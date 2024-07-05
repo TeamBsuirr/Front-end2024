@@ -1,0 +1,11 @@
+.but-loopsearch-1 .loop {
+  width: 20px;
+  height: 20px;
+}
+.but-loopsearch-1 {
+  border-radius: 8px;
+  background: var(--dark, #1F1B16);
+  display: flex;
+  padding: 10px 15px;
+  box-sizing: border-box;
+}

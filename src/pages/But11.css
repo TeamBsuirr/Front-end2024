@@ -1,0 +1,14 @@
+.but-11 .container {
+  overflow-wrap: break-word;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 20px;
+  color: #000000;
+}
+.but-1 {
+  border-radius: 10px;
+  background: var(--color, #E4B474);
+  display: flex;
+  padding: 28px 0 28px 8px;
+  box-sizing: border-box;
+}

@@ -1,0 +1,15 @@
+.but-4-main .container {
+  overflow-wrap: break-word;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 23px;
+  color: var(--light, #E2D4C4);
+}
+.but-4-main {
+  border-radius: 5px;
+  border: 2px solid var(--light, #E2D4C4);
+  background: var(--dark, #1F1B16);
+  display: flex;
+  padding: 29px 0;
+  box-sizing: border-box;
+}

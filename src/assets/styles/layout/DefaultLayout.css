@@ -1,0 +1,46 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  font-family: Zen Kurenaido, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-layout {
+  flex: 1;
+  /* display: flex;
+  flex-direction: column; */
+  align-items: center;
+  margin-top: 100px;
+  width: 100%;
+  /* height: 100%; */
+}
+
+.section-default{
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+  color: #1F1B16;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 9px 120px 70px 130px;
+  background: url('../../images/DefaultBG.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.header-container-default{
+  border-bottom: 2px solid #1F1B16;
+  margin-bottom: 20px;
+}
+.header-of-container-default{
+  color: #1F1B16;
+  font-family: 'Oswald', sans-serif;
+  font-size: 50px;
+  font-weight: 400;
+  text-align: center;
+}

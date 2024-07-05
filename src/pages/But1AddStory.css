@@ -1,0 +1,15 @@
+.but-1-add-story .container {
+  overflow-wrap: break-word;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--color, #E4B474);
+}
+.but-1-add-story {
+  border-radius: 10px;
+  border: 2px solid #E2D8CB;
+  background: #1F1B16;
+  display: flex;
+  padding: 26px 0 26px 9px;
+  box-sizing: border-box;
+}

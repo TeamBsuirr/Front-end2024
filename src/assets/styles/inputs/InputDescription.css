@@ -1,0 +1,69 @@
+/* .input-description {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: none;
+} */
+
+.story{
+    width: 60%;
+}
+
+textarea#story {
+    width: 100%;
+    height: 450px;
+    padding: 20px 25px;
+    resize: none;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #1F1B16;
+}
+
+textarea:focus {
+    outline: #1F1B16;
+}
+
+.attachment {
+    padding: 10px 25px;
+    background: #4d4b48e6;
+    border-radius: 5px 5px 0 0;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.input-file {
+    width: 25px;
+    height: 25px;
+    margin-right: 18px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+label[for='image'] {
+    background: url('../../images/icons/story/img.png') 100% 100% / 100% 100% no-repeat;
+}
+
+label[for='image']:hover {
+    background: url('../../images/icons/story/img-hover.png') 100% 100% / 100% 100% no-repeat;
+}
+
+label[for='video'] {
+    background: url('../../images/icons/story/vid.png') 100% 100% / 100% 100% no-repeat;
+}
+
+label[for='video']:hover {
+    background: url('../../images/icons/story/vid-hover.png') 100% 100% / 100% 100% no-repeat;
+}
+
+label[for='document'] {
+    background: url('../../images/icons/story/doc.png') 100% 100% / 100% 100% no-repeat;
+}
+
+label[for='document']:hover {
+    background: url('../../images/icons/story/doc-hover.png') 100% 100% / 100% 100% no-repeat;
+}

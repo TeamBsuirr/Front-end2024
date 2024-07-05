@@ -1,0 +1,54 @@
+.language .ellipse-4 {
+  border-radius: 2.5px;
+  background: var(--color, #E4B474);
+  margin: 13px 9px 8px 0;
+  width: 5px;
+  height: 5px;
+}
+.language .container {
+  position: relative;
+  overflow-wrap: break-word;
+  font-family: 'Zen Kurenaido';
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--color, #E4B474);
+}
+.language .container {
+  margin: 0 0.5px 24px 0;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  box-sizing: border-box;
+}
+.language .deutsch {
+  margin-left: 14px;
+  overflow-wrap: break-word;
+  font-family: 'Zen Kurenaido';
+  font-weight: 400;
+  font-size: 18px;
+  color: #EFE3D4;
+}
+.language .container-1 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+.language .container-1 {
+  position: absolute;
+  top: 50%;
+  right: 12.4px;
+  translate: 0 -50%;
+  overflow-wrap: break-word;
+  font-family: 'Zen Kurenaido';
+  font-weight: 400;
+  font-size: 18px;
+  color: #EFE3D4;
+}
+.language {
+  border-radius: 10px;
+  background: var(--token-2, #453F38);
+  padding: 8px 14px 11px 14px;
+  box-sizing: border-box;
+}

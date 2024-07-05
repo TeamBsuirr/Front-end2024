@@ -1,0 +1,8 @@
+.vid-2-add-story .container {
+  width: 23.5px;
+  height: 23.5px;
+}
+.vid-2-add-story {
+  display: flex;
+  box-sizing: border-box;
+}

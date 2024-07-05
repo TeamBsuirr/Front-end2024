@@ -1,0 +1,24 @@
+.photo .f-1015-ced-28184-c-8-be-66-a-57-cf-97-bcd-9-d-4 {
+  background: url('./../assets/images/Image4.jpeg') 50% / cover no-repeat;
+  margin-bottom: 13px;
+  width: 475px;
+  height: 308px;
+}
+.photo .container {
+  margin-right: 69.6px;
+  overflow-wrap: break-word;
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 20px;
+  text-decoration-line: underline;
+  text-transform: uppercase;
+  color: var(--color, #E4B474);
+}
+.photo {
+  background: var(--dark, #1F1B16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 18px;
+  box-sizing: border-box;
+}

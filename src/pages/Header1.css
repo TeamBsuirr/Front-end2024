@@ -1,0 +1,11 @@
+.header-1 .container {
+  overflow-wrap: break-word;
+  font-family: 'Zen Kurenaido';
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--color, #E4B474);
+}
+.header {
+  display: flex;
+  box-sizing: border-box;
+}

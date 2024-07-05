@@ -1,0 +1,90 @@
+.map .line-36 {
+  background: #E4B474;
+  transform: rotate(-40deg);
+  margin: 0 0 6px 1px;
+  width: 12.3px;
+  height: 3px;
+}
+.map .line-37 {
+  background: #E4B474;
+  transform: rotate(40deg);
+  margin-right: 1px;
+  width: 12.3px;
+  height: 3px;
+}
+.map .container-2 {
+  position: relative;
+  margin: 0 4px 28px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 11px 14.7px 17px 12px;
+  width: 40px;
+  box-sizing: border-box;
+}
+.map .img-573063-abf-147721 {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--dark, #1F1B16);
+  background: url('./../assets/images/Img573063Abf147721.jpeg') 50% / cover no-repeat;
+  margin-bottom: 10px;
+  width: 500px;
+  height: 312px;
+}
+.map .container {
+  margin: 0 28px 10px 28px;
+  display: inline-block;
+  align-self: flex-start;
+  overflow-wrap: break-word;
+  font-family: 'Oswald';
+  font-weight: 400;
+  font-size: 30px;
+  color: var(--color, #E4B474);
+}
+.map .container-3 {
+  margin: 0 28px 10px 28px;
+  align-self: flex-start;
+  overflow-wrap: break-word;
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--light, #E2D4C4);
+}
+.container-3 {
+  font-family: 'Inter';
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.333;
+}
+.map .container-4 {
+  margin: 0 28px;
+  align-self: flex-start;
+  overflow-wrap: break-word;
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 20px;
+  color: var(--light, #E2D4C4);
+}
+.container-4 {
+  font-family: 'Inter';
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.333;
+}
+.map .container-1 {
+  border-radius: 5px;
+  border: 2px solid var(--light, #E2D4C4);
+  background: var(--token-2, #453F38);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 390px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.map {
+  background: var(--token-1, rgba(77, 75, 72, 0.9));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 32px 25px 64px 25px;
+  box-sizing: border-box;
+}
