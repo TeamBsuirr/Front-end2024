@@ -3,7 +3,6 @@
     color: black;
     border: none;
     padding: 10px 20px;
-    /* margin-top: 74px; */
     font-size: 20px;
     font-style: normal;
     cursor: pointer;
@@ -22,7 +21,6 @@
     color: #E2D4C4;
     border: none;
     padding: 10px 20px;
-    /* margin-top: 74px; */
     font-size: 20px;
     font-style: normal;
     cursor: pointer;
@@ -40,7 +38,7 @@
     color: #1F1B16;
     border: none;
     padding: 10px 20px;
-    /* margin-top: 74px; */
+    border: 2px solid #1F1B16;
     font-size: 20px;
     font-style: normal;
     cursor: pointer;
@@ -52,21 +50,3 @@
     background-color: #1F1B16;
     color: #E2D4C4;
 }
-
-/* .reverse-transparent-submit-button{
-    background-color: transparent;
-    color: #1F1B16;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 74px;
-    font-size: 20px;
-    font-style: normal;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: background-color 0.5s ease;
-}
-
-.reverse-transparent-submit-button:hover {
-    background-color: #1F1B16;
-    color: #E2D4C4;
-} */

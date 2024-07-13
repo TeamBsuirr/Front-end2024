@@ -10,6 +10,8 @@ import SearchResults from '../components/forms/SearchResults';
 import PrisonerPage from '../pages/search/prisoner/PrisonerPage';
 import PrisonerSearchResult from '../components/forms/PrisonerSearchResult';
 import PrisonerStories from '../pages/prisoners/PrisonerStories';
+import MapUzniki from '../components/other/MapUzniki';
+import PhotoArchive from '../components/forms/PhotoArchive';
 
 
 export default function DefaultLayout() {
@@ -25,8 +27,8 @@ export default function DefaultLayout() {
 
                     <Route path="/story" element={<CreateStoryPage />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/map" element={<Contact />} />
-                    <Route path="/archive/photos" element={<Contact />} />
+                    <Route path="/map" element={<MapUzniki />} />
+                    <Route path="/archive/photos" element={<PhotoArchive />} />
                     <Route path="/contacts" element={<Contact />} />
                     <Route path="/search" element={<SearchResults />} />
                     <Route path="/prisoners" element={<PrisonerStories />} />

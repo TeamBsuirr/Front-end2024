@@ -23,10 +23,10 @@ export default function HeaderLayout() {
         <header className='header-layout'>
             <div className="header-container">
                 <div className="links">
-                    <a href="about" className="link">
+                    <a href="/about" className="link">
                         О проекте
                     </a>
-                    <a href="contacts" className="link">
+                    <a href="/contacts" className="link">
                         Контакты
                     </a>
                 </div>

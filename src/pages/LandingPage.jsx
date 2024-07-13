@@ -48,20 +48,26 @@ export default function LandingPage() {
                             <div className="link-item ">
                                 <div className='line-container'>
 
-                                    <button className="link-button item1">ИСТОРИИ УЧАСТНИКОВ</button>
+                                    <button className="link-button item1"
+                                        onClick={()=>{window.location.href="/prisoners";}}
+                                    >ИСТОРИИ УЧАСТНИКОВ</button>
 
                                     <p>Какой-то текст об истории участников, откуда собраны, я не знаю, я художник - я так вижу, может всё-же надо описание, или не надо, ну вы решите и мне скажите, я буду ждать и всё поправлю.</p>
                                 </div>
                             </div>
                             <div className="link-item ">
                                 <div className='line-container'>
-                                    <button className="link-button item2">ФОТОАРХИВ</button>
+                                    <button className="link-button item2"
+                                     onClick={()=>{window.location.href="/archive/photos";}}
+                                    >ФОТОАРХИВ</button>
                                     <p>Какой-то текст о фотоархиве, источниках, я не знаю, я художник - я так вижу, может всё-же надо описание, или не надо, ну вы решите и мне скажите, я буду ждать и всё поправлю.</p>
                                 </div>
                             </div>
                             <div className="link-item ">
                                 <div className='line-container'>
-                                    <button className="link-button item3">МЕСТА ГЕНОЦИДА НА КАРТЕ РБ</button>
+                                    <button className="link-button item3"
+                                    onClick={()=>{window.location.href="/map";}}
+                                    >МЕСТА ГЕНОЦИДА НА КАРТЕ РБ</button>
                                     <p>Какой-то текст о карте с местами геноцида, откуда информация, я не знаю, я художник - я так вижу, может всё-же надо описание, или не надо, ну вы решите и мне скажите, я буду ждать и всё поправлю.</p>
                                 </div>
                             </div>

@@ -7,7 +7,7 @@ export default function DateForm({ id, name, labelText }) {
 
     return (<>
         <label for={id}>{labelText}</label>
-        <input type="date" id={id} name={name} min="1800-01-01" max="3000-01-01" />
+        <input className='date-input' type="date" id={id} name={name} min="1800-01-01" max="3000-01-01" />
     </>
     )
 }

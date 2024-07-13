@@ -14,8 +14,8 @@ export default function FooterLayout() {
                 <div>
                     <SiteMainHeaderSpan size="lg" />
 
-                    <a href="about" className="link">О проекте</a>
-                    <a href="contacts" className="link">Контакты</a>
+                    <a href="/about" className="link">О проекте</a>
+                    <a href="/contacts" className="link">Контакты</a>
                 </div>
 
                 <div>
