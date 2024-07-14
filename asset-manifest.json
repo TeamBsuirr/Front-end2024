@@ -1,36 +1,31 @@
 {
   "files": {
-    "main.css": "/Front-end2024/static/css/main.4db6ec2a.css",
-    "main.js": "/Front-end2024/static/js/main.f7ecb38c.js",
+    "main.css": "/Front-end2024/static/css/main.56967358.css",
+    "main.js": "/Front-end2024/static/js/main.61f5431d.js",
     "static/media/ZenKurenaido-Regular.ttf": "/Front-end2024/static/media/ZenKurenaido-Regular.61210c17444b93cbf502.ttf",
     "static/media/DefaultBG.jpg": "/Front-end2024/static/media/DefaultBG.2bdef49c008775a10a53.jpg",
     "static/media/LandingPageBack.png": "/Front-end2024/static/media/LandingPageBack.9101a62f27f28eec3244.png",
     "static/media/OldPaper.jpeg": "/Front-end2024/static/media/OldPaper.e3ed9fb99e1ff1cfcfc4.jpeg",
     "static/media/Inter-VariableFont_slnt,wght.ttf": "/Front-end2024/static/media/Inter-VariableFont_slnt,wght.853e01975d2783d9fa29.ttf",
-    "static/media/Image.png": "/Front-end2024/static/media/Image.fb2a07f1c2d9c8c4d169.png",
     "static/media/Image3.jpeg": "/Front-end2024/static/media/Image3.98ce497518e429d9d40d.jpeg",
     "static/media/Oswald-VariableFont_wght.ttf": "/Front-end2024/static/media/Oswald-VariableFont_wght.7cecd0da606d25b0905d.ttf",
     "static/media/archiveLogo.svg": "/Front-end2024/static/media/archiveLogo.4a1d2f4babde9f8cf929846e04e1676d.svg",
-    "static/media/Img573063Abf147721.jpeg": "/Front-end2024/static/media/Img573063Abf147721.05ed3ea81bd146cd48c7.jpeg",
-    "static/media/Image2.png": "/Front-end2024/static/media/Image2.3eaa9f7392528fabd835.png",
     "static/media/churchLogo.svg": "/Front-end2024/static/media/churchLogo.2695496dced1124b7134403698362c73.svg",
     "static/media/worldLogo.svg": "/Front-end2024/static/media/worldLogo.5ed1396f378149dda071518f673b2c1f.svg",
     "static/media/Image4.jpeg": "/Front-end2024/static/media/Image4.705fe13884505c48148e.jpeg",
     "static/media/Vasek Italic_0.ttf": "/Front-end2024/static/media/Vasek Italic_0.2f7614224eea82c2bee8.ttf",
     "static/media/MapBG.png": "/Front-end2024/static/media/MapBG.5b6b54285f6aafcd2484.png",
-    "static/media/Unnamed1.jpeg": "/Front-end2024/static/media/Unnamed1.0aa7a3706f2149fe6766.jpeg",
-    "static/media/Image1.png": "/Front-end2024/static/media/Image1.389630d68feef6c2abef.png",
     "static/media/FontBG.png": "/Front-end2024/static/media/FontBG.f531daf7d9f984a4cfac.png",
     "static/media/PhotoBG.png": "/Front-end2024/static/media/PhotoBG.19d512427871af0bc631.png",
     "static/media/bsuir.svg": "/Front-end2024/static/media/bsuir.f3a557c277cd8fa0c0a37f8d896c0a79.svg",
     "index.html": "/Front-end2024/index.html",
     "static/media/close.svg": "/Front-end2024/static/media/close.1fe4f9d62c534c8aeaef110789e65be4.svg",
     "static/media/x-icon.svg": "/Front-end2024/static/media/x-icon.fa6d7fcc96c2b311fd017f48b8e0cc8a.svg",
-    "main.4db6ec2a.css.map": "/Front-end2024/static/css/main.4db6ec2a.css.map",
-    "main.f7ecb38c.js.map": "/Front-end2024/static/js/main.f7ecb38c.js.map"
+    "main.56967358.css.map": "/Front-end2024/static/css/main.56967358.css.map",
+    "main.61f5431d.js.map": "/Front-end2024/static/js/main.61f5431d.js.map"
   },
   "entrypoints": [
-    "static/css/main.4db6ec2a.css",
-    "static/js/main.f7ecb38c.js"
+    "static/css/main.56967358.css",
+    "static/js/main.61f5431d.js"
   ]
 }
