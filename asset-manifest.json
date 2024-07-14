@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Front-end2024/static/css/main.56967358.css",
-    "main.js": "/Front-end2024/static/js/main.15b37768.js",
+    "main.css": "/Front-end2024/static/css/main.678cf9e0.css",
+    "main.js": "/Front-end2024/static/js/main.1779e761.js",
     "static/media/ZenKurenaido-Regular.ttf": "/Front-end2024/static/media/ZenKurenaido-Regular.61210c17444b93cbf502.ttf",
     "static/media/DefaultBG.jpg": "/Front-end2024/static/media/DefaultBG.2bdef49c008775a10a53.jpg",
     "static/media/LandingPageBack.png": "/Front-end2024/static/media/LandingPageBack.9101a62f27f28eec3244.png",
@@ -21,11 +21,11 @@
     "index.html": "/Front-end2024/index.html",
     "static/media/close.svg": "/Front-end2024/static/media/close.1fe4f9d62c534c8aeaef110789e65be4.svg",
     "static/media/x-icon.svg": "/Front-end2024/static/media/x-icon.fa6d7fcc96c2b311fd017f48b8e0cc8a.svg",
-    "main.56967358.css.map": "/Front-end2024/static/css/main.56967358.css.map",
-    "main.15b37768.js.map": "/Front-end2024/static/js/main.15b37768.js.map"
+    "main.678cf9e0.css.map": "/Front-end2024/static/css/main.678cf9e0.css.map",
+    "main.1779e761.js.map": "/Front-end2024/static/js/main.1779e761.js.map"
   },
   "entrypoints": [
-    "static/css/main.56967358.css",
-    "static/js/main.15b37768.js"
+    "static/css/main.678cf9e0.css",
+    "static/js/main.1779e761.js"
   ]
 }
