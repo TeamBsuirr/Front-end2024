@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Front-end2024/static/css/main.e685ec12.css",
-    "main.js": "/Front-end2024/static/js/main.26a37066.js",
+    "main.js": "/Front-end2024/static/js/main.504e8cbb.js",
     "static/media/ZenKurenaido-Regular.ttf": "/Front-end2024/static/media/ZenKurenaido-Regular.61210c17444b93cbf502.ttf",
     "static/media/DefaultBG.jpg": "/Front-end2024/static/media/DefaultBG.2bdef49c008775a10a53.jpg",
     "static/media/LandingPageBack.png": "/Front-end2024/static/media/LandingPageBack.9101a62f27f28eec3244.png",
@@ -22,10 +22,10 @@
     "static/media/close.svg": "/Front-end2024/static/media/close.1fe4f9d62c534c8aeaef110789e65be4.svg",
     "static/media/x-icon.svg": "/Front-end2024/static/media/x-icon.fa6d7fcc96c2b311fd017f48b8e0cc8a.svg",
     "main.e685ec12.css.map": "/Front-end2024/static/css/main.e685ec12.css.map",
-    "main.26a37066.js.map": "/Front-end2024/static/js/main.26a37066.js.map"
+    "main.504e8cbb.js.map": "/Front-end2024/static/js/main.504e8cbb.js.map"
   },
   "entrypoints": [
     "static/css/main.e685ec12.css",
-    "static/js/main.26a37066.js"
+    "static/js/main.504e8cbb.js"
   ]
 }
