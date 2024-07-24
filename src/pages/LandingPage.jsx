@@ -4,6 +4,7 @@ import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import HeaderLanding from '../components/layout/HeaderLanding';
 import FooterLayout from '../components/layout/FooterLayout';
 import FooterLanding from '../components/layout/FooterLanding';
+import { useHref } from 'react-router-dom';
 // import HeaderLayout from '../components/layout/HeaderLayout';
 export default function LandingPage() {
 
@@ -32,7 +33,10 @@ export default function LandingPage() {
                             <h2>Поиск жертв геноцида</h2>
                             <div className="search-bar">
                                 <input type="text" placeholder="ФИО, концлагерь..." />
-                                <button class="search-button" onClick={()=>{window.location.href="/search";}}>
+                                <button class="search-button" onClick={()=>{
+                                    window.location.href="/search";
+                                    
+                                    }}>
                                     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M19.6465 20.3536C19.8417 20.5489 20.1583 20.5489 20.3536 20.3536C20.5489 20.1583 20.5489 19.8417 20.3536 19.6465L19.6465 20.3536ZM13.8761 14.5832L19.6465 20.3536L20.3536 19.6465L14.5832 13.8761L13.8761 14.5832Z" fill="#E2D4C4" />
                                         <circle cx="8.37034" cy="8.37034" r="7.87034" stroke="#E2D4C4" />

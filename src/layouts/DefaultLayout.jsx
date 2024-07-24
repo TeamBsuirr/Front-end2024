@@ -12,6 +12,8 @@ import PrisonerSearchResult from '../components/forms/PrisonerSearchResult';
 import PrisonerStories from '../pages/prisoners/PrisonerStories';
 import MapUzniki from '../components/other/MapUzniki';
 import PhotoArchive from '../components/forms/PhotoArchive';
+import PageTemplate from '../components/other/PageTemplate';
+import AdminLogin from '../pages/login/AdminLogin';
 
 
 export default function DefaultLayout() {
@@ -33,6 +35,8 @@ export default function DefaultLayout() {
                     <Route path="/search" element={<SearchResults />} />
                     <Route path="/prisoners" element={<PrisonerStories />} />
                     <Route path="/search/prisoner/*" element={<PrisonerPage />} />
+                    <Route path="/login" element={<AdminLogin />} /> {/* ВРЕМЕННО */}
+                    <Route path="*" element={<PageTemplate />} /> {/* Маршрут для неопределенных страниц */}
                 </Routes>
 
 
