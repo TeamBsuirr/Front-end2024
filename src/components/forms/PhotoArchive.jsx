@@ -2,47 +2,13 @@ import { React, useState } from 'react';
 import '../../assets/styles/forms/PhotoArchive.css'
 import Image4 from '../../assets/images/Image4.jpeg'
 
-export default function PhotoArchive() {
+export default function PhotoArchive({arrayOfPhotoObjects}) {
     const [selectedObject, setSelectedObject] = useState(null);
-
-    const arrayOfResults = [
-        {
-            img: Image4,
-            header: "Ивано Петр Иванович",
-            description: "текст текст текст текст текст текст текст текст текст текст текст текст текст текст...",
-        },
-        {
-            img: Image4,
-            header: "Ивано Петр Иванович",
-            description: "текст текст текст текст текст текст текст текст текст текст текст текст текст текст...",
-        },
-        {
-            img: Image4,
-            header: "Ивано Петр Иванович",
-            description: "текст текст текст текст текст текст текст текст текст текст текст текст текст текст...",
-        },
-        {
-            img: Image4,
-            header: "Ивано Петр Иванович",
-            description: "текст текст текст текст текст текст текст текст текст текст текст текст текст текст...",
-        },
-        {
-            img: Image4,
-            header: "Ивано Петр Иванович",
-            description: "текст текст текст текст текст текст текст текст текст текст текст текст текст текст...",
-        },
-        {
-            img: Image4,
-            header: "Ивано Петр Иванович",
-            description: "текст текст текст текст текст текст текст текст текст текст текст текст текст текст...",
-        },
-
-    ]
 
 
     function openImage(index) {
-        if (arrayOfResults[index]) {
-            setSelectedObject(arrayOfResults[index]);
+        if (arrayOfPhotoObjects[index]) {
+            setSelectedObject(arrayOfPhotoObjects[index]);
         }
     }
 
@@ -72,11 +38,11 @@ export default function PhotoArchive() {
             {/* ADD TOP BORDER TO THIS */}
             <section className='section-register-search-result'>
 
-                {arrayOfResults.map((obj, index) => (
+                {arrayOfPhotoObjects.map((obj, index) => (
                     <div className='result-container-archive' key={index}>
-                        <img src={obj.img} alt={"image #" + index} onClick={() => { openImage(index); }} />
+                        <img src={obj.image.urlToFile} alt={"image #" + index} onClick={() => { openImage(index); }} />
                         <div className='result-container-archive-description'>
-                            <h3>{obj.header}</h3>
+                            <h3>{obj.title}</h3>
                         </div>
                     </div>
                 ))}
@@ -84,9 +50,9 @@ export default function PhotoArchive() {
                 {selectedObject && (
                     <div className='modal' onClick={closeModal}>
                         <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-                            <img src={selectedObject.img} alt="Selected" />
+                            <img src={selectedObject.image.urlToFile} alt="Selected" />
                             <div className='modal-description'>
-                                <h3>{selectedObject.header}</h3>
+                                <h3>{selectedObject.title}</h3>
                                 <span>{selectedObject.description}</span>
 
                             </div>

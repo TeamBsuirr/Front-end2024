@@ -7,20 +7,37 @@ import userService from './services/userService';
 // Перехватчик запросов
 api.interceptors.request.use(
     config => {
+        let headers = new Headers();
+
+        if (config.url === '/auth/login') {
+            // Если запрос на /auth/login, не добавляем токены
+            console.log("Request interceptor: login request detected, not adding tokens.");
+            return config;
+        }
 
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
-        console.log("Request interceptor: tokens set");
+       
 
         if (accessToken) {
-            config.headers['Authorization'] = `${accessToken}`;
+            config.headers['Authorization'] = `Bearer ${accessToken}`;
+            console.log("Request interceptor: tokens set (Authorization)");
         }
         if (refreshToken) {
-            config.headers['x-refresh-token'] = refreshToken;
+            // config.headers['x-refresh-token'] = refreshToken;
+            config.headers['x-refresh-token'] = `Bearer ${accessToken}`;
+            console.log("Request interceptor: tokens set (x)");
         }
 
 
-        console.log("Request interceptor: config", config);
+
+        // config.headers['Access-Control-Allow-Origin'] = `http://localhost:3000`;
+        // config.headers['Access-Control-Allow-Methods'] = `POST, GET, PUT, DELETE`;
+        // config.headers['Access-Control-Allow-Headers'] = `Content-Type, Authorization`;
+        // headers.append('Access-Control-Allow-Origin',`http://localhost:3000`);
+        // headers.append('Access-Control-Allow-Methods',`POST, GET, PUT, DELETE`);
+        // headers.append('Access-Control-Allow-Headers', `Content-Type, Authorization`);
+         console.log("Request interceptor: config", config);
         return config;
        
     },
@@ -64,7 +81,7 @@ api.interceptors.response.use(
         console.error("Response interceptor error:", error);
         if (error.response && error.response.status === 401) {
           console.warn("Unauthorized access - redirecting to login");
-          window.location.href = '/';
+          //window.location.href = '/';
         }
         return Promise.reject(error);
     }

@@ -13,7 +13,9 @@
     font-size: 20px;
     position: absolute;
     color: #E9C79A;
-    top:-18px;
+    top:-14px;
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
   }
   
   .carousel {

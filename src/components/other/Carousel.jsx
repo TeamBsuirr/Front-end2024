@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import '../../assets/styles/other/Carousel.css'
 
@@ -37,24 +37,48 @@ const Carousel = ({ images }) => {
         carouselRef.current.scrollLeft = scrollLeft - walk;
     };
 
-    return (
-        <div
-            className="carousel-container"
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeave}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-        >
-            <h4>Материалы к истории</h4>
-            <div className="carousel" ref={carouselRef}>
-                {images.map((image, index) => (
-                    <div className="carousel-item" key={index}>
-                        <img src={image.urlToFile} alt={`Slide ${index + 1}`} />
-                    </div>
-                ))}
-            </div>
+
+    const [selectedObject, setSelectedObject] = useState(null);
+
+    function openImage(index) {
+        if (images[index]) {
+            setSelectedObject(images[index]);
+        }
+    }
+
+    function closeModal() {
+        setSelectedObject(null);
+    }
+
+
+return (
+    <div
+        className="carousel-container"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+    >
+        <h4>Материалы к истории</h4>
+        <div className="carousel" ref={carouselRef}>
+            {images.map((image, index) => (
+                <div className="carousel-item" key={index}>
+                    <img src={image.urlToFile} alt={`Slide ${index + 1}`} onClick = {() => { openImage(index); }} />
+                </div>
+            ))}
         </div>
-    );
+
+
+        {selectedObject && (
+            <div className='modal' onClick={closeModal}>
+                <div className='modal-content' onClick={(e) => e.stopPropagation()}>
+                    <img src={selectedObject.urlToFile} alt="Selected" />
+                </div>
+            </div>
+        )}
+
+    </div>
+);
 };
 
 export default Carousel;

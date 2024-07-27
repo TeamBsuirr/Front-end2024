@@ -5,37 +5,35 @@ import SearchResults from '../../../components/forms/SearchResults';
 import PageTemplate from '../../../components/other/PageTemplate';
 import Card from '../../../components/cards/Card';
 import humanService from '../../../api/services/humanService';
+import PhotoArchive from '../../../components/forms/PhotoArchive';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
 
 
-export default function PrisonerPage() {
-    const [objectOfPrisoners, setObjectOfPrisoners] = useState(null);
+export default function PhotoArchivePage() {
+    const [arrayOfPhotoObjects, setArrayOfPhotoObjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-
-
-        const queryStringArray = window.location.pathname.split('/');
-        const idOfPrisoner = queryStringArray[queryStringArray.length - 1];
-
-        humanService.getHumanById(idOfPrisoner)
+        searchService.getAllPhotos()
             .then(data => {
-                setObjectOfPrisoners(data);
+                console.log(data);
+                setArrayOfPhotoObjects(data);
+
                 setLoading(false);
 
             })
             .catch(error => {
-                console.error('Ошибка получения данных узника:', error);
+                console.error('Ошибка получения данных фотоархива:', error);
 
                 let errMsg = error.message ? error.message : error;
-
+                
                 notification.error({
-                    message: 'Ошибка получения данных узника',
+                    message: 'Ошибка получения данных фотоархива',
                     description: 'Ошибка получения данных с сервера: ' + errMsg
                 });
-
+                
                 setLoading(false);
             });
 
@@ -44,14 +42,13 @@ export default function PrisonerPage() {
     }, []);
 
 
-
     if (loading) {
         return <PageTemplate content={<Spinner size="large" />} />;
-    } else if (!objectOfPrisoners) {
+    } else if (!arrayOfPhotoObjects) {
         return <NotFound />;
     } else {
         return (
-            <Card objectOfPrisoners={objectOfPrisoners} />
+            <PhotoArchive arrayOfPhotoObjects={arrayOfPhotoObjects} />
         );
     }
 }

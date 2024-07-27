@@ -16,16 +16,54 @@
 .date-input {
     width: 100%;
     height: 40px;
-    padding: 0 0 7px;
+    /* padding: 0 0 2px; */
+    padding: 0 1px;
     border-radius: 5px;
     border: 1px solid #1F1B16;
     background: transparent;
     font-family: "Zen Kurenaido", sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
     color: #1F1B16;
+    position: relative; /* Needed to position the pseudo-element */
+    appearance: auto;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
 }
 
 .date-input:focus {
     outline: #1F1B16;
+}
+
+.date-input::after {
+    content: '';
+    display: block;
+    background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-128.png) no-repeat;
+    background-size: contain; /* Ensure the image fits within the pseudo-element */
+    width: 18px; /* Adjust the size to match the font size */
+    height: 18px; /* Adjust the size to match the font size */
+    position: absolute;
+    right: 5px; /* Position the icon 4px to the right of the input */
+    top: 50%;
+    transform: translateY(-50%); /* Center the icon vertically */
+    pointer-events: none; /* Prevent the icon from blocking input events */
+}
+
+::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1
+}
+
+::-webkit-calendar-picker-indicator::after {
+    content: '';
+    display: block;
+    background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-128.png) no-repeat;
+    background-size: contain; /* Ensure the image fits within the pseudo-element */
+    width: 18px; /* Adjust the size to match the font size */
+    height: 18px; /* Adjust the size to match the font size */
+    position: absolute;
+    right: 5px; /* Position the icon 4px to the right of the input */
+    top: 50%;
+    transform: translateY(-50%); /* Center the icon vertically */
+  
 }

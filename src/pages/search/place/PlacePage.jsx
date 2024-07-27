@@ -1,16 +1,16 @@
 import { React, useEffect, useState } from 'react';
 import Spinner from '../../../components/other/Spinner';
-import searchService from '../../../api/services/searchService';
-import SearchResults from '../../../components/forms/SearchResults';
 import PageTemplate from '../../../components/other/PageTemplate';
 import Card from '../../../components/cards/Card';
 import humanService from '../../../api/services/humanService';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
+import placeService from '../../../api/services/placeService';
+import CardPlace from '../../../components/cards/CardPlace';
 
 
-export default function PrisonerPage() {
-    const [objectOfPrisoners, setObjectOfPrisoners] = useState(null);
+export default function PlacePage() {
+    const [objectOfPlace, setobjectOfPlace] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,19 +20,19 @@ export default function PrisonerPage() {
         const queryStringArray = window.location.pathname.split('/');
         const idOfPrisoner = queryStringArray[queryStringArray.length - 1];
 
-        humanService.getHumanById(idOfPrisoner)
+        placeService.getPlaceById(idOfPrisoner)
             .then(data => {
-                setObjectOfPrisoners(data);
+                setobjectOfPlace(data);
                 setLoading(false);
 
             })
             .catch(error => {
-                console.error('Ошибка получения данных узника:', error);
+                console.error('Ошибка получения данных концлагеря:', error);
 
                 let errMsg = error.message ? error.message : error;
 
                 notification.error({
-                    message: 'Ошибка получения данных узника',
+                    message: 'Ошибка получения данных концлагеря',
                     description: 'Ошибка получения данных с сервера: ' + errMsg
                 });
 
@@ -47,11 +47,11 @@ export default function PrisonerPage() {
 
     if (loading) {
         return <PageTemplate content={<Spinner size="large" />} />;
-    } else if (!objectOfPrisoners) {
+    } else if (!objectOfPlace) {
         return <NotFound />;
     } else {
         return (
-            <Card objectOfPrisoners={objectOfPrisoners} />
+            <CardPlace objectOfPlace={objectOfPlace} />
         );
     }
 }

@@ -1,10 +1,9 @@
 
 
 import { React } from 'react';
-// import '../../assets/styles/other/PageTemplate.css'
 import '../../assets/styles/layout/DefaultLayout.css'
 
-export default function PageTemplate({ content }) {
+export default function PageTemplate({ content,contentSection }) {
 
     return (
 
@@ -14,6 +13,7 @@ export default function PageTemplate({ content }) {
                     {content}
                 </h1>
             </div>
+            <p>{contentSection}</p>
         </section>
 
     )

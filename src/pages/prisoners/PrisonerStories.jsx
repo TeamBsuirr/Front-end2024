@@ -5,6 +5,8 @@ import PageTemplate from '../../components/other/PageTemplate';
 import PrisonerSearchResult from '../../components/forms/PrisonerSearchResult';
 import humanService from '../../api/services/humanService';
 import Spinner from '../../components/other/Spinner';
+import NotFound from '../../components/layout/NotFound';
+import { notification } from 'antd';
 
 
 export default function PrisonerStories() {
@@ -19,29 +21,36 @@ export default function PrisonerStories() {
         humanService.getAllHistoriesForPrisonerStories()
             .then(data => {
                 console.log(data)
-                setHistoies(data);
+                setHistoies(data.histories);
                 setLoading(false);
 
-                setPlaces(["Концлагерь 1","Концлагерь 2","Концлагерь 3",])
-                setYears(["1941","1942","1943","1944","1945",])
-            
+                setPlaces(data.places)
+                setYears(data.years)
+
             })
             .catch(error => {
-                console.error('Error fetching histories:', error);
+                console.error('Ошибка получения данных историй участников:', error);
+
+                let errMsg = error.message ? error.message : error;
+
+                notification.error({
+                    message: 'Ошибка получения данных историй участников',
+                    description: 'Ошибка получения данных с сервера: ' + errMsg
+                });
+
                 setLoading(false);
             });
 
     }, []);
 
 
-
     if (loading) {
-        return <PageTemplate content={<Spinner size="large" />}/>;
+        return <PageTemplate content={<Spinner size="large" />} />;
+    } else if (!histories || !places || !years) {
+        return <NotFound />;
     } else {
         return (
-            <>
-                {histories && places && years && <PrisonerSearchResult histories={histories} places={places} years={years}/>}
-            </>
+            <PrisonerSearchResult histories={histories} places={places} years={years} />
         );
     }
 }

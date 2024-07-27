@@ -2,6 +2,17 @@ body {
   font-family: "Roboto";
 }
 
+.notificationError{
+  border-radius: 8px;
+  background-color: #E0CDB4;
+  color: #1F1B16;
+  font-weight: 400;
+  font-family: Inter;
+  font-weight: 400;
+
+
+}
+
 @font-face {
   font-family: 'Zen Kurenaido';
   src: url('./assets/fonts/ZenKurenaido-Regular.ttf') format('truetype');

@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import '../../assets/styles/other/Map.css'
 import Image3 from '../../assets/images/Image3.jpeg'
 import closeSvg from '../../assets/images/icons/other/close.svg'
+import ButtonSubmit from '../buttons/ButtonSubmit';
 export default function MapUzniki() {
   const [activePlace, setActivePlace] = useState({});
 
@@ -11,7 +12,7 @@ export default function MapUzniki() {
     script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE';
     document.body.appendChild(script);
   };
-  
+
   return (
     <div className='section-search-result'>
       <section className='section-form-search-result'>
@@ -37,7 +38,7 @@ export default function MapUzniki() {
 
           <div className='active-place'>
             <div className='header-active-place'>
-              <img src={closeSvg} alt="close icon" onClick={()=>{setActivePlace(null);}}/>
+              <img src={closeSvg} alt="close icon" onClick={() => { setActivePlace(null); }} />
             </div>
             <div className='container-active-place'>
 
@@ -62,6 +63,16 @@ export default function MapUzniki() {
                 </div>
               </div>
             </div>
+            <div className='container-button-selected-place'>
+                <ButtonSubmit 
+                  isColorsInverse={true}
+                  themeColor="yellow"
+                  href="/"
+                  spanText='ПОДРОБНЕЕ О ЛАГЕРЕ'
+                  onClick={() => { 1; }}
+
+                  size />
+              </div>
           </div>
         </> : <></>}
       </section>

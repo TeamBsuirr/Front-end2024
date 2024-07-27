@@ -1,11 +1,15 @@
+import api from '../axiosInstance';
 import handleRequest from '../requestHelper';
 
 const searchService = {
-  getAllUsers: () => handleRequest(() => api.get('/users')),
-  getUserById: (id) => handleRequest(() => api.get(`/users/${id}`)),
-  createUser: (data) => handleRequest(() => api.post('/users', data)),
-  updateUser: (id, data) => handleRequest(() => api.put(`/users/${id}`, data)),
-  deleteUser: (id) => handleRequest(() => api.delete(`/users/${id}`)),
+  getGlobalSearch: (stringSearch) => handleRequest(() => api.get(`/filter-search?search=${stringSearch}`)),
+  getAllPhotos: () => handleRequest(() => api.get('/albums')),
+
+//   getGlobalSearch: (searchText) => handleRequest(async () => {
+//     const response = await api.get(`/filter-search?searchText=${searchText}`);
+//     console.log(response)
+//     return response;
+// }),
 };
 
 export default searchService;

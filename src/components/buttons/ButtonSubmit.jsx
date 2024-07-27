@@ -14,6 +14,10 @@ export default function ButtonSubmit({ isColorsInverse=false, themeColor="yellow
     let heightButton = 70;
 
     switch (size) {
+        case "s":
+            widthButton = 290;
+            heightButton = 60;
+            break;
         case "md":
             widthButton = 350;
             heightButton = 70;
@@ -27,15 +31,29 @@ export default function ButtonSubmit({ isColorsInverse=false, themeColor="yellow
             break;
     }
 
-    return (
-        <button 
-            className={styleClass} 
-            onClick={()=>{
-                window.location.href=href;
-            }} 
-            style={{ width: widthButton, height: heightButton }}
-        >
-            {spanText}
-        </button>
-    )
+    if(href==="none"){
+        return (
+            <button 
+                className={styleClass} 
+                onClick={onClick} 
+                style={{ width: widthButton, height: heightButton }}
+            >
+                {spanText}
+            </button>
+        )
+    } else {
+        return (
+            <button 
+                className={styleClass} 
+                onClick={()=>{
+                    window.location.href=href;
+                }} 
+                style={{ width: widthButton, height: heightButton }}
+            >
+                {spanText}
+            </button>
+        )
+    }
+
+
 }
