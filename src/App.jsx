@@ -11,10 +11,6 @@ import PageTemplate from './components/other/PageTemplate';
 import Spinner from './components/other/Spinner';
 
 
-
-
-
-
 // const router = createBrowserRouter([
 //   { path: '/*', element: <DefaultLayout /> },
 //   { path: '/', element: <LandingPage /> },

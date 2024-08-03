@@ -4,8 +4,9 @@ notification.config({
     placement: 'top',
     top: 70,
     duration: 3,
-    className:"notificationError",
-    stack:{
+    className: "notificationError",
+    stack: {
         threshold: 5
     }
-  });
+});
+
