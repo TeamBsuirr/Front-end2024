@@ -3,7 +3,7 @@ import api from './axiosInstance';
 
 const handleRequest = async (request) => {
   try {
-    console.log("Request started");
+    console.log("Request started",request);
 
     
     // Логируем формат данных
@@ -11,6 +11,7 @@ const handleRequest = async (request) => {
     if (config.data) {
       console.log("Request body data:", config.data);
     }
+    console.log("whole config",config)
 
 
 

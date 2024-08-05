@@ -7,6 +7,7 @@ import userService from './services/userService';
 // Перехватчик запросов
 api.interceptors.request.use(
     config => {
+
         let headers = new Headers();
 
         if (config.url === '/auth/login') {
@@ -17,7 +18,7 @@ api.interceptors.request.use(
 
         const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
-       
+
 
         if (accessToken) {
             config.headers['Authorization'] = `Bearer ${accessToken}`;
@@ -29,6 +30,12 @@ api.interceptors.request.use(
             console.log("Request interceptor: tokens set (x)");
         }
 
+        console.log(config)
+        if (typeof config.data === "string") {
+            config.data = JSON.parse(config.data);
+        } else {
+            console.log(typeof(config.data))
+        }
 
 
         // config.headers['Access-Control-Allow-Origin'] = `http://localhost:3000`;
@@ -37,9 +44,9 @@ api.interceptors.request.use(
         // headers.append('Access-Control-Allow-Origin',`http://localhost:3000`);
         // headers.append('Access-Control-Allow-Methods',`POST, GET, PUT, DELETE`);
         // headers.append('Access-Control-Allow-Headers', `Content-Type, Authorization`);
-         console.log("Request interceptor: config", config);
+        console.log("Request interceptor: config", config);
         return config;
-       
+
     },
     error => {
         console.error("Request interceptor error:", error);
@@ -62,7 +69,7 @@ api.interceptors.request.use(
 
 //         console.log("Request interceptor: config", config);
 //         return config;
-       
+
 //     }
 //     , function (error) {
 //         console.error("Request interceptor error:", error);
@@ -80,8 +87,8 @@ api.interceptors.response.use(
     error => {
         console.error("Response interceptor error:", error);
         if (error.response && error.response.status === 401) {
-          console.warn("Unauthorized access - redirecting to login");
-          //window.location.href = '/';
+            console.warn("Unauthorized access - redirecting to login");
+            //window.location.href = '/';
         }
         return Promise.reject(error);
     }

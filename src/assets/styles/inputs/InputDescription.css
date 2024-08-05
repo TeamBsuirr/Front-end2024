@@ -24,6 +24,8 @@ textarea#story {
 
 textarea:focus {
     outline: #1F1B16;
+    font-family: Zen Kurenaido, sans-serif;
+    font-size: 22px;
 }
 
 .attachment {

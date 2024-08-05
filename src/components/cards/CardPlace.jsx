@@ -32,8 +32,8 @@ export default function CardPlace({ objectOfPlace }) {
 
                     <ul>
                         <li>
-                            <h2>Дата основания: </h2>
-                            <span>добавить год г.</span>
+                            <h2>Дата основания:</h2>
+                            <span>{objectOfPlace.dateOfFoundation ? " " + objectOfPlace.dateOfFoundation+" г." : " год не определен"} </span>
                         </li>
                         <li>
                             <h2>Местоположение: </h2>
@@ -49,7 +49,7 @@ export default function CardPlace({ objectOfPlace }) {
                             <ButtonSubmit
                                 isColorsInverse={false}
                                 themeColor="transparent"
-                                href="/map"
+                                href={"/map#"+objectOfPlace.id}
                                 spanText='ПОСМОТРЕТЬ НА КАРТЕ'
                                 onClick={() => { 1; }}
                                 size="s" />

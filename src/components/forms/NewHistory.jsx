@@ -12,19 +12,19 @@ import Spinner from '../other/Spinner';
 
 export default function NewHistory() {
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        patronymic: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        placeOfStay: "",
-        startDateOfStay: "",
-        endDateOfStay: "",
-        fio: "",
-        phoneNumber: "",
-        email: "",
-        history: "",
-        files: []
+        "name": "",
+        "surname": "",
+        "patronymic": "",
+        "dateOfBirth": "",
+        "placeOfBirth": "",
+        "placeOfDetention": "",
+        "dateFrom": "",
+        "dateTo": "",
+        "fio": "",
+        "phoneNumber": "",
+        "email": "",
+        "history": "",
+        "files": []
     });
     const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ export default function NewHistory() {
         let isValid = true;
         console.log(formData);
         // Validate name, surname, and patronymic
-        ['firstName', 'lastName', 'patronymic'].forEach(field => {
+        ['name', 'surname', 'patronymic'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
                 isValid = false;
                 notification.error({ message: `Поле ${field} должно содержать от 1 до 100 символов` });
@@ -49,13 +49,13 @@ export default function NewHistory() {
             isValid = false;
             notification.error({ message: 'Некорректная дата рождения' });
         }
-        if (formData.startDateOfStay >= formData.endDateOfStay) {
+        if (formData.dateFrom >= formData.dateTo) {
             isValid = false;
             notification.error({ message: 'Дата начала содержания не может быть позже или равна дате окончания' });
         }
 
         // Validate place of birth and place of stay
-        ['placeOfBirth', 'placeOfStay'].forEach(field => {
+        ['placeOfBirth', 'placeOfDetention'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 200) {
                 isValid = false;
                 notification.error({ message: `Поле ${field} должно содержать от 1 до 200 символов` });
@@ -148,6 +148,8 @@ export default function NewHistory() {
         if (validateInput()) {
             // Form valid, send data to server
             console.log("Form Data:", formData);
+            console.log("Form Data Type:", typeof formData);
+
             setLoading(true);
 
             userService.postStory(formData)
@@ -193,15 +195,15 @@ export default function NewHistory() {
 
                 <div className='container-form-new-history'>
                     <div className='container-inputs-form-new-history'>
-                        <InputForm placeholder="Фамилия участника" name="lastName" id="lastName" type="text" onChange={handleInputChange} />
-                        <InputForm placeholder="Имя участника" type="text" id="firstName" name="firstName" onChange={handleInputChange} />
+                        <InputForm placeholder="Фамилия участника" name="surname" id="surname" type="text" onChange={handleInputChange} />
+                        <InputForm placeholder="Имя участника" type="text" id="name" name="name" onChange={handleInputChange} />
                         <InputForm placeholder="Отчество участника" type="text" id="patronymic" name="patronymic" onChange={handleInputChange} />
                         <InputForm placeholder="Дата рождения" type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} />
                         <InputForm placeholder="Место рождения" type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} />
-                        <InputForm placeholder="Место содержания" type="text" id="placeOfStay" name="placeOfStay" onChange={handleInputChange} />
+                        <InputForm placeholder="Место содержания" type="text" id="placeOfDetention" name="placeOfDetention" onChange={handleInputChange} />
                         <div className="date-range">
-                            <DateForm labelText="с" type="date" id="startDateOfStay" name="startDateOfStay" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
-                            <DateForm labelText="по" type="date" id="endDateOfStay" name="endDateOfStay" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                            <DateForm labelText="с" type="date" id="dateFrom" name="dateFrom" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                            <DateForm labelText="по" type="date" id="dateTo" name="dateTo" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
                         </div>
                     </div>
                     <InputDescription onFileChange={handleFileChange} onStoryChange={handleStoryChange} />
@@ -236,7 +238,6 @@ export default function NewHistory() {
                             href="none"
                             spanText='ДОБАВИТЬ МОЮ ИСТОРИЮ'
                             onClick={handleSubmit}
-
                             size />
                     </div>
 

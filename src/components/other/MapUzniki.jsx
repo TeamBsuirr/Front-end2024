@@ -1,46 +1,11 @@
 import { React, useState } from 'react';
 import '../../assets/styles/other/Map.css'
-import Image3 from '../../assets/images/Image3.jpeg'
 import PlaceMarkIcon from '../../assets/images/icons/other/star.svg'
 import closeSvg from '../../assets/images/icons/other/close.svg'
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps';
-import { Descriptions } from 'antd';
-export default function MapUzniki() {
-
-  const arrayOfPlaceMarks = [
-    {
-      placeName: "Тростенец",
-      locationDescription: "локация Тростенец",
-      description: "описание Тростенец",
-      id:1,
-      coordinates: {
-        latitude: 50.28,
-        longitude: 34.58,
-      }
-    },
-    {
-      placeName: "Озаричи",
-      id:2,
-      locationDescription: "локация Озаричи",
-      description: "описание Озаричи",
-      coordinates: {
-        latitude: 52.2749,
-        longitude: 29.1602,
-      }
-    },
-    {
-      placeName: "Минское гетто",
-      id:3,
-      locationDescription: "локация Минское гетто",
-      description: "описание Минское гетто",
-      coordinates: {
-        latitude: 53.5434,
-        longitude: 27.3233,
-      }
-    },
-  ]
-  const [activePlace, setActivePlace] = useState(null);
+export default function MapUzniki({ arrayOfPlaceMarks, passedPlace }) {
+  const [activePlace, setActivePlace] = useState(passedPlace);
 
   // Handler function for setting the active place
   const handlePlacemarkClick = (place) => {
@@ -75,17 +40,17 @@ export default function MapUzniki() {
             <Map
               width={1320}
               height={627}
-              defaultState={{ center: [53.55, 27.66], zoom: 6.5 }}
+              defaultState={{ center: passedPlace ? [passedPlace.coordinates.latitude, passedPlace.coordinates.longitude] : [53.55, 27.66], zoom: 6.5 }}
             >
-              {arrayOfPlaceMarks.map((obj, index) => (
+              {arrayOfPlaceMarks.map((obj) => (
                 <Placemark
-                  key={index}
+                  key={obj.id}
                   geometry={[obj.coordinates.latitude, obj.coordinates.longitude]}
                   options={{
                     iconLayout: 'default#image',
                     iconImageHref: PlaceMarkIcon,
-                    iconImageSize: [30, 30],
-                    iconImageOffset: [-15, -15],
+                    iconImageSize: obj.id === activePlace?.id ? [40, 40] : [30, 30],  // Increase size if active
+                    iconImageOffset: obj.id === activePlace?.id ? [-20, -20] : [-15, -15],
                   }}
                   onClick={() => handlePlacemarkClick(obj)}
                 />
@@ -99,13 +64,13 @@ export default function MapUzniki() {
 
           <div className='active-place'>
             <div className='header-active-place'>
-              <img src={closeSvg} alt="close icon" onClick={() =>  setActivePlace(null) } />
+              <img src={closeSvg} alt="close icon" onClick={() => setActivePlace(null)} />
             </div>
             <div className='container-active-place'>
 
               <div className='content-active-place'>
                 <div className='container-image-active-place'>
-                  <img src={Image3} alt="image of place" />
+                  <img src={activePlace.previewImg} alt="image of place" />
                 </div>
                 <div className='container-text-active-place'>
                   <h2>
@@ -114,11 +79,11 @@ export default function MapUzniki() {
                   <ul>
                     <li>
                       <h3>Местоположение: </h3>
-                      <span>{activePlace.coordinates.latitude}</span>
+                      <span>{activePlace.locationDescription}</span>
                     </li>
                     <li>
                       <h3>Описание: </h3>
-                      <span>текст</span>
+                      <span>{activePlace.shortDescription}</span>
                     </li>
                   </ul>
                 </div>
@@ -128,7 +93,7 @@ export default function MapUzniki() {
               <ButtonSubmit
                 isColorsInverse={true}
                 themeColor="yellow"
-                href={"/search/place/"+activePlace.id}
+                href={"/search/place/" + activePlace.id}
                 spanText='ПОДРОБНЕЕ О ЛАГЕРЕ'
                 onClick={() => { 1; }}
 

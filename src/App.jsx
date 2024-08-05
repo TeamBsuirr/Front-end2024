@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 
 
 import DefaultLayout from './layouts/DefaultLayout';
@@ -31,7 +31,9 @@ export default function App() {
   }
 
   return (
-    <RouterProvider router={router} />
+    <Suspense fallback="loading">
+      <RouterProvider router={router} />
+    </Suspense>
   );
 }
 

@@ -18,6 +18,7 @@ import SearchResultPage from '../pages/search/SearchResultPage';
 import PhotoArchivePage from '../pages/archive/photos/PhotoArchivePage';
 import PlacePage from '../pages/search/place/PlacePage';
 import Analysis from '../pages/archive/analysis/Analysis';
+import MapPage from '../pages/map/MapPage';
 
 
 export default function DefaultLayout() {
@@ -34,7 +35,7 @@ export default function DefaultLayout() {
 
                     <Route path="/story" element={<CreateStoryPage />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/map" element={<MapUzniki />} />
+                    <Route path="/map" element={<MapPage />} />
                     <Route path="/archive/photos" element={<PhotoArchivePage />} />
                     <Route path="/archive/analysis" element={<Analysis />} />
                     
