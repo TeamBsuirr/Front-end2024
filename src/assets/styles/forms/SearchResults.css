@@ -96,6 +96,11 @@
 .search-bar-search-result img {
     position: relative;
     right: 30px;
+    cursor: pointer;
+}
+
+.search-bar-search-result img:hover{
+    transform: scale(1.2);
 }
 
 .search-bar-search-result button {

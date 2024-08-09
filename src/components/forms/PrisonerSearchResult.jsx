@@ -1,13 +1,15 @@
 import { React, useEffect, useState } from 'react';
 // import '../../assets/styles/forms/SearchResults.css'
 import '../../assets/styles/forms/PrisonerSearchResult.css'
+import { useTranslation } from 'react-i18next';
 
 export default function PrisonerSearchResult({ histories, places, years }) {
 
+  const { t } = useTranslation();
   const [filteredHistories, setFilteredHistories] = useState(histories);
-  const [selectedPlace, setSelectedPlace] = useState('Все места пребывания');
-  const [selectedCalendar, setSelectedCalendar] = useState('Все года');
-  const [selectedAlphabet, setSelectedAlphabet] = useState('По алфавиту');
+  const [selectedPlace, setSelectedPlace] = useState(t('stories.filter.place'));
+  const [selectedCalendar, setSelectedCalendar] = useState(t('stories.filter.year'));
+  const [selectedAlphabet, setSelectedAlphabet] = useState(t('stories.sort.alphabetically'));
 
   useEffect(() => {
     const inputs = document.querySelectorAll('input');
@@ -27,7 +29,7 @@ export default function PrisonerSearchResult({ histories, places, years }) {
       const input = event.target.closest('.list').previousElementSibling;
       input.value = event.target.textContent;
 
-      console.log("вставить значение фильтра: ", event.target.textContent)
+      // console.log("вставить значение фильтра: ", event.target.textContent)
       if (input.name === 'sort-place') {
         console.log("вставил 1")
         setSelectedPlace(event.target.textContent);
@@ -79,24 +81,24 @@ export default function PrisonerSearchResult({ histories, places, years }) {
 
     if (type === 'sort-place') {
       setSelectedPlace(value);
-      if (value !== 'Все места пребывания') {
+      if (value !== t('stories.filter.place')) {
         updatedHistories = updatedHistories.filter(obj => obj.places.includes(value));
       }
     }
-  
+
     if (type === 'sort-calendar') {
       setSelectedCalendar(value);
-      if (value !== 'Все года') {
+      if (value !== t('stories.filter.year')) {
         updatedHistories = updatedHistories.filter(obj => obj.years.includes(value));
       }
     }
 
     if (type === 'sort-alphabet') {
-      if (value === 'По алфавиту') {
+      if (value === t('stories.sort.alphabetically')) {
         updatedHistories = updatedHistories.sort((a, b) => a.header.localeCompare(b.header));
-      } else if (value === 'С конца алфавита') {
+      } else if (value === t('stories.sort.counter-alphabetically')) {
         updatedHistories = updatedHistories.sort((a, b) => b.header.localeCompare(a.header));
-      } else if (value === 'По дате добавления') {
+      } else if (value === t('stories.sort.by-date')) {
         updatedHistories = updatedHistories.sort((a, b) => new Date(b.dateCreated) - new Date(a.dateCreated));
       }
     }
@@ -113,12 +115,12 @@ export default function PrisonerSearchResult({ histories, places, years }) {
 
           </div>
           <div className='header-of-section-prisoners'>
-            ИСТОРИИ УЧАСТНИКОВ
+            {t('stories.header')}
           </div>
         </div>
 
         <div className='container-description-prisoners'>
-          <span>Истории, собранные из каких-то источников, а также добавленные пользователями и тд текст текст текст текст текст текст текст </span>
+          <span>{t('stories.additional-text')}</span>
         </div>
 
       </section>
@@ -133,7 +135,7 @@ export default function PrisonerSearchResult({ histories, places, years }) {
                 {places.map((place, index) => (
                   <li key={index}>{place}</li>
                 ))}
-                <li>Все места пребывания</li>
+                <li>{t('stories.filter.place')}</li>
               </ul>
             </div>
             <div class="calendar">
@@ -142,15 +144,15 @@ export default function PrisonerSearchResult({ histories, places, years }) {
                 {years.map((year, index) => (
                   <li key={index}>{year}</li>
                 ))}
-                <li>Все года</li>
+                <li>{t('stories.filter.year')}</li>
               </ul>
             </div>
             <div class="alphabet">
               <input className='input-filter' type="text" name="sort-alphabet" id="sort-alphabet" value={selectedAlphabet} readonly />
               <ul class="list">
-                <li>По алфавиту</li>
-                <li>С конца алфавита</li>
-                <li>По дате добавления</li>
+                <li>{t('stories.sort.alphabetically')}</li>
+                <li>{t('stories.sort.counter-alphabetically')}</li>
+                <li>{t('stories.sort.by-date')}</li>
               </ul>
             </div>
           </div>

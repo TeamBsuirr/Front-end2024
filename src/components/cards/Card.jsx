@@ -7,8 +7,11 @@ import Image3 from '../../assets/images/Image3.jpeg'
 import Carousel from '../other/Carousel';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export default function Card({ objectOfPrisoners }) {
+    const { t } = useTranslation();
+
     const splitIndex = 73; // Количество символов в первой части строки
 
     const firstPart = objectOfPrisoners.history.description.slice(0, splitIndex);
@@ -32,17 +35,17 @@ export default function Card({ objectOfPrisoners }) {
 
                     <ul>
                         <li>
-                            <h2>Дата рождения: </h2>
+                            <h2>{t("add-story.placeholder.date-of-birth")}: </h2>
                             <span>{objectOfPrisoners.dateOfBirth} г.</span>
                         </li>
                         <li>
-                            <h2>Место рождения: </h2>
+                            <h2>{t("add-story.placeholder.place-of-birth")}: </h2>
                             <span>{objectOfPrisoners.placeOfBirth}</span>
                         </li>
                         {objectOfPrisoners.places.map((place) => (<>
 
                             <li>
-                                <h2>Место содержания: </h2>
+                                <h2>{t("add-story.placeholder.place-of-detention")}: </h2>
                                 <span>{place.place.placeName}, {place.region?.centralCity}</span>
                                 <br />
                             </li>
@@ -74,7 +77,7 @@ export default function Card({ objectOfPrisoners }) {
                     isColorsInverse={true}
                     themeColor="yellow"
                     href="/story"
-                    spanText='ХОЧУ ДОБАВИТЬ ИСТОРИЮ'
+                    spanText={t("add-story.btn.add-story")}
                     onClick={() => { 1; }}
 
                     size />
@@ -82,7 +85,7 @@ export default function Card({ objectOfPrisoners }) {
                     isColorsInverse={false}
                     themeColor="transparent"
                     href="/prisoners"
-                    spanText='ДРУГИЕ ИСТОРИИ'
+                    spanText={t("add-story.btn.other-stories")}
                     onClick={() => { 1; }}
 
                     size />

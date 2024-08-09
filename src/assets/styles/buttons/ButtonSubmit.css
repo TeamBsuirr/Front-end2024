@@ -8,6 +8,7 @@
     cursor: pointer;
     border-radius: 10px;
     transition: background-color 0.5s ease;
+    text-transform:uppercase;
 }
 
 .submit-button:hover {
@@ -26,6 +27,7 @@
     cursor: pointer;
     border-radius: 10px;
     transition: background-color 0.5s ease;
+    text-transform:uppercase;
 }
 
 .reverse-submit-button:hover {
@@ -44,6 +46,7 @@
     cursor: pointer;
     border-radius: 10px;
     transition: background-color 0.5s ease;
+    text-transform:uppercase;
 }
 
 .transparent-submit-button:hover {

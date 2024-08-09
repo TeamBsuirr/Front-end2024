@@ -7,8 +7,11 @@ import Image3 from '../../assets/images/Image3.jpeg'
 import Carousel from '../other/Carousel';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export default function CardPlace({ objectOfPlace }) {
+    const { t } = useTranslation();
+
     const splitIndex = 73; // Количество символов в первой части строки
 
     const firstPart = objectOfPlace.history.description.slice(0, splitIndex);
@@ -32,15 +35,15 @@ export default function CardPlace({ objectOfPlace }) {
 
                     <ul>
                         <li>
-                            <h2>Дата основания:</h2>
+                            <h2>{t("add-camp.placeholder.date-of-foundation")}:</h2>
                             <span>{objectOfPlace.dateOfFoundation ? " " + objectOfPlace.dateOfFoundation+" г." : " год не определен"} </span>
                         </li>
                         <li>
-                            <h2>Местоположение: </h2>
+                            <h2>{t("add-camp.placeholder.location")}: </h2>
                             <span>{objectOfPlace.region.centralCity}</span>
                         </li>
                         <li>
-                            <h2>Количество узников: </h2>
+                            <h2>{t("add-camp.placeholder.number-of-prisoners")}: </h2>
                             <span>{objectOfPlace.countDeath}</span>
                         </li>
 
@@ -50,7 +53,7 @@ export default function CardPlace({ objectOfPlace }) {
                                 isColorsInverse={false}
                                 themeColor="transparent"
                                 href={"/map#"+objectOfPlace.id}
-                                spanText='ПОСМОТРЕТЬ НА КАРТЕ'
+                                spanText={t("add-camp.btn.view-on-map")}
                                 onClick={() => { 1; }}
                                 size="s" />
                         </div>
@@ -80,7 +83,7 @@ export default function CardPlace({ objectOfPlace }) {
                     isColorsInverse={true}
                     themeColor="yellow"
                     href="/prisoners"
-                    spanText='ИСТОРИИ УЗНИКОВ'
+                    spanText={t("add-camp.btn.stories-of-prisoners")}
                     onClick={() => { 1; }}
 
                     size />

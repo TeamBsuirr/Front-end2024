@@ -4,12 +4,15 @@ import PlaceMarkIcon from '../../assets/images/icons/other/star.svg'
 import closeSvg from '../../assets/images/icons/other/close.svg'
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps';
+import { useTranslation } from 'react-i18next';
+
 export default function MapUzniki({ arrayOfPlaceMarks, passedPlace }) {
+  const { t } = useTranslation();
   const [activePlace, setActivePlace] = useState(passedPlace);
 
   // Handler function for setting the active place
   const handlePlacemarkClick = (place) => {
-    console.log('Place clicked:', place);
+    //console.log('Place clicked:', place);
     setActivePlace(place);
   };
 
@@ -22,13 +25,12 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace }) {
 
           </div>
           <div className='header-of-section-prisoners'>
-            МЕСТА ГЕНОЦИДА НА КАРТЕ РЕСПУБЛИКИ БЕЛАРУСЬ
-
+            {t('map.header')}
           </div>
         </div>
 
         <div className='container-description-map'>
-          <span>Места Боли отмечены маркерами на карте Республики Беларусь. Нажмите на метку для просмотра информации о концлагере и списке узников.</span>
+          <span>{t('map.additional-text')}</span>
         </div>
 
       </section>
@@ -78,11 +80,11 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace }) {
                   </h2>
                   <ul>
                     <li>
-                      <h3>Местоположение: </h3>
+                      <h3>{t('map.card.location')}: </h3>
                       <span>{activePlace.locationDescription}</span>
                     </li>
                     <li>
-                      <h3>Описание: </h3>
+                      <h3>{t('map.card.description')}: </h3>
                       <span>{activePlace.shortDescription}</span>
                     </li>
                   </ul>
@@ -94,9 +96,8 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace }) {
                 isColorsInverse={true}
                 themeColor="yellow"
                 href={"/search/place/" + activePlace.id}
-                spanText='ПОДРОБНЕЕ О ЛАГЕРЕ'
+                spanText={t("map.card.btn")}
                 onClick={() => { 1; }}
-
                 size />
             </div>
           </div>

@@ -4,8 +4,10 @@ import '../../assets/styles/layout/FooterLayout.css'
 import PartnersList from '../other/PartnersList';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import SiteMainHeaderSpan from '../other/SiteMainHeaderSpan';
+import { useTranslation } from 'react-i18next';
 
 export default function FooterLayout() {
+    const { t } = useTranslation();
 
     return (
         <footer className='footer-container-layout'>
@@ -14,13 +16,13 @@ export default function FooterLayout() {
                 <div>
                     <SiteMainHeaderSpan size="lg" />
 
-                    <a href="/about" className="link">О проекте</a>
-                    <a href="/contacts" className="link">Контакты</a>
+                    <a href="/about" className="link">{t('ref.about-project')}</a>
+                    <a href="/contacts" className="link">{t('ref.contacts')}</a>
                 </div>
 
                 <div>
                     <div className="button-footer-container">
-                        <ButtonSubmit isColorsInverse={false} themeColor="yellow" href="/story" spanText="ХОЧУ ДОБАВИТЬ ИСТОРИЮ" size="md" />
+                        <ButtonSubmit isColorsInverse={false} themeColor="yellow" href="/story" spanText={t("add-story.btn.add-story")} size="md" />
                     </div>
                 </div>
 
@@ -31,8 +33,8 @@ export default function FooterLayout() {
 
             <div className='bottom-footer-container-layout'>
                 {/* BOTTOM PART */}
-                <span className="footer-project-name">Ⓒ Узники Беларуси, 2024</span>
-                <span className="footer-policy-info">Политика конфиденциальности</span>
+                <span className="footer-project-name">{t('copyright')}</span>
+                <span className="footer-policy-info">{t('privacy-policy')}</span>
             </div>
         </footer>
     )

@@ -1,8 +1,10 @@
 import { React } from 'react';
 import '../../assets/styles/inputs/InputDescription.css'
+import { useTranslation } from 'react-i18next';
 
 
 export default function InputDescription({ onFileChange, onStoryChange }) {
+    const { t } = useTranslation();
 
     return (
         <div class="story">
@@ -14,7 +16,7 @@ export default function InputDescription({ onFileChange, onStoryChange }) {
                 <label htmlFor="document" className="input-file"></label>
                 <input type="file" name="document" id="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar" onChange={onFileChange} multiple />
             </div>
-            <textarea name="story" id="story" placeholder="Пожалуйста, напишите Вашу историю..." onChange={onStoryChange}></textarea>
+            <textarea name="story" id="story" placeholder={t("add-story.placeholder.story-text")} onChange={onStoryChange}></textarea>
 
         </div>
     )

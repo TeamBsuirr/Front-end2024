@@ -1,13 +1,16 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../../assets/styles/layout/HeaderLanding.css'
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 export default function HeaderLanding() {
 
     const [menuVisible, setMenuVisible] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState('russian');
+    const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'ru');
     const [isHovered, setIsHovered] = useState(false);
-
+    const { t } = useTranslation();
+    
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
     };
@@ -17,16 +20,21 @@ export default function HeaderLanding() {
         setMenuVisible(false); // Закрыть меню после выбора
     };
 
+    useEffect(() => {
+        i18next.changeLanguage(selectedLanguage);
+        localStorage.setItem('language', selectedLanguage);
+    }, [selectedLanguage]);
+
     return (
 
         <header className='header'>
             <div className="header-container">
                 <div className="links">
                     <a href="/about" className="link">
-                        О проекте
+                        {t('ref.about-project')}
                     </a>
                     <a href="/contacts" className="link">
-                        Контакты
+                        {t('ref.contacts')}
                     </a>
                 </div>
                 <div className="globus-button"
@@ -89,20 +97,20 @@ export default function HeaderLanding() {
                     <div className="language-menu">
                         <ul>
                             <li
-                                className={selectedLanguage === 'russian' ? 'active' : ''}
-                                onClick={() => handleLanguageSelect('russian')}
+                                className={selectedLanguage === 'ru' ? 'active' : ''}
+                                onClick={() => handleLanguageSelect('ru')}
                             >
                                 Русский
                             </li>
                             <li
-                                className={selectedLanguage === 'belorussian' ? 'active' : ''}
-                                onClick={() => handleLanguageSelect('belorussian')}
+                                className={selectedLanguage === 'be' ? 'active' : ''}
+                                onClick={() => handleLanguageSelect('be')}
                             >
                                 Белорусский
                             </li>
                             <li
-                                className={selectedLanguage === 'deutsch' ? 'active' : ''}
-                                onClick={() => handleLanguageSelect('deutsch')}
+                                className={selectedLanguage === 'de' ? 'active' : ''}
+                                onClick={() => handleLanguageSelect('de')}
                             >
                                 Deutsch
                             </li>

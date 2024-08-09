@@ -1,9 +1,9 @@
-import { React } from 'react';
+import { React, Suspense, useEffect } from 'react';
 import '../assets/styles/layout/DefaultLayout.css'
 import CreateStoryPage from '../pages/story/CreateStoryPage';
 import HeaderLayout from '../components/layout/HeaderLayout';
 import FooterLayout from '../components/layout/FooterLayout';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import About from '../pages/about/About';
 import Contact from '../pages/contact/Contact';
 import SearchResults from '../components/forms/SearchResults';
@@ -19,40 +19,78 @@ import PhotoArchivePage from '../pages/archive/photos/PhotoArchivePage';
 import PlacePage from '../pages/search/place/PlacePage';
 import Analysis from '../pages/archive/analysis/Analysis';
 import MapPage from '../pages/map/MapPage';
+import i18n from '../i18n';
 
+const useLanguage = () => {
+    const { lang } = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (lang) {
+            i18n.changeLanguage(lang);
+            localStorage.setItem('language', lang);
+
+            // Получаем текущий путь, параметры запроса и хэш
+            const currentPath = window.location.pathname;
+            const searchParams = window.location.search;
+            const hashParams = window.location.hash;
+
+            // Проверяем, если текущий путь уже содержит языковой префикс
+            const pathWithoutLang = currentPath.replace(/^\/(ru|de|be)/, ''); // можно расширить список языков по необходимости
+            const newPath = `/${lang}${pathWithoutLang}${searchParams}${hashParams}`;
+
+            // Переходим на новый путь, если он отличается от текущего
+            if (newPath !== `${currentPath}${searchParams}${hashParams}`) {
+                navigate(newPath, { replace: true });
+            }
+        } else {
+            // Если lang не задан, перенаправляем на язык по умолчанию
+            const defaultLang = localStorage.getItem('language') || 'ru';
+
+            // Получаем текущий путь, параметры запроса и хэш
+            const currentPath = window.location.pathname;
+            const searchParams = window.location.search;
+            const hashParams = window.location.hash;
+
+            // Проверяем, если текущий путь уже содержит языковой префикс
+            const pathWithoutLang = currentPath.replace(/^\/(ru|de|be)/, ''); // можно расширить список языков по необходимости
+            const newPath = `/${defaultLang}${pathWithoutLang}${searchParams}${hashParams}`;
+
+            // Переходим на новый путь, если он отличается от текущего
+            if (newPath !== `${currentPath}${searchParams}${hashParams}`) {
+                navigate(newPath, { replace: true });
+            }
+        }
+    }, [lang, navigate]);
+
+    return lang;
+};
 
 export default function DefaultLayout() {
+    useLanguage();
 
-    
     return (
         <>
             <HeaderLayout />
-            <main className='main-layout'>
-
-                <Routes>
-
-                    {/* {workingUser && <Route path="profile" element={<ProfileTemplate />} />} */}
-
-                    <Route path="/story" element={<CreateStoryPage />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/map" element={<MapPage />} />
-                    <Route path="/archive/photos" element={<PhotoArchivePage />} />
-                    <Route path="/archive/analysis" element={<Analysis />} />
-                    
-                    <Route path="/contacts" element={<Contact />} />
-                    <Route path="/search" element={<SearchResultPage />} />
-                    <Route path="/prisoners" element={<PrisonerStories />} />
-                    <Route path="/search/prisoner/*" element={<PrisonerPage />} />
-                    <Route path="/search/place/*" element={<PlacePage />} />
-                    <Route path="/login" element={<AdminLogin />} /> {/* ВРЕМЕННО */}
-                    <Route path="*" element={<PageTemplate />} /> {/* Маршрут для неопределенных страниц */}
-                </Routes>
-
-
-            </main >
+            <Suspense fallback="loading">
+                <main className='main-layout'>
+                    <Routes>
+                        <Route path="/:lang/story" element={<CreateStoryPage />} />
+                        <Route path="/:lang/about" element={<About />} />
+                        <Route path="/:lang/map" element={<MapPage />} />
+                        <Route path="/:lang/archive/photos" element={<PhotoArchivePage />} />
+                        <Route path="/:lang/archive/analysis" element={<Analysis />} />
+                        <Route path="/:lang/contacts" element={<Contact />} />
+                        <Route path="/:lang/search" element={<SearchResultPage />} />
+                        <Route path="/:lang/prisoners" element={<PrisonerStories />} />
+                        <Route path="/:lang/search/prisoner/*" element={<PrisonerPage />} />
+                        <Route path="/:lang/search/place/*" element={<PlacePage />} />
+                        <Route path="/:lang/login" element={<AdminLogin />} />
+                        <Route path="*" element={<PageTemplate />} />
+                    </Routes>
+                </main>
+            </Suspense>
             <FooterLayout />
-
-
         </>
-    )
+    );
 }

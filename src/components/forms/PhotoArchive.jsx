@@ -1,8 +1,11 @@
 import { React, useState } from 'react';
 import '../../assets/styles/forms/PhotoArchive.css'
 import Image4 from '../../assets/images/Image4.jpeg'
+import { useTranslation } from 'react-i18next';
 
 export default function PhotoArchive({arrayOfPhotoObjects}) {
+    
+    const { t } = useTranslation();
     const [selectedObject, setSelectedObject] = useState(null);
 
 
@@ -26,12 +29,12 @@ export default function PhotoArchive({arrayOfPhotoObjects}) {
 
                     </div>
                     <div className='header-of-section-prisoners'>
-                        ФОТОАРХИВ
+                    {t('photo-archive.header')}
                     </div>
                 </div>
 
-                <div className='container-description-archive'>
-                    <span>Архив фотографий из концлагерей на территории Республики Беларусь</span>
+                <div className='container-description-prisoners'>
+                    <span>{t('photo-archive.additional-text')}</span>
                 </div>
 
             </section>

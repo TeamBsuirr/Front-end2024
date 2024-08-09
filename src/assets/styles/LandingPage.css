@@ -232,6 +232,7 @@ html {
   border: 2px solid #1F1B16;
   font-size: 28px;
   color: #1F1B16;
+  text-transform: uppercase;
   border-radius: 5px;
   margin-right: 20px;
   cursor: pointer;

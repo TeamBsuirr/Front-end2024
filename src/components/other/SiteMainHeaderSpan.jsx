@@ -1,8 +1,11 @@
 import React from 'react';
 import '../../assets/styles/other/SiteMainHeaderSpan.css'
+import { useTranslation } from 'react-i18next';
 
 
 export default function SiteMainHeaderSpan({ size }) {
+    const { t } = useTranslation();
+
     let styleClassL = "low-header-span-md";
     let styleClassB = "low-header-span-md";
     switch (size) {
@@ -21,8 +24,8 @@ export default function SiteMainHeaderSpan({ size }) {
 
     return (
         <>
-            <span className={styleClassB}>УЗНИКИ БЕЛАРУСИ</span>
-            <span className={styleClassL}>геноцид Белорусского народа</span>
+            <span className={styleClassB}>{t('logo.prisoners')}</span>
+            <span className={styleClassL}>{t('logo.additional-text')}</span>
         </>
     )
 }

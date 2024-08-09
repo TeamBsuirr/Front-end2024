@@ -8,9 +8,12 @@ import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
 import userService from '../../api/services/userService';
 import Spinner from '../other/Spinner';
+import { useTranslation } from 'react-i18next';
 
 
 export default function NewHistory() {
+    const { t } = useTranslation();
+
     const [formData, setFormData] = useState({
         "name": "",
         "surname": "",
@@ -35,11 +38,12 @@ export default function NewHistory() {
         ['name', 'surname', 'patronymic'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
                 isValid = false;
-                notification.error({ message: `Поле ${field} должно содержать от 1 до 100 символов` });
+
+                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.symbol-length') });
             }
             if (/["'<>]/.test(formData[field])) {
                 isValid = false;
-                notification.error({ message: `Поле ${field} содержит недопустимые символы` });
+                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.incorrect-symbols') });
             }
         });
 
@@ -47,47 +51,47 @@ export default function NewHistory() {
         const today = new Date().toISOString().split('T')[0];
         if (!formData.dateOfBirth || formData.dateOfBirth >= today) {
             isValid = false;
-            notification.error({ message: 'Некорректная дата рождения' });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
         }
         if (formData.dateFrom >= formData.dateTo) {
             isValid = false;
-            notification.error({ message: 'Дата начала содержания не может быть позже или равна дате окончания' });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-dot') });
         }
 
         // Validate place of birth and place of stay
         ['placeOfBirth', 'placeOfDetention'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 200) {
                 isValid = false;
-                notification.error({ message: `Поле ${field} должно содержать от 1 до 200 символов` });
+                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.symbol-length-place') });
             }
             if (/["'<>]/.test(formData[field])) {
                 isValid = false;
-                notification.error({ message: `Поле ${field} содержит недопустимые символы` });
+                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.incorrect-symbols') });
             }
         });
 
         // Validate history
         if (!formData.history || formData.history.length < 1 || formData.history.length > 1000) {
             isValid = false;
-            notification.error({ message: 'Поле история должно содержать от 1 до 1000 символов' });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-length-story') });
         }
         if (/["'<>]/.test(formData.history)) {
             isValid = false;
-            notification.error({ message: 'Поле история содержит недопустимые символы' });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-symbols-story') });
         }
 
         // Validate phone number
         const phoneRegex = /^\+375 \(\d{2}\) \d{3} - \d{2} - \d{2}$/;
         if (!formData.phoneNumber || !phoneRegex.test(formData.phoneNumber)) {
             isValid = false;
-            notification.error({ message: 'Некорректный формат телефона' });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-phone') });
         }
 
         // Validate email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!formData.email || !emailRegex.test(formData.email)) {
             isValid = false;
-            notification.error({ message: 'Некорректный email' });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-email') });
         }
 
         // Validate files
@@ -105,15 +109,15 @@ export default function NewHistory() {
             const fileType = file.type;
             if (disallowedTypes.includes(fileType)) {
                 isValid = false;
-                notification.error({ message: 'Файл типа ' + fileType + ' не разрешен для загрузки' });
+                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
             }
             if (!allowedImageTypes.includes(fileType) && !allowedVideoTypes.includes(fileType) && !allowedDocumentTypes.includes(fileType)) {
                 isValid = false;
-                notification.error({ message: 'Файл типа ' + fileType + ' не разрешен для загрузки' });
+                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
             }
             if (file.size > 5 * 1024 * 1024) { // 5 MB
                 isValid = false;
-                notification.error({ message: 'Размер файла не должен превышать 5 МБ' });
+                notification.error({ message: t('errors.front-end.add-story.incorrect-file-size') });
             }
         });
 
@@ -147,34 +151,28 @@ export default function NewHistory() {
     const handleSubmit = () => {
         if (validateInput()) {
             // Form valid, send data to server
-            console.log("Form Data:", formData);
-            console.log("Form Data Type:", typeof formData);
+            // console.log("Form Data:", formData);
+            // console.log("Form Data Type:", typeof formData);
 
             setLoading(true);
 
             userService.postStory(formData)
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
                     setLoading(false);
-                    notification.success({ message: 'История успешно добавлена' });
+                    notification.success({ message: t('errors.front-end.add-story.success') });
+
                 })
                 .catch(error => {
-                    console.error('Ошибка получения результатов:', error);
+                    // console.error('Ошибка получения результатов:', error);
                     let errMsg = error.message ? error.message : error;
                     notification.error({
-                        message: 'Ошибка получения результатов',
-                        description: 'Ошибка получения данных узников и концлагерей с сервера: ' + errMsg
+                        message: t('errors.front-end.add-story.error-receive'),
+                        description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
                     });
+
                     setLoading(false);
                 });
-
-            // axios.post('/your-endpoint', formData)
-            //     .then(response => {
-            //         notification.success({ message: 'История успешно добавлена' });
-            //     })
-            //     .catch(error => {
-            //         notification.error({ message: 'Ошибка при отправке данных' });
-            //     });
         }
     };
 
@@ -189,21 +187,21 @@ export default function NewHistory() {
 
                 <div className='header-container-new-history'>
                     <h1 className='header-of-section'>
-                        ДОБАВИТЬ ИСТОРИЮ
+                        {t("add-story.header")}
                     </h1>
                 </div>
 
                 <div className='container-form-new-history'>
                     <div className='container-inputs-form-new-history'>
-                        <InputForm placeholder="Фамилия участника" name="surname" id="surname" type="text" onChange={handleInputChange} />
-                        <InputForm placeholder="Имя участника" type="text" id="name" name="name" onChange={handleInputChange} />
-                        <InputForm placeholder="Отчество участника" type="text" id="patronymic" name="patronymic" onChange={handleInputChange} />
-                        <InputForm placeholder="Дата рождения" type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} />
-                        <InputForm placeholder="Место рождения" type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} />
-                        <InputForm placeholder="Место содержания" type="text" id="placeOfDetention" name="placeOfDetention" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.surname")} name="surname" id="surname" type="text" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.name")} type="text" id="name" name="name" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.patronymic")} type="text" id="patronymic" name="patronymic" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.place-of-birth")} type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.place-of-detention")} type="text" id="placeOfDetention" name="placeOfDetention" onChange={handleInputChange} />
                         <div className="date-range">
-                            <DateForm labelText="с" type="date" id="dateFrom" name="dateFrom" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
-                            <DateForm labelText="по" type="date" id="dateTo" name="dateTo" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                            <DateForm labelText={t("add-story.placeholder.date-from")} type="date" id="dateFrom" name="dateFrom" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                            <DateForm labelText={t("add-story.placeholder.date-to")} type="date" id="dateTo" name="dateTo" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
                         </div>
                     </div>
                     <InputDescription onFileChange={handleFileChange} onStoryChange={handleStoryChange} />
@@ -216,18 +214,19 @@ export default function NewHistory() {
             <section className='section-register-new-history'>
                 <div className='container-register-header-new-history'>
                     <div>
-                        <h2>КОНТАКТНЫЕ ДАННЫЕ</h2>
+                        <h2>{t("add-story.header-personal-data")}</h2>
                     </div>
                     <div style={{ marginTop: -35, }}>
-                        <span>Укажите свои личные данные, чтобы добавить историю</span>
+                        <span>{t("add-story.header-description-personal-data")}</span>
                     </div>
 
 
                 </div>
                 <div className='container-register-form-new-history'>
                     <div className='container-register-form-inputs-new-history'>
-                        <InputForm placeholder="ФИО" type="text" name="fio" onChange={handleInputChange} />
-                        <InputForm placeholder="Телефон" type="tel" name="phoneNumber" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.your-name")} 
+                        type="text" name="fio" onChange={handleInputChange} />
+                        <InputForm placeholder={t("add-story.placeholder.phone")} type="tel" name="phoneNumber" onChange={handleInputChange} />
                         <InputForm placeholder="Email" type="email" name="email" onChange={handleInputChange} />
                     </div>
 
@@ -236,7 +235,7 @@ export default function NewHistory() {
                             isColorsInverse={true}
                             themeColor="yellow"
                             href="none"
-                            spanText='ДОБАВИТЬ МОЮ ИСТОРИЮ'
+                            spanText={t("add-story.btn.add-my-story")}
                             onClick={handleSubmit}
                             size />
                     </div>

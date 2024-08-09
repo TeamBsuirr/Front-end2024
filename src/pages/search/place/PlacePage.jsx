@@ -7,9 +7,11 @@ import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
 import placeService from '../../../api/services/placeService';
 import CardPlace from '../../../components/cards/CardPlace';
+import { useTranslation } from 'react-i18next';
 
 
 export default function PlacePage() {
+    const { t } = useTranslation();
     const [objectOfPlace, setobjectOfPlace] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -27,13 +29,12 @@ export default function PlacePage() {
 
             })
             .catch(error => {
-                console.error('Ошибка получения данных концлагеря:', error);
+                //console.error('Ошибка получения данных концлагеря:', error);
 
                 let errMsg = error.message ? error.message : error;
-
                 notification.error({
-                    message: 'Ошибка получения данных концлагеря',
-                    description: 'Ошибка получения данных с сервера: ' + errMsg
+                    message: t('errors.front-end.fetch.msg-place'),
+                    description: t('errors.front-end.fetch.description') + errMsg
                 });
 
                 setLoading(false);

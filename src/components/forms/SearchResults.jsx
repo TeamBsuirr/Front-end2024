@@ -1,14 +1,14 @@
 import { React, useEffect, useState } from 'react';
 import '../../assets/styles/forms/SearchResults.css'
 import '../../assets/styles/forms/PrisonerSearchResult.css'
-
-
 import xIcon from '../../assets/vectors/x-icon.svg';
 import { notification } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export default function SearchResults({ arrayFoundObjects }) {
+    const { t } = useTranslation();
     const [searchInputValue, setSearchInputValue] = useState("");
-    const [selectedFilter, setSelectedFilter] = useState('Показать всё');
+    const [selectedFilter, setSelectedFilter] = useState(t('search.parameters.show-all'));
     const [filteredObjects, setFilteredObjects] = useState(arrayFoundObjects);
 
     function clickGlobalSearchButton() {
@@ -16,8 +16,19 @@ export default function SearchResults({ arrayFoundObjects }) {
             window.location.href = `/search?searchFor=${searchInputValue}`;
         } else {
             notification.warning({
-                message: 'Пустое поле поиска!',
-                description: 'Пожалуйста, введите поисковой запрос в соответсвующее поле.'
+                message: t('erros.front-end.empty-search-field'),
+                description: t('erros.front-end.empty-search-field-description'),
+            })
+        }
+    }
+
+    function clickDeleteInputBtn() {
+        if (searchInputValue !== "") {
+            setSearchInputValue("");
+        } else {
+            notification.warning({
+                message: t('erros.front-end.empty-search-field'),
+                description: t('erros.front-end.empty-search-field-description'),
             })
         }
     }
@@ -77,11 +88,11 @@ export default function SearchResults({ arrayFoundObjects }) {
     }, []);
 
     const filterHistories = (value) => {
-        if (value === 'Показать всё') {
+        if (value === t('search.parameters.show-all')) {
             setFilteredObjects(arrayFoundObjects);
-        } else if (value === 'Концлагеря') {
+        } else if (value === t('search.parameters.places')) {
             setFilteredObjects(arrayFoundObjects.filter(obj => obj.type === 'places'));
-        } else if (value === 'Узники') {
+        } else if (value === t('search.parameters.prisoners')) {
             setFilteredObjects(arrayFoundObjects.filter(obj => obj.type === 'humans'));
         }
     };
@@ -93,11 +104,10 @@ export default function SearchResults({ arrayFoundObjects }) {
                 <div className='header-container-search-result'>
 
                     <h2 className='span-of-section'>
-                        Главная
+                        {t('ref.main')}
                     </h2>
                     <h1 className='header-of-section'>
-
-                        ПОИСК
+                        {t('search.header')}
                     </h1>
                 </div>
 
@@ -105,13 +115,14 @@ export default function SearchResults({ arrayFoundObjects }) {
 
                 <div className='container-form-search-result'>
                     <div className="search-bar-search-result">
-                        <input type="text" placeholder="ФИО, концлагерь..."
+                        <input type="text" placeholder={t('search.placeholder')}
                             value={searchInputValue}
                             onChange={(event) => {
                                 setSearchInputValue(event.target.value);
                             }}
                         />
-                        <img src={xIcon} alt="X-ICON" />
+                        <img src={xIcon} alt="X-ICON"
+                            onClick={clickDeleteInputBtn} />
 
                         <button onClick={clickGlobalSearchButton}>
                             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -124,14 +135,14 @@ export default function SearchResults({ arrayFoundObjects }) {
                 </div>
 
                 <div className='container-result-search-result'>
-                    <span>Найдено результатов: {filteredObjects.length}</span>
+                    <span>{t('search.number-of-results')} {filteredObjects.length}</span>
 
                     <div className='container-result-search-result-for-filter'>
                         <input className='input-filter' type="text" name="sort-arrayFoundObjects" id="sort-arrayFoundObjects" value={selectedFilter} readonly />
                         <ul class="list">
-                            <li>Показать всё</li>
-                            <li>Концлагеря</li>
-                            <li>Узники</li>
+                            <li>{t('search.parameters.show-all')}</li>
+                            <li>{t('search.parameters.places')}</li>
+                            <li>{t('search.parameters.prisoners')}</li>
                         </ul>
                     </div>
                 </div>

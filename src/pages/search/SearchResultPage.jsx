@@ -5,12 +5,13 @@ import Spinner from '../../components/other/Spinner';
 import searchService from '../../api/services/searchService';
 import SearchResults from '../../components/forms/SearchResults';
 import PageTemplate from '../../components/other/PageTemplate';
-import { GetURLParameter } from '../../js/common/clickFunctions';
 import { notification } from 'antd';
 import NotFound from '../../components/layout/NotFound';
+import { useTranslation } from 'react-i18next';
 
 
 export default function SearchResultPage() {
+    const { t } = useTranslation();
     const [humans, setHumans] = useState(null);
     const [places, setPlaces] = useState(null);
     const [arrayFoundObjects, setArrayFoundObjects] = useState([]);
@@ -29,11 +30,12 @@ export default function SearchResultPage() {
             setSearchString(urlParams.get('searchFor'))
             urlParamsString=urlParams.get('searchFor');
         } else {
-            console.error('Ошибка получения результатов. Поиск пустой!');
+            //console.error('Ошибка получения результатов. Поиск пустой!');
             notification.error({
-                message: 'Ошибка получения результатов. Поиск пустой!',
-                description: 'Ошибка получения данных узников и концлагерей: введите поиск с главной страницы, вы не передаете никаких данных для поиска.'
+                message: t('errors.front-end.empty-main-search-field'),
+                description: t('errors.front-end.empty-main-search-field-description')
             });
+
             setLoading(false);
         }
 

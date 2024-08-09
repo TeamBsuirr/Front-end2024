@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react';
 
 import '../../assets/styles/other/Carousel.css'
+import { useTranslation } from 'react-i18next';
 
 const Carousel = ({ images }) => {
+    const { t } = useTranslation();
+
     const carouselRef = useRef(null);
     let isDragging = false;
     let startX;
@@ -59,7 +62,7 @@ return (
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
     >
-        <h4>Материалы к истории</h4>
+        <h4>{t('materials')}</h4>
         <div className="carousel" ref={carouselRef}>
             {images.map((image, index) => (
                 <div className="carousel-item" key={index}>

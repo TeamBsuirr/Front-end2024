@@ -3,15 +3,14 @@ import '../../assets/styles/layout/NotFound.css'
 import { Link } from 'react-router-dom';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import PageTemplate from '../other/PageTemplate';
+import { useTranslation } from 'react-i18next';
 
-class NotFound extends Component {
-    render() {
-        return (
+export default function NotFound(){
+    const { t } = useTranslation();
 
-            <PageTemplate content={"404 Ошибка: ресурс или страница не найдены"}/>
+    return (
 
-        );
-    }
+        <PageTemplate content={t('errors.front-end.404-error')} />
+
+    );
 }
-
-export default NotFound;

@@ -8,9 +8,11 @@ import humanService from '../../../api/services/humanService';
 import PhotoArchive from '../../../components/forms/PhotoArchive';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
+import { useTranslation } from 'react-i18next';
 
 
 export default function PhotoArchivePage() {
+    const { t } = useTranslation();
     const [arrayOfPhotoObjects, setArrayOfPhotoObjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -25,13 +27,13 @@ export default function PhotoArchivePage() {
 
             })
             .catch(error => {
-                console.error('Ошибка получения данных фотоархива:', error);
+                //console.error( error);
 
                 let errMsg = error.message ? error.message : error;
                 
                 notification.error({
-                    message: 'Ошибка получения данных фотоархива',
-                    description: 'Ошибка получения данных с сервера: ' + errMsg
+                    message: t('errors.front-end.fetch.msg-photo-a'),
+                    description: t('errors.front-end.fetch.description') + errMsg
                 });
                 
                 setLoading(false);

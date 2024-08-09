@@ -5,9 +5,11 @@ import { notification } from 'antd';
 import NotFound from '../../components/layout/NotFound';
 import placeService from '../../api/services/placeService';
 import MapUzniki from '../../components/other/MapUzniki';
+import { useTranslation } from 'react-i18next';
 
 
 export default function MapPage() {
+    const { t } = useTranslation();
     const [arrayOfPlaces, setArrayOfPlaces] = useState(null);
     const [loading, setLoading] = useState(true);
     const [passedPlace,setPassedPlace]=useState(null);
@@ -31,13 +33,13 @@ export default function MapPage() {
 
             })
             .catch(error => {
-                console.error('Ошибка получения данных концлагерей:', error);
+                //console.error('Ошибка получения данных концлагерей:', error);
 
                 let errMsg = error.message ? error.message : error;
 
                 notification.error({
-                    message: 'Ошибка получения данных концлагерей',
-                    description: 'Ошибка получения данных с сервера: ' + errMsg
+                    message: t('errors.front-end.fetch.msg-places'),
+                    description: t('errors.front-end.fetch.description') + errMsg
                 });
 
                 setLoading(false);

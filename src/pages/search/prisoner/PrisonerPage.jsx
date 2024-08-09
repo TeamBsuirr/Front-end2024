@@ -7,9 +7,11 @@ import Card from '../../../components/cards/Card';
 import humanService from '../../../api/services/humanService';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
+import { useTranslation } from 'react-i18next';
 
 
 export default function PrisonerPage() {
+    const { t } = useTranslation();
     const [objectOfPrisoners, setObjectOfPrisoners] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -27,13 +29,13 @@ export default function PrisonerPage() {
 
             })
             .catch(error => {
-                console.error('Ошибка получения данных узника:', error);
+                // console.error('Ошибка получения данных узника:', error);
 
                 let errMsg = error.message ? error.message : error;
 
                 notification.error({
-                    message: 'Ошибка получения данных узника',
-                    description: 'Ошибка получения данных с сервера: ' + errMsg
+                    message: t('errors.front-end.fetch.msg-prisoner'),
+                    description: t('errors.front-end.fetch.description') + errMsg
                 });
 
                 setLoading(false);

@@ -12,7 +12,7 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
     // Регулярное выражение для разрешения букв всех указанных языков и пробелов
     const regex = /^[\p{L}\s]*$/u;
     const value = e.target.value;
-    
+
     if (regex.test(value) || value === '') {
       onChange(e);
     } else {
@@ -51,7 +51,7 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
 
     <input className="input-form" id={id}
       name={name} type={type} placeholder={placeholder}
-      
+
       onChange={type === 'text' ? handleTextInputChange : handleInputChange}
     />
   )

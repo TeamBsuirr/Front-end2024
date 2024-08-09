@@ -7,9 +7,11 @@ import humanService from '../../api/services/humanService';
 import Spinner from '../../components/other/Spinner';
 import NotFound from '../../components/layout/NotFound';
 import { notification } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 
 export default function PrisonerStories() {
+    const { t } = useTranslation();
     const [histories, setHistoies] = useState([]);
     const [places, setPlaces] = useState([]);
     const [years, setYears] = useState([]);
@@ -29,13 +31,13 @@ export default function PrisonerStories() {
 
             })
             .catch(error => {
-                console.error('Ошибка получения данных историй участников:', error);
+                //console.error('Ошибка получения данных историй участников:', error);
 
                 let errMsg = error.message ? error.message : error;
 
                 notification.error({
-                    message: 'Ошибка получения данных историй участников',
-                    description: 'Ошибка получения данных с сервера: ' + errMsg
+                    message: t('errors.front-end.fetch.msg-prisoners'),
+                    description: t('errors.front-end.fetch.description') + errMsg
                 });
 
                 setLoading(false);
