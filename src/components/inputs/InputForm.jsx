@@ -5,7 +5,7 @@ import InputMask from 'react-input-mask';
 import '../../assets/styles/inputs/InputForm.css'
 
 
-export default function InputForm({ placeholder, type, name, id, min = null, max = null, onChange }) {
+export default function InputForm({ placeholder, type, name, id, min = null, max = null, onChange, value = null }) {
 
   // Обработчик для text input, который фильтрует вводимые символы
   const handleTextInputChange = (e) => {
@@ -26,6 +26,7 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
   const handleInputChange = (e) => {
     onChange(e);
   };
+
 
   if (type === "coordinates") {
     return <input className="input-form-coordinates" id={id}
@@ -58,8 +59,8 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
 
     <input className="input-form" id={id}
       name={name} type={type} placeholder={placeholder}
-
-      onChange={type === 'text' ? handleTextInputChange : handleInputChange}
+      value = { value }
+      onChange={type === 'text' ? (value === null) ? handleTextInputChange : handleInputChange : handleInputChange}
     />
   )
 }

@@ -27,10 +27,40 @@
       text-align: center;
       color: #1F1B16;
     }
-    
+
     .input-form-coordinates:focus {
       outline: #1F1B16;
     }
+
+
+
+    .input-form-photo {
+      width: 100%;
+      height: 40px;
+      padding: 0 0 7px;
+      border-radius: 5px;
+      border: 1px solid #1F1B16;
+      background: transparent;
+      font-family: "Zen Kurenaido", sans-serif;
+      font-size: 22px;
+      text-align: center;
+      color: #1F1B16;
+      display: flex !important;
+      background-image: url('../../images/icons/story/img-black.svg');
+      background-position: 30% 51%;
+      background-repeat: no-repeat;
+    }
+
+    .input-form-photo::before {
+      text-align: center;
+      opacity: 65%;
+    }
+
+    .input-form-photo::file-selector-button {
+      display: none;
+      font-display: none;
+    }
+
 
     *,
     *:before,

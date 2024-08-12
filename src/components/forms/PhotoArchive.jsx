@@ -3,6 +3,7 @@ import '../../assets/styles/forms/PhotoArchive.css'
 import Image4 from '../../assets/images/Image4.jpeg'
 import { useTranslation } from 'react-i18next';
 import ButtomAdmin from '../buttons/ButtonAdmin';
+import HeaderSection from '../other/HeaderSection';
 
 export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
 
@@ -24,16 +25,9 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
     return (
         <div className='section-search-result'>
             <section className='section-form-search-result'>
-
-                <div className='header-container-search-result-prisoners'>
-                    <div className='span-of-section-prisoners'>
-
-                    </div>
-                    <h1 className='header-of-section-prisoners'>
-                        {t('photo-archive.header')}
-                    </h1>
-                </div>
-
+                <HeaderSection
+                    textFirst={t('photo-archive.header')}
+                />
                 {!isAdmin ?
                     <>
                         <div className='container-description-map-admin'>

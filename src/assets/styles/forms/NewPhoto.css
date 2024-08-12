@@ -42,6 +42,14 @@
     gap: 22px;
 }
 
+.container-inputs-form-last-input{
+    display: flex;
+    flex-direction: row;
+    width: 116.8%;
+    margin-left: 16.8%;
+    gap:4.8%;
+}
+
 .container-add-form-button-new-photo {
     margin-top: 0px;
     margin-bottom: 36px;
@@ -110,4 +118,25 @@
 
 .container-inputs-new-photo .story-short textarea {
     height: 280px !important    ;
+}
+
+.container-image-input-attachment{
+    position: relative;
+    width: min-content;
+    padding: 8px 15px;
+    background: #1F1B16;
+    border-radius: 5px ;
+}
+
+.container-image-input-attachment label{
+    margin-right: 0px;
+}
+
+
+label[for='image'] {
+    background: url('../../images/icons/story/img-plus.svg') 100% 100% / 100% 100% no-repeat;
+}
+
+label[for='image']:hover {
+    background: url('../../images/icons/story/img-plus-hover.svg') 100% 100% / 100% 100% no-repeat;
 }

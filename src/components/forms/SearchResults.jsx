@@ -4,6 +4,7 @@ import '../../assets/styles/forms/PrisonerSearchResult.css'
 import xIcon from '../../assets/vectors/x-icon.svg';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
+import HeaderSection from '../other/HeaderSection';
 
 export default function SearchResults({ arrayFoundObjects }) {
     const { t } = useTranslation();
@@ -101,18 +102,12 @@ export default function SearchResults({ arrayFoundObjects }) {
         <div className='section-search-result'>
             <section className='section-form-search-result'>
 
-                <div className='header-container-search-result'>
-
-                    <h2 className='span-of-section'>
-                        {t('ref.main')}
-                    </h2>
-                    <h1 className='header-of-section'>
-                        {t('search.header')}
-                    </h1>
-                </div>
-
-
-
+                <HeaderSection
+                    textFirst={t('ref.main')}
+                    textSecond={t('search.header')}
+                    isMarginLeftText={true}
+                />
+                
                 <div className='container-form-search-result'>
                     <div className="search-bar-search-result">
                         <input type="text" placeholder={t('search.placeholder')}

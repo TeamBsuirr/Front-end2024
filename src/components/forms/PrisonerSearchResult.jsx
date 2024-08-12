@@ -3,8 +3,9 @@ import { React, useEffect, useState } from 'react';
 import '../../assets/styles/forms/PrisonerSearchResult.css'
 import { useTranslation } from 'react-i18next';
 import ButtomAdmin from '../buttons/ButtonAdmin';
+import HeaderSection from '../other/HeaderSection';
 
-export default function PrisonerSearchResult({ histories, places, years,isAdmin=false }) {
+export default function PrisonerSearchResult({ histories, places, years, isAdmin = false }) {
 
   const { t } = useTranslation();
   const [filteredHistories, setFilteredHistories] = useState(histories);
@@ -111,15 +112,12 @@ export default function PrisonerSearchResult({ histories, places, years,isAdmin=
     <div className='section-search-result'>
       <section className='section-form-search-result'>
 
-        <div className='header-container-search-result-prisoners'>
-          <div className='span-of-section-prisoners'>
 
-          </div>
-          <h1 className='header-of-section-prisoners'>
-            {t('stories.header')}
-          </h1>
-        </div>
-{/* 
+        <HeaderSection
+          textFirst={t('stories.header')}
+        />
+
+        {/* 
         <div className='container-description-prisoners'>
           <span>{t('stories.additional-text')}</span>
         </div> */}

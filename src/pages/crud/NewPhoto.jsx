@@ -12,6 +12,7 @@ import ButtonSubmit from '../../components/buttons/ButtonSubmit';
 import InputShortDescription from '../../components/inputs/InputShortDescription';
 import InputPhoto from '../../components/inputs/InputPhoto';
 import InputSelect from '../../components/inputs/InputSelect';
+import HeaderSection from '../../components/other/HeaderSection';
 
 
 export default function NewPhoto({ isAdmin = false }) {
@@ -220,25 +221,27 @@ export default function NewPhoto({ isAdmin = false }) {
 
             <section className='section-form-new-photo'>
 
-                <div className='header-container-2h'>
-                    <h2 className='span-of-section-2h'>
-                        {t('ref.control-panel')}
-                    </h2>
-                    <h1 className='header-of-section-2h'>
-                        {t('add-photo.header')}
-                    </h1>
-                </div>
+                <HeaderSection textFirst={t('ref.control-panel')} textSecond={t('add-photo.header')} isCenteredText={false} />
 
                 <div className='container-form-new-photo'>
                     <div className='container-inputs-form-new-photo'>
                         <div className='container-inputs-form-inputs'>
-                            <InputPhoto placeholder={t("add-photo.placeholder.photo-load")} name="placeName" id="placeName" type="text" onChange={handleInputChange} />
+                            <InputPhoto placeholder={t("add-photo.placeholder.photo-load")} onChange={handleInputChange} />
                             <InputSelect placeholder={t("add-photo.placeholder.place")} type="text" id="dateOfFoundation" name="dateOfFoundation" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} />
-                            <InputSelect placeholder={t("add-photo.placeholder.people")} type="text" id="countDeath" name="countDeath" onChange={handleInputChange} />
+
+                            <div className='container-inputs-form-last-input'>
+                                <InputSelect placeholder={t("add-photo.placeholder.people")} type="text" id="countDeath" name="countDeath" onChange={handleInputChange} />
+
+                                <div className="container-image-input-attachment">
+                                    <label htmlFor="image" className="input-file"></label>
+                                    <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff,.svg" multiple />
+                                </div>
+                            </div>
+
 
                             <div className='container-small-message'>
-                                <span>Можно: Не добавлять узника</span>
-                                <span>Можно: Добавить узника <a href="/story">(клик сюда)</a>, если его нету в списке</span>
+                                <span>{t('add-photo.tip-text.not-add-uznik')}</span>
+                                <span>{t('add-photo.tip-text.add-uznik-p1')}<a href="/story">{t('add-photo.tip-text.add-uznik-p2')}</a>{t('add-photo.tip-text.add-uznik-p3')}</span>
                             </div>
                         </div>
 

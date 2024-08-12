@@ -11,6 +11,7 @@ import InputForm from '../../components/inputs/InputForm';
 import InputDescription from '../../components/inputs/InputDescription';
 import ButtonSubmit from '../../components/buttons/ButtonSubmit';
 import Spinner from '../../components/other/Spinner';
+import HeaderSection from '../../components/other/HeaderSection';
 
 
 export default function NewPlace({ isAdmin = false }) {
@@ -218,14 +219,7 @@ export default function NewPlace({ isAdmin = false }) {
 
             <section className='section-form-new-history'>
 
-                <div className='header-container-2h'>
-                    <h2 className='span-of-section-2h'>
-                        {t('ref.control-panel')}
-                    </h2>
-                    <h1 className='header-of-section-2h'>
-                        {t('add-camp.header')}
-                    </h1>
-                </div>
+                <HeaderSection textFirst={t('ref.control-panel')} textSecond={t('add-camp.header')} isCenteredText={false} />
 
                 <div className='container-form-new-place'>
                     <div className='container-inputs-form-new-place'>

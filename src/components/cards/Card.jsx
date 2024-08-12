@@ -29,9 +29,7 @@ export default function Card({ objectOfPrisoners }) {
                     <h1 className='header-of-container-prisoner'>
                         {objectOfPrisoners.surname + " " + objectOfPrisoners.name + " " + objectOfPrisoners.patronymic}
 
-                    </h1>
-
-
+                    </h1>   
 
                     <ul>
                         <li>

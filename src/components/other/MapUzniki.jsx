@@ -6,8 +6,9 @@ import ButtonSubmit from '../buttons/ButtonSubmit';
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps';
 import { useTranslation } from 'react-i18next';
 import ButtomAdmin from '../buttons/ButtonAdmin';
+import HeaderSection from './HeaderSection';
 
-export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin=false }) {
+export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = false }) {
   const { t } = useTranslation();
   const [activePlace, setActivePlace] = useState(passedPlace);
 
@@ -21,14 +22,9 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin=fals
     <div className='section-map-page'>
       <section className='section-map-header'>
 
-        <div className='header-container-search-result-prisoners'>
-          <div className='span-of-section-prisoners'>
-
-          </div>
-          <h1 className='header-of-section-prisoners'>
-            {t('map.header')}
-          </h1>
-        </div>
+        <HeaderSection
+          textFirst={t('map.header')}
+        />
 
         {isAdmin ?
           <>

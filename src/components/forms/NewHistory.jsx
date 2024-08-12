@@ -9,6 +9,8 @@ import { notification } from 'antd';
 import userService from '../../api/services/userService';
 import Spinner from '../other/Spinner';
 import { useTranslation } from 'react-i18next';
+import HeaderSection from '../other/HeaderSection';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 
 export default function NewHistory({ isAdmin = false }) {
@@ -200,6 +202,11 @@ export default function NewHistory({ isAdmin = false }) {
         }
     };
 
+    function onChangeCaptcha(value) {
+        console.log("Captcha value:", value);
+    }
+
+
     return (
         <div className='section-new-history'>
             {loading ? (<>
@@ -209,11 +216,7 @@ export default function NewHistory({ isAdmin = false }) {
 
             <section className='section-form-new-history'>
 
-                <div className='header-container-new-history'>
-                    <h1 className='header-of-section'>
-                        {t("add-story.header")}
-                    </h1>
-                </div>
+                <HeaderSection textFirst={t("add-story.header")} isCenteredText={true} />
 
                 <div className='container-form-new-history'>
                     <div className='container-inputs-form-new-history'>
@@ -238,6 +241,15 @@ export default function NewHistory({ isAdmin = false }) {
             {!isAdmin ?
                 <>
                     <div className='container-add-form-button-new-history'>
+                        <div>
+                            <ReCAPTCHA
+                                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                onChange={onChangeCaptcha}
+                            />
+                        </div>
+
+
+
                         <ButtonSubmit
                             isColorsInverse={true}
                             themeColor="yellow"
@@ -269,6 +281,14 @@ export default function NewHistory({ isAdmin = false }) {
                         </div>
 
                         <div className='container-register-form-button-new-history'>
+                            <div>
+                                <ReCAPTCHA
+                                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                    onChange={onChangeCaptcha}
+                                />
+                            </div>
+
+
                             <ButtonSubmit
                                 isColorsInverse={true}
                                 themeColor="yellow"

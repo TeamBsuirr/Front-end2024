@@ -31,6 +31,9 @@ textarea#story {
     border-radius: 0 0 5px 5px;
     border: 1px solid #1F1B16;
     background: transparent;
+    outline: #1F1B16;
+    font-family: Zen Kurenaido, sans-serif;
+    font-size: 22px;
 }
 
 textarea:focus {

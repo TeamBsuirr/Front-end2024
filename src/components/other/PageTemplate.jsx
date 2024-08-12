@@ -2,17 +2,19 @@
 
 import { React } from 'react';
 import '../../assets/styles/layout/DefaultLayout.css'
+import HeaderSection from './HeaderSection';
 
-export default function PageTemplate({ content,contentSection }) {
+export default function PageTemplate({ content, contentSection }) {
 
     return (
 
         <section className='section-default'>
-            <div className='header-container-default'>
-                <h1 className='header-of-container-default'>
-                    {content}
-                </h1>
-            </div>
+
+            <HeaderSection
+                textFirst={content}
+                isCenteredText={true}
+            />
+
             <p>{contentSection}</p>
         </section>
 

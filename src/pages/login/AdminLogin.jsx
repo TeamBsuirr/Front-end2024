@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import userService from '../../api/services/userService';
+import PageTemplate from '../../components/other/PageTemplate';
+import { useTranslation } from 'react-i18next';
+import '../../assets/styles/forms/AdminLogin.css'
+import InputForm from '../../components/inputs/InputForm';
+import ButtonSubmit from '../../components/buttons/ButtonSubmit';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const AdminLogin = () => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('mne12mrl_31zawfhc8');
   const [error, setError] = useState(null);
@@ -23,32 +30,54 @@ const AdminLogin = () => {
     }
   };
 
+  function onChangeCaptcha(value) {
+    console.log("Captcha value:", value);
+  }
+
   return (
-    <div>
-      <h1>Admin Login</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div>
-        <label>
-          Username:
-          <input
+    <PageTemplate content={t('admin-panel.authorization.header')} contentSection={
+      <div className='login-container'>
+        <div className='login-input-container'>
+          <InputForm
+            placeholder={t('admin-panel.authorization.login')}
             type="text"
+            name="username"
+            id="username"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Password:
-          <input
+            onChange={(e) => setUsername(e.target.value)} />
+
+        </div>
+        <div className='login-input-container'>
+          <InputForm
+            placeholder={t('admin-panel.authorization.password')}
             type="password"
+            name="password"
+            id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)} />
+        </div>
+
+        <div className='login-captcha-container'>
+          <ReCAPTCHA
+            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+            onChange={onChangeCaptcha}
           />
-        </label>
+        </div>
+
+        <div className='login-btn-container'>
+          <ButtonSubmit
+            isColorsInverse={true}
+            themeColor="yellow"
+            href="none"
+            spanText={t("admin-panel.btn.enter")}
+            onClick={handleLogin}
+            size="s" />
+        </div>
+
       </div>
-      <button onClick={handleLogin}>Login</button>
-    </div>
+    }
+    />
+
   );
 };
 

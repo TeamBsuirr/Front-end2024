@@ -128,7 +128,7 @@
     align-items: center;
 }
 
-.container-register-form-inputs-new-history {
+/* .container-register-form-inputs-new-history {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -136,11 +136,8 @@
     max-width: 400px;
     align-items: center;
 
-}
+} */
 
-.container-register-form-button-new-history {
-    margin-top: 36px;
-}
 
 .container-add-form-button-new-place {
     margin-top: 0px;
