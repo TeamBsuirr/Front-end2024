@@ -2,8 +2,9 @@ import { React, useEffect, useState } from 'react';
 // import '../../assets/styles/forms/SearchResults.css'
 import '../../assets/styles/forms/PrisonerSearchResult.css'
 import { useTranslation } from 'react-i18next';
+import ButtomAdmin from '../buttons/ButtonAdmin';
 
-export default function PrisonerSearchResult({ histories, places, years }) {
+export default function PrisonerSearchResult({ histories, places, years,isAdmin=false }) {
 
   const { t } = useTranslation();
   const [filteredHistories, setFilteredHistories] = useState(histories);
@@ -114,14 +115,29 @@ export default function PrisonerSearchResult({ histories, places, years }) {
           <div className='span-of-section-prisoners'>
 
           </div>
-          <div className='header-of-section-prisoners'>
+          <h1 className='header-of-section-prisoners'>
             {t('stories.header')}
-          </div>
+          </h1>
         </div>
-
+{/* 
         <div className='container-description-prisoners'>
           <span>{t('stories.additional-text')}</span>
-        </div>
+        </div> */}
+
+        {isAdmin ?
+          <>
+            <div className='container-description-prisoners-admin'>
+              <span>{t('stories.additional-text')}</span>
+              <div className='admin-btn-container'>
+                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/" spanText={t('admin-panel.btn.add-story')} size="m" />
+              </div>
+            </div>
+          </>
+          :
+          <div className='container-description-prisoners'>
+            <span>{t('stories.additional-text')}</span>
+          </div>
+        }
 
       </section>
       {/* ADD TOP BORDER TO THIS */}

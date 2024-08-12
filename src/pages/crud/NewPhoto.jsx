@@ -1,17 +1,20 @@
 import { React, useState } from 'react';
-import '../../assets/styles/forms/NewHistory.css'
+import '../../assets/styles/forms/NewPhoto.css'
 
-import InputForm from '../inputs/InputForm';
-import DateForm from '../inputs/DateForm';
-import InputDescription from '../inputs/InputDescription';
-import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
 import userService from '../../api/services/userService';
-import Spinner from '../other/Spinner';
 import { useTranslation } from 'react-i18next';
+import Spinner from '../../components/other/Spinner';
+import InputForm from '../../components/inputs/InputForm';
+import DateForm from '../../components/inputs/DateForm';
+import InputDescription from '../../components/inputs/InputDescription';
+import ButtonSubmit from '../../components/buttons/ButtonSubmit';
+import InputShortDescription from '../../components/inputs/InputShortDescription';
+import InputPhoto from '../../components/inputs/InputPhoto';
+import InputSelect from '../../components/inputs/InputSelect';
 
 
-export default function NewHistory({ isAdmin = false }) {
+export default function NewPhoto({ isAdmin = false }) {
     const { t } = useTranslation();
 
     const [formData, setFormData] = useState({
@@ -133,6 +136,14 @@ export default function NewHistory({ isAdmin = false }) {
         });
     };
 
+    const handleDescriptionChange = (e) => {
+        setFormData({
+            ...formData,
+            shortDescription: e.target.value
+        });
+    };
+
+
     const handleFileChange = (e) => {
         const { files } = e.target;
         setFormData({
@@ -201,89 +212,63 @@ export default function NewHistory({ isAdmin = false }) {
     };
 
     return (
-        <div className='section-new-history'>
+        <div className='section-new-photo'>
             {loading ? (<>
                 <Spinner size="large" />
             </>) : (<></>)
             }
 
-            <section className='section-form-new-history'>
+            <section className='section-form-new-photo'>
 
-                <div className='header-container-new-history'>
-                    <h1 className='header-of-section'>
-                        {t("add-story.header")}
+                <div className='header-container-2h'>
+                    <h2 className='span-of-section-2h'>
+                        {t('ref.control-panel')}
+                    </h2>
+                    <h1 className='header-of-section-2h'>
+                        {t('add-photo.header')}
                     </h1>
                 </div>
 
-                <div className='container-form-new-history'>
-                    <div className='container-inputs-form-new-history'>
-                        <InputForm placeholder={t("add-story.placeholder.surname")} name="surname" id="surname" type="text" onChange={handleInputChange} />
-                        <InputForm placeholder={t("add-story.placeholder.name")} type="text" id="name" name="name" onChange={handleInputChange} />
-                        <InputForm placeholder={t("add-story.placeholder.patronymic")} type="text" id="patronymic" name="patronymic" onChange={handleInputChange} />
-                        <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} />
-                        <InputForm placeholder={t("add-story.placeholder.place-of-birth")} type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} />
-                        <InputForm placeholder={t("add-story.placeholder.place-of-detention")} type="text" id="placeOfDetention" name="placeOfDetention" onChange={handleInputChange} />
-                        <div className="date-range">
-                            <DateForm labelText={t("add-story.placeholder.date-from")} type="date" id="dateFrom" name="dateFrom" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
-                            <DateForm labelText={t("add-story.placeholder.date-to")} type="date" id="dateTo" name="dateTo" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                <div className='container-form-new-photo'>
+                    <div className='container-inputs-form-new-photo'>
+                        <div className='container-inputs-form-inputs'>
+                            <InputPhoto placeholder={t("add-photo.placeholder.photo-load")} name="placeName" id="placeName" type="text" onChange={handleInputChange} />
+                            <InputSelect placeholder={t("add-photo.placeholder.place")} type="text" id="dateOfFoundation" name="dateOfFoundation" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                            <InputSelect placeholder={t("add-photo.placeholder.people")} type="text" id="countDeath" name="countDeath" onChange={handleInputChange} />
+
+                            <div className='container-small-message'>
+                                <span>Можно: Не добавлять узника</span>
+                                <span>Можно: Добавить узника <a href="/story">(клик сюда)</a>, если его нету в списке</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div className='container-desctription-inputs-new-photo'>
+                    <div className='container-section-photo-description'>
+                        <div className='container-span-for-inputs-new-photo'>
+                            <span>
+                                {t("add-photo.placeholder.tip")}
+                            </span>
+                        </div>
+                        <div className='container-inputs-new-photo'>
+                            <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="placeName" id="placeName" type="text" onChange={handleInputChange} />
+                            <InputShortDescription onDescriptionChange={handleDescriptionChange} />
                         </div>
                     </div>
-                    <InputDescription onFileChange={handleFileChange} onStoryChange={handleStoryChange} />
-
                 </div>
-
-
             </section>
 
-            {!isAdmin ?
-                <>
-                    <div className='container-add-form-button-new-history'>
-                        <ButtonSubmit
-                            isColorsInverse={true}
-                            themeColor="yellow"
-                            href="none"
-                            spanText={t("admin-panel.btn.add")}
-                            onClick={handleAdminAdd}
-                            size />
-                    </div>
-                </>
-                :
-                < section className='section-register-new-history'>
-                    {/* ADD TOP BORDER TO THIS */}
-                    <div className='container-register-header-new-history'>
-                        <div>
-                            <h2>{t("add-story.header-personal-data")}</h2>
-                        </div>
-                        <div style={{ marginTop: -35, }}>
-                            <span>{t("add-story.header-description-personal-data")}</span>
-                        </div>
 
-
-                    </div>
-                    <div className='container-register-form-new-history'>
-                        <div className='container-register-form-inputs-new-history'>
-                            <InputForm placeholder={t("add-story.placeholder.your-name")}
-                                type="text" name="fio" onChange={handleInputChange} />
-                            <InputForm placeholder={t("add-story.placeholder.phone")} type="tel" name="phoneNumber" onChange={handleInputChange} />
-                            <InputForm placeholder="Email" type="email" name="email" onChange={handleInputChange} />
-                        </div>
-
-                        <div className='container-register-form-button-new-history'>
-                            <ButtonSubmit
-                                isColorsInverse={true}
-                                themeColor="yellow"
-                                href="none"
-                                spanText={t("add-story.btn.add-my-story")}
-                                onClick={handleSubmit}
-                                size />
-                        </div>
-
-                    </div>
-                </section>
-            }
-
-
-
+            <div className='container-add-form-button-new-photo'>
+                <ButtonSubmit
+                    isColorsInverse={true}
+                    themeColor="yellow"
+                    href="none"
+                    spanText={t("admin-panel.btn.add")}
+                    onClick={handleAdminAdd}
+                    size />
+            </div>
         </div >
     )
 }

@@ -2,9 +2,10 @@ import { React, useState } from 'react';
 import '../../assets/styles/forms/PhotoArchive.css'
 import Image4 from '../../assets/images/Image4.jpeg'
 import { useTranslation } from 'react-i18next';
+import ButtomAdmin from '../buttons/ButtonAdmin';
 
-export default function PhotoArchive({arrayOfPhotoObjects}) {
-    
+export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
+
     const { t } = useTranslation();
     const [selectedObject, setSelectedObject] = useState(null);
 
@@ -28,14 +29,25 @@ export default function PhotoArchive({arrayOfPhotoObjects}) {
                     <div className='span-of-section-prisoners'>
 
                     </div>
-                    <div className='header-of-section-prisoners'>
-                    {t('photo-archive.header')}
-                    </div>
+                    <h1 className='header-of-section-prisoners'>
+                        {t('photo-archive.header')}
+                    </h1>
                 </div>
 
-                <div className='container-description-prisoners'>
-                    <span>{t('photo-archive.additional-text')}</span>
-                </div>
+                {!isAdmin ?
+                    <>
+                        <div className='container-description-map-admin'>
+                            <span>{t('photo-archive.additional-text')}</span>
+                            <div className='admin-btn-container'>
+                                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/" spanText={t('admin-panel.btn.add-photo-archive')} size="s" />
+                            </div>
+                        </div>
+                    </>
+                    :
+                    <div className='container-description-map'>
+                        <span>{t('photo-archive.additional-text')}</span>
+                    </div>
+                }
 
             </section>
             {/* ADD TOP BORDER TO THIS */}

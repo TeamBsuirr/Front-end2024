@@ -20,7 +20,7 @@ html {
   /* height: 100%; */
 }
 
-.section-default{
+.section-default {
   display: flex;
   flex: 3;
   flex-direction: column;
@@ -33,20 +33,63 @@ html {
   background-size: cover;
 }
 
-.section-default p{
+.section-default p {
   font-family: Zen Kurenaido, sans-serif;
   font-size: 30px;
   font-weight: 400;
 }
 
-.header-container-default{
+.header-container-default {
   border-bottom: 2px solid #1F1B16;
   margin-bottom: 20px;
 }
-.header-of-container-default{
+
+.header-of-container-default {
   color: #1F1B16;
   font-family: 'Oswald', sans-serif;
   font-size: 50px;
   font-weight: 400;
   text-align: center;
+}
+
+.header-container-2h {
+  height: 85px;
+  margin-bottom: 0px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: row;
+  gap: 4px;
+
+
+  border-bottom: 2px solid #1F1B16;
+  margin-bottom: 20px;
+}
+
+.span-of-section-2h {
+  color: #1F1B16;
+  font-family: 'Oswald', sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  text-align: center;
+  border-right: 4px solid #1F1B16;
+  padding-right: 8px;
+  padding-top: 4.5px;
+  height: 53px;
+}
+
+.header-of-section-2h {
+  color: #1F1B16;
+  font-family: 'Oswald', sans-serif;
+  font-size: 50px;
+  font-weight: 400;
+  text-align: center;
+  margin-left: 4px;
+  padding-bottom: 17px;
+}
+
+.header-of-section,.header-of-section-prisoners{
+  margin-block-start: 0em;
+  margin-block-end: 0em;
 }

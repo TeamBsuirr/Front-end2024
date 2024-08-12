@@ -20,6 +20,9 @@ import PlacePage from '../pages/search/place/PlacePage';
 import Analysis from '../pages/archive/analysis/Analysis';
 import MapPage from '../pages/map/MapPage';
 import i18n from '../i18n';
+import Spinner from '../components/other/Spinner';
+import NewPlace from '../pages/crud/NewPlace';
+import NewPhoto from '../pages/crud/NewPhoto';
 
 const useLanguage = () => {
     const { lang } = useParams();
@@ -72,10 +75,17 @@ export default function DefaultLayout() {
     return (
         <>
             <HeaderLayout />
-            <Suspense fallback="loading">
+            <Suspense fallback={<PageTemplate content={<Spinner size="large" />} />}>
+                {/* <Suspense fallback={<Spinner size="large"s />}> */}
                 <main className='main-layout'>
                     <Routes>
+                        {/* ONLY FOR ADMIN */}
                         <Route path="/:lang/story" element={<CreateStoryPage />} />
+                        <Route path="/:lang/login" element={<AdminLogin />} />
+                        <Route path="/:lang/crud/place" element={<NewPlace />} />
+                        <Route path="/:lang/crud/photo" element={<NewPhoto />} />
+                        {/* ONLY FOR ADMIN */}
+
                         <Route path="/:lang/about" element={<About />} />
                         <Route path="/:lang/map" element={<MapPage />} />
                         <Route path="/:lang/archive/photos" element={<PhotoArchivePage />} />
@@ -85,7 +95,6 @@ export default function DefaultLayout() {
                         <Route path="/:lang/prisoners" element={<PrisonerStories />} />
                         <Route path="/:lang/search/prisoner/*" element={<PrisonerPage />} />
                         <Route path="/:lang/search/place/*" element={<PlacePage />} />
-                        <Route path="/:lang/login" element={<AdminLogin />} />
                         <Route path="*" element={<PageTemplate />} />
                     </Routes>
                 </main>

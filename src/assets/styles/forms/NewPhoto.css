@@ -1,0 +1,113 @@
+.section-new-photo {
+    display: flex;
+    flex: 3;
+    flex-direction: column;
+    color: #1F1B16;
+    font-family: Zen Kurenaido, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 50px 150px 70px;
+    background: url('../../images/DefaultBG.jpg') no-repeat center center;
+    background-size: cover;
+}
+
+.container-form-new-photo {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30% 37px;
+    gap: 40px;
+}
+
+
+.container-desctription-inputs-new-photo {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 7% 37px;
+    gap: 40px;
+    border-top: 2px solid #1F1B16;  
+}
+
+.container-inputs-form-new-photo {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container-inputs-form-inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+}
+
+.container-add-form-button-new-photo {
+    margin-top: 0px;
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-small-message {
+    display: flex;
+    flex-direction: column;
+    align-self: end;
+    font-size: 17px;
+}
+
+.container-small-message span {
+    align-self: end;
+}
+
+.container-small-message span a {
+    color: #E2D4C4;
+}
+
+.container-small-message span a:hover {
+    color: #1F1B16;
+}
+
+.container-section-photo-description {
+
+    /* justify-items: center;
+    gap: 20px; */
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.container-span-for-inputs-new-photo {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-self: center;
+    font-size: 22px;
+}
+
+.container-span-for-inputs-new-photo span{
+    display: flex;
+    text-align: center;
+    width: 80%;
+}
+
+.container-inputs-new-photo {
+    width: 50%;
+    padding-right: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.container-inputs-new-photo .story-short {
+    width: -webkit-fill-available;
+    
+}
+
+.container-inputs-new-photo .story-short textarea {
+    height: 280px !important    ;
+}

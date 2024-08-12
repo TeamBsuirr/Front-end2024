@@ -9,8 +9,18 @@
     resize: none;
 } */
 
-.story{
+.story {
     width: 60%;
+}
+
+.story-short {
+    width: 600px;
+    height: min-content;
+}
+
+.story-short textarea{
+    border-radius: 5px !important;
+    height: 320px !important;
 }
 
 textarea#story {
@@ -20,6 +30,7 @@ textarea#story {
     resize: none;
     border-radius: 0 0 5px 5px;
     border: 1px solid #1F1B16;
+    background: transparent;
 }
 
 textarea:focus {

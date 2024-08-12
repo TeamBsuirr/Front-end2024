@@ -57,7 +57,7 @@ export default function MapPage() {
         return <NotFound />;
     } else {
         return (
-            <MapUzniki arrayOfPlaceMarks={arrayOfPlaces} passedPlace={passedPlace} />
+            <MapUzniki arrayOfPlaceMarks={arrayOfPlaces} passedPlace={passedPlace} isAdmin={true} />
         );
     }
 }

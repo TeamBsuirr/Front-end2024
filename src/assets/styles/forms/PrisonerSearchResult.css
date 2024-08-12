@@ -50,12 +50,30 @@
 }
 
 .container-description-prisoners {
+
     padding-bottom: 8px;
     margin: 6px 0px;
-    padding-left: 14px  ;
+    padding-left: 14px;
     font-size: 22px;
     font-family: Zen Kurenaido, sans-serif;
 }
+
+.container-description-prisoners-admin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 8px;
+    margin: 6px 0px;
+    padding-left: 14px;
+    font-size: 22px;
+    font-family: Zen Kurenaido, sans-serif;
+}
+
+.container-description-prisoners-admin span {
+    width: 70%;
+}
+
 
 .section-prisoners-search-result {
     display: flex;
@@ -77,7 +95,7 @@
     transition: background-color 0.3s ease;
     transform: scale(1.05);
     background: #1F1B16;
-    color:#E2D4C4;
+    color: #E2D4C4;
 }
 
 
@@ -85,7 +103,7 @@
 
 .result-container-search-result:hover h3 {
     transition: background-color 0.3s ease;
-    color:#E4B474;
+    color: #E4B474;
     border-left: 2px solid #E4B474;
 }
 
@@ -116,7 +134,7 @@
 }
 
 .result-container-search-result-description span {
-    
+
     font-size: 15px;
     margin-top: -14px;
 }
@@ -138,19 +156,20 @@
 .sort-field div {
     width: calc(100% / 3);
     padding: 10px 0;
-    position: relative;   
+    position: relative;
 }
 
 .sort-field div:hover {
     background-color: #1F1B16;
 }
 
-.input-filter{
+.input-filter {
     border: 0;
-    margin:0;
+    margin: 0;
     cursor: pointer;
 }
-.input-filter:focus-visible{
+
+.input-filter:focus-visible {
     outline: 0;
 
 }
@@ -165,7 +184,7 @@
 }
 
 .sort-field div:hover input {
-    
+
     color: #E2D4C4;
 }
 

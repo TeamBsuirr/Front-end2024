@@ -5,7 +5,7 @@ import InputMask from 'react-input-mask';
 import '../../assets/styles/inputs/InputForm.css'
 
 
-export default function InputForm({ placeholder, type, name, id, min = null, max = null, onChange }) {
+export default function InputSelect({ placeholder, type, name, id, min = null, max = null, onChange }) {
 
   // Обработчик для text input, который фильтрует вводимые символы
   const handleTextInputChange = (e) => {

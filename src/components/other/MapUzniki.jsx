@@ -5,8 +5,9 @@ import closeSvg from '../../assets/images/icons/other/close.svg'
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps';
 import { useTranslation } from 'react-i18next';
+import ButtomAdmin from '../buttons/ButtonAdmin';
 
-export default function MapUzniki({ arrayOfPlaceMarks, passedPlace }) {
+export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin=false }) {
   const { t } = useTranslation();
   const [activePlace, setActivePlace] = useState(passedPlace);
 
@@ -24,14 +25,26 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace }) {
           <div className='span-of-section-prisoners'>
 
           </div>
-          <div className='header-of-section-prisoners'>
+          <h1 className='header-of-section-prisoners'>
             {t('map.header')}
-          </div>
+          </h1>
         </div>
 
-        <div className='container-description-map'>
-          <span>{t('map.additional-text')}</span>
-        </div>
+        {isAdmin ?
+          <>
+            <div className='container-description-map-admin'>
+              <span>{t('map.additional-text')}</span>
+              <div className='admin-btn-container'>
+                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/" spanText={t('admin-panel.btn.add-camp')} size="m" />
+              </div>
+            </div>
+          </>
+          :
+          <div className='container-description-map'>
+            <span>{t('map.additional-text')}</span>
+          </div>
+        }
+
 
       </section>
       {/* ADD TOP BORDER TO THIS */}
