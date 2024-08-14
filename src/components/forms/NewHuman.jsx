@@ -11,29 +11,15 @@ import Spinner from '../other/Spinner';
 import { useTranslation } from 'react-i18next';
 import HeaderSection from '../other/HeaderSection';
 import ReCAPTCHA from 'react-google-recaptcha';
+import humanService from '../../api/services/humanService';
+import InputSelect from '../inputs/InputSelect';
 
 
-export default function NewHistory() {
+export default function NewHumans({arrayOfPlaces, objectOfPrisoners }) {
     const { t } = useTranslation();
+    const [formData, setFormData] = useState(objectOfPrisoners);
 
-    const [formData, setFormData] = useState({
-        "name": "",
-        "surname": "",
-        "patronymic": "",
-        "dateOfBirth": "",
-        "placeOfBirth": "",
-        "placeOfDetention": "",
-        "dateFrom": "",
-        "dateTo": "",
-        "fio": "",
-        "phoneNumber": "",
-        "email": "",
-        "history": "",
-        "files": []
-    });
-
-
-
+    console.log(formData)
 
     const [loading, setLoading] = useState(false);
 
@@ -86,19 +72,6 @@ export default function NewHistory() {
             notification.error({ message: t('errors.front-end.add-story.incorrect-symbols-story') });
         }
 
-        // Validate phone number
-        const phoneRegex = /^\+375 \(\d{2}\) \d{3} - \d{2} - \d{2}$/;
-        if (!formData.phoneNumber || !phoneRegex.test(formData.phoneNumber)) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-phone') });
-        }
-
-        // Validate email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!formData.email || !emailRegex.test(formData.email)) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-email') });
-        }
 
         // Validate files
         const allowedImageTypes = [
@@ -161,13 +134,21 @@ export default function NewHistory() {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSelectChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleAdminAdd = () => {
         if (validateInput()) {
             // Form valid, send data to server
 
             setLoading(true);
 
-            userService.postStory(formData)
+            humanService.postHuman(formData)
                 .then(response => {
                     // console.log(response);
                     setLoading(false);
@@ -210,7 +191,14 @@ export default function NewHistory() {
                         <InputForm placeholder={t("add-story.placeholder.patronymic")} type="text" id="patronymic" name="patronymic" onChange={handleInputChange} value={formData.patronymic} />
                         <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} />
                         <InputForm placeholder={t("add-story.placeholder.place-of-birth")} type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} value={formData.placeOfBirth} />
-                        <InputForm placeholder={t("add-story.placeholder.place-of-detention")} type="text" id="placeOfDetention" name="placeOfDetention" onChange={handleInputChange} value={formData.placeOfDetention} />
+
+                        <InputSelect
+                            name="placeOfDetention"
+                            value={formData.placeOfDetention}
+                            arrayOfSelects={arrayOfPlaces}
+                            placeholder={t("add-story.placeholder.place-of-detention")} onChange={handleSelectChange}
+                        />
+
                         <div className="date-range">
                             <DateForm labelText={t("add-story.placeholder.date-from")} type="date" id="dateFrom" name="dateFrom" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateFrom} />
                             <DateForm labelText={t("add-story.placeholder.date-to")} type="date" id="dateTo" name="dateTo" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateTo} />
@@ -223,46 +211,26 @@ export default function NewHistory() {
 
             </section>
 
-            < section className='section-register-new-history'>
-                {/* ADD TOP BORDER TO THIS */}
-                <div className='container-register-header-new-history'>
+            <>
+                <div className='container-add-form-button-new-history'>
                     <div>
-                        <h2>{t("add-story.header-personal-data")}</h2>
-                    </div>
-                    <div style={{ marginTop: -35, }}>
-                        <span>{t("add-story.header-description-personal-data")}</span>
+                        <ReCAPTCHA
+                            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                            onChange={onChangeCaptcha}
+                        />
                     </div>
 
 
+
+                    <ButtonSubmit
+                        isColorsInverse={true}
+                        themeColor="yellow"
+                        href="none"
+                        spanText={t("admin-panel.btn.add")}
+                        onClick={handleAdminAdd}
+                        size />
                 </div>
-                <div className='container-register-form-new-history'>
-                    <div className='container-register-form-inputs-new-history'>
-                        <InputForm placeholder={t("add-story.placeholder.your-name")}
-                            type="text" name="fio" onChange={handleInputChange} />
-                        <InputForm placeholder={t("add-story.placeholder.phone")} type="tel" name="phoneNumber" onChange={handleInputChange} />
-                        <InputForm placeholder="Email" type="email" name="email" onChange={handleInputChange} />
-                    </div>
-
-                    <div className='container-register-form-button-new-history'>
-                        <div>
-                            <ReCAPTCHA
-                                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                                onChange={onChangeCaptcha}
-                            />
-                        </div>
-
-
-                        <ButtonSubmit
-                            isColorsInverse={true}
-                            themeColor="yellow"
-                            href="none"
-                            spanText={t("add-story.btn.add-my-story")}
-                            onClick={handleSubmit}
-                            size />
-                    </div>
-
-                </div>
-            </section>
+            </>
 
 
 

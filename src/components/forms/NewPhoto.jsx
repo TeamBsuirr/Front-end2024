@@ -4,21 +4,23 @@ import '../../assets/styles/forms/NewPhoto.css'
 import { notification } from 'antd';
 import userService from '../../api/services/userService';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../../components/other/Spinner';
-import InputForm from '../../components/inputs/InputForm';
-import DateForm from '../../components/inputs/DateForm';
-import InputDescription from '../../components/inputs/InputDescription';
-import ButtonSubmit from '../../components/buttons/ButtonSubmit';
-import InputShortDescription from '../../components/inputs/InputShortDescription';
-import InputPhoto from '../../components/inputs/InputPhoto';
-import InputSelect from '../../components/inputs/InputSelect';
-import HeaderSection from '../../components/other/HeaderSection';
+import Spinner from '../other/Spinner';
+import InputForm from '../inputs/InputForm';
+import DateForm from '../inputs/DateForm';
+import InputDescription from '../inputs/InputDescription';
+import ButtonSubmit from '../buttons/ButtonSubmit';
+import InputShortDescription from '../inputs/InputShortDescription';
+import InputPhoto from '../inputs/InputPhoto';
+import InputSelect from '../inputs/InputSelect';
+import HeaderSection from '../other/HeaderSection';
 
 
 export default function NewPhoto({ isAdmin = false }) {
     const { t } = useTranslation();
-
     const [formData, setFormData] = useState({
+        "humans": [],
+        "places": "",
+
         "name": "",
         "surname": "",
         "patronymic": "",
@@ -137,13 +139,20 @@ export default function NewPhoto({ isAdmin = false }) {
         });
     };
 
+    const handleSelectChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
     const handleDescriptionChange = (e) => {
         setFormData({
             ...formData,
             shortDescription: e.target.value
         });
     };
-
 
     const handleFileChange = (e) => {
         const { files } = e.target;
@@ -226,11 +235,25 @@ export default function NewPhoto({ isAdmin = false }) {
                 <div className='container-form-new-photo'>
                     <div className='container-inputs-form-new-photo'>
                         <div className='container-inputs-form-inputs'>
-                            <InputPhoto placeholder={t("add-photo.placeholder.photo-load")} onChange={handleInputChange} />
-                            <InputSelect placeholder={t("add-photo.placeholder.place")} type="text" id="dateOfFoundation" name="dateOfFoundation" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} />
+                            <InputPhoto
+                                placeholder={t("add-photo.placeholder.photo-load")}
+                                onChange={handleInputChange} />
+                            <InputSelect
+                                name="places"
+                                value={formData.places}
+                                arrayOfSelects={["МЕсто 1", "Место 2"]}
+                                placeholder={t("add-photo.placeholder.place")} onChange={handleSelectChange}
+                            />
 
                             <div className='container-inputs-form-last-input'>
-                                <InputSelect placeholder={t("add-photo.placeholder.people")} type="text" id="countDeath" name="countDeath" onChange={handleInputChange} />
+
+                                <InputSelect
+                                    placeholder={t("add-photo.placeholder.people")}
+                                    value={formData.humans}
+                                    name="humans"
+                                    arrayOfSelects={["Вася", "Коля"]}
+                                    onChange={handleSelectChange}
+                                />
 
                                 <div className="container-image-input-attachment">
                                     <label htmlFor="image" className="input-file"></label>

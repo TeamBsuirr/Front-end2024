@@ -21,8 +21,11 @@ import Analysis from '../pages/archive/analysis/Analysis';
 import MapPage from '../pages/map/MapPage';
 import i18n from '../i18n';
 import Spinner from '../components/other/Spinner';
-import NewPlace from '../pages/crud/NewPlace';
-import NewPhoto from '../pages/crud/NewPhoto';
+import NewPlace from '../pages/crud/NewPlacePage';
+import NewPhoto from '../pages/crud/NewPhotoPage';
+import NewPlacePage from '../pages/crud/NewPlacePage';
+import NewPhotoPage from '../pages/crud/NewPhotoPage';
+import NewHumanPage from '../pages/crud/NewHumanPage';
 
 const useLanguage = () => {
     const { lang } = useParams();
@@ -82,8 +85,9 @@ export default function DefaultLayout() {
                         {/* ONLY FOR ADMIN */}
                         <Route path="/:lang/story" element={<CreateStoryPage />} />
                         <Route path="/:lang/login" element={<AdminLogin />} />
-                        <Route path="/:lang/crud/place" element={<NewPlace />} />
-                        <Route path="/:lang/crud/photo" element={<NewPhoto />} />
+                        <Route path="/:lang/crud/place" element={<NewPlacePage />} />
+                        <Route path="/:lang/crud/photo" element={<NewPhotoPage />} />
+                        <Route path="/:lang/crud/human/*" element={<NewHumanPage />} />
                         {/* ONLY FOR ADMIN */}
 
                         <Route path="/:lang/about" element={<About />} />

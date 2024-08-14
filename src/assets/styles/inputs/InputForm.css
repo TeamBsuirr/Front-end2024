@@ -51,6 +51,11 @@
       background-repeat: no-repeat;
     }
 
+    .input-form-photo:focus {
+      outline: #1F1B16;
+    }
+
+
     .input-form-photo::before {
       text-align: center;
       opacity: 65%;
@@ -60,6 +65,7 @@
       display: none;
       font-display: none;
     }
+
 
 
     *,

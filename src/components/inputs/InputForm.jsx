@@ -32,6 +32,7 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
     return <input className="input-form-coordinates" id={id}
       name={name} type="number" placeholder={placeholder}
       onChange={handleInputChange}
+      value={value}
     />
   }
 
@@ -44,14 +45,19 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
         name={name}
         placeholder={placeholder}
         onChange={onChange}
+        value={value}
       />
     );
   }
 
   if (max || min) {
     return (
-      <input className="input-form" type={type} id={id} name={name} placeholder={placeholder} min={min} max={max}
-        onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" onChange={onChange} />
+      <input className="input-form"
+        type={type} id={id} name={name} value={value}
+        placeholder={placeholder} min={min} max={max}
+        onfocus="(this.type='date')"
+        onblur="if(this.value==''){this.type='text'}"
+        onChange={onChange} />
     )
   }
 
@@ -59,7 +65,7 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
 
     <input className="input-form" id={id}
       name={name} type={type} placeholder={placeholder}
-      value = { value }
+      value={value}
       onChange={type === 'text' ? (value === null) ? handleTextInputChange : handleInputChange : handleInputChange}
     />
   )

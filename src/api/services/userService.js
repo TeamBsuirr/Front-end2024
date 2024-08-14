@@ -3,26 +3,10 @@ import handleRequest from '../requestHelper';
 
 const userService = {
   authenticateAdmin: (data) => handleRequest(() => api.post('/auth/login', data)),
-  // postStory: (data) => handleRequest(() => api.post('/applications', {
-  //   name: data.name,
-  //   surname: data.surname,
-  //   patronymic: data.patronymic,
-  //   dateOfBirth: data.dateOfBirth,
-  //   placeOfBirth: data.placeOfBirth,
-  //   placeOfDetention: data.placeOfDetention,
-  //   dateFrom: data.dateFrom,
-  //   dateTo: data.dateTo,
-  //   fio: data.fio,
-  //   phoneNumber: data.phoneNumber,
-  //   email: data.email,
-  //   history: data.history,
-  //   files:data.file,
-  // })),
-  // postStory: (data) => handleRequest(() => api.post('/applications', data)),
+
   postStory: (data) => {
     // Сериализуем данные в FormData MIME
     const transformedData = new FormData()
-    //const newFiles = new File(data.files)
     // Логируем данные перед отправкой
     console.log("Posting story with transformedData:", data);
 

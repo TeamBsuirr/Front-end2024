@@ -20,7 +20,17 @@ export default function PrisonerPage() {
 
 
         const queryStringArray = window.location.pathname.split('/');
-        const idOfPrisoner = queryStringArray[queryStringArray.length - 1];
+        let idOfPrisoner = queryStringArray[queryStringArray.length - 1]
+
+        // Проверяем, является ли последний элемент числом
+        if (!isNaN(idOfPrisoner) && idOfPrisoner.trim() !== '') {
+            idOfPrisoner = Number(idOfPrisoner);
+        } else {
+            // Если это не число, делаем соответствующее действие, например, присваиваем null
+            idOfPrisoner = null;
+        }
+
+        console.log(idOfPrisoner);
 
         humanService.getHumanById(idOfPrisoner)
             .then(data => {

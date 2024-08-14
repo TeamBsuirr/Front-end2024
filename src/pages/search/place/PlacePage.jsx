@@ -20,9 +20,19 @@ export default function PlacePage() {
 
 
         const queryStringArray = window.location.pathname.split('/');
-        const idOfPrisoner = queryStringArray[queryStringArray.length - 1];
+        let idOfPlace = queryStringArray[queryStringArray.length - 1]
 
-        placeService.getPlaceById(idOfPrisoner)
+        // Проверяем, является ли последний элемент числом
+        if (!isNaN(idOfPlace) && idOfPlace.trim() !== '') {
+            idOfPlace = Number(idOfPlace);
+        } else {
+            // Если это не число, делаем соответствующее действие, например, присваиваем null
+            idOfPlace = null;
+        }
+
+        console.log(idOfPlace);
+
+        placeService.getPlaceById(idOfPlace)
             .then(data => {
                 setobjectOfPlace(data);
                 setLoading(false);
