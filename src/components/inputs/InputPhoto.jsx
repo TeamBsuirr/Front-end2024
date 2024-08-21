@@ -5,7 +5,7 @@ import InputMask from 'react-input-mask';
 import '../../assets/styles/inputs/InputForm.css'
 
 
-export default function InputPhoto({ placeholder, onFileChange }) {
+export default function InputPhoto({ placeholder, onFileChange,multiple=true }) {
 
     return (
         <>
@@ -20,7 +20,9 @@ export default function InputPhoto({ placeholder, onFileChange }) {
                 }}
             ></style>
             <input className="input-form-photo"
-                name="image" id="image" type="file"
+                name="image" 
+                id="image" 
+                type="file"
                 accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff,.svg"
                 onChange={onFileChange}
                 multiple

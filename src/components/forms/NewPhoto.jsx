@@ -13,35 +13,19 @@ import InputShortDescription from '../inputs/InputShortDescription';
 import InputPhoto from '../inputs/InputPhoto';
 import InputSelect from '../inputs/InputSelect';
 import HeaderSection from '../other/HeaderSection';
+import searchService from '../../api/services/searchService';
 
 
-export default function NewPhoto({ isAdmin = false }) {
+export default function NewPhoto({ objectOfPhoto, isAdmin = false }) {
     const { t } = useTranslation();
-    const [formData, setFormData] = useState({
-        "humans": [],
-        "places": "",
-
-        "name": "",
-        "surname": "",
-        "patronymic": "",
-        "dateOfBirth": "",
-        "placeOfBirth": "",
-        "placeOfDetention": "",
-        "dateFrom": "",
-        "dateTo": "",
-        "fio": "",
-        "phoneNumber": "",
-        "email": "",
-        "history": "",
-        "files": []
-    });
+    const [formData, setFormData] = useState(objectOfPhoto);
     const [loading, setLoading] = useState(false);
 
     const validateInput = () => {
         let isValid = true;
         console.log(formData);
         // Validate name, surname, and patronymic
-        ['name', 'surname', 'patronymic'].forEach(field => {
+        ['title', 'description'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
                 isValid = false;
 
@@ -53,79 +37,26 @@ export default function NewPhoto({ isAdmin = false }) {
             }
         });
 
-        // Validate date of birth, start date and end date
-        const today = new Date().toISOString().split('T')[0];
-        if (!formData.dateOfBirth || formData.dateOfBirth >= today) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
-        }
-        if (formData.dateFrom >= formData.dateTo) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-dot') });
-        }
-
-        // Validate place of birth and place of stay
-        ['placeOfBirth', 'placeOfDetention'].forEach(field => {
-            if (!formData[field] || formData[field].length < 1 || formData[field].length > 200) {
-                isValid = false;
-                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.symbol-length-place') });
-            }
-            if (/["'<>]/.test(formData[field])) {
-                isValid = false;
-                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.incorrect-symbols') });
-            }
-        });
-
-        // Validate history
-        if (!formData.history || formData.history.length < 1 || formData.history.length > 1000) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-length-story') });
-        }
-        if (/["'<>]/.test(formData.history)) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-symbols-story') });
-        }
-
-        // Validate phone number
-        const phoneRegex = /^\+375 \(\d{2}\) \d{3} - \d{2} - \d{2}$/;
-        if (!formData.phoneNumber || !phoneRegex.test(formData.phoneNumber)) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-phone') });
-        }
-
-        // Validate email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!formData.email || !emailRegex.test(formData.email)) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-email') });
-        }
-
         // Validate files
         const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg+xml'];
-        const allowedVideoTypes = ['video/mp4', 'video/x-msvideo', 'video/quicktime', 'video/x-matroska', 'video/x-flv', 'video/x-ms-wmv', 'video/webm'];
-        const allowedDocumentTypes = [
-            'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-            'text/plain', 'text/csv', 'application/zip', 'application/x-rar-compressed'
-        ];
         const disallowedTypes = ['application/x-javascript', 'application/x-php', 'application/x-msdos-program', 'application/x-shellscript', 'application/x-bat', 'application/x-msdos-program', 'application/x-vbscript', 'application/x-perl', 'application/x-python'];
 
-        formData.files.forEach(file => {
-            const fileType = file.type;
-            if (disallowedTypes.includes(fileType)) {
-                isValid = false;
-                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
-            }
-            if (!allowedImageTypes.includes(fileType) && !allowedVideoTypes.includes(fileType) && !allowedDocumentTypes.includes(fileType)) {
-                isValid = false;
-                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
-            }
-            if (file.size > 5 * 1024 * 1024) { // 5 MB
-                isValid = false;
-                notification.error({ message: t('errors.front-end.add-story.incorrect-file-size') });
-            }
-        });
+
+        console.log(formData)
+        const fileType = formData.image[0].type;
+        if (disallowedTypes.includes(fileType)) {
+            isValid = false;
+            notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
+        }
+        if (!allowedImageTypes.includes(fileType)) {
+            isValid = false;
+            notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
+        }
+        if (formData.size > 5 * 1024 * 1024) { // 5 MB
+            isValid = false;
+            notification.error({ message: t('errors.front-end.add-story.incorrect-file-size') });
+        }
+
 
 
         return isValid;
@@ -139,61 +70,24 @@ export default function NewPhoto({ isAdmin = false }) {
         });
     };
 
-    const handleSelectChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
 
     const handleDescriptionChange = (e) => {
         setFormData({
             ...formData,
-            shortDescription: e.target.value
+            description: e.target.value
         });
     };
 
     const handleFileChange = (e) => {
-        const { files } = e.target;
-        setFormData({
-            ...formData,
-            files: [...formData.files, ...files]
-        });
+        console.log('File input changed:', e); // Check if this logs
+        const file = e.target.files; // Convert FileList to array
+        console.log('File selected:', file); // Log the selected files
+        setFormData(prevState => ({
+            ...prevState,
+            image: file,
+        }));
     };
 
-    const handleStoryChange = (e) => {
-        setFormData({
-            ...formData,
-            history: e.target.value
-        });
-    };
-
-    const handleSubmit = () => {
-        if (validateInput()) {
-            // Form valid, send data to server
-
-            setLoading(true);
-
-            userService.postStory(formData)
-                .then(response => {
-                    // console.log(response);
-                    setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-story.success') });
-
-                })
-                .catch(error => {
-                    // console.error('Ошибка получения результатов:', error);
-                    let errMsg = error.message ? error.message : error;
-                    notification.error({
-                        message: t('errors.front-end.add-story.error-receive'),
-                        description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
-                    });
-
-                    setLoading(false);
-                });
-        }
-    };
 
     const handleAdminAdd = () => {
         if (validateInput()) {
@@ -201,7 +95,7 @@ export default function NewPhoto({ isAdmin = false }) {
 
             setLoading(true);
 
-            userService.postStory(formData)
+            searchService.postPhoto(formData)
                 .then(response => {
                     // console.log(response);
                     setLoading(false);
@@ -237,8 +131,12 @@ export default function NewPhoto({ isAdmin = false }) {
                         <div className='container-inputs-form-inputs'>
                             <InputPhoto
                                 placeholder={t("add-photo.placeholder.photo-load")}
-                                onChange={handleInputChange} />
-                            <InputSelect
+                                onFileChange={handleFileChange}
+                                multiple={false} />
+
+                            {/* ДОПОЛНИТЕЛЬНАЯ ФУНКЦИОНАЛЬНОСТЬ ДЛЯ ПРИВЯЗКИ К МЕСТУ И УЗНИКУ  */}
+
+                            {/* <InputSelect
                                 name="places"
                                 value={formData.places}
                                 arrayOfSelects={["МЕсто 1", "Место 2"]}
@@ -265,7 +163,9 @@ export default function NewPhoto({ isAdmin = false }) {
                             <div className='container-small-message'>
                                 <span>{t('add-photo.tip-text.not-add-uznik')}</span>
                                 <span>{t('add-photo.tip-text.add-uznik-p1')}<a href="/story">{t('add-photo.tip-text.add-uznik-p2')}</a>{t('add-photo.tip-text.add-uznik-p3')}</span>
-                            </div>
+                            </div> */}
+
+
                         </div>
 
                     </div>
@@ -278,7 +178,7 @@ export default function NewPhoto({ isAdmin = false }) {
                             </span>
                         </div>
                         <div className='container-inputs-new-photo'>
-                            <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="placeName" id="placeName" type="text" onChange={handleInputChange} />
+                            <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="title" id="title" type="text" onChange={handleInputChange} />
                             <InputShortDescription onDescriptionChange={handleDescriptionChange} />
                         </div>
                     </div>

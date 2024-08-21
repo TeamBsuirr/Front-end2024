@@ -24,7 +24,7 @@
     flex-direction: column;
     padding: 30px 7% 37px;
     gap: 40px;
-    border-top: 2px solid #1F1B16;  
+    /* border-top: 2px solid #1F1B16;   */
 }
 
 .container-inputs-form-new-photo {

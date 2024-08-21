@@ -6,6 +6,7 @@ import '../../assets/styles/forms/AdminLogin.css'
 import InputForm from '../../components/inputs/InputForm';
 import ButtonSubmit from '../../components/buttons/ButtonSubmit';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { notification } from 'antd';
 
 const AdminLogin = () => {
   const { t } = useTranslation();
@@ -22,10 +23,15 @@ const AdminLogin = () => {
       localStorage.setItem('refreshToken', refreshToken);
 
       setError(null); // Сброс ошибки при успешной авторизации
-      console.log('Admin logged in successfully');
+      // console.log('Admin logged in successfully');
+      notification.success({ message: t('admin-panel.msg.success') });
+
       // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
     } catch (err) {
       setError('Failed to login as admin');
+      notification.error({
+        message: t('admin-panel.msg.error')
+      });
       console.error('Error logging in:', err);
     }
   };

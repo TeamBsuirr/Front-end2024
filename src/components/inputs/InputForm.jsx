@@ -52,7 +52,7 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
 
   if (max || min) {
     return (
-      <input className="input-form"
+      <input className="input-form-date"
         type={type} id={id} name={name} value={value}
         placeholder={placeholder} min={min} max={max}
         onfocus="(this.type='date')"

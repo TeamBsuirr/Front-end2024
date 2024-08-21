@@ -57,3 +57,10 @@
 .list-select li:hover {
     background: #1F1B16;
 }
+
+.list-select .selected {
+    background-color: #E4B474;
+    font-weight: bold;
+    color: #E2D4C4;
+}
+

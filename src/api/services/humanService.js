@@ -11,7 +11,7 @@ const humanService = {
     getHumanById: (id) => handleRequest(() => api.get(`/humans/${id}`)),
     getHumanByIdForPostHuman: (id) => handleRequest(async () => {
         const response = await api.get(`/humans/${id}`)
-        return {data:transformResponseAHumanForMapForPostHuman(response.data)};
+        return { data: transformResponseAHumanForMapForPostHuman(response.data) };
     }),
     // createHuman: (data) => handleRequest(() => api.post('/humans', data)),
     postHuman: (data) => {
@@ -20,23 +20,36 @@ const humanService = {
         // Логируем данные перед отправкой
         console.log("Posting story with transformedData:", data);
 
-        transformedData.append('placeName', data.placeName);
-        transformedData.append('countDeath', data.countDeath);
-        transformedData.append('history.article', data.article);
-        transformedData.append('history.description', data.description);
-        transformedData.append('regionId', data.regionId);
-        transformedData.append('dateOfFoundation', data.dateOfFoundation);
-        transformedData.append('locationDescription', data.locationDescription);
-        transformedData.append('shortDescription', data.shortDescription);
-        transformedData.append('coordinates.latitude', data.latitude);
-        transformedData.append('coordinates.longitude', data.longitude);
+        transformedData.append('name', data.name);
+        transformedData.append('surname', data.surname);
+        transformedData.append('patronymic', data.patronymic);
+        transformedData.append('dateOfBirth', data.dateOfBirth);
+        transformedData.append('placeOfBirth', data.placeOfBirth);
+        transformedData.append('dateOfDie', data.dateOfDie);
 
-        data.files.forEach((file, index) => {
+        transformedData.append('history.article', "История");
+        transformedData.append('history.description', data.history);
+
+        // Separate and append files
+        const images = data.files.filter(file => file.type.startsWith('image/'));
+        const videos = data.files.filter(file => file.type.startsWith('video/'));
+
+        // Append images
+        images.forEach((file, index) => {
             transformedData.append('images', file);
         });
 
-        // Логируем данные перед отправкой
-        console.log("Posting place with transformedData:", transformedData);
+        // Append videos
+        videos.forEach((file, index) => {
+            transformedData.append('videos', file);
+        });
+
+        // Append places with a flattened structure
+        data.places.forEach((place, index) => {
+            transformedData.append(`places[${index}].placeId`, place.id);
+            transformedData.append(`places[${index}].dateFrom`, place.dateFrom);
+            transformedData.append(`places[${index}].dateTo`, place.dateTo);
+        });
 
         // Выполняем запрос, добавляя заголовок Content-Type
         return handleRequest(() => api.post('/humans', transformedData, {
@@ -47,32 +60,6 @@ const humanService = {
     },
     deleteHumanById: (id) => handleRequest(() => api.delete(`/humans/${id}`)),
 };
-
-// {
-//     "name": "string",
-//     "surname": "string",
-//     "patronymic": "string",
-//     "dateOfBirth": "2024-08-14",
-//     "placeOfBirth": "string",
-//     "dateOfDie": "2024-08-14",
-//     "images": [
-//       "string"
-//     ],
-//     "videos": [
-//       "string"
-//     ],
-//     "places": [
-//       {
-//         "placeId": 0,
-//         "dateFrom": "2024-08-14",
-//         "dateTo": "2024-08-14"
-//       }
-//     ],
-//     "history": {
-//       "article": "string",
-//       "description": "string"
-//     }
-//   }
 
 const transformResponseAHumanForMapForPostHuman = (data) => {
     console.log(data);

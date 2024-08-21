@@ -169,15 +169,15 @@ export default function NewPlace({ isAdmin = false }) {
                 .then(response => {
                     // console.log(response);
                     setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-place.success') });
+                    notification.success({ message: t('errors.front-end.add-story.success-place') });
 
                 })
                 .catch(error => {
                     // console.error('Ошибка получения результатов:', error);
                     let errMsg = error.message ? error.message : error;
                     notification.error({
-                        message: t('errors.front-end.'),
-                        description: t('errors.front-end.') + ' ' + errMsg
+                        message: t('errors.front-end.add-camp.common-create'),
+                        description:  errMsg
                     });
 
                     setLoading(false);
@@ -185,31 +185,31 @@ export default function NewPlace({ isAdmin = false }) {
         }
     };
 
-    const handleAdminAdd = () => {
-        if (validateInput()) {
-            // Form valid, send data to server
+    // const handleAdminAdd = () => {
+    //     if (validateInput()) {
+    //         // Form valid, send data to server
 
-            setLoading(true);
+    //         setLoading(true);
 
-            userService.postStory(formData)
-                .then(response => {
-                    // console.log(response);
-                    setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-place.success') });
+    //         userService.postStory(formData)
+    //             .then(response => {
+    //                 // console.log(response);
+    //                 setLoading(false);
+    //                 notification.success({ message: t('errors.front-end.add-story.success-place') });
 
-                })
-                .catch(error => {
-                    // console.error('Ошибка получения результатов:', error);
-                    let errMsg = error.message ? error.message : error;
-                    notification.error({
-                        message: t('errors.front-end.add-place.error-receive'),
-                        description: t('errors.front-end.add-place.error-receive-description') + ' ' + errMsg
-                    });
+    //             })
+    //             .catch(error => {
+    //                 // console.error('Ошибка получения результатов:', error);
+    //                 let errMsg = error.message ? error.message : error;
+    //                 notification.error({
+    //                     message: t('errors.front-end.add-place.error-receive'),
+    //                     description: t('errors.front-end.add-place.error-receive-description') + ' ' + errMsg
+    //                 });
 
-                    setLoading(false);
-                });
-        }
-    };
+    //                 setLoading(false);
+    //             });
+    //     }
+    // };
 
     return (
         <div className='section-new-history'>

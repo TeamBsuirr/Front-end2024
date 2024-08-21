@@ -15,7 +15,7 @@ import humanService from '../../api/services/humanService';
 import InputSelect from '../inputs/InputSelect';
 
 
-export default function NewHumans({arrayOfPlaces, objectOfPrisoners }) {
+export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPrisoners);
 
@@ -51,7 +51,7 @@ export default function NewHumans({arrayOfPlaces, objectOfPrisoners }) {
         }
 
         // Validate place of birth and place of stay
-        ['placeOfBirth', 'placeOfDetention'].forEach(field => {
+        ['placeOfBirth'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 200) {
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.symbol-length-place') });
@@ -136,10 +136,24 @@ export default function NewHumans({arrayOfPlaces, objectOfPrisoners }) {
 
     const handleSelectChange = (e) => {
         const { name, value } = e.target;
+        console.log('Received value:', name, value);
+
+        // Update the formData based on selected values
         setFormData(prevState => ({
             ...prevState,
             [name]: value
         }));
+    };
+
+    const handleDateRangeChange = (index, dateType, value) => {
+        const updatedPlaces = [...formData.places];
+
+        updatedPlaces[index][dateType] = value;
+
+        setFormData({
+            ...formData,
+            places: updatedPlaces
+        });
     };
 
     const handleAdminAdd = () => {
@@ -147,7 +161,7 @@ export default function NewHumans({arrayOfPlaces, objectOfPrisoners }) {
             // Form valid, send data to server
 
             setLoading(true);
-
+            console.log(formData)
             humanService.postHuman(formData)
                 .then(response => {
                     // console.log(response);
@@ -189,20 +203,63 @@ export default function NewHumans({arrayOfPlaces, objectOfPrisoners }) {
                         <InputForm placeholder={t("add-story.placeholder.surname")} name="surname" id="surname" type="text" onChange={handleInputChange} value={formData.surname} />
                         <InputForm placeholder={t("add-story.placeholder.name")} type="text" id="name" name="name" onChange={handleInputChange} value={formData.name} />
                         <InputForm placeholder={t("add-story.placeholder.patronymic")} type="text" id="patronymic" name="patronymic" onChange={handleInputChange} value={formData.patronymic} />
-                        <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} />
+                        <div className='container-input-span'>
+                            <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} />
+                            <span>{t("add-story.placeholder.date-of-birth")}</span>
+                        </div>
+                        <div className='container-input-span'>
+                        <InputForm placeholder={t("add-story.placeholder.date-of-death")} type="date" id="dateOfDie" name="dateOfDie" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfDie} />
+                        <span>{t("add-story.placeholder.date-of-death")}</span>
+                        </div>
+
                         <InputForm placeholder={t("add-story.placeholder.place-of-birth")} type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} value={formData.placeOfBirth} />
 
+
                         <InputSelect
-                            name="placeOfDetention"
-                            value={formData.placeOfDetention}
-                            arrayOfSelects={arrayOfPlaces}
-                            placeholder={t("add-story.placeholder.place-of-detention")} onChange={handleSelectChange}
+                            name="places"
+                            value={formData.places}
+                            arrayOfSelects={arrayOfPlaces}  // Ensure arrayOfPlaces contains objects with an `id` and `name` property
+                            multiple={true}
+                            onChange={handleSelectChange}
+                            placeholder={t("add-story.placeholder.place-of-detention")}
                         />
 
-                        <div className="date-range">
+                        {/* <div className="date-range">
                             <DateForm labelText={t("add-story.placeholder.date-from")} type="date" id="dateFrom" name="dateFrom" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateFrom} />
                             <DateForm labelText={t("add-story.placeholder.date-to")} type="date" id="dateTo" name="dateTo" max="2000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateTo} />
-                        </div>
+                        </div> */}
+
+                        {formData.places.map((place, index) => (
+
+                            <div className='container-date-range'>
+                                <div key={index} className="date-range">
+                                    <DateForm
+                                        labelText={t("add-story.placeholder.date-from")}
+                                        type="date"
+                                        id={`dateFrom-${index}`}
+                                        name={`dateFrom-${index}`}
+                                        max="3000-01-01"
+                                        min="1800-01-01"
+                                        onChange={e => handleDateRangeChange(index, 'dateFrom', e.target.value)}
+                                        value={place.dateFrom}
+                                    />
+
+
+                                    <DateForm
+                                        labelText={t("add-story.placeholder.date-to")}
+                                        type="date"
+                                        id={`dateTo-${index}`}
+                                        name={`dateTo-${index}`}
+                                        max="3000-01-01"
+                                        min="1800-01-01"
+                                        onChange={e => handleDateRangeChange(index, 'dateTo', e.target.value)}
+                                        value={place.dateTo}
+                                    />
+
+                                </div>
+                                <span>({place.name})</span>
+                            </div>
+                        ))}
                     </div>
                     <InputDescription onFileChange={handleFileChange} onStoryChange={handleStoryChange} value={formData.history} />
 

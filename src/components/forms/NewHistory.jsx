@@ -208,7 +208,12 @@ export default function NewHistory() {
                         <InputForm placeholder={t("add-story.placeholder.surname")} name="surname" id="surname" type="text" onChange={handleInputChange} value={formData.surname} />
                         <InputForm placeholder={t("add-story.placeholder.name")} type="text" id="name" name="name" onChange={handleInputChange} value={formData.name} />
                         <InputForm placeholder={t("add-story.placeholder.patronymic")} type="text" id="patronymic" name="patronymic" onChange={handleInputChange} value={formData.patronymic} />
-                        <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} />
+                        {/* <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} /> */}
+                        <div className='container-input-span'>
+                            <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} />
+                            <span>{t("add-story.placeholder.date-of-birth")}</span>
+                        </div>
+
                         <InputForm placeholder={t("add-story.placeholder.place-of-birth")} type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} value={formData.placeOfBirth} />
                         <InputForm placeholder={t("add-story.placeholder.place-of-detention")} type="text" id="placeOfDetention" name="placeOfDetention" onChange={handleInputChange} value={formData.placeOfDetention} />
                         <div className="date-range">

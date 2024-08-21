@@ -20,10 +20,15 @@ export default function NewHumanPage() {
         "surname": "",
         "patronymic": "",
         "dateOfBirth": "",
+        "dateOfDie":"",
         "placeOfBirth": "",
-        "placeOfDetention": "",
-        "dateFrom": "",
-        "dateTo": "",
+        "places": [
+            // {
+            //     "placeId": 0,
+            //     "dateFrom": "",
+            //     "dateTo": ""
+            // }
+        ],
         "history": "",
         "files": []
     });
