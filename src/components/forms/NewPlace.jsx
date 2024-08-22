@@ -136,13 +136,15 @@ export default function NewPlace({ isAdmin = false }) {
         });
     };
 
-    const handleFileChange = (e) => {
-        const { files } = e.target;
-        setFormData({
-            ...formData,
-            files: [...formData.files, ...files]
-        });
+    const handleFileChange = (files) => {
+        // Ensure files are processed correctly
+        const updatedFiles = Array.from(files);
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            files: updatedFiles
+        }));
     };
+
 
     const handleStoryChange = (e) => {
         setFormData({

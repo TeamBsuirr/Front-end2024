@@ -5,7 +5,14 @@ import InputMask from 'react-input-mask';
 import '../../assets/styles/inputs/InputSelect.css'
 
 
-export default function InputSelect({ placeholder, name, arrayOfSelects = [], onChange, value = multiple ? [] : '', multiple = false }) {
+export default function InputSelect({ 
+  placeholder,
+  name,
+  arrayOfSelects = [], // Default to an empty array
+  onChange,
+  value = [], // Default to an empty array if multiple is true
+  multiple = false
+ }) {
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef(null);
 

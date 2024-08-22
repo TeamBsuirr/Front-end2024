@@ -9,18 +9,31 @@ import { useTranslation } from 'react-i18next';
 
 export default function LandingPage() {
     const { t } = useTranslation();
-
+    let isLngWarn = false;
     const [searchInputValue, setSearchInputValue] = useState("");
 
     function clickGlobalSearchButton() {
+        console.log(localStorage.getItem('language'), isLngWarn)
+
+
         if (searchInputValue !== "") {
-            window.location.href = `/search?searchFor=${searchInputValue}`;
+            if (localStorage.getItem('language') !== "ru" && !isLngWarn) {
+                isLngWarn = true;
+                notification.warning({
+                    message: t("errors.front-end.warning-search-title"),
+                    description: t("errors.front-end.warning-search-description")
+                })
+            } else {
+                window.location.href = `/search?searchFor=${searchInputValue}`;
+            }
+
         } else {
             notification.warning({
                 message: t("errors.front-end.empty-search-field"),
                 description: t("errors.front-end.empty-search-field-description")
             })
         }
+
     }
 
     return (

@@ -8,14 +8,19 @@ import Carousel from '../other/Carousel';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
+import ButtonCrud from '../buttons/ButtonCrud';
 
-export default function Card({ objectOfPrisoners }) {
+export default function Card({ objectOfPrisoners, isAdmin = false }) {
     const { t } = useTranslation();
 
     const splitIndex = 73; // Количество символов в первой части строки
 
     const firstPart = objectOfPrisoners.history.description.slice(0, splitIndex);
     const secondPart = objectOfPrisoners.history.description.slice(splitIndex);
+
+    const handleDelete = (id)=>{
+        return 1;
+    }
 
     return (
 
@@ -29,7 +34,21 @@ export default function Card({ objectOfPrisoners }) {
                     <h1 className='header-of-container-prisoner'>
                         {objectOfPrisoners.surname + " " + objectOfPrisoners.name + " " + objectOfPrisoners.patronymic}
 
-                    </h1>   
+                    </h1>
+                    {!isAdmin ?
+                        <>
+                            <div className='container-description-map-admin'>
+
+                                <div className='admin-btn-container'>
+                                    <ButtonCrud href={`/crud/human/${objectOfPrisoners.id}`} svgType="edit" />
+                                    <ButtonCrud href="none" onClick={handleDelete(objectOfPrisoners.id)} svgType="delete" />
+                                </div>
+                            </div>
+                        </>
+                        :
+                        <></>
+                    }
+
 
                     <ul>
                         <li>
@@ -44,8 +63,9 @@ export default function Card({ objectOfPrisoners }) {
 
                             <li>
                                 <h2>{t("add-story.placeholder.place-of-detention")}: </h2>
-                                <span>{place.place.placeName}, {place.region?.centralCity}</span>
                                 <br />
+                                <span>{place.place.placeName}, {place.region?.centralCity} </span>
+
                             </li>
 
                             <li>

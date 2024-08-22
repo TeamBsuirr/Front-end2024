@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import Spinner from '../other/Spinner';
 import InputForm from '../inputs/InputForm';
 import DateForm from '../inputs/DateForm';
-import InputDescription from '../inputs/InputDescription';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import InputShortDescription from '../inputs/InputShortDescription';
 import InputPhoto from '../inputs/InputPhoto';
@@ -132,7 +131,9 @@ export default function NewPhoto({ objectOfPhoto, isAdmin = false }) {
                             <InputPhoto
                                 placeholder={t("add-photo.placeholder.photo-load")}
                                 onFileChange={handleFileChange}
-                                multiple={false} />
+                                multiple={false} 
+                                value={formData.image.urlToFile}
+                                />
 
                             {/* ДОПОЛНИТЕЛЬНАЯ ФУНКЦИОНАЛЬНОСТЬ ДЛЯ ПРИВЯЗКИ К МЕСТУ И УЗНИКУ  */}
 
@@ -178,8 +179,8 @@ export default function NewPhoto({ objectOfPhoto, isAdmin = false }) {
                             </span>
                         </div>
                         <div className='container-inputs-new-photo'>
-                            <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="title" id="title" type="text" onChange={handleInputChange} />
-                            <InputShortDescription onDescriptionChange={handleDescriptionChange} />
+                            <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="title" id="title" type="text" onChange={handleInputChange} value={formData.title} />
+                            <InputShortDescription onDescriptionChange={handleDescriptionChange}  shortValue={formData.description} />
                         </div>
                     </div>
                 </div>

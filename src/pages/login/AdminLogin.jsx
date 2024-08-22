@@ -26,6 +26,7 @@ const AdminLogin = () => {
       // console.log('Admin logged in successfully');
       notification.success({ message: t('admin-panel.msg.success') });
 
+      setTimeout(()=>window.location.href ="/crud",1000)
       // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
     } catch (err) {
       setError('Failed to login as admin');

@@ -45,10 +45,16 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
         }
-        if (formData.dateFrom >= formData.dateTo) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-dot') });
-        }
+        // if (formData.dateFrom >= formData.dateTo) {
+        //     isValid = false;
+        //     notification.error({ message: t('errors.front-end.add-story.incorrect-dot') });
+        // }
+        formData.places.forEach((place, index) => {
+            if (place.dateFrom >= place.dateTo) {
+                isValid = false;
+                notification.error({ message: t('errors.front-end.add-story.incorrect-dot') + ` (Place: ${place.place.placeName ?? place.name})` });
+            }
+        });
 
         // Validate place of birth and place of stay
         ['placeOfBirth'].forEach(field => {
@@ -119,12 +125,21 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
         });
     };
 
-    const handleFileChange = (e) => {
-        const { files } = e.target;
-        setFormData({
-            ...formData,
-            files: [...formData.files, ...files]
-        });
+    // const handleFileChange = (e) => {
+    //     const { files } = e.target;
+    //     setFormData({
+    //         ...formData,
+    //         files: [...formData.files, ...files]
+    //     });
+    // };
+
+    const handleFileChange = (files) => {
+        // Ensure files are processed correctly
+        const updatedFiles = Array.from(files);
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            files: updatedFiles
+        }));
     };
 
     const handleStoryChange = (e) => {
@@ -257,11 +272,11 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
                                     />
 
                                 </div>
-                                <span>({place.name})</span>
+                                <span>({place.place?.placeName ?? place.name})</span>
                             </div>
                         ))}
                     </div>
-                    <InputDescription onFileChange={handleFileChange} onStoryChange={handleStoryChange} value={formData.history} />
+                    <InputDescription onFileChange={handleFileChange} onStoryChange={handleStoryChange} valueFiles={formData.files}  value={formData.history} />
 
                 </div>
 

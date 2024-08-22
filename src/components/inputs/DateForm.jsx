@@ -3,7 +3,7 @@
 import { React } from 'react';
 import '../../assets/styles/inputs/DateForm.css'
 
-export default function DateForm({ labelText, type, id, name, max, min, onChange }) {
+export default function DateForm({ labelText, type, id, name, max, min, onChange,value }) {
 
     return (<>
         {/* <label for={id}>{labelText}</label>
@@ -19,6 +19,7 @@ export default function DateForm({ labelText, type, id, name, max, min, onChange
             min={min}
             max={max}
             onChange={onChange}
+            value={value}
         />
 
     </>

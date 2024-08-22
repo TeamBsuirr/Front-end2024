@@ -6,12 +6,8 @@ import FooterLayout from '../components/layout/FooterLayout';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import About from '../pages/about/About';
 import Contact from '../pages/contact/Contact';
-import SearchResults from '../components/forms/SearchResults';
 import PrisonerPage from '../pages/search/prisoner/PrisonerPage';
-import PrisonerSearchResult from '../components/forms/PrisonerSearchResult';
 import PrisonerStories from '../pages/prisoners/PrisonerStories';
-import MapUzniki from '../components/other/MapUzniki';
-import PhotoArchive from '../components/forms/PhotoArchive';
 import PageTemplate from '../components/other/PageTemplate';
 import AdminLogin from '../pages/login/AdminLogin';
 import SearchResultPage from '../pages/search/SearchResultPage';
@@ -21,11 +17,12 @@ import Analysis from '../pages/archive/analysis/Analysis';
 import MapPage from '../pages/map/MapPage';
 import i18n from '../i18n';
 import Spinner from '../components/other/Spinner';
-import NewPlace from '../pages/crud/NewPlacePage';
-import NewPhoto from '../pages/crud/NewPhotoPage';
-import NewPlacePage from '../pages/crud/NewPlacePage';
-import NewPhotoPage from '../pages/crud/NewPhotoPage';
-import NewHumanPage from '../pages/crud/NewHumanPage';
+
+import Policy from '../pages/about/policy/Policy';
+import NewPhotoPage from '../pages/crud/photo/NewPhotoPage';
+import NewPlacePage from '../pages/crud/place/NewPlacePage';
+import NewHumanPage from '../pages/crud/human/NewHumanPage';
+import AdminDashboardPage from '../pages/crud/AdminDashboardPage';
 
 const useLanguage = () => {
     const { lang } = useParams();
@@ -85,12 +82,14 @@ export default function DefaultLayout() {
                         {/* ONLY FOR ADMIN */}
                         <Route path="/:lang/story" element={<CreateStoryPage />} />
                         <Route path="/:lang/login" element={<AdminLogin />} />
-                        <Route path="/:lang/crud/place" element={<NewPlacePage />} />
-                        <Route path="/:lang/crud/photo" element={<NewPhotoPage />} />
+                        <Route path="/:lang/crud/place/*" element={<NewPlacePage />} />
+                        <Route path="/:lang/crud/photo/*" element={<NewPhotoPage />} />
                         <Route path="/:lang/crud/human/*" element={<NewHumanPage />} />
+                        <Route path="/:lang/crud" element={<AdminDashboardPage />} />
                         {/* ONLY FOR ADMIN */}
 
                         <Route path="/:lang/about" element={<About />} />
+                        <Route path="/:lang/about/policy" element={<Policy />} />
                         <Route path="/:lang/map" element={<MapPage />} />
                         <Route path="/:lang/archive/photos" element={<PhotoArchivePage />} />
                         <Route path="/:lang/archive/analysis" element={<Analysis />} />

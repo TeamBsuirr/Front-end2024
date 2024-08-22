@@ -1,9 +1,9 @@
 import { React, useEffect, useState } from 'react';
-import NewPhoto from '../../components/forms/NewPhoto';
+import NewPhoto from '../../../components/forms/NewPhoto';
 import { useTranslation } from 'react-i18next';
-import searchService from '../../api/services/searchService';
-import Spinner from '../../components/other/Spinner';
-import PageTemplate from '../../components/other/PageTemplate';
+import searchService from '../../../api/services/searchService';
+import Spinner from '../../../components/other/Spinner';
+import PageTemplate from '../../../components/other/PageTemplate';
 import { notification } from 'antd';
 
 
@@ -39,7 +39,6 @@ export default function NewPhotoPage() {
                     setObjectOfPhoto(data);
                     console.log(data)
                     setLoading(false);
-
                 })
                 .catch(errorPrisoner => {
                     //console.error('Ошибка получения данных концлагеря:', error);

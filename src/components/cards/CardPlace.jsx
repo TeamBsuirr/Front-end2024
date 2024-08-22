@@ -8,14 +8,19 @@ import Carousel from '../other/Carousel';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
+import ButtonCrud from '../buttons/ButtonCrud';
 
-export default function CardPlace({ objectOfPlace }) {
+export default function CardPlace({ objectOfPlace,isAdmin=false }) {
     const { t } = useTranslation();
 
     const splitIndex = 73; // Количество символов в первой части строки
 
     const firstPart = objectOfPlace.history.description.slice(0, splitIndex);
     const secondPart = objectOfPlace.history.description.slice(splitIndex);
+
+    const handleDelete = (id)=>{
+        return 1;
+    }
 
     return (
 
@@ -31,7 +36,19 @@ export default function CardPlace({ objectOfPlace }) {
 
                     </h1>
 
+                    {!isAdmin ?
+                        <>
+                            <div className='container-description-map-admin'>
 
+                                <div className='admin-btn-container'>
+                                    <ButtonCrud href={`/crud/place/${objectOfPlace.id}`} svgType="edit" />
+                                    <ButtonCrud href="none" onClick={handleDelete(objectOfPlace.id)} svgType="delete" />
+                                </div>
+                            </div>
+                        </>
+                        :
+                        <></>
+                    }
 
                     <ul>
                         <li>

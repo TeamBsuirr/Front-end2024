@@ -70,7 +70,7 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
         patronymic: data.patronymic || '',
         dateOfBirth: data.dateOfBirth || '',
         placeOfBirth: data.placeOfBirth || '',
-        placeOfDetention: [''], // Заполнится ниже
+        places: data.places || [], // Заполнится ниже
         dateFrom: '',
         dateTo: '',
         history: data.history?.description || '',
@@ -78,12 +78,12 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
     };
 
     // Если есть данные о местах, извлекаем информацию о месте заключения
-    if (data.places && data.places.length > 0) {
-        const place = data.places[0]; // Предполагаем, что первое место в списке - нужное
-        transformedData.placeOfDetention = place.places || [''];
-        transformedData.dateFrom = place.dateFrom || '';
-        transformedData.dateTo = place.dateTo || '';
-    }
+    // if (data.places && data.places.length > 0) {
+    //     const place = data.places[0]; // Предполагаем, что первое место в списке - нужное
+    //     transformedData.places = place.places || [''];
+    //     transformedData.dateFrom = place.dateFrom || '';
+    //     transformedData.dateTo = place.dateTo || '';
+    // }
 
     console.log(transformedData)
 

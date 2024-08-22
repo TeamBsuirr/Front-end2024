@@ -34,7 +34,7 @@ export default function FooterLanding() {
             <div className='bottom-footer-container'>
                 {/* BOTTOM PART */}
                 <span className="footer-project-name">{t('copyright')}</span>
-                <span className="footer-policy-info">{t('privacy-policy')}</span>
+                <a href="/about/policy" className="link">{t('privacy-policy')}</a>
             </div>
         </footer>
     )

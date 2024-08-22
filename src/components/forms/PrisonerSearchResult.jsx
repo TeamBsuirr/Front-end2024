@@ -122,7 +122,7 @@ export default function PrisonerSearchResult({ histories, places, years, isAdmin
           <span>{t('stories.additional-text')}</span>
         </div> */}
 
-        {isAdmin ?
+        {!isAdmin ?
           <>
             <div className='container-description-prisoners-admin'>
               <span>{t('stories.additional-text')}</span>

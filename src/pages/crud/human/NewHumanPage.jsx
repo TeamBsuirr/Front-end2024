@@ -1,15 +1,14 @@
 
 
 import { React, useEffect, useState } from 'react';
-import NewPhoto from '../../components/forms/NewPhoto';
-import NewHistoryAdmin from '../../components/forms/NewHuman';
-import PageTemplate from '../../components/other/PageTemplate';
-import Spinner from '../../components/other/Spinner';
+import NewHuman from '../../../components/forms/NewHuman';
+import PageTemplate from '../../../components/other/PageTemplate';
+import Spinner from '../../../components/other/Spinner';
 import { notification } from 'antd';
-import NotFound from '../../components/layout/NotFound';
-import placeService from '../../api/services/placeService';
+import NotFound from '../../../components/layout/NotFound';
+import placeService from '../../../api/services/placeService';
 import { useTranslation } from 'react-i18next';
-import humanService from '../../api/services/humanService';
+import humanService from '../../../api/services/humanService';
 
 
 export default function NewHumanPage() {
@@ -23,11 +22,6 @@ export default function NewHumanPage() {
         "dateOfDie":"",
         "placeOfBirth": "",
         "places": [
-            // {
-            //     "placeId": 0,
-            //     "dateFrom": "",
-            //     "dateTo": ""
-            // }
         ],
         "history": "",
         "files": []
@@ -101,7 +95,7 @@ export default function NewHumanPage() {
         return <NotFound />;
     } else {
         return (
-            <NewHistoryAdmin arrayOfPlaces={arrayOfPlaces} objectOfPrisoners={objectOfPrisoners} />
+            <NewHuman arrayOfPlaces={arrayOfPlaces} objectOfPrisoners={objectOfPrisoners} />
         );
     }
 

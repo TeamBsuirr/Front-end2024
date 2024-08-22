@@ -1,0 +1,27 @@
+.crud-button {
+    background-color: transparent;
+    background-image: var(--crud-img);
+    background-position: 51% 51%;
+    background-repeat: no-repeat;
+    color: #1F1B16;
+    border: none;
+    padding: 7px 10px 8px 26px;
+    font-size: 17px;
+    font-style: normal;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.5s ease;
+    text-transform: uppercase;
+    align-self: flex-end;
+    height: 40px;
+    width: 40px;
+}
+
+.crud-button:hover {
+    color: #E4B474;
+    background-color: #1F1B16;
+    border: 2px solid #1F1B16;
+    background-image: var(--crud-hover-img);
+    background-position: 51% 54%;
+    background-repeat: no-repeat;
+}
