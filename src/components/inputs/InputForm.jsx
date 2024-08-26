@@ -71,7 +71,7 @@ export default function InputForm({ placeholder, type, name, id, min = null, max
     <input className="input-form" id={id}
       name={name} type={type} placeholder={placeholder}
       value={value}
-      onChange={type === 'text' ? (value === null) ? handleTextInputChange : handleInputChange : handleInputChange}
+      onChange={type === 'text' ? handleTextInputChange : handleInputChange}
     />
   )
 }

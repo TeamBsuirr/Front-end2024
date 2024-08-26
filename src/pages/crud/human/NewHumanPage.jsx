@@ -1,6 +1,4 @@
-
-
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NewHuman from '../../../components/forms/NewHuman';
 import PageTemplate from '../../../components/other/PageTemplate';
 import Spinner from '../../../components/other/Spinner';
@@ -10,94 +8,276 @@ import placeService from '../../../api/services/placeService';
 import { useTranslation } from 'react-i18next';
 import humanService from '../../../api/services/humanService';
 
-
 export default function NewHumanPage() {
     const { t } = useTranslation();
     const [arrayOfPlaces, setArrayOfPlaces] = useState([]);
     const [objectOfPrisoners, setObjectOfPrisoners] = useState({
-        "name": "",
-        "surname": "",
-        "patronymic": "",
-        "dateOfBirth": "",
-        "dateOfDie":"",
-        "placeOfBirth": "",
-        "places": [
-        ],
-        "history": "",
-        "files": []
+        name: "",
+        surname: "",
+        patronymic: "",
+        dateOfBirth: "",
+        dateOfDie: "",
+        placeOfBirth: "",
+        places: [],
+        history: "",
+        files: []
     });
     const [loading, setLoading] = useState(true);
+    const [dataLoaded, setDataLoaded] = useState(false);
 
+    // Function to fetch file and create File object
+    async function urlToFile(url, fileName, fileExtension, fileType) {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return new File([blob], `${fileName}.${fileExtension}`, { type: fileType });
+    }
+
+    // Function to get MIME type from file extension
+    function getMimeType(fileExtension) {
+        const mimeTypes = {
+            jpg: "image/jpeg",
+            jpeg: "image/jpeg",
+            png: "image/png",
+            gif: "image/gif",
+            bmp: "image/bmp",
+            tiff: "image/tiff",
+            svg: "image/svg+xml",
+            mp4: "video/mp4",
+            avi: "video/x-msvideo",
+            mov: "video/quicktime",
+            mkv: "video/x-matroska",
+            flv: "video/x-flv",
+            wmv: "video/x-ms-wmv",
+            webm: "video/webm",
+            pdf: "application/pdf",
+            doc: "application/msword",
+            docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            xls: "application/vnd.ms-excel",
+            xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            ppt: "application/vnd.ms-powerpoint",
+            pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            txt: "text/plain",
+            csv: "text/csv",
+            zip: "application/zip",
+            rar: "application/x-rar-compressed",
+        };
+        return mimeTypes[fileExtension.toLowerCase()] || "application/octet-stream";
+    }
+
+    // Function to convert files from URLs to File objects
+    async function convertFiles(files) {
+        if (!Array.isArray(files) || files.length === 0) {
+            return [];
+        }
+        return Promise.all(files.map(async (fileObj) => {
+            const fileExtension = fileObj.urlToFile.split('.').pop();
+            const fileName = `file_${fileObj.id}`;
+            const mimeType = getMimeType(fileExtension);
+            return await urlToFile(fileObj.urlToFile, fileName, fileExtension, mimeType);
+        }));
+    }
+
+    // Fetch data and handle file conversion
     useEffect(() => {
         setLoading(true);
+        const queryStringArray = window.location.pathname.split('/');
+        let idOfPrisoner = queryStringArray[queryStringArray.length - 1];
 
+        if (!isNaN(idOfPrisoner) && idOfPrisoner.trim() !== '') {
+            idOfPrisoner = Number(idOfPrisoner);
+        } else {
+            idOfPrisoner = null;
+        }
+
+        // Fetch places data
         placeService.getAllPlacesForPostHuman()
             .then(data => {
-                console.log(data);
                 setArrayOfPlaces(data);
-                setLoading(false);
-
             })
             .catch(error => {
-                //console.error( error);
-
                 let errMsg = error.message ? error.message : error;
-
                 notification.error({
                     message: t('errors.front-end.fetch.msg-photo-a'),
                     description: t('errors.front-end.fetch.description') + errMsg
                 });
-
-                setLoading(false);
             });
 
-    }, []);
-
-    useEffect(() => {
-        setLoading(true);
-        const queryStringArray = window.location.pathname.split('/');
-        let idOfPrisoner = queryStringArray[queryStringArray.length - 1]
-
-        // Проверяем, является ли последний элемент числом
-        if (!isNaN(idOfPrisoner) && idOfPrisoner.trim() !== '') {
-            idOfPrisoner = Number(idOfPrisoner);
-        } else {
-            // Если это не число, делаем соответствующее действие, например, присваиваем null
-            idOfPrisoner = null;
-        }
-
-        if (idOfPrisoner)
+        if (idOfPrisoner) {
             humanService.getHumanByIdForPostHuman(idOfPrisoner)
-                .then(data => {
-                    setObjectOfPrisoners(data);
-                    console.log(data)
-                    setLoading(false);
-
+                .then(async data => {
+                    const fileObjects = await convertFiles(data.files);
+                    setObjectOfPrisoners({
+                        ...data,
+                        files: fileObjects
+                    });
+                    setDataLoaded(true); // Ensure that data is fully loaded
                 })
                 .catch(errorPrisoner => {
-                    //console.error('Ошибка получения данных концлагеря:', error);
-
                     let errMsg = errorPrisoner.message ? errorPrisoner.message : errorPrisoner;
                     notification.error({
                         message: t('errors.front-end.fetch.msg-prisoner'),
                         description: t('errors.front-end.fetch.description') + errMsg
                     });
-
-                    setLoading(false);
+                    setDataLoaded(true); // Ensure that data is fully loaded even if there is an error
                 });
-    }, []);
+        } else {
+            setDataLoaded(true); // Ensure that data is fully loaded even if no prisoner ID
+        }
 
+        setLoading(false); // Set loading to false after processing all data
+    }, [t]);
 
-
-    if (loading) {
+    // Check if the data is loaded and has valid content
+    if (loading || !dataLoaded) {
         return <PageTemplate content={<Spinner size="large" />} />;
-    } else if (!arrayOfPlaces) {
+    } else if (arrayOfPlaces.length === 0 || !objectOfPrisoners) {
         return <NotFound />;
     } else {
         return (
             <NewHuman arrayOfPlaces={arrayOfPlaces} objectOfPrisoners={objectOfPrisoners} />
         );
     }
-
 }
+
+
+// import React, { useEffect, useState } from 'react';
+// import NewHuman from '../../../components/forms/NewHuman';
+// import PageTemplate from '../../../components/other/PageTemplate';
+// import Spinner from '../../../components/other/Spinner';
+// import { notification } from 'antd';
+// import NotFound from '../../../components/layout/NotFound';
+// import placeService from '../../../api/services/placeService';
+// import { useTranslation } from 'react-i18next';
+// import humanService from '../../../api/services/humanService';
+
+// export default function NewHumanPage() {
+//     const { t } = useTranslation();
+//     const [arrayOfPlaces, setArrayOfPlaces] = useState([]);
+//     const [objectOfPrisoners, setObjectOfPrisoners] = useState({
+//         name: "",
+//         surname: "",
+//         patronymic: "",
+//         dateOfBirth: "",
+//         dateOfDie: "",
+//         placeOfBirth: "",
+//         places: [],
+//         history: "",
+//         files: []
+//     });
+//     const [loading, setLoading] = useState(true);
+//     const [dataLoaded, setDataLoaded] = useState(false);
+
+//     // Function to fetch file and create File object
+//     async function urlToFile(url, fileName, fileExtension, fileType) {
+//         const response = await fetch(url);
+//         const blob = await response.blob();
+//         return new File([blob], `${fileName}.${fileExtension}`, { type: fileType });
+//     }
+
+//     // Function to get MIME type from file extension
+//     function getMimeType(fileExtension) {
+//         const mimeTypes = {
+//             jpg: "image/jpeg",
+//             jpeg: "image/jpeg",
+//             png: "image/png",
+//             gif: "image/gif",
+//             bmp: "image/bmp",
+//             tiff: "image/tiff",
+//             svg: "image/svg+xml",
+//             mp4: "video/mp4",
+//             avi: "video/x-msvideo",
+//             mov: "video/quicktime",
+//             mkv: "video/x-matroska",
+//             flv: "video/x-flv",
+//             wmv: "video/x-ms-wmv",
+//             webm: "video/webm",
+//             pdf: "application/pdf",
+//             doc: "application/msword",
+//             docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+//             xls: "application/vnd.ms-excel",
+//             xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+//             ppt: "application/vnd.ms-powerpoint",
+//             pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+//             txt: "text/plain",
+//             csv: "text/csv",
+//             zip: "application/zip",
+//             rar: "application/x-rar-compressed",
+//         };
+//         return mimeTypes[fileExtension.toLowerCase()] || "application/octet-stream";
+//     }
+
+//     // Function to convert files from URLs to File objects
+//     async function convertFiles(files) {
+//         if (!Array.isArray(files) || files.length === 0) {
+//             return [];
+//         }
+//         return Promise.all(files.map(async (fileObj) => {
+//             const fileExtension = fileObj.urlToFile.split('.').pop();
+//             const fileName = `file_${fileObj.id}`;
+//             const mimeType = getMimeType(fileExtension);
+//             return await urlToFile(fileObj.urlToFile, fileName, fileExtension, mimeType);
+//         }));
+//     }
+
+//     // Fetch data and handle file conversion
+//     useEffect(() => {
+//         setLoading(true);
+//         const queryStringArray = window.location.pathname.split('/');
+//         let idOfPrisoner = queryStringArray[queryStringArray.length - 1];
+
+//         if (!isNaN(idOfPrisoner) && idOfPrisoner.trim() !== '') {
+//             idOfPrisoner = Number(idOfPrisoner);
+//         } else {
+//             idOfPrisoner = null;
+//         }
+
+//         // Fetch places data
+//         placeService.getAllPlacesForPostHuman()
+//             .then(data => {
+//                 setArrayOfPlaces(data);
+//             })
+//             .catch(error => {
+//                 let errMsg = error.message ? error.message : error;
+//                 notification.error({
+//                     message: t('errors.front-end.fetch.msg-photo-a'),
+//                     description: t('errors.front-end.fetch.description') + errMsg
+//                 });
+//             });
+
+//         if (idOfPrisoner) {
+//             humanService.getHumanByIdForPostHuman(idOfPrisoner)
+//                 .then(async data => {
+//                     const fileObjects = await convertFiles(data.files);
+//                     setObjectOfPrisoners({
+//                         ...data,
+//                         files: fileObjects
+//                     });
+//                     setDataLoaded(true); // Ensure that data is fully loaded
+//                 })
+//                 .catch(errorPrisoner => {
+//                     let errMsg = errorPrisoner.message ? errorPrisoner.message : errorPrisoner;
+//                     notification.error({
+//                         message: t('errors.front-end.fetch.msg-prisoner'),
+//                         description: t('errors.front-end.fetch.description') + errMsg
+//                     });
+//                     setDataLoaded(true); // Ensure that data is fully loaded even if there is an error
+//                 });
+//         } else {
+//             setDataLoaded(true); // Ensure that data is fully loaded even if no prisoner ID
+//         }
+
+//         setLoading(false); // Set loading to false after processing all data
+//     }, [t]);
+
+//     // Check if the data is loaded and has valid content
+//     if (loading || !dataLoaded) {
+//         return <PageTemplate content={<Spinner size="large" />} />;
+//     } else if (arrayOfPlaces.length === 0 || !objectOfPrisoners) {
+//         return <NotFound />;
+//     } else {
+//         return (
+//             <NewHuman arrayOfPlaces={arrayOfPlaces} objectOfPrisoners={objectOfPrisoners} />
+//         );
+//     }
+// }
 

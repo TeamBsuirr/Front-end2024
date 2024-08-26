@@ -58,6 +58,50 @@ const humanService = {
             }
         }));
     },
+    updateHuman: (data) => {
+        // Сериализуем данные в FormData MIME
+        const transformedData = new FormData()
+        // Логируем данные перед отправкой
+        console.log("Posting story with transformedData:", data);
+
+        transformedData.append('name', data.name);
+        transformedData.append('surname', data.surname);
+        transformedData.append('patronymic', data.patronymic);
+        transformedData.append('dateOfBirth', data.dateOfBirth);
+        transformedData.append('placeOfBirth', data.placeOfBirth);
+        transformedData.append('dateOfDie', data.dateOfDie);
+
+        transformedData.append('history.article', "История");
+        transformedData.append('history.description', data.history);
+
+        // Separate and append files
+        const images = data.files.filter(file => file.type.startsWith('image/'));
+        const videos = data.files.filter(file => file.type.startsWith('video/'));
+
+        // Append images
+        images.forEach((file, index) => {
+            transformedData.append('images', file);
+        });
+
+        // Append videos
+        videos.forEach((file, index) => {
+            transformedData.append('videos', file);
+        });
+
+        // Append places with a flattened structure
+        data.places.forEach((place, index) => {
+            transformedData.append(`places[${index}].placeId`, place.id);
+            transformedData.append(`places[${index}].dateFrom`, place.dateFrom);
+            transformedData.append(`places[${index}].dateTo`, place.dateTo);
+        });
+
+        // Выполняем запрос, добавляя заголовок Content-Type
+        return handleRequest(() => api.update('/humans', transformedData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }));
+    },
     deleteHumanById: (id) => handleRequest(() => api.delete(`/humans/${id}`)),
 };
 
@@ -69,8 +113,10 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
         surname: data.surname || '',
         patronymic: data.patronymic || '',
         dateOfBirth: data.dateOfBirth || '',
+        dateOfDie:data.dateOfDie || '',
         placeOfBirth: data.placeOfBirth || '',
-        places: data.places || [], // Заполнится ниже
+       // places: data.places || [], // Заполнится ниже
+       places: [],
         dateFrom: '',
         dateTo: '',
         history: data.history?.description || '',
@@ -78,12 +124,18 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
     };
 
     // Если есть данные о местах, извлекаем информацию о месте заключения
-    // if (data.places && data.places.length > 0) {
-    //     const place = data.places[0]; // Предполагаем, что первое место в списке - нужное
-    //     transformedData.places = place.places || [''];
-    //     transformedData.dateFrom = place.dateFrom || '';
-    //     transformedData.dateTo = place.dateTo || '';
-    // }
+    if (data.places && data.places.length > 0) {
+        // const place = data.places[0]; // Предполагаем, что первое место в списке - нужное
+        transformedData.places = data.places.map((place) => {
+            console.log(place)
+            return {
+                id: place?.place.id || '',
+                name: place?.place.placeName || '',
+                dateFrom: place.dateFrom || '',
+                dateTo: place.dateTo || '',
+            }
+        })
+    }
 
     console.log(transformedData)
 

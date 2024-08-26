@@ -21,18 +21,6 @@ export default function InputSelect({
     setIsOpen(isOpen => !isOpen);
   };
 
-  // Handle selection of a list item
-  // const handleListItemClick = (selectedValue) => {
-  //   if (onChange) {
-  //     if (typeof selectedValue === "object") {
-  //       onChange({ target: { name, value: selectedValue.name } });
-  //     } else {
-  //       onChange({ target: { name, value: selectedValue } });
-  //     }
-
-  //   }
-  //   setIsOpen(false);
-  // };
 
   // Handle selection of a list item
   const handleListItemClick = (selectedValue) => {
@@ -73,6 +61,18 @@ export default function InputSelect({
   };
 
   useEffect(() => {
+
+    if(value){
+      console.log(value)
+      // let placeholderTemp = arrayOfSelects.map((objPlace)=>{
+      //   return objPlace?.placeName ?? objPlace.name;
+      // })
+
+      // placeholderTemp.join(', ')
+
+    }
+
+
     // Bind the event listener for detecting clicks outside the component
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -83,7 +83,7 @@ export default function InputSelect({
 
   const displayValue = () => {
     if (multiple && Array.isArray(value)) {
-      return value.map(item => (typeof item === "object" ? item.name : item)).join(', ');
+      return value.map(item => (typeof item === "object" ? item.name ?? item.place.placeName : item)).join(', ');
     }
     return typeof value === "object" ? value.name : value;
   };
@@ -97,7 +97,7 @@ export default function InputSelect({
         name={name}
         id={name}
         value={displayValue()}
-        placeholder={placeholder}
+        placeholder={value.length!==0 ? displayValue() : placeholder}
         readOnly
         onClick={handleInputClick}
       />

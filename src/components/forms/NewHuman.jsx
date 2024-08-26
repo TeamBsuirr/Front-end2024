@@ -73,7 +73,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-length-story') });
         }
-        if (/["'<>]/.test(formData.history)) {
+        if (/[<>]/.test(formData.history)) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-symbols-story') });
         }

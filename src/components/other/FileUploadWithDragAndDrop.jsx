@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DndContext, PointerSensor, useSensor } from '@dnd-kit/core';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -62,6 +62,20 @@ const FileUploadWithDragAndDrop = ({ fileList, setFileList, onFileChange, typesD
         },
     });
 
+    useEffect(() => {
+        const newPreviewFiles = fileList.map(file => {
+            if (!file.preview && file.type?.startsWith('image/')) {
+                return {
+                    ...file,
+                    preview: URL.createObjectURL(file.file),
+                };
+            }
+            return file;
+        });
+    
+        setPreviewFiles(newPreviewFiles);
+    }, [fileList]);
+
     const onDragEnd = ({ active, over }) => {
         if (active.id !== over?.id) {
             const reorderedFiles = arrayMove(
@@ -83,15 +97,18 @@ const FileUploadWithDragAndDrop = ({ fileList, setFileList, onFileChange, typesD
     const handleFileInputChange = (event) => {
         if (event.target && event.target.files) {
             const files = Array.from(event.target.files);
+            console.log('Files:', files);
             const newFiles = files.map((file) => ({
                 uid: file.name + '-' + file.lastModified,
-                name: file.name ,
+                name: file.name,
                 type: file.type,
                 file,
                 preview: file.type.startsWith('image/') ? URL.createObjectURL(file) : null,
                 status: 'done',
             }));
+            console.log('New Files:', newFiles);
             const validatedFiles = newFiles.map(validateFiles);
+            console.log('Validated Files:', validatedFiles);
             setFileList(prevFiles => [...prevFiles, ...validatedFiles]);
             setPreviewFiles(prevFiles => [...prevFiles, ...newFiles.filter(file => file.preview)]);
             onFileChange([...fileList, ...validatedFiles].map(file => file.file));

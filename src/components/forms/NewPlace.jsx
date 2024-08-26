@@ -15,29 +15,10 @@ import HeaderSection from '../other/HeaderSection';
 import placeService from '../../api/services/placeService';
 
 
-export default function NewPlace({ isAdmin = false }) {
+export default function NewPlace({ isAdmin = false,objectOfPlace }) {
     const { t } = useTranslation();
 
-    const [formData, setFormData] = useState(
-        {
-            "placeName": "",
-            "countDeath": 0,
-
-            "article": "Заголовок истории",
-            "description": "",
-
-            "regionId": 1,
-            "files": [
-            ],
-            "dateOfFoundation": "",
-            "locationDescription": "",
-            "shortDescription": "",
-
-            "latitude": 0,
-            "longitude": 0
-
-        }
-    );
+    const [formData, setFormData] = useState(objectOfPlace);
 
 
     const [loading, setLoading] = useState(false);

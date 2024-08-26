@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import '../../assets/styles/inputs/InputDescription.css'
 import { useTranslation } from 'react-i18next';
 import FileUploadWithDragAndDrop from '../other/FileUploadWithDragAndDrop';
@@ -6,7 +6,22 @@ import FileUploadWithDragAndDrop from '../other/FileUploadWithDragAndDrop';
 
 export default function InputDescription({ onFileChange, onStoryChange, typesDisallowed = [], value,valueFiles=[] }) {
     const { t } = useTranslation();
-    const [fileList, setFileList] = useState(valueFiles);
+    const [fileList, setFileList] = useState([]);
+
+    // Обновляем fileList при изменении valueFiles
+    useEffect(() => {
+        const updatedFiles = valueFiles.map((file) => {
+            return {
+                uid: file.name + '-' + file.lastModified,
+                name: file.name,
+                type: file.type,
+                status: 'done',
+                file,
+                preview: file.type?.startsWith('image/') ? URL.createObjectURL(file) : null,
+            };
+        });
+        setFileList(updatedFiles);
+    }, [valueFiles]);
 
     const handleFileInputChange = (event) => {
         if (event.target && event.target.files) {
@@ -18,6 +33,7 @@ export default function InputDescription({ onFileChange, onStoryChange, typesDis
                 type: file.type,
                 status: 'done',
                 file,
+                preview: file.type?.startsWith('image/') ? URL.createObjectURL(file) : null,
             }));
 
             const updatedFileList = [...fileList, ...validatedFiles];
@@ -41,7 +57,7 @@ export default function InputDescription({ onFileChange, onStoryChange, typesDis
                 <FileUploadWithDragAndDrop
                     fileList={fileList}
                     setFileList={setFileList}
-                    onFileChange={onFileChange}  // Pass the callback down to the child component
+                    onFileChange={onFileChange} 
                     typesDisallowed={typesDisallowed}
                 />
             </div>
