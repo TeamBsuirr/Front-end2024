@@ -5,8 +5,10 @@
 import { useState } from 'react';
 import '../../assets/styles/buttons/ButtonAdmin.css'
 import plusSvg from '../../assets/images/icons/other/plus.svg'
+import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 export default function ButtomAdmin({ themeColor = "black", href = "/", spanText = "КНОПКА", size = "", onClick }) {
+    const navigate = useLocalizedNavigate();
     let styleClass = themeColor === "black" ? "admin-button" : "reverse-admin-button";
     let widthButton = 283;
     let heightButton = 39;
@@ -50,7 +52,8 @@ export default function ButtomAdmin({ themeColor = "black", href = "/", spanText
             <button
                 className={styleClass}
                 onClick={() => {
-                    window.location.href = href;
+                    //window.location.href = href;
+                    navigate(href);
                 }}
                 style={{ width: widthButton, height: heightButton }}
             >

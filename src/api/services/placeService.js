@@ -43,6 +43,7 @@ const placeService = {
       }
     }));
   },
+  deletePlaceById: (id) => handleRequest(() => api.delete(`/places/${id}`)),
 };
 
 const transformResponseAllPlacesForMapForPostHuman = (data) => {

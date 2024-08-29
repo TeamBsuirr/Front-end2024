@@ -7,8 +7,10 @@ import InputForm from '../../components/inputs/InputForm';
 import ButtonSubmit from '../../components/buttons/ButtonSubmit';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { notification } from 'antd';
+import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 const AdminLogin = () => {
+  const navigate = useLocalizedNavigate();
   const { t } = useTranslation();
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('mne12mrl_31zawfhc8');
@@ -26,7 +28,7 @@ const AdminLogin = () => {
       // console.log('Admin logged in successfully');
       notification.success({ message: t('admin-panel.msg.success') });
 
-      setTimeout(()=>window.location.href ="/crud",1000)
+      setTimeout(()=>navigate("/crud"),1000)
       // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
     } catch (err) {
       setError('Failed to login as admin');

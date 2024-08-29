@@ -1,4 +1,4 @@
-import { React, Suspense, useEffect } from 'react';
+import { React, Suspense, useEffect, useState } from 'react';
 import '../assets/styles/layout/DefaultLayout.css'
 import CreateStoryPage from '../pages/story/CreateStoryPage';
 import HeaderLayout from '../components/layout/HeaderLayout';
@@ -23,12 +23,18 @@ import NewPhotoPage from '../pages/crud/photo/NewPhotoPage';
 import NewPlacePage from '../pages/crud/place/NewPlacePage';
 import NewHumanPage from '../pages/crud/human/NewHumanPage';
 import AdminDashboardPage from '../pages/crud/AdminDashboardPage';
+import LandingPage from '../pages/LandingPage';
+import ProtectedRoute from './ProtectedRoute';
+import { checkAdminStatus } from '../utils/auth';
+
 
 const useLanguage = () => {
     const { lang } = useParams();
     const navigate = useNavigate();
-
+    
     useEffect(() => {
+        
+
         if (lang) {
             i18n.changeLanguage(lang);
             localStorage.setItem('language', lang);
@@ -66,38 +72,87 @@ const useLanguage = () => {
         }
     }, [lang, navigate]);
 
+   
+ 
     return lang;
 };
 
 export default function DefaultLayout() {
     useLanguage();
 
+    const [isAdmin, setIsAdmin] = useState(false);
+  
+    useEffect(()=>{
+        const result = checkAdminStatus();
+        setIsAdmin(result);
+    },[])
+
+  
     return (
         <>
+            <script src="https://api-maps.yandex.ru/v3/?apikey=6d85a114-74fe-4685-bb56-5802a759c0e9&lang=ru_RU"></script>
+            <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
             <HeaderLayout />
             <Suspense fallback={<PageTemplate content={<Spinner size="large" />} />}>
                 {/* <Suspense fallback={<Spinner size="large"s />}> */}
                 <main className='main-layout'>
                     <Routes>
-                        {/* ONLY FOR ADMIN */}
-                        <Route path="/:lang/story" element={<CreateStoryPage />} />
-                        <Route path="/:lang/login" element={<AdminLogin />} />
-                        <Route path="/:lang/crud/place/*" element={<NewPlacePage />} />
-                        <Route path="/:lang/crud/photo/*" element={<NewPhotoPage />} />
-                        <Route path="/:lang/crud/human/*" element={<NewHumanPage />} />
-                        <Route path="/:lang/crud" element={<AdminDashboardPage />} />
-                        {/* ONLY FOR ADMIN */}
+                        {/* Admin Protected Routes */}
+                        <Route
+                            path="/:lang/story"
+                            element={
+                                <ProtectedRoute>
+                                    <CreateStoryPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/:lang/crud/place/*"
+                            element={
+                                <ProtectedRoute>
+                                    <NewPlacePage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/:lang/crud/photo/*"
+                            element={
+                                <ProtectedRoute>
+                                    <NewPhotoPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/:lang/crud/human/*"
+                            element={
+                                <ProtectedRoute>
+                                    <NewHumanPage />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/:lang/crud"
+                            element={
+                                <ProtectedRoute>
+                                    <AdminDashboardPage />
+                                </ProtectedRoute>
+                            }
+                        />
 
+                        {/* Public Routes */}
+
+                        <Route path="/:lang/login" element={<AdminLogin />} />
                         <Route path="/:lang/about" element={<About />} />
                         <Route path="/:lang/about/policy" element={<Policy />} />
-                        <Route path="/:lang/map" element={<MapPage />} />
-                        <Route path="/:lang/archive/photos" element={<PhotoArchivePage />} />
+                        <Route path="/:lang/map" element={<MapPage isAdmin={isAdmin}/>} />
+                        <Route path="/:lang/archive/photos" element={<PhotoArchivePage isAdmin={isAdmin} />} />
                         <Route path="/:lang/archive/analysis" element={<Analysis />} />
                         <Route path="/:lang/contacts" element={<Contact />} />
-                        <Route path="/:lang/search" element={<SearchResultPage />} />
-                        <Route path="/:lang/prisoners" element={<PrisonerStories />} />
-                        <Route path="/:lang/search/prisoner/*" element={<PrisonerPage />} />
-                        <Route path="/:lang/search/place/*" element={<PlacePage />} />
+                        <Route path="/:lang/search" element={<SearchResultPage isAdmin={isAdmin}/>} />
+                        <Route path="/:lang/prisoners" element={<PrisonerStories isAdmin={isAdmin}/>} />
+                        <Route path="/:lang/search/prisoner/*" element={<PrisonerPage isAdmin={isAdmin}/>} />
+                        <Route path="/:lang/search/place/*" element={<PlacePage isAdmin={isAdmin}/>} />
+                        <Route path="/:lang/" element={<LandingPage />} />
                         <Route path="*" element={<PageTemplate />} />
                     </Routes>
                 </main>

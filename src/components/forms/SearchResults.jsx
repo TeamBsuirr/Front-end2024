@@ -5,16 +5,20 @@ import xIcon from '../../assets/vectors/x-icon.svg';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import HeaderSection from '../other/HeaderSection';
+import { useNavigate } from 'react-router-dom';
+import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 export default function SearchResults({ arrayFoundObjects }) {
     const { t } = useTranslation();
+    const navigate = useLocalizedNavigate();
     const [searchInputValue, setSearchInputValue] = useState("");
     const [selectedFilter, setSelectedFilter] = useState(t('search.parameters.show-all'));
     const [filteredObjects, setFilteredObjects] = useState(arrayFoundObjects);
 
     function clickGlobalSearchButton() {
         if (searchInputValue !== "") {
-            window.location.href = `/search?searchFor=${searchInputValue}`;
+            //window.location.href = `/search?searchFor=${searchInputValue}`;
+            navigate(`/search?searchFor=${encodeURIComponent(searchInputValue)}`);
         } else {
             notification.warning({
                 message: t('erros.front-end.empty-search-field'),
@@ -149,7 +153,7 @@ export default function SearchResults({ arrayFoundObjects }) {
                     <div className='result-container-search-result' key={obj.id}>
                         <img src={obj.img} alt={"image #" + 1} onClick={() => {
                             const hrefString = obj.type === "humans" ? "/search/prisoner/" : "/search/place/";
-                            window.location.href = hrefString + obj.id;
+                            navigate(hrefString + obj.id);
                         }} />
                         <div className='result-container-search-result-description'>
                             <h3>{obj.header}</h3>

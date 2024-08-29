@@ -1,6 +1,7 @@
 import axios from 'axios';
 import api from './axiosInstance';
 import userService from './services/userService';
+import { logout, refreshToken } from '../utils/tokenService';
 
 // console.log("start");
 
@@ -55,41 +56,41 @@ api.interceptors.request.use(
 );
 
 
-//         const accessToken = localStorage.getItem('accessToken');
-//         const refreshToken = localStorage.getItem('refreshToken');
-//         console.log("Request interceptor: tokens set");
-
-//         if (accessToken) {
-//             config.headers['Authorization'] = `Bearer ${accessToken}`;
-//         }
-//         if (refreshToken) {
-//             config.headers['x-refresh-token'] = refreshToken;
-//         }
-
-
-//         console.log("Request interceptor: config", config);
-//         return config;
-
-//     }
-//     , function (error) {
-//         console.error("Request interceptor error:", error);
-//         return Promise.reject(error);
-//     }
-// );
-
-
 // Перехватчик ответов
 api.interceptors.response.use(
     response => {
         console.log("Response interceptor: response received");
         return response;
     },
-    error => {
+    // error => {
+    //     console.error("Response interceptor error:", error);
+    //     if (error.response && error.response.status === 401) {
+    //         console.warn("Unauthorized access - redirecting to login");
+    //         //window.location.href = '/';
+    //     }
+    //     return Promise.reject(error);
+    // }
+    async error => {
         console.error("Response interceptor error:", error);
-        if (error.response && error.response.status === 401) {
-            console.warn("Unauthorized access - redirecting to login");
-            //window.location.href = '/';
+
+        const originalRequest = error.config;
+
+        if (error.response && error.response.status === 401 && !originalRequest._retry) {
+            console.warn("Unauthorized access detected - attempting to refresh token");
+
+            originalRequest._retry = true;
+
+            try {
+                const newAccessToken = await refreshToken();
+                api.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+                originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                return api(originalRequest);
+            } catch (refreshError) {
+                console.error("Token refresh failed:", refreshError);
+                logout();  // Выход из системы, если обновление токена не удалось
+            }
         }
+
         return Promise.reject(error);
     }
 );

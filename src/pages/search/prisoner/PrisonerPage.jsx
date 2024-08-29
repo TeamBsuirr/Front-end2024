@@ -10,7 +10,7 @@ import NotFound from '../../../components/layout/NotFound';
 import { useTranslation } from 'react-i18next';
 
 
-export default function PrisonerPage() {
+export default function PrisonerPage({isAdmin=false}) {
     const { t } = useTranslation();
     const [objectOfPrisoners, setObjectOfPrisoners] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -63,7 +63,7 @@ export default function PrisonerPage() {
         return <NotFound />;
     } else {
         return (
-            <Card objectOfPrisoners={objectOfPrisoners} />
+            <Card objectOfPrisoners={objectOfPrisoners} isAdmin={isAdmin}/>
         );
     }
 }

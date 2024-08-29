@@ -10,7 +10,7 @@ import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 
-export default function PrisonerStories() {
+export default function PrisonerStories({isAdmin=false}) {
     const { t } = useTranslation();
     const [histories, setHistoies] = useState([]);
     const [places, setPlaces] = useState([]);
@@ -52,7 +52,7 @@ export default function PrisonerStories() {
         return <NotFound />;
     } else {
         return (
-            <PrisonerSearchResult histories={histories} places={places} years={years} />
+            <PrisonerSearchResult histories={histories} places={places} years={years} isAdmin={isAdmin}/>
         );
     }
 }

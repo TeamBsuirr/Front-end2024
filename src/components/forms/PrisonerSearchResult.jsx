@@ -4,9 +4,10 @@ import '../../assets/styles/forms/PrisonerSearchResult.css'
 import { useTranslation } from 'react-i18next';
 import ButtomAdmin from '../buttons/ButtonAdmin';
 import HeaderSection from '../other/HeaderSection';
+import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 export default function PrisonerSearchResult({ histories, places, years, isAdmin = false }) {
-
+  const navigate = useLocalizedNavigate();
   const { t } = useTranslation();
   const [filteredHistories, setFilteredHistories] = useState(histories);
   const [selectedPlace, setSelectedPlace] = useState(t('stories.filter.place'));
@@ -122,7 +123,7 @@ export default function PrisonerSearchResult({ histories, places, years, isAdmin
           <span>{t('stories.additional-text')}</span>
         </div> */}
 
-        {!isAdmin ?
+        {isAdmin ?
           <>
             <div className='container-description-prisoners-admin'>
               <span>{t('stories.additional-text')}</span>
@@ -174,7 +175,7 @@ export default function PrisonerSearchResult({ histories, places, years, isAdmin
 
         {filteredHistories.map((obj) => (
           <div className='result-container-search-result' key={obj.id}>
-            <img src={obj.img} alt={"image #" + 1} onClick={() => { window.location.href = "/search/prisoner/" + obj.id; }} />
+            <img src={obj.img} alt={"image #" + 1} onClick={() => { navigate("/search/prisoner/" + obj.id); }} />
             <div className='result-container-search-result-description'>
               <h3>{obj.header}</h3>
               <span>{obj.description}</span>

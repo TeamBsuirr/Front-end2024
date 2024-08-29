@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 
 
 import DefaultLayout from './layouts/DefaultLayout';
@@ -6,9 +6,11 @@ import LandingPage from './pages/LandingPage';
 
 import { createBrowserRouter, Route, RouterProvider, Routes, Navigate, Outlet } from 'react-router-dom';
 import './index.css';
-import './js/common/globalFunctions';
+import './utils/globalFunctions';
+
 import PageTemplate from './components/other/PageTemplate';
 import Spinner from './components/other/Spinner';
+import { scheduleTokenRefresh } from './utils/tokenService';
 
 
 // const router = createBrowserRouter([
@@ -18,17 +20,13 @@ import Spinner from './components/other/Spinner';
 
 const router = createBrowserRouter([
   { path: '/*', element: <DefaultLayout /> },
-  { path: '/', element: <LandingPage /> },
-
 ]);
 
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(false);
-
-  if (isLoading) {
-    return <PageTemplate content={<Spinner size="large" />} />;
-  }
+  useEffect(() => {
+    scheduleTokenRefresh(); // Активируем регулярное обновление токенов
+  }, []);
 
   return (
 

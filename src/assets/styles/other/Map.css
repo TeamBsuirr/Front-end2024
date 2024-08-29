@@ -58,6 +58,10 @@ width: 70%;
 
 .container-map {
     border: 1.5px #1F1B16 solid;
+    position: relative;
+    z-index: 1; /* Ensure this is above other elements */
+
+    pointer-events: auto;
 }
 
 .active-place {

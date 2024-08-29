@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useCallback, useState } from 'react';
 import '../../assets/styles/other/Map.css'
 import PlaceMarkIcon from '../../assets/images/icons/other/star.svg'
 import closeSvg from '../../assets/images/icons/other/close.svg'
@@ -13,10 +13,15 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
   const [activePlace, setActivePlace] = useState(passedPlace);
 
   // Handler function for setting the active place
-  const handlePlacemarkClick = (place) => {
-    //console.log('Place clicked:', place);
+//   const handlePlacemarkClick = (place, e) => {
+//     e.stopPropagation();
+//     setActivePlace(place);
+// };
+
+  const handlePlacemarkClick = useCallback((place, e) => {
+    e.stopPropagation();
     setActivePlace(place);
-  };
+  }, []);
 
   return (
     <div className='section-map-page'>
@@ -31,7 +36,7 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
             <div className='container-description-map-admin'>
               <span>{t('map.additional-text')}</span>
               <div className='admin-btn-container'>
-                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/" spanText={t('admin-panel.btn.add-camp')} size="m" />
+                <ButtomAdmin isColorsInverse={false} themeColor="black" href={`/crud/place`} spanText={t('admin-panel.btn.add-camp')} size="m" />
               </div>
             </div>
           </>
@@ -48,10 +53,21 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
 
         <div className='container-map'>
           <YMaps>
-            <Map
+            {/* <Map
               width={1320}
               height={627}
               defaultState={{ center: passedPlace ? [passedPlace.coordinates.latitude, passedPlace.coordinates.longitude] : [53.55, 27.66], zoom: 6.5 }}
+            > */}
+              <Map
+              width={1320}
+              height={627}
+              defaultState={{
+                center: passedPlace
+                  ? [passedPlace.coordinates.latitude, passedPlace.coordinates.longitude]
+                  : [53.55, 27.66],
+                zoom: 6.5,
+              }}
+              onLoad={(ymaps) => console.log('Map loaded')} // Ensure map is fully loaded
             >
               {arrayOfPlaceMarks.map((obj) => (
                 <Placemark
@@ -63,7 +79,7 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
                     iconImageSize: obj.id === activePlace?.id ? [40, 40] : [30, 30],  // Increase size if active
                     iconImageOffset: obj.id === activePlace?.id ? [-20, -20] : [-15, -15],
                   }}
-                  onClick={() => handlePlacemarkClick(obj)}
+                  onClick={(e) => handlePlacemarkClick(obj,e)}
                 />
               ))}
             </Map>

@@ -4,9 +4,11 @@
 
 import { useState } from 'react';
 import '../../assets/styles/buttons/ButtonSubmit.css'
+import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 
 export default function ButtonSubmit({ isColorsInverse=false, themeColor="yellow", href="/", spanText="КНОПКА", size="",onClick}) {
+    const navigate = useLocalizedNavigate();
     let styleClass = themeColor === "yellow" ? 
     (isColorsInverse ? "reverse-submit-button" : "submit-button") : 
     (isColorsInverse ? "reverse-transparent-submit-button" : "transparent-submit-button");
@@ -46,7 +48,8 @@ export default function ButtonSubmit({ isColorsInverse=false, themeColor="yellow
             <button 
                 className={styleClass} 
                 onClick={()=>{
-                    window.location.href=href;
+                    navigate(href);
+                    //window.location.href=href;
                 }} 
                 style={{ width: widthButton, height: heightButton }}
             >

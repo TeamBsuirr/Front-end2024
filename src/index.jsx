@@ -8,8 +8,6 @@ import './api/interceptors';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <script src="https://api-maps.yandex.ru/v3/?apikey=6d85a114-74fe-4685-bb56-5802a759c0e9&lang=ru_RU"></script>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
     <App />
   </React.StrictMode>,
 )

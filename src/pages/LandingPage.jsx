@@ -5,10 +5,13 @@ import HeaderLanding from '../components/layout/HeaderLanding';
 import FooterLanding from '../components/layout/FooterLanding';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import useLocalizedNavigate from '../utils/useLocalizedNavigate';
 
 
 export default function LandingPage() {
     const { t } = useTranslation();
+    const navigate = useLocalizedNavigate();
     let isLngWarn = false;
     const [searchInputValue, setSearchInputValue] = useState("");
 
@@ -24,7 +27,8 @@ export default function LandingPage() {
                     description: t("errors.front-end.warning-search-description")
                 })
             } else {
-                window.location.href = `/search?searchFor=${searchInputValue}`;
+                //window.location.href = `/search?searchFor=${searchInputValue}`;
+                navigate(`/search?searchFor=${encodeURIComponent(searchInputValue)}`);
             }
 
         } else {
@@ -83,7 +87,7 @@ export default function LandingPage() {
                                 <div className='line-container'>
 
                                     <button className="link-button item1"
-                                        onClick={() => { window.location.href = "/prisoners"; }}
+                                        onClick={() => { navigate("/prisoners"); }}
                                     >{t('main.btn.stories')}</button>
 
                                     <p>{t("main.btn-description.stories")}</p>
@@ -92,7 +96,7 @@ export default function LandingPage() {
                             <div className="link-item ">
                                 <div className='line-container'>
                                     <button className="link-button item2"
-                                        onClick={() => { window.location.href = "/archive/photos"; }}
+                                        onClick={() => { navigate("/archive/photos"); }}
                                     >{t('main.btn.photo-archive')}</button>
                                     <p>{t("main.btn-description.photo-archive")}</p>
                                 </div>
@@ -100,7 +104,7 @@ export default function LandingPage() {
                             <div className="link-item ">
                                 <div className='line-container'>
                                     <button className="link-button item3"
-                                        onClick={() => { window.location.href = "/map"; }}
+                                        onClick={() => { navigate("/map"); }}
                                     >{t('main.btn.places')}</button>
                                     <p>{t("main.btn-description.places")}</p>
                                 </div>
@@ -108,7 +112,7 @@ export default function LandingPage() {
                             <div className="link-item ">
                                 <div className='line-container'>
                                     <button className="link-button item4" style={{ textTransform: "uppercase", fontSize: "22px" }}
-                                        onClick={() => { window.location.href = "/archive/analysis"; }}
+                                        onClick={() => { navigate("/archive/analysis"); }}
                                     >{t('main.btn.legal-analysis')}</button>
                                     <p>{t("main.btn-description.legal-analysis")}</p>
                                 </div>
@@ -117,7 +121,7 @@ export default function LandingPage() {
                     </div>
                 </section >
 
-                <FooterLanding />
+                {/* <FooterLanding /> */}
 
             </main >
 

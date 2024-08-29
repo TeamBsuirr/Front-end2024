@@ -4,12 +4,15 @@ import '../../assets/styles/layout/HeaderLayout.css'
 import SiteMainHeaderSpan from '../other/SiteMainHeaderSpan';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
+import { useLocation } from 'react-router-dom';
 
 export default function HeaderLayout() {
-
+    const navigate = useLocalizedNavigate();
     const [menuVisible, setMenuVisible] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('language') || 'ru');
     const [isHovered, setIsHovered] = useState(false);
+    const location = useLocation();
     const { t } = useTranslation();
 
     const toggleMenu = () => {
@@ -17,8 +20,34 @@ export default function HeaderLayout() {
     };
 
     const handleLanguageSelect = (language) => {
+        console.log('Selected language:', language); // Debug log
         setSelectedLanguage(language);
-        setMenuVisible(false); // Закрыть меню после выбора
+        setMenuVisible(false); // Close menu after selection
+    
+        // Update localStorage with the selected language
+        localStorage.setItem('language', language);
+    
+        // Get the selected language or default to 'ru'
+        const selectedLang = language || 'ru';
+        console.log('Selected language from localStorage:', selectedLang); // Debug log
+    
+        // Get current path, query parameters, and hash
+        const currentPath = location.pathname;
+        const searchParams = location.search;
+        const hashParams = location.hash;
+    
+        // Remove the current language prefix if it exists
+        const currentLangMatch = currentPath.match(/^\/(ru|de|be)/);
+        const pathWithoutCurrentLang = currentLangMatch
+            ? currentPath.replace(currentLangMatch[0], '')
+            : currentPath;
+    
+        // Construct the new path with the selected language prefix
+        const newPath = `/${selectedLang}${pathWithoutCurrentLang}${searchParams}${hashParams}`;
+        console.log('Navigating to new path:', newPath); // Debug log
+    
+        // Navigate to the new path
+        navigate(newPath, { replace: true });
     };
 
     useEffect(() => {

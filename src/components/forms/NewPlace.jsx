@@ -15,7 +15,7 @@ import HeaderSection from '../other/HeaderSection';
 import placeService from '../../api/services/placeService';
 
 
-export default function NewPlace({ isAdmin = false,objectOfPlace }) {
+export default function NewPlace({ objectOfPlace }) {
     const { t } = useTranslation();
 
     const [formData, setFormData] = useState(objectOfPlace);

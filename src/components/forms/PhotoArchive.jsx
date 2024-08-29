@@ -28,7 +28,7 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
                 <HeaderSection
                     textFirst={t('photo-archive.header')}
                 />
-                {!isAdmin ?
+                {isAdmin ?
                     <>
                         <div className='container-description-map-admin'>
                             <span>{t('photo-archive.additional-text')}</span>

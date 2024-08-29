@@ -11,7 +11,7 @@ import NotFound from '../../../components/layout/NotFound';
 import { useTranslation } from 'react-i18next';
 
 
-export default function PhotoArchivePage() {
+export default function PhotoArchivePage({isAdmin=false}) {
     const { t } = useTranslation();
     const [arrayOfPhotoObjects, setArrayOfPhotoObjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -50,7 +50,7 @@ export default function PhotoArchivePage() {
         return <NotFound />;
     } else {
         return (
-            <PhotoArchive arrayOfPhotoObjects={arrayOfPhotoObjects} />
+            <PhotoArchive arrayOfPhotoObjects={arrayOfPhotoObjects} isAdmin={isAdmin}/>
         );
     }
 }

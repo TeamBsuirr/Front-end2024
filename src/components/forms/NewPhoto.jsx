@@ -15,7 +15,7 @@ import HeaderSection from '../other/HeaderSection';
 import searchService from '../../api/services/searchService';
 
 
-export default function NewPhoto({ objectOfPhoto, isAdmin = false }) {
+export default function NewPhoto({ objectOfPhoto}) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPhoto);
     const [loading, setLoading] = useState(false);

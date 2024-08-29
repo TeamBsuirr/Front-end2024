@@ -8,7 +8,7 @@ import MapUzniki from '../../components/other/MapUzniki';
 import { useTranslation } from 'react-i18next';
 
 
-export default function MapPage() {
+export default function MapPage({isAdmin=false}) {
     const { t } = useTranslation();
     const [arrayOfPlaces, setArrayOfPlaces] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -57,7 +57,7 @@ export default function MapPage() {
         return <NotFound />;
     } else {
         return (
-            <MapUzniki arrayOfPlaceMarks={arrayOfPlaces} passedPlace={passedPlace} isAdmin={true} />
+            <MapUzniki arrayOfPlaceMarks={arrayOfPlaces} passedPlace={passedPlace} isAdmin={isAdmin} />
         );
     }
 }

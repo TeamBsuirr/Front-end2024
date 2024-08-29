@@ -82,7 +82,7 @@ html {
   color: #E2D4C4;
   width: 100%;
   box-sizing: border-box;
-  height: 123vh;
+  /* height: 123vh; */
 }
 
 .search-section {
