@@ -1,0 +1,49 @@
+name: Deploy Frontend
+
+# Триггер для запуска на каждый пуш в ветку main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    # Указываем на какой виртуальной машине будет выполняться job
+    runs-on: ubuntu-latest
+
+    steps:
+      # Шаг 1: Клонирование репозитория
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Шаг 2: Установка Node.js версии 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      # Шаг 3: Установка зависимостей
+      - name: Install dependencies
+        run: npm install
+
+      # Шаг 4: Сборка проекта
+      - name: Build project
+        run: npm run build
+
+      # Шаг 5: Копирование файлов на сервер через SSH
+      - name: Deploy to server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+          mkdir -p ~/.ssh
+          echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+
+          # Копирование файлов на сервер
+          rsync -avz --delete ./build/ user@your-server.com:/var/www/uzniki-front-v1/build
+
+      # Шаг 6: Перезапуск сервера (если нужно, используйте pm2)
+      - name: Restart server
+        run: |
+          ssh user@your-server.com "pm2 restart all"
