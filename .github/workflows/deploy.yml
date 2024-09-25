@@ -1,6 +1,6 @@
 name: Deploy Frontend
 
-# Триггер для запуска на каждый пуш в ветку main
+# Триггер для запуска workflow на каждый пуш в ветку main
 on:
   push:
     branches:
@@ -40,10 +40,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
 
-          # Копирование файлов на сервер
-          rsync -avz --delete ./build/ user@your-server.com:/var/www/uzniki-front-v1/build
+          # Копирование файлов на сервер через IP-адрес
+          rsync -avz --delete ./build/ user@93.177.124.102:/var/www/uzniki-front-v1/build
 
-      # Шаг 6: Перезапуск сервера (если нужно, используйте pm2)
+      # Шаг 6: Перезапуск сервера через SSH и PM2
       - name: Restart server
         run: |
-          ssh user@your-server.com "pm2 restart all"
+          ssh user@93.177.124.102 "pm2 restart all"
