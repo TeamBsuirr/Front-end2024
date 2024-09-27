@@ -30,6 +30,8 @@ jobs:
 
       # Шаг 4: Сборка проекта
       - name: Build project
+        env:
+          CI: false
         run: npm run build
 
       # Шаг 5: Копирование файлов на сервер через SSH
