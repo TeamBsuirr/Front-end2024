@@ -99,14 +99,14 @@ export default function DefaultLayout() {
                 <main className='main-layout'>
                     <Routes>
                         {/* Admin Protected Routes */}
-                        <Route
+                        {/* <Route
                             path="/:lang/story"
                             element={
                                 <ProtectedRoute>
                                     <CreateStoryPage />
                                 </ProtectedRoute>
                             }
-                        />
+                        /> */}
                         <Route
                             path="/:lang/crud/place/*"
                             element={

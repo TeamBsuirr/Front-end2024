@@ -13,7 +13,7 @@ i18n
     debug: true,
     backend: {
       //loadPath: '/locales/{{lng}}/{{ns}}.json', // Путь к файлам с переводами
-      loadPath: 'http://localhost:8080/i18n/{{lng}}.json', // Путь к файлам с переводами
+      loadPath: process.env.REACT_APP_I18N_PATH, // Путь к файлам с переводами
       
     },
     detection: {

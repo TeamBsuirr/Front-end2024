@@ -8,6 +8,8 @@ import { checkAdminStatus } from '../utils/auth';
 const ProtectedRoute = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const currentLNG = localStorage.getItem('language') || 'ru';
+  const linkToPass = "/"+currentLNG+"/login";
 
   useEffect(() => {
     const verifyAdmin = async () => {
@@ -23,7 +25,7 @@ const ProtectedRoute = ({ children }) => {
     return <Spinner size="large" />; // Or a loading screen
   }
 
-  return isAdmin ? children : <Navigate to="/login" replace />;
+  return isAdmin ? children : <Navigate to={linkToPass} replace />;
 };
 
 export default ProtectedRoute;

@@ -17,7 +17,7 @@ export const refreshToken = async () => {
 export const logout = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-  window.location.href = '/login'; // Перенаправляем на страницу логина
+  window.location.href = '/:lang/login'; // Перенаправляем на страницу логина
 };
 
 // Механизм для регулярного обновления токенов

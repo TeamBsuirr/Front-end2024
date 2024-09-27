@@ -13,11 +13,6 @@ import Spinner from './components/other/Spinner';
 import { scheduleTokenRefresh } from './utils/tokenService';
 
 
-// const router = createBrowserRouter([
-//   { path: '/*', element: <DefaultLayout /> },
-//   { path: '/', element: <LandingPage /> },
-// ], { basename: '/Front-end2024/' });
-
 const router = createBrowserRouter([
   { path: '/*', element: <DefaultLayout /> },
 ]);
