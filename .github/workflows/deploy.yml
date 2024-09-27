@@ -33,6 +33,7 @@ jobs:
       # Шаг 5: Копирование файлов на сервер через SSH
       - name: Deploy to server
         env:
+          CI: ""
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
