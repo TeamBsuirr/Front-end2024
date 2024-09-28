@@ -99,14 +99,7 @@ export default function DefaultLayout() {
                 <main className='main-layout'>
                     <Routes>
                         {/* Admin Protected Routes */}
-                        {/* <Route
-                            path="/:lang/story"
-                            element={
-                                <ProtectedRoute>
-                                    <CreateStoryPage />
-                                </ProtectedRoute>
-                            }
-                        /> */}
+                
                         <Route
                             path="/:lang/crud/place/*"
                             element={
@@ -141,7 +134,7 @@ export default function DefaultLayout() {
                         />
 
                         {/* Public Routes */}
-
+                        <Route path="/:lang/story" element={<CreateStoryPage />} />
                         <Route path="/:lang/login" element={<AdminLogin />} />
                         <Route path="/:lang/about" element={<About />} />
                         <Route path="/:lang/about/policy" element={<Policy />} />
