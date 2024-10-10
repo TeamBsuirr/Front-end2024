@@ -17,9 +17,6 @@ const router = createBrowserRouter([
   { path: '/*', element: <DefaultLayout /> },
 ]);
 
-
-
-
 export default function App() {
   useEffect(() => {
     scheduleTokenRefresh(); // Активируем регулярное обновление токенов
