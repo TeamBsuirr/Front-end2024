@@ -34,10 +34,6 @@ jobs:
           CI: false
         run: npm run build
 
-      # Установка PM2 для управления процессами
-      - name: Install PM2
-        run: npm install -g pm2
-
       # Шаг 5: Копирование файлов на сервер через SSH
       - name: Deploy to server
         env:
@@ -57,9 +53,6 @@ jobs:
           # Копирование файлов на сервер через IP-адрес
           rsync -avz --delete ./build/ root@93.177.124.102:/var/www/93.177.124.102/html
 
-          # Шаг 6: Перезапуск сервера через SSH и PM2 (# Запуск процесса через PM2 (например, app.js))
-          ssh root@93.177.124.102 "pm2 start /var/www/93.177.124.102/html/app.js --name my-app || pm2 restart my-app"
-
-          # Сохранение процесса в PM2
-          ssh root@93.177.124.102 "pm2 save"
+          # Шаг 6: Перезапуск сервера через nginx
+          sudo systemctl restart nginx
 
