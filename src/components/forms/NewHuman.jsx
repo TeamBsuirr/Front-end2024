@@ -50,7 +50,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
         //     notification.error({ message: t('errors.front-end.add-story.incorrect-dot') });
         // }
         formData.places.forEach((place, index) => {
-            if (place.dateFrom >= place.dateTo) {
+            if (place.dateFrom > place.dateTo) {
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-story.incorrect-dot') + ` (Place: ${place.place?.placeName ?? place.name})` });
             }
