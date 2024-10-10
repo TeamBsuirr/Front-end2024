@@ -35,14 +35,6 @@ jobs:
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
           REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
         run: npm run build
-
-      # Шаг *: Проверка переменных
-      - name: Check environment variables
-        run: |
-          echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}"
-          echo "REACT_APP_I18N_PATH=${{ secrets.REACT_APP_I18N_PATH }}"
-    
-
       # Шаг 5: Копирование файлов на сервер через SSH
       - name: Deploy to server
         env:
@@ -63,4 +55,5 @@ jobs:
           rsync -avz --delete ./build/ root@93.177.124.102:/var/www/93.177.124.102/html
 
           # Шаг 6: Установим переменные окружения на сервере и Перезапуск сервера через nginx
-          ssh root@93.177.124.102 "export REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }} && export REACT_APP_I18N_PATH=${{ secrets.REACT_APP_I18N_PATH }} && sudo systemctl restart nginx"
+          sudo systemctl restart nginx
+          #ssh root@93.177.124.102 "export REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }} && export REACT_APP_I18N_PATH=${{ secrets.REACT_APP_I18N_PATH }} && sudo systemctl restart nginx"
