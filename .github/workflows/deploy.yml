@@ -55,4 +55,4 @@ jobs:
       # Шаг 6: Перезапуск сервера через SSH и PM2
       - name: Restart server
         run: |
-          ssh user@93.177.124.102 "pm2 restart all"
+          ssh root@93.177.124.102 "pm2 restart all"
