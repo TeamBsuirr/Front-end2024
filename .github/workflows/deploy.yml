@@ -34,6 +34,10 @@ jobs:
           CI: false
         run: npm run build
 
+      # Установка PM2 для управления процессами
+      - name: Install PM2
+        run: npm install -g pm2
+
       # Шаг 5: Копирование файлов на сервер через SSH
       - name: Deploy to server
         env:
