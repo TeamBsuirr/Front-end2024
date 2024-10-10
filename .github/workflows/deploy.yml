@@ -51,7 +51,7 @@ jobs:
           echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
 
           # Копирование файлов на сервер через IP-адрес
-          rsync -avz --delete ./build/ user@93.177.124.102:/var/www/93.177.124.102/html
+          rsync -avz --delete ./build/ root@93.177.124.102:/var/www/93.177.124.102/html
       # Шаг 6: Перезапуск сервера через SSH и PM2
       - name: Restart server
         run: |
