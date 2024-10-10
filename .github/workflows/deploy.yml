@@ -32,6 +32,8 @@ jobs:
       - name: Build project
         env:
           CI: false
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+          REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
         run: npm run build
 
       # Шаг 5: Копирование файлов на сервер через SSH
