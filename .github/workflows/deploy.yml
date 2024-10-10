@@ -55,7 +55,3 @@ jobs:
 
           # Шаг 6: Перезапуск сервера через nginx
           sudo systemctl restart nginx
-
-           # Шаг 7: Перезапуск бекенд
-          java -jar /root/backend/backend-uzniki-0.0.1-SNAPSHOT.jar
-
