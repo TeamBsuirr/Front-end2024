@@ -81,7 +81,7 @@ const AdminLogin = () => {
 
         <div className='login-captcha-container'>
           <ReCAPTCHA
-            sitekey={process.env.REACT_APP_RECAPTCHA_SECRET_API_KEY}
+            sitekey={process.env.REACT_APP_RECAPTCHA_API_KEY}
             onChange={onChangeCaptcha}
           />
         </div>

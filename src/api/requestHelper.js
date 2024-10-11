@@ -33,6 +33,14 @@ const handleRequest = async (request) => {
         });
       }
 
+      if (error.response.message) {
+        //console.log("123123123")
+        notification.error({
+          message: 'Ошибка получения данных c сервера',
+          description: 'Ошибка получения данных с сервера: ' + error.response.message
+        });
+      }
+
 
     } else if (error.request) {
       console.error('Error request:', error.request);
