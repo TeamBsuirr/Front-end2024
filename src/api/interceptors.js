@@ -2,6 +2,7 @@ import axios from 'axios';
 import api from './axiosInstance';
 import userService from './services/userService';
 import { logout, refreshToken } from '../utils/tokenService';
+import { notification } from 'antd';
 
 // console.log("start");
 
@@ -39,12 +40,7 @@ api.interceptors.request.use(
         }
 
 
-        // config.headers['Access-Control-Allow-Origin'] = `http://localhost:3000`;
-        // config.headers['Access-Control-Allow-Methods'] = `POST, GET, PUT, DELETE`;
-        // config.headers['Access-Control-Allow-Headers'] = `Content-Type, Authorization`;
-        // headers.append('Access-Control-Allow-Origin',`http://localhost:3000`);
-        // headers.append('Access-Control-Allow-Methods',`POST, GET, PUT, DELETE`);
-        // headers.append('Access-Control-Allow-Headers', `Content-Type, Authorization`);
+
         //console.log("Request interceptor: config", config);
         return config;
 
@@ -62,14 +58,6 @@ api.interceptors.response.use(
         //console.log("Response interceptor: response received");
         return response;
     },
-    // error => {
-    //     console.error("Response interceptor error:", error);
-    //     if (error.response && error.response.status === 401) {
-    //         console.warn("Unauthorized access - redirecting to login");
-    //         //window.location.href = '/';
-    //     }
-    //     return Promise.reject(error);
-    // }
     async error => {
         console.error("Response interceptor error:", error);
 
@@ -88,6 +76,11 @@ api.interceptors.response.use(
             } catch (refreshError) {
                 console.error("Token refresh failed:", refreshError);
                 logout();  // Выход из системы, если обновление токена не удалось
+                notification.warning({
+                    message: 'Session Expired',
+                    description: 'Your session has expired. You have been logged out.',
+                });
+                window.location.href = '/';  // Перенаправление на главную страницу
             }
         }
 

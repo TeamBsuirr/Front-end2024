@@ -59,10 +59,14 @@ width: 70%;
 .container-map {
     border: 1.5px #1F1B16 solid;
     position: relative;
-    z-index: 1; /* Ensure this is above other elements */
+    z-index: 0; /* Ensure this is above other elements */
 
     pointer-events: auto;
 }
+
+.ymaps-2-1-79-placemark, .ymaps-2-1-79-placemark-overlay {
+    z-index: 650;
+  }
 
 .active-place {
     z-index: 10;

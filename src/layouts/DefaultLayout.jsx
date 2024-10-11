@@ -112,8 +112,6 @@ export default function DefaultLayout() {
         // Если после названия страницы идет не число, возможно это подстраница
         currentPage = `${parts[2]}/${parts[3]}`;
     }
-  
-    console.log("current page",currentPage)
 
 
       
@@ -124,10 +122,6 @@ export default function DefaultLayout() {
             {/* Use t() to fetch the title and description dynamically */}
             <title>{t(`page-title.${currentPage}`)}</title>
             <meta name="description" content={t(`page-description.${currentPage}`)} />
-
-            <meta http-equiv="Access-Control-Allow-Origin" content="*" />
-            <script src="https://api-maps.yandex.ru/v3/?apikey=6d85a114-74fe-4685-bb56-5802a759c0e9&lang=ru_RU"></script>
-            <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
         </Helmet>
             
             <HeaderLayout />

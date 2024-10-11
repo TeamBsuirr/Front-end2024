@@ -1,4 +1,4 @@
-import { React, useCallback, useState } from 'react';
+import { React, useCallback, useEffect, useState } from 'react';
 import '../../assets/styles/other/Map.css'
 import PlaceMarkIcon from '../../assets/images/icons/other/star.svg'
 import closeSvg from '../../assets/images/icons/other/close.svg'
@@ -11,17 +11,27 @@ import HeaderSection from './HeaderSection';
 export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = false }) {
   const { t } = useTranslation();
   const [activePlace, setActivePlace] = useState(passedPlace);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [mapKey, setMapKey] = useState(Date.now()); // Dynamic key for Map to force re-render
 
   // Handler function for setting the active place
-//   const handlePlacemarkClick = (place, e) => {
-//     e.stopPropagation();
-//     setActivePlace(place);
-// };
-
   const handlePlacemarkClick = useCallback((place, e) => {
     e.stopPropagation();
     setActivePlace(place);
   }, []);
+
+  // Ensure map is fully loaded before allowing interaction with placemarks
+  const handleMapLoad = () => {
+    console.log('Map fully loaded');
+    setIsMapLoaded(true);
+  };
+
+  // Trigger re-render of map when arrayOfPlaceMarks changes
+  useEffect(() => {
+    if (arrayOfPlaceMarks.length > 0) {
+      setMapKey(Date.now()); // Force Map re-render by changing key
+    }
+  }, [arrayOfPlaceMarks]);
 
   return (
     <div className='section-map-page'>
@@ -52,13 +62,9 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
       <section className='section-map'>
 
         <div className='container-map'>
-          <YMaps>
-            {/* <Map
-              width={1320}
-              height={627}
-              defaultState={{ center: passedPlace ? [passedPlace.coordinates.latitude, passedPlace.coordinates.longitude] : [53.55, 27.66], zoom: 6.5 }}
-            > */}
+          <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_API_KEY, lang: 'ru_RU', load: 'package.full' }}>
               <Map
+              key={mapKey}
               width={1320}
               height={627}
               defaultState={{
@@ -67,21 +73,22 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
                   : [53.55, 27.66],
                 zoom: 6.5,
               }}
-              onLoad={(ymaps) => console.log('Map loaded')} // Ensure map is fully loaded
+              onLoad={handleMapLoad} // Ensure map is fully loaded
             >
-              {arrayOfPlaceMarks.map((obj) => (
-                <Placemark
-                  key={obj.id}
-                  geometry={[obj.coordinates.latitude, obj.coordinates.longitude]}
-                  options={{
-                    iconLayout: 'default#image',
-                    iconImageHref: PlaceMarkIcon,
-                    iconImageSize: obj.id === activePlace?.id ? [40, 40] : [30, 30],  // Increase size if active
-                    iconImageOffset: obj.id === activePlace?.id ? [-20, -20] : [-15, -15],
-                  }}
-                  onClick={(e) => handlePlacemarkClick(obj,e)}
-                />
-              ))}
+             {isMapLoaded  && // Render placemarks only after the map is fully loaded
+                arrayOfPlaceMarks.map((obj) => (
+                  <Placemark
+                    key={obj.id}
+                    geometry={[obj.coordinates.latitude, obj.coordinates.longitude]}
+                    options={{
+                      iconLayout: 'default#image',
+                      iconImageHref: PlaceMarkIcon,
+                      iconImageSize: obj.id === activePlace?.id ? [40, 40] : [30, 30],
+                      iconImageOffset: obj.id === activePlace?.id ? [-20, -20] : [-15, -15],
+                    }}
+                    onClick={(e) => handlePlacemarkClick(obj, e)}
+                  />
+                ))}
             </Map>
           </YMaps>
         </div>
