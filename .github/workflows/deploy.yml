@@ -35,6 +35,8 @@ jobs:
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
           REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
           REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
+          REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
+          REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
         run: npm run build
       # Шаг 5: Копирование файлов на сервер через SSH
       - name: Deploy to server
@@ -44,6 +46,8 @@ jobs:
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
           REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
           REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
+          REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
+          REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
         run: |
           # Установка ssh-agent и добавление приватного ключа
           eval "$(ssh-agent -s)"

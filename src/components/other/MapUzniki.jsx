@@ -31,6 +31,12 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
     if (arrayOfPlaceMarks.length > 0) {
       setMapKey(Date.now()); // Force Map re-render by changing key
     }
+
+     // Очистка при размонтировании компонента
+     return () => {
+      console.log('Component unmounting: cleaning up resources');
+      // Здесь можно добавить логику очистки, например, удаление обработчиков событий
+    };
   }, [arrayOfPlaceMarks]);
 
   return (
@@ -62,7 +68,7 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
       <section className='section-map'>
 
         <div className='container-map'>
-          <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_API_KEY, lang: 'ru_RU', load: 'package.full' }}>
+          <YMaps query={{ apikey: process.env.REACT_APP_YANDEX_API_KEY, lang: 'ru_RU', load: 'Map,Placemark' }}>
               <Map
               key={mapKey}
               width={1320}
@@ -73,6 +79,12 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
                   : [53.55, 27.66],
                 zoom: 6.5,
               }}
+              options={{
+                optimizeMemoryUsage: true,
+                suppressMapOpenBlock: true, // отключает открытия панели "Яндекс.Карты"
+                autoFitToViewport: 'always', // карта всегда будет подстраиваться под размер контейнера
+                // controls: [] // убирает все контролы на карте, если они не нужны
+              }}
               onLoad={handleMapLoad} // Ensure map is fully loaded
             >
              {isMapLoaded  && // Render placemarks only after the map is fully loaded
@@ -81,10 +93,13 @@ export default function MapUzniki({ arrayOfPlaceMarks, passedPlace, isAdmin = fa
                     key={obj.id}
                     geometry={[obj.coordinates.latitude, obj.coordinates.longitude]}
                     options={{
+                      
                       iconLayout: 'default#image',
                       iconImageHref: PlaceMarkIcon,
                       iconImageSize: obj.id === activePlace?.id ? [40, 40] : [30, 30],
                       iconImageOffset: obj.id === activePlace?.id ? [-20, -20] : [-15, -15],
+
+        
                     }}
                     onClick={(e) => handlePlacemarkClick(obj, e)}
                   />

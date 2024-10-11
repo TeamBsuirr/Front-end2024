@@ -287,7 +287,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
                 <div className='container-add-form-button-new-history'>
                     <div>
                         <ReCAPTCHA
-                            sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                            sitekey={process.env.REACT_APP_RECAPTCHA_API_KEY}
                             onChange={onChangeCaptcha}
                         />
                     </div>
