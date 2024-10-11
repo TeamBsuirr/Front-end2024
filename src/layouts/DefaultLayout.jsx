@@ -3,7 +3,7 @@ import '../assets/styles/layout/DefaultLayout.css'
 import CreateStoryPage from '../pages/story/CreateStoryPage';
 import HeaderLayout from '../components/layout/HeaderLayout';
 import FooterLayout from '../components/layout/FooterLayout';
-import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import About from '../pages/about/About';
 import Contact from '../pages/contact/Contact';
 import PrisonerPage from '../pages/search/prisoner/PrisonerPage';
@@ -26,6 +26,9 @@ import AdminDashboardPage from '../pages/crud/AdminDashboardPage';
 import LandingPage from '../pages/LandingPage';
 import ProtectedRoute from './ProtectedRoute';
 import { checkAdminStatus } from '../utils/auth';
+import { Helmet } from 'react-helmet-async';
+import { t } from 'i18next';
+import { notification } from 'antd';
 
 
 const useLanguage = () => {
@@ -77,7 +80,12 @@ const useLanguage = () => {
     return lang;
 };
 
+
+
 export default function DefaultLayout() {
+    
+    const location = useLocation(); // Get the current route
+
     useLanguage();
 
     const [isAdmin, setIsAdmin] = useState(false);
@@ -85,14 +93,43 @@ export default function DefaultLayout() {
     useEffect(()=>{
         const result = checkAdminStatus();
         setIsAdmin(result);
+        notification.warning({
+            message: t("errors.front-end.warning-site-not-finished"),
+            description: t("errors.front-end.warning-site-not-finished-msg"),
+            duration: 7,
+          })
     },[])
 
+    // Determine the current page based on the route
+    const parts = location.pathname.split('/');
+    let currentPage = parts[2] || 'main'; // второй элемент после языка
+
+    // Если третий элемент (после языка) — это число, значит это ID объекта, и его нужно игнорировать
+    if (!isNaN(parts[3])) {
+        // Если после названия страницы идет число (ID объекта), оставляем currentPage как есть
+        currentPage = parts[2]; // Например, '/ru/crud/place/123' -> 'place'
+    } else if (parts[3]) {
+        // Если после названия страницы идет не число, возможно это подстраница
+        currentPage = `${parts[2]}/${parts[3]}`;
+    }
   
+    console.log("current page",currentPage)
+
+
+      
+
     return (
         <>
+        <Helmet>
+            {/* Use t() to fetch the title and description dynamically */}
+            <title>{t(`page-title.${currentPage}`)}</title>
+            <meta name="description" content={t(`page-description.${currentPage}`)} />
+
             <meta http-equiv="Access-Control-Allow-Origin" content="*" />
             <script src="https://api-maps.yandex.ru/v3/?apikey=6d85a114-74fe-4685-bb56-5802a759c0e9&lang=ru_RU"></script>
             <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1" />
+        </Helmet>
+            
             <HeaderLayout />
             <Suspense fallback={<PageTemplate content={<Spinner size="large" />} />}>
                 {/* <Suspense fallback={<Spinner size="large"s />}> */}
@@ -134,16 +171,22 @@ export default function DefaultLayout() {
                         />
 
                         {/* Public Routes */}
-                        <Route path="/:lang/story" element={<CreateStoryPage />} />
-                        <Route path="/:lang/login" element={<AdminLogin />} />
-                        <Route path="/:lang/about" element={<About />} />
-                        <Route path="/:lang/about/policy" element={<Policy />} />
+
                         <Route path="/:lang/map" element={<MapPage isAdmin={isAdmin}/>} />
+                        <Route path="/:lang/contacts" element={<Contact />} />
+                        <Route path="/:lang/login" element={<AdminLogin />} />
                         <Route path="/:lang/archive/photos" element={<PhotoArchivePage isAdmin={isAdmin} />} />
                         <Route path="/:lang/archive/analysis" element={<Analysis />} />
-                        <Route path="/:lang/contacts" element={<Contact />} />
+                        <Route path="/:lang/about" element={<About />} />
+                        <Route path="/:lang/about/policy" element={<Policy />} />
                         <Route path="/:lang/search" element={<SearchResultPage isAdmin={isAdmin}/>} />
                         <Route path="/:lang/prisoners" element={<PrisonerStories isAdmin={isAdmin}/>} />
+                     
+
+
+                        <Route path="/:lang/story" element={<CreateStoryPage />} />
+                        
+                       
                         <Route path="/:lang/search/prisoner/*" element={<PrisonerPage isAdmin={isAdmin}/>} />
                         <Route path="/:lang/search/place/*" element={<PlacePage isAdmin={isAdmin}/>} />
                         <Route path="/:lang/" element={<LandingPage />} />

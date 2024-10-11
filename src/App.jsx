@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 import DefaultLayout from './layouts/DefaultLayout';
@@ -8,14 +8,14 @@ import { createBrowserRouter, Route, RouterProvider, Routes, Navigate, Outlet } 
 import './index.css';
 import './utils/globalFunctions';
 
-import PageTemplate from './components/other/PageTemplate';
-import Spinner from './components/other/Spinner';
 import { scheduleTokenRefresh } from './utils/tokenService';
+import { HelmetProvider } from 'react-helmet-async';
 
 
 const router = createBrowserRouter([
   { path: '/*', element: <DefaultLayout /> },
 ]);
+
 
 export default function App() {
   useEffect(() => {
@@ -23,9 +23,9 @@ export default function App() {
   }, []);
 
   return (
-      
+    <HelmetProvider>
       <RouterProvider router={router} />
-
+    </HelmetProvider>
   );
 }
 

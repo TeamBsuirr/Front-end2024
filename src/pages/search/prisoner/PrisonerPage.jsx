@@ -8,6 +8,7 @@ import humanService from '../../../api/services/humanService';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
 import { useTranslation } from 'react-i18next';
+import SEOComponent from '../../../utils/seoData';
 
 
 export default function PrisonerPage({isAdmin=false}) {
@@ -63,7 +64,11 @@ export default function PrisonerPage({isAdmin=false}) {
         return <NotFound />;
     } else {
         return (
+            <>
+            <SEOComponent data={objectOfPrisoners} type="prisoner" />
             <Card objectOfPrisoners={objectOfPrisoners} isAdmin={isAdmin}/>
+            </>
+            
         );
     }
 }

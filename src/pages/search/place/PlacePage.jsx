@@ -8,9 +8,11 @@ import NotFound from '../../../components/layout/NotFound';
 import placeService from '../../../api/services/placeService';
 import CardPlace from '../../../components/cards/CardPlace';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
+import SEOComponent from '../../../utils/seoData';
 
 
-export default function PlacePage({isAdmin=false}) {
+export default function PlacePage({ isAdmin = false }) {
     const { t } = useTranslation();
     const [objectOfPlace, setobjectOfPlace] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -36,7 +38,7 @@ export default function PlacePage({isAdmin=false}) {
             .then(data => {
                 setobjectOfPlace(data);
                 setLoading(false);
-
+                
             })
             .catch(error => {
                 //console.error('Ошибка получения данных концлагеря:', error);
@@ -62,7 +64,11 @@ export default function PlacePage({isAdmin=false}) {
         return <NotFound />;
     } else {
         return (
-            <CardPlace objectOfPlace={objectOfPlace} isAdmin={isAdmin}/>
+            <>
+                <SEOComponent data={objectOfPlace} type="place" />
+                <CardPlace objectOfPlace={objectOfPlace} isAdmin={isAdmin} />
+            </>
+
         );
     }
 }
