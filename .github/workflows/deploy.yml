@@ -52,7 +52,7 @@ jobs:
           echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
 
           # Копирование файлов на сервер через IP-адрес
-          rsync -avz --delete ./build/ root@93.177.124.102:/var/www/93.177.124.102/html
+          rsync -avz --delete ./build/ root@93.177.124.102:/var/www/uzniki.by/html
 
           # Шаг 6: Установим переменные окружения на сервере и Перезапуск сервера через nginx
           sudo systemctl restart nginx
