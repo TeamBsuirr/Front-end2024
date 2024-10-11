@@ -12,7 +12,7 @@ const searchService = {
     // Сериализуем данные в FormData MIME
     const transformedData = new FormData()
     // Логируем данные перед отправкой
-    console.log("Posting photo with transformedData:", data);
+    //console.log("Posting photo with transformedData:", data);
 
     transformedData.append('title', data.title);
     transformedData.append('description', data.description);
@@ -37,7 +37,7 @@ const searchService = {
 };
 
 const transformResponseAPhotoForMapForPostPhoto = (data) => {
-  console.log(data);
+  //console.log(data);
   // Извлечение основных полей
   const transformedData = data;
   // const transformedData = {

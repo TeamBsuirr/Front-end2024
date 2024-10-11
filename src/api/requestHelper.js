@@ -3,20 +3,20 @@ import api from './axiosInstance';
 
 const handleRequest = async (request) => {
   try {
-    console.log("Request started",request);
+    //console.log("Request started",request);
 
     
     // Логируем формат данных
     const config = request.config ? request.config : {};
     if (config.data) {
-      console.log("Request body data:", config.data);
+      //console.log("Request body data:", config.data);
     }
-    console.log("whole config",config)
+    //console.log("whole config",config)
 
 
 
     const response = await request();
-    console.log("Request successful:", response); // Преобразованные данные
+    //console.log("Request successful:", response); // Преобразованные данные
     return response.data;
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -26,7 +26,7 @@ const handleRequest = async (request) => {
       console.error('Error headers:', error.response.headers);
 
       if (error.response.data.message) {
-        console.log("123123123")
+        //console.log("123123123")
         notification.error({
           message: 'Ошибка получения данных c сервера',
           description: 'Ошибка получения данных с сервера: ' + error.response.data.message

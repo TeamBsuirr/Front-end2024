@@ -34,13 +34,13 @@ export default function PrisonerSearchResult({ histories, places, years, isAdmin
 
       // console.log("вставить значение фильтра: ", event.target.textContent)
       if (input.name === 'sort-place') {
-        console.log("вставил 1")
+        //console.log("вставил 1")
         setSelectedPlace(event.target.textContent);
       } else if (input.name === 'sort-calendar') {
-        console.log("вставил 2")
+        //console.log("вставил 2")
         setSelectedCalendar(event.target.textContent);
       } else if (input.name === 'sort-alphabet') {
-        console.log("вставил 3")
+        //console.log("вставил 3")
         setSelectedAlphabet(event.target.textContent);
       }
 

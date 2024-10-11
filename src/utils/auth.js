@@ -7,7 +7,7 @@ export const checkAdminStatus = () => {
   try {
     const decodedToken = jwtDecode(token);
 
-    console.log(decodedToken)
+    //console.log(decodedToken)
     return decodedToken.role === "ROLE_ADMIN"; // Проверяем, что роль в токене - администратор
 
   } catch (e) {

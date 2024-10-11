@@ -8,7 +8,7 @@ const userService = {
     // Сериализуем данные в FormData MIME
     const transformedData = new FormData()
     // Логируем данные перед отправкой
-    console.log("Posting story with transformedData:", data);
+    //console.log("Posting story with transformedData:", data);
 
     transformedData.append('name', data.name)
     transformedData.append('surname', data.surname)
@@ -27,7 +27,7 @@ const userService = {
     });
 
     // Логируем данные перед отправкой
-    console.log("Posting story with transformedData:", transformedData);
+    //console.log("Posting story with transformedData:", transformedData);
 
     // Выполняем запрос, добавляя заголовок Content-Type
     return handleRequest(() => api.post('/applications', transformedData, {

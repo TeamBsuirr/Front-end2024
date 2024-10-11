@@ -40,7 +40,7 @@ const AdminLogin = () => {
   };
 
   function onChangeCaptcha(value) {
-    console.log("Captcha value:", value);
+    //console.log("Captcha value:", value);
   }
 
   return (

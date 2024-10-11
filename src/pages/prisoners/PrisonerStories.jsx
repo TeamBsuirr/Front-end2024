@@ -22,7 +22,7 @@ export default function PrisonerStories({isAdmin=false}) {
         setLoading(true);
         humanService.getAllHistoriesForPrisonerStories()
             .then(data => {
-                console.log(data)
+                //console.log(data)
                 setHistoies(data.histories);
                 setLoading(false);
 

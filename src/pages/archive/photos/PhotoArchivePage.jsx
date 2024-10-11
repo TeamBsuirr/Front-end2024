@@ -20,7 +20,7 @@ export default function PhotoArchivePage({isAdmin=false}) {
         setLoading(true);
         searchService.getAllPhotos()
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setArrayOfPhotoObjects(data);
 
                 setLoading(false);

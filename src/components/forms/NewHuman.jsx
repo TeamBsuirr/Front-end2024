@@ -19,13 +19,13 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPrisoners);
 
-    console.log(formData)
+    //console.log(formData)
 
     const [loading, setLoading] = useState(false);
 
     const validateInput = () => {
         let isValid = true;
-        console.log(formData);
+        //console.log(formData);
         // Validate name, surname, and patronymic
         ['name', 'surname', 'patronymic'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
@@ -151,7 +151,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
 
     const handleSelectChange = (e) => {
         const { name, value } = e.target;
-        console.log('Received value:', name, value);
+        //console.log('Received value:', name, value);
 
         // Update the formData based on selected values
         setFormData(prevState => ({
@@ -176,7 +176,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
             // Form valid, send data to server
 
             setLoading(true);
-            console.log(formData)
+            //console.log(formData)
             humanService.postHuman(formData)
                 .then(response => {
                     // console.log(response);
@@ -198,7 +198,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
     };
 
     function onChangeCaptcha(value) {
-        console.log("Captcha value:", value);
+        //console.log("Captcha value:", value);
     }
 
 

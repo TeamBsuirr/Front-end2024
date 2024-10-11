@@ -30,7 +30,7 @@ export default function PrisonerPage({isAdmin=false}) {
             idOfPrisoner = null;
         }
 
-        console.log(idOfPrisoner);
+        //console.log(idOfPrisoner);
 
         humanService.getHumanById(idOfPrisoner)
             .then(data => {

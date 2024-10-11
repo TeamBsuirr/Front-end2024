@@ -16,7 +16,7 @@ export default function LandingPage() {
     const [searchInputValue, setSearchInputValue] = useState("");
 
     function clickGlobalSearchButton() {
-        console.log(localStorage.getItem('language'), isLngWarn)
+        //console.log(localStorage.getItem('language'), isLngWarn)
 
 
         if (searchInputValue !== "") {

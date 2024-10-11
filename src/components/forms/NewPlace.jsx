@@ -25,7 +25,7 @@ export default function NewPlace({ objectOfPlace }) {
 
     const validateInput = () => {
         let isValid = true;
-        console.log(formData);
+        //console.log(formData);
         // Validate text fields
         ['placeName', 'locationDescription', 'shortDescription', 'article'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
@@ -87,19 +87,19 @@ export default function NewPlace({ objectOfPlace }) {
 
         formData.files.forEach(file => {
             const fileType = file.type;
-            console.log(file)
+            //console.log(file)
             if (disallowedTypes.includes(fileType)) {
-                console.log("disaollew types")
+                //console.log("disaollew types")
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-place.type-file') + " " + fileType + " " + t('errors.front-end.add-place.incorrect-file-type') });
             }
             if (!allowedImageTypes.includes(fileType) && !allowedVideoTypes.includes(fileType)) {
-                console.log("not found good types")
+                //console.log("not found good types")
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-place.type-file') + " " + fileType + " " + t('errors.front-end.add-place.incorrect-file-type') });
             }
             if (file.size > 5 * 1024 * 1024 && !allowedVideoTypes.includes(fileType)) { // 5 MB
-                console.log("size types")
+                //console.log("size types")
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-place.incorrect-file-size') });
             }

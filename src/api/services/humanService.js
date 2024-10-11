@@ -18,7 +18,7 @@ const humanService = {
         // Сериализуем данные в FormData MIME
         const transformedData = new FormData()
         // Логируем данные перед отправкой
-        console.log("Posting story with transformedData:", data);
+        //console.log("Posting story with transformedData:", data);
 
         transformedData.append('name', data.name);
         transformedData.append('surname', data.surname);
@@ -62,7 +62,7 @@ const humanService = {
         // Сериализуем данные в FormData MIME
         const transformedData = new FormData()
         // Логируем данные перед отправкой
-        console.log("Posting story with transformedData:", data);
+        //console.log("Posting story with transformedData:", data);
 
         transformedData.append('name', data.name);
         transformedData.append('surname', data.surname);
@@ -106,7 +106,7 @@ const humanService = {
 };
 
 const transformResponseAHumanForMapForPostHuman = (data) => {
-    console.log(data);
+    //console.log(data);
     // Извлечение основных полей
     const transformedData = {
         name: data.name || '',
@@ -127,7 +127,7 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
     if (data.places && data.places.length > 0) {
         // const place = data.places[0]; // Предполагаем, что первое место в списке - нужное
         transformedData.places = data.places.map((place) => {
-            console.log(place)
+            //console.log(place)
             return {
                 id: place?.place.id || '',
                 name: place?.place.placeName || '',
@@ -137,7 +137,7 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
         })
     }
 
-    console.log(transformedData)
+    //console.log(transformedData)
 
     return transformedData;
 };

@@ -26,7 +26,7 @@ export const scheduleTokenRefresh = () => {
     setInterval(async () => {
       try {
         await refreshToken();
-        console.log('Token refreshed successfully');
+        //console.log('Token refreshed successfully');
       } catch (error) {
         console.error('Failed to refresh token automatically:', error);
         logout();

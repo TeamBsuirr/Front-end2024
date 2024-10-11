@@ -22,7 +22,7 @@ export default function NewPhoto({ objectOfPhoto}) {
 
     const validateInput = () => {
         let isValid = true;
-        console.log(formData);
+        //console.log(formData);
         // Validate name, surname, and patronymic
         ['title', 'description'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
@@ -41,7 +41,7 @@ export default function NewPhoto({ objectOfPhoto}) {
         const disallowedTypes = ['application/x-javascript', 'application/x-php', 'application/x-msdos-program', 'application/x-shellscript', 'application/x-bat', 'application/x-msdos-program', 'application/x-vbscript', 'application/x-perl', 'application/x-python'];
 
 
-        console.log(formData)
+        //console.log(formData)
         const fileType = formData.image[0].type;
         if (disallowedTypes.includes(fileType)) {
             isValid = false;
@@ -78,9 +78,9 @@ export default function NewPhoto({ objectOfPhoto}) {
     };
 
     const handleFileChange = (e) => {
-        console.log('File input changed:', e); // Check if this logs
+        //console.log('File input changed:', e); // Check if this logs
         const file = e.target.files; // Convert FileList to array
-        console.log('File selected:', file); // Log the selected files
+        //console.log('File selected:', file); // Log the selected files
         setFormData(prevState => ({
             ...prevState,
             image: file,

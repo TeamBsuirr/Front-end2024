@@ -43,7 +43,7 @@ export default function SearchResults({ arrayFoundObjects }) {
         const lists = document.querySelectorAll('.list');
         const listItems = document.querySelectorAll('.list li');
 
-        console.log(inputs)
+        //console.log(inputs)
 
         const handleInputClick = (event) => {
             hideList();

@@ -37,7 +37,7 @@ export default function NewPhotoPage() {
             searchService.getPhotoByIdForPostPhoto(idOfPhoto)
                 .then(data => {
                     setObjectOfPhoto(data);
-                    console.log(data)
+                    //console.log(data)
                     setLoading(false);
                 })
                 .catch(errorPrisoner => {

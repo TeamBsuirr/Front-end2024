@@ -13,7 +13,7 @@ api.interceptors.request.use(
 
         if (config.url === '/auth/login') {
             // Если запрос на /auth/login, не добавляем токены
-            console.log("Request interceptor: login request detected, not adding tokens.");
+            //console.log("Request interceptor: login request detected, not adding tokens.");
             return config;
         }
 
@@ -23,19 +23,19 @@ api.interceptors.request.use(
 
         if (accessToken) {
             config.headers['Authorization'] = `Bearer ${accessToken}`;
-            console.log("Request interceptor: tokens set (Authorization)");
+            //console.log("Request interceptor: tokens set (Authorization)");
         }
         if (refreshToken) {
             // config.headers['x-refresh-token'] = refreshToken;
             config.headers['x-refresh-token'] = `Bearer ${accessToken}`;
-            console.log("Request interceptor: tokens set (x)");
+            //console.log("Request interceptor: tokens set (x)");
         }
 
-        console.log(config)
+        //console.log(config)
         if (typeof config.data === "string") {
             config.data = JSON.parse(config.data);
         } else {
-            console.log(typeof(config.data))
+            //console.log(typeof(config.data))
         }
 
 
@@ -45,7 +45,7 @@ api.interceptors.request.use(
         // headers.append('Access-Control-Allow-Origin',`http://localhost:3000`);
         // headers.append('Access-Control-Allow-Methods',`POST, GET, PUT, DELETE`);
         // headers.append('Access-Control-Allow-Headers', `Content-Type, Authorization`);
-        console.log("Request interceptor: config", config);
+        //console.log("Request interceptor: config", config);
         return config;
 
     },
@@ -59,7 +59,7 @@ api.interceptors.request.use(
 // Перехватчик ответов
 api.interceptors.response.use(
     response => {
-        console.log("Response interceptor: response received");
+        //console.log("Response interceptor: response received");
         return response;
     },
     // error => {

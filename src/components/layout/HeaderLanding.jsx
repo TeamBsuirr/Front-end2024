@@ -19,7 +19,7 @@ export default function HeaderLanding() {
     };
 
     const handleLanguageSelect = (language) => {
-        console.log('Selected language:', language); // Debug log
+        //console.log('Selected language:', language); // Debug log
         setSelectedLanguage(language);
         setMenuVisible(false); // Close menu after selection
     
@@ -28,7 +28,7 @@ export default function HeaderLanding() {
     
         // Get the selected language or default to 'ru'
         const selectedLang = language || 'ru';
-        console.log('Selected language from localStorage:', selectedLang); // Debug log
+        //console.log('Selected language from localStorage:', selectedLang); // Debug log
     
         // Get current path, query parameters, and hash
         const currentPath = location.pathname;
@@ -43,7 +43,7 @@ export default function HeaderLanding() {
     
         // Construct the new path with the selected language prefix
         const newPath = `/${selectedLang}${pathWithoutCurrentLang}${searchParams}${hashParams}`;
-        console.log('Navigating to new path:', newPath); // Debug log
+        //console.log('Navigating to new path:', newPath); // Debug log
     
         // Navigate to the new path
         navigate(newPath, { replace: true });

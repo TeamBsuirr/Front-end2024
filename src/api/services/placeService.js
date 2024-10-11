@@ -16,7 +16,7 @@ const placeService = {
     // Сериализуем данные в FormData MIME
     const transformedData = new FormData()
     // Логируем данные перед отправкой
-    console.log("Posting story with transformedData:", data);
+    //console.log("Posting story with transformedData:", data);
 
     transformedData.append('placeName', data.placeName);
     transformedData.append('countDeath', data.countDeath);
@@ -34,7 +34,7 @@ const placeService = {
     });
 
     // Логируем данные перед отправкой
-    console.log("Posting place with transformedData:", transformedData);
+    //console.log("Posting place with transformedData:", transformedData);
 
     // Выполняем запрос, добавляя заголовок Content-Type
     return handleRequest(() => api.post('/places', transformedData, {
@@ -48,7 +48,7 @@ const placeService = {
 
 const transformResponseAllPlacesForMapForPostHuman = (data) => {
 
-  console.log(data);
+  //console.log(data);
   const transformedData = data.map((obj) => {
     return {
       id: obj.id,
@@ -68,7 +68,7 @@ const transformResponseAllPlacesForMapForPostHuman = (data) => {
 
 const transformResponseAllPlacesForMap = (data) => {
 
-  console.log(data);
+  //console.log(data);
   const transformedData = data.map((obj) => {
     return {
       id: obj.id,

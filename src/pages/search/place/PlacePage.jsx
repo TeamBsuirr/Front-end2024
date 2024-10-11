@@ -30,7 +30,7 @@ export default function PlacePage({isAdmin=false}) {
             idOfPlace = null;
         }
 
-        console.log(idOfPlace);
+        //console.log(idOfPlace);
 
         placeService.getPlaceById(idOfPlace)
             .then(data => {

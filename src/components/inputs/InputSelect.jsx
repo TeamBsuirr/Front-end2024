@@ -63,7 +63,7 @@ export default function InputSelect({
   useEffect(() => {
 
     if(value){
-      console.log(value)
+      //console.log(value)
       // let placeholderTemp = arrayOfSelects.map((objPlace)=>{
       //   return objPlace?.placeName ?? objPlace.name;
       // })

@@ -97,7 +97,7 @@ const FileUploadWithDragAndDrop = ({ fileList, setFileList, onFileChange, typesD
     const handleFileInputChange = (event) => {
         if (event.target && event.target.files) {
             const files = Array.from(event.target.files);
-            console.log('Files:', files);
+            //console.log('Files:', files);
             const newFiles = files.map((file) => ({
                 uid: file.name + '-' + file.lastModified,
                 name: file.name,
@@ -106,9 +106,9 @@ const FileUploadWithDragAndDrop = ({ fileList, setFileList, onFileChange, typesD
                 preview: file.type.startsWith('image/') ? URL.createObjectURL(file) : null,
                 status: 'done',
             }));
-            console.log('New Files:', newFiles);
+            //console.log('New Files:', newFiles);
             const validatedFiles = newFiles.map(validateFiles);
-            console.log('Validated Files:', validatedFiles);
+            //console.log('Validated Files:', validatedFiles);
             setFileList(prevFiles => [...prevFiles, ...validatedFiles]);
             setPreviewFiles(prevFiles => [...prevFiles, ...newFiles.filter(file => file.preview)]);
             onFileChange([...fileList, ...validatedFiles].map(file => file.file));

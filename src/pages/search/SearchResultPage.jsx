@@ -64,12 +64,12 @@ export default function SearchResultPage() {
                     description: place.history?.description.split(' ').slice(0, 15).join(' ')
                 }));
 
-                console.log(humansFormatted,placesFormatted)
+                //console.log(humansFormatted,placesFormatted)
 
                 const combinedResults = [...humansFormatted, ...placesFormatted];
                 setArrayFoundObjects(combinedResults);
 
-                console.log(arrayFoundObjects)
+                //console.log(arrayFoundObjects)
 
                 setLoading(false);
                 

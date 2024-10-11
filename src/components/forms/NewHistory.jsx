@@ -39,7 +39,7 @@ export default function NewHistory() {
 
     const validateInput = () => {
         let isValid = true;
-        console.log(formData);
+        //console.log(formData);
         // Validate name, surname, and patronymic
         ['name', 'surname', 'patronymic'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
@@ -197,7 +197,7 @@ export default function NewHistory() {
     };
 
     function onChangeCaptcha(value) {
-        console.log("Captcha value:", value);
+        //console.log("Captcha value:", value);
     }
 
 
