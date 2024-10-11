@@ -12,11 +12,20 @@ import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 const AdminLogin = () => {
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation();
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('mne12mrl_31zawfhc8');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
 
   const handleLogin = async () => {
+    if (!isCaptchaValid) {
+      notification.error({
+           message: t('errors.front-end.captcha-failed'), 
+           description:t(t('errors.front-end.captcha-failed-msg'))
+      });
+      return; // Предотвратить отправку формы
+    }
+
     try {
       const response = await userService.authenticateAdmin({ username, password });
       const { accessToken, refreshToken } = response;
@@ -39,9 +48,13 @@ const AdminLogin = () => {
     }
   };
 
-  function onChangeCaptcha(value) {
-    //console.log("Captcha value:", value);
-  }
+  const onChangeCaptcha = (value) => {
+    if (value) {
+        setIsCaptchaValid(true); // Капча пройдена
+    } else {
+        setIsCaptchaValid(false); // Капча не пройдена
+    }
+};
 
   return (
     <PageTemplate content={t('admin-panel.authorization.header')} contentSection={
@@ -68,7 +81,7 @@ const AdminLogin = () => {
 
         <div className='login-captcha-container'>
           <ReCAPTCHA
-            sitekey={process.env.REACT_APP_RECAPTCHA_API_KEY}
+            sitekey={process.env.REACT_APP_RECAPTCHA_SECRET_API_KEY}
             onChange={onChangeCaptcha}
           />
         </div>

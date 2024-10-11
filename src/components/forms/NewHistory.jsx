@@ -32,10 +32,8 @@ export default function NewHistory() {
         "files": []
     });
 
-
-
-
     const [loading, setLoading] = useState(false);
+    const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
 
     const validateInput = () => {
         let isValid = true;
@@ -171,6 +169,14 @@ export default function NewHistory() {
     };
 
     const handleSubmit = () => {
+        if (!isCaptchaValid) {
+            notification.error({
+                 message: t('errors.front-end.captcha-failed'), 
+                 description:t(t('errors.front-end.captcha-failed-msg'))
+            });
+            return; // Предотвратить отправку формы
+        }
+
         if (validateInput()) {
             // Form valid, send data to server
 
@@ -196,9 +202,13 @@ export default function NewHistory() {
         }
     };
 
-    function onChangeCaptcha(value) {
-        //console.log("Captcha value:", value);
-    }
+    const onChangeCaptcha = (value) => {
+        if (value) {
+            setIsCaptchaValid(true); // Капча пройдена
+        } else {
+            setIsCaptchaValid(false); // Капча не пройдена
+        }
+    };
 
 
     return (

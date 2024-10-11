@@ -22,6 +22,16 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
     //console.log(formData)
 
     const [loading, setLoading] = useState(false);
+    const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
+
+    const onChangeCaptcha = (value) => {
+        if (value) {
+            setIsCaptchaValid(true); // Капча пройдена
+        } else {
+            setIsCaptchaValid(false); // Капча не пройдена
+        }
+    };
+    
 
     const validateInput = () => {
         let isValid = true;
@@ -172,6 +182,13 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
     };
 
     const handleAdminAdd = () => {
+        if (!isCaptchaValid) {
+            notification.error({
+                 message: t('errors.front-end.captcha-failed'), 
+                 description:t(t('errors.front-end.captcha-failed-msg'))
+            });
+            return; // Предотвратить отправку формы
+        }
         if (validateInput()) {
             // Form valid, send data to server
 
@@ -196,11 +213,6 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
                 });
         }
     };
-
-    function onChangeCaptcha(value) {
-        //console.log("Captcha value:", value);
-    }
-
 
     return (
         <div className='section-new-history'>
