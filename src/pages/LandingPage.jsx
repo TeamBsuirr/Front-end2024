@@ -48,7 +48,7 @@ export default function LandingPage() {
                 <section className="section-background">
                     <div className="section-content">
                         <h1>
-                            {t('main.title.h1')}
+                            httpps{t('main.title.h1')}
                         </h1>
                         <h2> {t('main.title.h2-1')}</h2>
                         <h2> {t('main.title.h2-2')}</h2>
