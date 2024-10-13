@@ -1,12 +1,10 @@
 import { React, useState } from 'react';
 import '../../assets/styles/forms/NewHistory.css'
-
 import InputForm from '../inputs/InputForm';
 import DateForm from '../inputs/DateForm';
 import InputDescription from '../inputs/InputDescription';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
-import userService from '../../api/services/userService';
 import Spinner from '../other/Spinner';
 import { useTranslation } from 'react-i18next';
 import HeaderSection from '../other/HeaderSection';
