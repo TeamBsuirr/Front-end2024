@@ -137,3 +137,44 @@
     input[type="date"]::-webkit-calendar-picker-indicator {
       opacity: 0;
     }
+
+    .file-preview-image{
+      width: 30%;
+      position: relative;
+      top: 0;
+      right: 20px;
+    }
+
+    .attachment-preview-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 10px 25px;
+      margin-top: 5px;
+      background: #4d4b48e6;
+      border-radius: 5px 5px 5px 5px;
+  }
+
+  .attachment-preview-image img{
+    border-radius: 5px 5px 5px 5px;
+  }
+
+  .file-name{
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  .file-name:hover{
+    color: #E4B474;
+  }
+
+  .admin-btn-container-archive{
+    width: fit-content;
+    background: #E4B474;
+    border-radius: 5px;
+    position: relative;
+    top: -54px;
+    left: -17px;
+  }

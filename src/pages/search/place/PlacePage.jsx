@@ -32,8 +32,6 @@ export default function PlacePage({ isAdmin = false }) {
             idOfPlace = null;
         }
 
-        //console.log(idOfPlace);
-
         placeService.getPlaceById(idOfPlace)
             .then(data => {
                 setobjectOfPlace(data);
@@ -65,7 +63,7 @@ export default function PlacePage({ isAdmin = false }) {
     } else {
         return (
             <>
-                <SEOComponent data={objectOfPlace} type="place" />
+                {/* <SEOComponent data={objectOfPlace} type="place" /> */}
                 <CardPlace objectOfPlace={objectOfPlace} isAdmin={isAdmin} />
             </>
 

@@ -113,6 +113,8 @@
     height: 201px;
     width: 100%;
     cursor: pointer;
+    object-fit: contain;
+    background: white;
 }
 
 .result-container-search-result-description {

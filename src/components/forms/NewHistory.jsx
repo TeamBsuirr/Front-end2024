@@ -75,7 +75,7 @@ export default function NewHistory() {
         });
 
         // Validate history
-        if (!formData.history || formData.history.length < 1 || formData.history.length > 1000) {
+        if (!formData.history || formData.history.length < 1 || formData.history.length > 10000) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-length-story') });
         }

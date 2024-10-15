@@ -5,13 +5,16 @@ import xIcon from '../../assets/vectors/x-icon.svg';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import HeaderSection from '../other/HeaderSection';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 export default function SearchResults({ arrayFoundObjects }) {
     const { t } = useTranslation();
     const navigate = useLocalizedNavigate();
-    const [searchInputValue, setSearchInputValue] = useState("");
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchForValue = searchParams.get('searchFor') || ""; // Default to "" if 'searchFor' is not present
+
+    const [searchInputValue, setSearchInputValue] = useState(searchForValue);
     const [selectedFilter, setSelectedFilter] = useState(t('search.parameters.show-all'));
     const [filteredObjects, setFilteredObjects] = useState(arrayFoundObjects);
 
@@ -19,10 +22,11 @@ export default function SearchResults({ arrayFoundObjects }) {
         if (searchInputValue !== "") {
             //window.location.href = `/search?searchFor=${searchInputValue}`;
             navigate(`/search?searchFor=${encodeURIComponent(searchInputValue)}`);
+            window.location.reload();
         } else {
             notification.warning({
-                message: t('erros.front-end.empty-search-field'),
-                description: t('erros.front-end.empty-search-field-description'),
+                message: t('errors.front-end.empty-search-field'),
+                description: t('errors.front-end.empty-search-field-description'),
             })
         }
     }
@@ -32,8 +36,8 @@ export default function SearchResults({ arrayFoundObjects }) {
             setSearchInputValue("");
         } else {
             notification.warning({
-                message: t('erros.front-end.empty-search-field'),
-                description: t('erros.front-end.empty-search-field-description'),
+                message: t('errors.front-end.empty-search-field'),
+                description: t('errors.front-end.empty-search-field-description'),
             })
         }
     }

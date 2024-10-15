@@ -52,7 +52,6 @@ export default function ButtomAdmin({ themeColor = "black", href = "/", spanText
             <button
                 className={styleClass}
                 onClick={() => {
-                    //window.location.href = href;
                     navigate(href);
                 }}
                 style={{ width: widthButton, height: heightButton }}

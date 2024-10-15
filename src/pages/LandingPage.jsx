@@ -1,19 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../assets/styles/LandingPage.css'
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import HeaderLanding from '../components/layout/HeaderLanding';
 import FooterLanding from '../components/layout/FooterLanding';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import useLocalizedNavigate from '../utils/useLocalizedNavigate';
 
 
 export default function LandingPage() {
     const { t } = useTranslation();
     const navigate = useLocalizedNavigate();
+    
     let isLngWarn = false;
     const [searchInputValue, setSearchInputValue] = useState("");
+   
 
     function clickGlobalSearchButton() {
         //console.log(localStorage.getItem('language'), isLngWarn)
@@ -27,7 +29,7 @@ export default function LandingPage() {
                     description: t("errors.front-end.warning-search-description")
                 })
             } else {
-                //window.location.href = `/search?searchFor=${searchInputValue}`;
+              
                 navigate(`/search?searchFor=${encodeURIComponent(searchInputValue)}`);
             }
 

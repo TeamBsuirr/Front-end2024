@@ -33,7 +33,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
 
     const validateInput = () => {
         let isValid = true;
-        //console.log(formData);
+
         // Validate name, surname, and patronymic
         ['name', 'surname', 'patronymic'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
@@ -53,10 +53,6 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
         }
-        // if (formData.dateFrom >= formData.dateTo) {
-        //     isValid = false;
-        //     notification.error({ message: t('errors.front-end.add-story.incorrect-dot') });
-        // }
         formData.places.forEach((place, index) => {
             if (place.dateFrom > place.dateTo) {
                 isValid = false;
@@ -77,7 +73,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
         });
 
         // Validate history
-        if (!formData.history || formData.history.length < 1 || formData.history.length > 1000) {
+        if (!formData.history || formData.history.length < 1 || formData.history.length > 10000) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-length-story') });
         }
@@ -133,13 +129,6 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
         });
     };
 
-    // const handleFileChange = (e) => {
-    //     const { files } = e.target;
-    //     setFormData({
-    //         ...formData,
-    //         files: [...formData.files, ...files]
-    //     });
-    // };
 
     const handleFileChange = (files) => {
         // Ensure files are processed correctly
@@ -197,7 +186,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
                     // console.log(response);
                     setLoading(false);
                     notification.success({ message: t('errors.front-end.add-story.success') });
-
+                    
                 })
                 .catch(error => {
                     // console.error('Ошибка получения результатов:', error);
@@ -286,7 +275,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
                             </div>
                         ))}
                     </div>
-                    <InputDescription onFileChange={handleFileChange} onStoryChange={handleStoryChange} valueFiles={formData.files}  value={formData.history} />
+                    <InputDescription typesDisallowed={["doc"]} onFileChange={handleFileChange} onStoryChange={handleStoryChange} valueFiles={formData.files}  value={formData.history} />
 
                 </div>
 

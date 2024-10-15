@@ -20,6 +20,8 @@ export default function NewPhoto({ objectOfPhoto}) {
     const [formData, setFormData] = useState(objectOfPhoto);
     const [loading, setLoading] = useState(false);
 
+
+
     const validateInput = () => {
         let isValid = true;
         //console.log(formData);
@@ -41,19 +43,34 @@ export default function NewPhoto({ objectOfPhoto}) {
         const disallowedTypes = ['application/x-javascript', 'application/x-php', 'application/x-msdos-program', 'application/x-shellscript', 'application/x-bat', 'application/x-msdos-program', 'application/x-vbscript', 'application/x-perl', 'application/x-python'];
 
 
-        //console.log(formData)
-        const fileType = formData.image[0].type;
-        if (disallowedTypes.includes(fileType)) {
+        // Проверяем, есть ли загруженные файлы
+        if (!formData.image || formData.image.length === 0) {
             isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
-        }
-        if (!allowedImageTypes.includes(fileType)) {
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
-        }
-        if (formData.size > 5 * 1024 * 1024) { // 5 MB
-            isValid = false;
-            notification.error({ message: t('errors.front-end.add-story.incorrect-file-size') });
+            notification.error({ message: t('errors.front-end.add-story.no-files') });
+        } else {
+            // Проверка типа файла
+            const fileType = formData.image.type;
+            if (disallowedTypes.includes(fileType)) {
+                isValid = false;
+                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
+            }
+            if (!allowedImageTypes.includes(fileType)) {
+                isValid = false;
+                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
+            }
+        
+            // Проверка размера файла
+            if (formData.image.size > 5 * 1024 * 1024) { // 5 MB
+                isValid = false;
+                notification.error({ message: t('errors.front-end.add-story.incorrect-file-size') });
+            }
+        
+            // Проверка на некорректные символы
+            const field = 'image'; // Пример поля, которое проверяем
+            if (/["'<>]/.test(formData[field])) {
+                isValid = false;
+                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.incorrect-symbols') });
+            }
         }
 
 
@@ -77,13 +94,11 @@ export default function NewPhoto({ objectOfPhoto}) {
         });
     };
 
-    const handleFileChange = (e) => {
-        //console.log('File input changed:', e); // Check if this logs
-        const file = e.target.files; // Convert FileList to array
-        //console.log('File selected:', file); // Log the selected files
+    const handleFileChange = (file) => {
+        
         setFormData(prevState => ({
             ...prevState,
-            image: file,
+            image: file, // Сохраняем сам объект файла
         }));
     };
 
@@ -98,7 +113,7 @@ export default function NewPhoto({ objectOfPhoto}) {
                 .then(response => {
                     // console.log(response);
                     setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-story.success') });
+                    notification.success({ message: t('errors.front-end.add-story.success-photo') });
 
                 })
                 .catch(error => {
@@ -131,8 +146,7 @@ export default function NewPhoto({ objectOfPhoto}) {
                             <InputPhoto
                                 placeholder={t("add-photo.placeholder.photo-load")}
                                 onFileChange={handleFileChange}
-                                multiple={false} 
-                                value={formData.image.urlToFile}
+                                initialImage={formData.image}
                                 />
 
                             {/* ДОПОЛНИТЕЛЬНАЯ ФУНКЦИОНАЛЬНОСТЬ ДЛЯ ПРИВЯЗКИ К МЕСТУ И УЗНИКУ  */}

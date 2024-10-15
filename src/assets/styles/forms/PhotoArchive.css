@@ -92,6 +92,8 @@
     width: 100%;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
+    object-fit: contain;
+    background: white;
 }
 
 .result-container-archive:hover {

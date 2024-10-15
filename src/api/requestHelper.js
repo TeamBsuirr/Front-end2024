@@ -1,5 +1,6 @@
 import { notification } from 'antd';
 import api from './axiosInstance';
+import { t } from 'i18next';
 
 const handleRequest = async (request) => {
   try {
@@ -25,19 +26,29 @@ const handleRequest = async (request) => {
       console.error('Error status:', error.response.status);
       console.error('Error headers:', error.response.headers);
 
+      let validationErrorsMessage = '';
+      if (error.response.data.validationErrors) {
+          const validationErrors = error.response.data.validationErrors;
+          
+          // Собираем ошибки в одну строку
+          validationErrorsMessage = Object.entries(validationErrors).map(([field, errorMessage]) => {
+              return `${t(field)}: ${errorMessage}`;
+          }).join('; ');
+      }
+
       if (error.response.data.message) {
-        //console.log("123123123")
+        
         notification.error({
-          message: 'Ошибка получения данных c сервера',
-          description: 'Ошибка получения данных с сервера: ' + error.response.data.message
+          message: t('errors.front-end.fetch.common'),
+          description: t('errors.front-end.fetch.description')+' ' + error.response.data.message + " " + validationErrorsMessage
         });
       }
 
       if (error.response.message) {
-        //console.log("123123123")
+        
         notification.error({
-          message: 'Ошибка получения данных c сервера',
-          description: 'Ошибка получения данных с сервера: ' + error.response.message
+          message: t('errors.front-end.fetch.common'),
+          description: t('errors.front-end.fetch.description')+' ' + error.response.message
         });
       }
 

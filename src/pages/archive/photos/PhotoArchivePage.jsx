@@ -16,6 +16,7 @@ export default function PhotoArchivePage({isAdmin=false}) {
     const [arrayOfPhotoObjects, setArrayOfPhotoObjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
+
     useEffect(() => {
         setLoading(true);
         searchService.getAllPhotos()

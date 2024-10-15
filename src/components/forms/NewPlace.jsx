@@ -1,10 +1,7 @@
 import { React, useState } from 'react';
 import '../../assets/styles/forms/NewPlace.css'
-
-
 import { notification } from 'antd';
-import userService from '../../api/services/userService';
-
+import ReCAPTCHA from 'react-google-recaptcha';
 import { useTranslation } from 'react-i18next';
 import InputShortDescription from '../inputs/InputShortDescription';
 import InputForm from '../inputs/InputForm';
@@ -17,11 +14,17 @@ import placeService from '../../api/services/placeService';
 
 export default function NewPlace({ objectOfPlace }) {
     const { t } = useTranslation();
-
+    const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
     const [formData, setFormData] = useState(objectOfPlace);
-
-
     const [loading, setLoading] = useState(false);
+
+    const onChangeCaptcha = (value) => {
+        if (value) {
+            setIsCaptchaValid(true); // Капча пройдена
+        } else {
+            setIsCaptchaValid(false); // Капча не пройдена
+        }
+    };
 
     const validateInput = () => {
         let isValid = true;
@@ -30,7 +33,7 @@ export default function NewPlace({ objectOfPlace }) {
         ['placeName', 'locationDescription', 'shortDescription', 'article'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
                 isValid = false;
-                notification.error({ message: t('errors.front-end.') + " " + field + " " + t('errors.front-end.add-place.symbol-length') });
+                notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.symbol-length') });
             }
             if (/["'<>]/.test(formData[field])) {
                 isValid = false;
@@ -39,37 +42,39 @@ export default function NewPlace({ objectOfPlace }) {
         });
 
         // Validate history
-        if (!formData.description || formData.description.length < 1 || formData.description.length > 1000) {
+        if (!formData.description || formData.description.length < 1 || formData.description.length > 10000) {
             isValid = false;
-            notification.error({ message: t('errors.front-end.tory') });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-length-story') });
         }
         if (/["'<>]/.test(formData.description)) {
             isValid = false;
-            notification.error({ message: t('errors.front-end.tory') });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-symbols-story') });
         }
 
         // Validate date of birth, start date and end date
         const today = new Date().toISOString().split('T')[0];
         if (!formData.dateOfFoundation || formData.dateOfFoundation >= today) {
             isValid = false;
-            notification.error({ message: t('errors.front-end.of') });
+            notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
         }
 
         // Validate countDeath (number), validate coordinates (number)
         // Validate countDeath (number)
-        if (isNaN(formData.countDeath) || formData.countDeath < 0) {
+        if (!formData.countDeath || isNaN(formData.countDeath) || formData.countDeath < 0) {
             isValid = false;
-            notification.error({ message: t('errors.front-end.add-place.invalid-countDeath') });
+            notification.error({ message: t('errors.front-end.add-camp.invalid-countDeath') });
         }
 
         // Validate coordinates (number)
         ['latitude', 'longitude'].forEach(coord => {
-            if (isNaN(formData[coord]) || formData[coord] < -180 || formData[coord] > 180) {
+           
+            if (!formData[coord] || isNaN(formData[coord]) || formData[coord] < -180 || formData[coord] > 180) {
                 isValid = false;
-                notification.error({ message: t('errors.front-end.add-place.invalid-coordinates') });
+                notification.error({ message: t('errors.front-end.add-camp.invalid-coordinates') });
             }
         });
 
+        
 
         // 
 
@@ -144,6 +149,13 @@ export default function NewPlace({ objectOfPlace }) {
 
     const handleSubmit = () => {
         if (validateInput()) {
+            if (!isCaptchaValid) {
+                notification.error({
+                     message: t('errors.front-end.captcha-failed'), 
+                     description:t(t('errors.front-end.captcha-failed-msg'))
+                });
+                return; // Предотвратить отправку формы
+            }
             // Form valid, send data to server
 
             setLoading(true);
@@ -160,7 +172,7 @@ export default function NewPlace({ objectOfPlace }) {
                     let errMsg = error.message ? error.message : error;
                     notification.error({
                         message: t('errors.front-end.add-camp.common-create'),
-                        description:  errMsg
+                        description: errMsg
                     });
 
                     setLoading(false);
@@ -168,31 +180,7 @@ export default function NewPlace({ objectOfPlace }) {
         }
     };
 
-    // const handleAdminAdd = () => {
-    //     if (validateInput()) {
-    //         // Form valid, send data to server
 
-    //         setLoading(true);
-
-    //         userService.postStory(formData)
-    //             .then(response => {
-    //                 // console.log(response);
-    //                 setLoading(false);
-    //                 notification.success({ message: t('errors.front-end.add-story.success-place') });
-
-    //             })
-    //             .catch(error => {
-    //                 // console.error('Ошибка получения результатов:', error);
-    //                 let errMsg = error.message ? error.message : error;
-    //                 notification.error({
-    //                     message: t('errors.front-end.add-place.error-receive'),
-    //                     description: t('errors.front-end.add-place.error-receive-description') + ' ' + errMsg
-    //                 });
-
-    //                 setLoading(false);
-    //             });
-    //     }
-    // };
 
     return (
         <div className='section-new-history'>
@@ -211,15 +199,15 @@ export default function NewPlace({ objectOfPlace }) {
                             <div className='container-inputs-form-inputs'>
                                 <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="placeName" id="placeName" type="text" onChange={handleInputChange} value={formData.placeName} />
                                 <InputForm placeholder={t("add-camp.placeholder.date-of-foundation")} type="date" id="dateOfFoundation" name="dateOfFoundation" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfFoundation} />
-                                <InputForm placeholder={t("add-camp.placeholder.number-of-deaths")} type="number" id="countDeath" name="countDeath" onChange={handleInputChange} value={formData.countDeath} />
+                                <InputForm placeholder={t("add-camp.placeholder.number-of-deaths")} type="number" id="countDeath" name="countDeath" onChange={handleInputChange} value={formData.countDeath !==0 ? formData.countDeath :""} />
                                 <InputForm placeholder={t("add-camp.placeholder.location")} type="text" id="locationDescription" name="locationDescription" onChange={handleInputChange} value={formData.locationDescription} />
                             </div>
 
                             <div className='container-inputs-for-coordinates'>
                                 <span>{t('add-camp.placeholder.coordinates')}</span>
                                 <div>
-                                    <InputForm placeholder={t("add-camp.placeholder.latitude")} type="coordinates" id="latitude" name="latitude" onChange={handleInputChange} value={formData.latitude} />
-                                    <InputForm placeholder={t("add-camp.placeholder.longitude")} type="coordinates" id="longitude" name="longitude" onChange={handleInputChange} value={formData.longitude} />
+                                    <InputForm placeholder={t("add-camp.placeholder.latitude")} type="coordinates" id="latitude" name="latitude" onChange={handleInputChange} value={formData.latitude ? formData.latitude!==0 : formData.latitude=""} />
+                                    <InputForm placeholder={t("add-camp.placeholder.longitude")} type="coordinates" id="longitude" name="longitude" onChange={handleInputChange} value={formData.longitude!==0 ? formData.longitude : formData.longitude=""} />
                                 </div>
 
                             </div>
@@ -228,12 +216,19 @@ export default function NewPlace({ objectOfPlace }) {
                             <InputShortDescription onDescriptionChange={handleDescriptionChange} shortValue={formData.shortDescription} />
                         </div>
                     </div>
-                    <InputDescription typesDisallowed={["doc"]} onFileChange={handleFileChange} onStoryChange={handleStoryChange} value={formData.description} />
+                    <InputDescription typesDisallowed={["doc"]} onFileChange={handleFileChange} onStoryChange={handleStoryChange} valueFiles={formData.files} value={formData.description} />
                 </div>
             </section>
 
 
             <div className='container-add-form-button-new-place'>
+                <div>
+                    <ReCAPTCHA
+                        sitekey={process.env.REACT_APP_RECAPTCHA_API_KEY}
+                        onChange={onChangeCaptcha}
+                    />
+                </div>
+
                 <ButtonSubmit
                     isColorsInverse={true}
                     themeColor="yellow"

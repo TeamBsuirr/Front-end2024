@@ -65,7 +65,7 @@ export default function PrisonerPage({isAdmin=false}) {
     } else {
         return (
             <>
-            <SEOComponent data={objectOfPrisoners} type="prisoner" />
+            {/* <SEOComponent data={objectOfPrisoners} type="prisoner" /> */}
             <Card objectOfPrisoners={objectOfPrisoners} isAdmin={isAdmin}/>
             </>
             

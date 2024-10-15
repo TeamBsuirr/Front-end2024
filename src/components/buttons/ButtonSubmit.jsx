@@ -49,7 +49,6 @@ export default function ButtonSubmit({ isColorsInverse=false, themeColor="yellow
                 className={styleClass} 
                 onClick={()=>{
                     navigate(href);
-                    //window.location.href=href;
                 }} 
                 style={{ width: widthButton, height: heightButton }}
             >
