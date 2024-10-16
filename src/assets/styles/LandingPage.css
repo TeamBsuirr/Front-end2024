@@ -208,6 +208,7 @@ html {
   margin-top: 20px;
   margin-bottom: 20px;
   width: 100%;
+  height: fit-content;
   position: relative;
 }
 
@@ -298,7 +299,7 @@ html {
   color: #1F1B16;
   font-size: 24px;
   padding-left: 20px;
-  height: 90px;
+  height: fit-content;
   display: flex;
   align-items: center;
   font-family: "Zen Kurenaido", sans-serif;

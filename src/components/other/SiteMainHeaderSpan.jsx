@@ -23,9 +23,9 @@ export default function SiteMainHeaderSpan({ size }) {
     }
 
     return (
-        <>
+        <div className='container-big-header-span'>
             <span className={styleClassB}>{t('logo.prisoners')}</span>
             <span className={styleClassL}>{t('logo.additional-text')}</span>
-        </>
+        </div>
     )
 }
