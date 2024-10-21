@@ -23,76 +23,80 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
       const script = document.createElement('script');
       script.src = `https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=${process.env.REACT_APP_YANDEX_API_KEY}`;
       script.onload = () => {
-        window.ymaps.ready(init);
+        console.log('Яндекс.Карты API загружен');
+        window.ymaps.ready(init); // Ожидаем полной инициализации API Яндекс.Карт
       };
       document.body.appendChild(script);
     };
-
+  
     const init = () => {
       const map = new window.ymaps.Map(mapRef.current, {
-        center: [53.551244, 27.668423], // Координаты центра карты (Минск)
+        center: [53.551244, 27.668423],
         zoom: 7,
-        controls: [], // Убираем все стандартные контролы
-        suppressMapOpenBlock: true, // Убираем блок "Открыть в Яндекс.Картах"
+        controls: [],
+        suppressMapOpenBlock: true,
       });
-
+  
+      console.log('Карта инициализирована');
+  
       // Кастомный макет для hint (подсказки)
       const customHintLayout = window.ymaps.templateLayoutFactory.createClass(
         '<div style="display: flex; width: max-content;height: 40px; box-sizing: border-box;align-items: center; color: #E4B474; background-color: #4D4B48; opacity: 0.9; border-radius: 10px; padding: 10px; color: white;">{{ properties.hintContent }}</div>'
       );
-
-      // Добавляем метки из массива arrayOfPlaceMarks
-      arrayOfPlaceMarks.forEach((place) => {
-        const placemark = new window.ymaps.Placemark(
-          [place.coordinates.latitude, place.coordinates.longitude],
-          {
-            hintContent: place.placeName, // Hint при наведении
-          },
-          {
-            iconLayout: 'default#image',
-            iconImageHref: PlaceMarkIcon, // Кастомная иконка
-            iconImageSize: [30, 30], // Изменяем размер иконки для активной метки
-            iconImageOffset: [-15, -15],
-            hintLayout: customHintLayout, // Применяем кастомный hint
-          }
-        );
-
-        // Добавляем обработчик клика для метки
-        placemark.events.add('click', (e) => handlePlacemarkClick(place, e));
-        
-
-        // Добавляем обработчик наведения (hover) — увеличение иконки
-        placemark.events
-        .add('mouseenter', () => {
-          placemark.options.set({
-            iconImageSize: [40, 40], // Увеличиваем размер иконки при наведении
-            iconImageOffset: [-20, -20], // Корректируем смещение
-          });
-        })
-        .add('mouseleave', () => {
-          placemark.options.set({
-            iconImageSize: [30, 30], // Возвращаем стандартный размер иконки
-            iconImageOffset: [-15, -15],
-          });
+  
+      // Добавляем метки сразу после инициализации карты
+      if (arrayOfPlaceMarks.length > 0) {
+        arrayOfPlaceMarks.forEach((place) => {
+          const placemark = new window.ymaps.Placemark(
+            [place.coordinates.latitude, place.coordinates.longitude],
+            {
+              hintContent: place.placeName,
+            },
+            {
+              iconLayout: 'default#image',
+              iconImageHref: PlaceMarkIcon,
+              iconImageSize: [40, 40],
+              iconImageOffset: [-15, -15],
+              hintLayout: customHintLayout,
+            }
+          );
+    
+          // Добавляем обработчики событий для меток
+          placemark.events.add('click', (e) => handlePlacemarkClick(place, e));
+    
+          placemark.events
+            .add('mouseenter', () => {
+              placemark.options.set({
+                iconImageSize: [50, 50],
+                iconImageOffset: [-20, -20],
+              });
+            })
+            .add('mouseleave', () => {
+              placemark.options.set({
+                iconImageSize: [40, 40],
+                iconImageOffset: [-15, -15],
+              });
+            });
+    
+          map.geoObjects.add(placemark);
         });
-
-        // В бой  
-        map.geoObjects.add(placemark);
-      });
-
+      } else {
+        console.log('Массив меток пуст');
+      }
+      
       // Если передано passedPlace, выделяем его
       if (passedPlace) {
-        // Центрируем карту на выбранную метку
         map.setCenter([passedPlace.coordinates.latitude, passedPlace.coordinates.longitude], 12);
+        console.log('Карта центрирована на:', passedPlace.placeName);
       }
     };
-
+  
     loadYandexMap();
-
-
+  
     return () => {
       if (window.ymaps && mapRef.current) {
         window.ymaps.destroy(mapRef.current);
+        console.log('Карта уничтожена');
       }
     };
   }, [arrayOfPlaceMarks, passedPlace]);
