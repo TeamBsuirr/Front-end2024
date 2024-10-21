@@ -32,6 +32,8 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
       const map = new window.ymaps.Map(mapRef.current, {
         center: [53.551244, 27.668423], // Координаты центра карты (Минск)
         zoom: 7,
+        controls: [], // Убираем все стандартные контролы
+        suppressMapOpenBlock: true, // Убираем блок "Открыть в Яндекс.Картах"
       });
 
       // Кастомный макет для hint (подсказки)
@@ -124,7 +126,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
 
        <section className='section-map'>
         <div className='container-map'>
-          <div ref={mapRef} style={{ width: '100%', height: '500px' }} />
+          <div ref={mapRef} style={{ width: '1520px', height: '100vh' }} />
         </div>
        </section>
 
