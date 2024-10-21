@@ -1,4 +1,4 @@
-import { React, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { React, useCallback, useEffect, useRef, useState } from 'react';
 import '../../assets/styles/other/Map.css';
 import { useTranslation } from 'react-i18next';
 import HeaderSection from './HeaderSection';
@@ -112,7 +112,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
     setActivePlace(place); // Устанавливаем активное место
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const loadYandexMap = () => {
       const script = document.createElement('script');
       script.src = `https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=${process.env.REACT_APP_YANDEX_API_KEY}`;
@@ -174,6 +174,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
     
           map.geoObjects.add(placemark);
         });
+        console.log('Метки сделаны!');
       } else {
         console.log('Массив меток пуст');
       }
