@@ -23,8 +23,8 @@ export default function NewPlacePage() {
         },
       
         "region": {
-            "id":0,
-            "centralCity":"",
+            "id":1,
+            "name":"Минск",
         },
         "images": [
         ],
@@ -39,7 +39,8 @@ export default function NewPlacePage() {
     const [loading, setLoading] = useState(true);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-
+    const [arrayOfRegions, setArrayOfRegions] = useState(null);
+    
     // Function to fetch file and create File object
     async function urlToFile(url, fileName, fileExtension, fileType) {
         const response = await fetch(url);
@@ -107,6 +108,25 @@ export default function NewPlacePage() {
             setIsUpdate(false)
         }
 
+     
+        placeService.getAllRegions()
+        .then(data => {
+            setArrayOfRegions(data);
+            setLoading(false);
+            
+        })
+        .catch(error => {
+            //console.error('Ошибка получения данных концлагеря:', error);
+    
+            let errMsg = error.message ? error.message : error;
+            notification.error({
+                message: t('errors.front-end.fetch.msg-place'),
+                description: "Error fetching regions" + errMsg
+            });
+    
+            setLoading(false);
+        });
+
 
         if (idOfPlace) {
             placeService.getPlaceById(idOfPlace)
@@ -141,7 +161,7 @@ export default function NewPlacePage() {
         return <NotFound />;
     } else {
         return (
-            <NewPlace objectOfPlace={objectOfPlace} isUpdate={isUpdate} />
+            <NewPlace objectOfPlace={objectOfPlace} arrayOfRegions={arrayOfRegions} isUpdate={isUpdate} />
         );
     }
 }

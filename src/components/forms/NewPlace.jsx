@@ -10,14 +10,15 @@ import ButtonSubmit from '../buttons/ButtonSubmit';
 import Spinner from '../other/Spinner';
 import HeaderSection from '../other/HeaderSection';
 import placeService from '../../api/services/placeService';
+import InputSelect from '../inputs/InputSelect';
 
 
-export default function NewPlace({ objectOfPlace, isUpdate }) {
+export default function NewPlace({ objectOfPlace, isUpdate,arrayOfRegions }) {
     const { t } = useTranslation();
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
     const [formData, setFormData] = useState(objectOfPlace);
     const [loading, setLoading] = useState(false);
-    console.log(formData)
+    
     const onChangeCaptcha = (value) => {
         if (value) {
             setIsCaptchaValid(true); // Капча пройдена
@@ -68,7 +69,7 @@ export default function NewPlace({ objectOfPlace, isUpdate }) {
         // Validate coordinates (number)
         ['latitude', 'longitude'].forEach(coord => {
 
-            if (!formData.coordinates[coord] || isNaN(formData.coordinates[coord]) || formData.coordinates[coord] < -180 || formData.coordinates[coord] > 180) {
+            if (!formData[coord] || isNaN(formData[coord]) || formData[coord] < -180 || formData[coord] > 180) {
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-camp.invalid-coordinates') });
             }
@@ -149,6 +150,20 @@ export default function NewPlace({ objectOfPlace, isUpdate }) {
         });
     };
 
+    const handleSelectChange = (e) => {
+        const { name, value } = e.target;
+        //console.log('Received value:', name, value);
+
+        // Update the formData based on selected values
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+
+        console.log(formData,name,value)
+
+    };
+
     const handleSubmit = () => {
         if (validateInput()) {
             if (!isCaptchaValid) {
@@ -165,8 +180,8 @@ export default function NewPlace({ objectOfPlace, isUpdate }) {
             if (!isUpdate) {
                 placeService.postPlace(formData)
                     .then(response => {
-
-                        if (response.status === 201) {  // Предположим, что 201 — код успешного добавления
+                        console.log(response)
+                        if (response.status === 201 || !response.status ) {  // Предположим, что 201 — код успешного добавления
                             notification.success({ message: t('errors.front-end.add-story.success-camp') });
                         }
                         setLoading(false);
@@ -190,7 +205,7 @@ export default function NewPlace({ objectOfPlace, isUpdate }) {
                 placeService.updatePlace(formData)
                     .then(response => {
                         // console.log(response);
-                        if (response.status === 201)   // Предположим, что 201 — код успешного добавления
+                        if (response.status === 201 || !response.status)   // Предположим, что 201 — код успешного добавления
                             notification.success({ message: t('errors.front-end.update-story.success-camp') });
                         setLoading(false);
                        
@@ -232,6 +247,17 @@ export default function NewPlace({ objectOfPlace, isUpdate }) {
                                 <InputForm placeholder={t("add-camp.placeholder.date-of-foundation")} type="date" id="dateOfFoundation" name="dateOfFoundation" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfFoundation} />
                                 <InputForm placeholder={t("add-camp.placeholder.number-of-deaths")} type="number" id="countDeath" name="countDeath" onChange={handleInputChange} value={formData.countDeath !== 0 ? formData.countDeath : ""} />
                                 <InputForm placeholder={t("add-camp.placeholder.location")} type="text" id="locationDescription" name="locationDescription" onChange={handleInputChange} value={formData.locationDescription} />
+                            
+                                
+                        <InputSelect
+                            name="region"
+                            value={formData.region}
+                            arrayOfSelects={arrayOfRegions}  // Ensure arrayOfPlaces contains objects with an `id` and `name` property
+                            multiple={false}
+                            onChange={handleSelectChange}
+                            placeholder={t("add-camp.placeholder.location")}
+                        />
+
                             </div>
 
                             <div className='container-inputs-for-coordinates'>

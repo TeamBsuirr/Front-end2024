@@ -20,7 +20,7 @@ export default function CardPlace({ objectOfPlace,isAdmin=false,setLoading }) {
 
     const firstPart = objectOfPlace.history.description.slice(0, splitIndex);
     const secondPart = objectOfPlace.history.description.slice(splitIndex);
-    console.log(objectOfPlace)
+
     const handleDelete = async (id) => {
         try {
             setLoading(true);

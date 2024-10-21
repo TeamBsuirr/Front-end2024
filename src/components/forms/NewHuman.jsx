@@ -188,7 +188,7 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                     .then(response => {
                         
                         setLoading(false);
-                        if (response.status === 201)
+                        if (response.status === 201 || !response.status)
                             notification.success({ message: t('errors.front-end.add-story.success') });
                         
                     })
@@ -208,7 +208,7 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                     humanService.updateHuman(formData)
                     .then(response => {
                         setLoading(false);
-                        if (response.status === 201)
+                        if (response.status === 201 || !response.status)
                             notification.success({ message: t('errors.front-end.update-story.success') });
                         
                     })

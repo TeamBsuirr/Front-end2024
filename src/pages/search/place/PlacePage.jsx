@@ -13,7 +13,7 @@ export default function PlacePage({ isAdmin = false }) {
     const { t } = useTranslation();
     const [objectOfPlace, setobjectOfPlace] = useState(null);
     const [loading, setLoading] = useState(true);
-
+   
     useEffect(() => {
         setLoading(true);
 
@@ -47,8 +47,6 @@ export default function PlacePage({ isAdmin = false }) {
                 setLoading(false);
             });
 
-
-
     }, []);
 
 
@@ -61,7 +59,7 @@ export default function PlacePage({ isAdmin = false }) {
         return (
             <>
                 {/* <SEOComponent data={objectOfPlace} type="place" /> */}
-                <CardPlace objectOfPlace={objectOfPlace} isAdmin={isAdmin} setLoading={setLoading} />
+                <CardPlace objectOfPlace={objectOfPlace}  isAdmin={isAdmin} setLoading={setLoading} />
             </>
 
         );
