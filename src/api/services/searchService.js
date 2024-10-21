@@ -35,6 +35,30 @@ const searchService = {
       }
     }));
   },
+  updatePhoto: (data) => {
+    // Сериализуем данные в FormData MIME
+    const transformedData = new FormData()
+    // Логируем данные перед отправкой
+    transformedData.append('title', data.title);
+    transformedData.append('description', data.description);
+
+    // Check if data.image is a File or FileList
+    if (data.image instanceof File) {
+      transformedData.append('image', data.image);
+    } else if (data.image instanceof FileList) {
+      Array.from(data.image).forEach((file, index) => {
+        transformedData.append('image', file);
+      });
+    } else {
+      console.error("data.image should be a File or FileList");
+    }
+    // Выполняем запрос, добавляя заголовок Content-Type
+    return handleRequest(() => api.put(`/albums/${data.id}`, transformedData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }));
+  },
 };
 
 const transformResponseAPhotoForMapForPostPhoto = (data) => {

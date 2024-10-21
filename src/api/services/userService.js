@@ -14,6 +14,7 @@ const userService = {
     transformedData.append('surname', data.surname)
     transformedData.append('patronymic', data.patronymic)
     transformedData.append('dateOfBirth', data.dateOfBirth)
+    transformedData.append('dateOfDie', data.dateOfDie)
     transformedData.append('placeOfBirth', data.placeOfBirth)
     transformedData.append('placeOfDetention', data.placeOfDetention)
     transformedData.append('dateFrom', data.dateFrom)

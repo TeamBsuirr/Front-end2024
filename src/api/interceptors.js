@@ -79,7 +79,9 @@ api.interceptors.response.use(
               message: 'Session Expired',
               description: 'Your session has expired. You have been logged out.',
             });
+
             return Promise.reject(error);
+            
           }
     
           originalRequest._retry = true;

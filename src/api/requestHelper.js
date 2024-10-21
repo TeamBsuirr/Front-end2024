@@ -4,15 +4,12 @@ import { t } from 'i18next';
 
 const handleRequest = async (request) => {
   try {
-    //console.log("Request started",request);
-
-    
+  
     // Логируем формат данных
     const config = request.config ? request.config : {};
     if (config.data) {
       //console.log("Request body data:", config.data);
     }
-    //console.log("whole config",config)
 
 
 

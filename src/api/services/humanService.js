@@ -59,10 +59,9 @@ const humanService = {
         }));
     },
     updateHuman: (data) => {
+        
         // Сериализуем данные в FormData MIME
         const transformedData = new FormData()
-        // Логируем данные перед отправкой
-        //console.log("Posting story with transformedData:", data);
 
         transformedData.append('name', data.name);
         transformedData.append('surname', data.surname);
@@ -94,9 +93,9 @@ const humanService = {
             transformedData.append(`places[${index}].dateFrom`, place.dateFrom);
             transformedData.append(`places[${index}].dateTo`, place.dateTo);
         });
-
+        console.log(data)
         // Выполняем запрос, добавляя заголовок Content-Type
-        return handleRequest(() => api.update('/humans', transformedData, {
+        return handleRequest(() => api.put(`/humans/${data.id}`, transformedData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

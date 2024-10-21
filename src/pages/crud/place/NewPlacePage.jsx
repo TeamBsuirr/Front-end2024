@@ -12,15 +12,21 @@ import { notification } from 'antd';
 
 export default function NewPlacePage() {
     const { t } = useTranslation();
-    const [objectOfPlace, setObjectOfPlace] = useState(        {
+    const [objectOfPlace, setObjectOfPlace] = useState({
+        "id": "",
         "placeName": "",
         "countDeath": 0,
 
         "article": "Заголовок истории",
-        "description": "",
-
-        "regionId": 1,
-        "files": [
+        "history":{
+            "description": "",
+        },
+      
+        "region": {
+            "id":0,
+            "centralCity":"",
+        },
+        "images": [
         ],
         "dateOfFoundation": "",
         "locationDescription": "",
@@ -32,6 +38,7 @@ export default function NewPlacePage() {
     });
     const [loading, setLoading] = useState(true);
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
 
     // Function to fetch file and create File object
     async function urlToFile(url, fileName, fileExtension, fileType) {
@@ -93,20 +100,24 @@ export default function NewPlacePage() {
 
         if (!isNaN(idOfPlace) && idOfPlace.trim() !== '') {
             idOfPlace = Number(idOfPlace);
+            setIsUpdate(true)
+            objectOfPlace.id = idOfPlace
         } else {
             idOfPlace = null;
+            setIsUpdate(false)
         }
 
 
         if (idOfPlace) {
             placeService.getPlaceById(idOfPlace)
                 .then(async data => {
-                    const fileObjects = await convertFiles(data.image);
+                    const fileObjects = await convertFiles(data.images);
                     setObjectOfPlace({
                         ...data,
-                        image: fileObjects
+                        images: fileObjects
                     });
                     setDataLoaded(true); // Ensure that data is fully loaded
+                    console.log(data)
                 })
                 .catch(errorPrisoner => {
                     let errMsg = errorPrisoner.message ? errorPrisoner.message : errorPrisoner;
@@ -130,7 +141,7 @@ export default function NewPlacePage() {
         return <NotFound />;
     } else {
         return (
-            <NewPlace objectOfPlace={objectOfPlace} />
+            <NewPlace objectOfPlace={objectOfPlace} isUpdate={isUpdate} />
         );
     }
 }

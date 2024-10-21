@@ -21,15 +21,15 @@ const placeService = {
     transformedData.append('placeName', data.placeName);
     transformedData.append('countDeath', data.countDeath);
     transformedData.append('history.article', data.article);
-    transformedData.append('history.description', data.description);
-    transformedData.append('regionId', data.regionId);
+    transformedData.append('history.description', data.history.description);
+    transformedData.append('region.id', data.region.id);
     transformedData.append('dateOfFoundation', data.dateOfFoundation);
     transformedData.append('locationDescription', data.locationDescription);
     transformedData.append('shortDescription', data.shortDescription);
-    transformedData.append('coordinates.latitude', data.latitude);
-    transformedData.append('coordinates.longitude', data.longitude);
+    transformedData.append('coordinates.latitude', data.coordinates.latitude);
+    transformedData.append('coordinates.longitude', data.coordinates.longitude);
 
-    data.files.forEach((file, index) => {
+    data.images.forEach((file, index) => {
       transformedData.append('images', file);
     });
 
@@ -38,6 +38,32 @@ const placeService = {
 
     // Выполняем запрос, добавляя заголовок Content-Type
     return handleRequest(() => api.post('/places', transformedData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }));
+  },
+  updatePlace: (data) => {
+    // Сериализуем данные в FormData MIME
+    const transformedData = new FormData()
+
+    transformedData.append('placeName', data.placeName);
+    transformedData.append('countDeath', data.countDeath);
+    transformedData.append('history.article', data.article);
+    transformedData.append('history.description', data.history.description);
+    transformedData.append('region.id', data.region.id);
+    transformedData.append('dateOfFoundation', data.dateOfFoundation);
+    transformedData.append('locationDescription', data.locationDescription);
+    transformedData.append('shortDescription', data.shortDescription);
+    transformedData.append('coordinates.latitude', data.coordinates.latitude);
+    transformedData.append('coordinates.longitude', data.coordinates.longitude);
+
+    data.images.forEach((file, index) => {
+      transformedData.append('images', file);
+    });
+
+    // Выполняем запрос, добавляя заголовок Content-Type
+    return handleRequest(() => api.put(`/places/${data.id}`, transformedData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

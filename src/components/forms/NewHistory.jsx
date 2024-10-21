@@ -21,6 +21,8 @@ export default function NewHistory() {
         "surname": "",
         "patronymic": "",
         "dateOfBirth": "",
+        "dateOfDie": "",
+        
         "placeOfBirth": "",
         "placeOfDetention": "",
         "dateFrom": "",
@@ -52,11 +54,22 @@ export default function NewHistory() {
         });
 
         // Validate date of birth, start date and end date
-        const today = new Date().toISOString().split('T')[0];
-        if (!formData.dateOfBirth || formData.dateOfBirth >= today) {
+        // 1 old if
+         const today = new Date().toISOString().split('T')[0];
+        // if (!formData.dateOfBirth || formData.dateOfBirth >= today) {
+        //     isValid = false;
+        //     notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
+        // }
+        // new 2 ifs
+        if (!formData.dateOfBirth || formData.dateOfBirth >= today || formData.dateOfBirth >= formData.dateOfDie) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
         }
+        if (!formData.dateOfDie || formData.dateOfBirth >= today || formData.dateOfBirth >= formData.dateOfDie) {
+            isValid = false;
+            notification.error({ message: t('errors.front-end.add-story.incorrect-dod') });
+        }
+
         if (formData.dateFrom >= formData.dateTo) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-dot') });
@@ -227,10 +240,14 @@ export default function NewHistory() {
                         <InputForm placeholder={t("add-story.placeholder.surname")} name="surname" id="surname" type="text" onChange={handleInputChange} value={formData.surname} />
                         <InputForm placeholder={t("add-story.placeholder.name")} type="text" id="name" name="name" onChange={handleInputChange} value={formData.name} />
                         <InputForm placeholder={t("add-story.placeholder.patronymic")} type="text" id="patronymic" name="patronymic" onChange={handleInputChange} value={formData.patronymic} />
-                        {/* <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} /> */}
+                      
                         <div className='container-input-span'>
                             <InputForm placeholder={t("add-story.placeholder.date-of-birth")} type="date" id="dateOfBirth" name="dateOfBirth" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfBirth} />
                             <span>{t("add-story.placeholder.date-of-birth")}</span>
+                        </div>
+                        <div className='container-input-span'>
+                            <InputForm placeholder={t("add-story.placeholder.date-of-death")} type="date" id="dateOfDie" name="dateOfDie" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfDie} />
+                            <span>{t("add-story.placeholder.date-of-death")}</span>
                         </div>
 
                         <InputForm placeholder={t("add-story.placeholder.place-of-birth")} type="text" id="placeOfBirth" name="placeOfBirth" onChange={handleInputChange} value={formData.placeOfBirth} />

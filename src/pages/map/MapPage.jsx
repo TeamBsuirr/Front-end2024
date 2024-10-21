@@ -20,7 +20,7 @@ export default function MapPage({isAdmin=false}) {
 
         const queryStringArray = window.location.hash.split('#');
         const idOfPlace = +queryStringArray[queryStringArray.length - 1];
-//        console.log(idOfPlace)
+        
 
         placeService.getAllPlaces()
             .then(data => {
@@ -28,8 +28,13 @@ export default function MapPage({isAdmin=false}) {
                 setLoading(false);
                 //console.log(arrayOfPlaces)
                 if(idOfPlace && data){
-                    setPassedPlace(data[idOfPlace-1]);
+                    data.map(obj=>{
+                        if(obj.id === idOfPlace)
+                            setPassedPlace(obj);
+                    })
+                   
                 }
+                console.log(data)
 
             })
             .catch(error => {

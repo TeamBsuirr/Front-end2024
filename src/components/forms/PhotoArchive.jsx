@@ -71,7 +71,7 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
                         <div className='container-description-map-admin'>
                             <span>{t('photo-archive.additional-text')}</span>
                             <div className='admin-btn-container'>
-                                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/" spanText={t('admin-panel.btn.add-photo-archive')} size="s" />
+                                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/crud/photo" spanText={t('admin-panel.btn.add-photo-archive')} size="s" />
                             </div>
                         </div>
                     </>

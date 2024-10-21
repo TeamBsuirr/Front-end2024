@@ -12,12 +12,12 @@ import HeaderSection from '../other/HeaderSection';
 import placeService from '../../api/services/placeService';
 
 
-export default function NewPlace({ objectOfPlace }) {
+export default function NewPlace({ objectOfPlace, isUpdate }) {
     const { t } = useTranslation();
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
     const [formData, setFormData] = useState(objectOfPlace);
     const [loading, setLoading] = useState(false);
-
+    console.log(formData)
     const onChangeCaptcha = (value) => {
         if (value) {
             setIsCaptchaValid(true); // Капча пройдена
@@ -30,7 +30,7 @@ export default function NewPlace({ objectOfPlace }) {
         let isValid = true;
         //console.log(formData);
         // Validate text fields
-        ['placeName', 'locationDescription', 'shortDescription', 'article'].forEach(field => {
+        ['placeName', 'locationDescription', 'shortDescription', 'placeName'].forEach(field => {
             if (!formData[field] || formData[field].length < 1 || formData[field].length > 100) {
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-story.field') + " " + field + " " + t('errors.front-end.add-story.symbol-length') });
@@ -42,11 +42,11 @@ export default function NewPlace({ objectOfPlace }) {
         });
 
         // Validate history
-        if (!formData.description || formData.description.length < 1 || formData.description.length > 10000) {
+        if (!formData.history.description || formData.history.description.length < 1 || formData.history.description.length > 10000) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-length-story') });
         }
-        if (/["'<>]/.test(formData.description)) {
+        if (/["'<>]/.test(formData.history.description)) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-symbols-story') });
         }
@@ -67,46 +67,46 @@ export default function NewPlace({ objectOfPlace }) {
 
         // Validate coordinates (number)
         ['latitude', 'longitude'].forEach(coord => {
-           
-            if (!formData[coord] || isNaN(formData[coord]) || formData[coord] < -180 || formData[coord] > 180) {
+
+            if (!formData.coordinates[coord] || isNaN(formData.coordinates[coord]) || formData.coordinates[coord] < -180 || formData.coordinates[coord] > 180) {
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-camp.invalid-coordinates') });
             }
         });
 
-        
+
 
         // 
 
         // Validate files
         const allowedImageTypes = [
-            'image/jpeg', 'image/png', 'image/gif', 'image/bmp',
+            undefined, 'image/jpeg', 'image/png', 'image/gif', 'image/bmp',
             'image/tiff', 'image/svg+xml', 'image/webp',
             'image/x-icon', 'image/vnd.microsoft.icon', 'image/heic',
             'image/heif', 'image/x-canon-cr2', 'image/x-nikon-nef',
             'image/x-sony-arw', 'image/x-olympus-orf', 'image/x-panasonic-rw2',
             'image/x-fujifilm-raf', 'image/x-adobe-dng'
         ];
-        const allowedVideoTypes = ['video/mp4', 'video/x-msvideo', 'video/quicktime', 'video/x-matroska', 'video/x-flv', 'video/x-ms-wmv', 'video/webm'];
+        const allowedVideoTypes = [undefined,'video/mp4', 'video/x-msvideo', 'video/quicktime', 'video/x-matroska', 'video/x-flv', 'video/x-ms-wmv', 'video/webm'];
         const disallowedTypes = ['application/x-javascript', 'application/x-php', 'application/x-msdos-program', 'application/x-shellscript', 'application/x-bat', 'application/x-msdos-program', 'application/x-vbscript', 'application/x-perl', 'application/x-python'];
 
-        formData.files.forEach(file => {
+        formData.images.forEach(file => {
             const fileType = file.type;
             //console.log(file)
             if (disallowedTypes.includes(fileType)) {
                 //console.log("disaollew types")
                 isValid = false;
-                notification.error({ message: t('errors.front-end.add-place.type-file') + " " + fileType + " " + t('errors.front-end.add-place.incorrect-file-type') });
+                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
             }
             if (!allowedImageTypes.includes(fileType) && !allowedVideoTypes.includes(fileType)) {
                 //console.log("not found good types")
                 isValid = false;
-                notification.error({ message: t('errors.front-end.add-place.type-file') + " " + fileType + " " + t('errors.front-end.add-place.incorrect-file-type') });
+                notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
             }
             if (file.size > 5 * 1024 * 1024 && !allowedVideoTypes.includes(fileType)) { // 5 MB
                 //console.log("size types")
                 isValid = false;
-                notification.error({ message: t('errors.front-end.add-place.incorrect-file-size') });
+                notification.error({ message: t('errors.front-end.add-story.incorrect-file-size') });
             }
         });
 
@@ -127,7 +127,7 @@ export default function NewPlace({ objectOfPlace }) {
         const updatedFiles = Array.from(files);
         setFormData(prevFormData => ({
             ...prevFormData,
-            files: updatedFiles
+            images: updatedFiles
         }));
     };
 
@@ -136,7 +136,9 @@ export default function NewPlace({ objectOfPlace }) {
         setFormData({
             ...formData,
 
-            description: e.target.value
+            history:{
+                description: e.target.value
+            }
         });
     };
 
@@ -151,8 +153,8 @@ export default function NewPlace({ objectOfPlace }) {
         if (validateInput()) {
             if (!isCaptchaValid) {
                 notification.error({
-                     message: t('errors.front-end.captcha-failed'), 
-                     description:t(t('errors.front-end.captcha-failed-msg'))
+                    message: t('errors.front-end.captcha-failed'),
+                    description: t(t('errors.front-end.captcha-failed-msg'))
                 });
                 return; // Предотвратить отправку формы
             }
@@ -160,23 +162,44 @@ export default function NewPlace({ objectOfPlace }) {
 
             setLoading(true);
 
-            placeService.postPlace(formData)
-                .then(response => {
-                    // console.log(response);
-                    setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-story.success-place') });
+            if (!isUpdate) {
+                placeService.postPlace(formData)
+                    .then(response => {
+                        // console.log(response);
+                        setLoading(false);
+                        notification.success({ message: t('errors.front-end.add-story.success-place') });
 
-                })
-                .catch(error => {
-                    // console.error('Ошибка получения результатов:', error);
-                    let errMsg = error.message ? error.message : error;
-                    notification.error({
-                        message: t('errors.front-end.add-camp.common-create'),
-                        description: errMsg
+                    })
+                    .catch(error => {
+                        // console.error('Ошибка получения результатов:', error);
+                        let errMsg = error.message ? error.message : error;
+                        notification.error({
+                            message: t('errors.front-end.add-camp.common-create'),
+                            description: errMsg
+                        });
+
+                        setLoading(false);
                     });
+            } else {
+                placeService.updatePlace(formData)
+                    .then(response => {
+                        // console.log(response);
+                        setLoading(false);
+                        notification.success({ message: t('errors.front-end.update-story.success-camp') });
 
-                    setLoading(false);
-                });
+                    })
+                    .catch(error => {
+                        // console.error('Ошибка получения результатов:', error);
+                        let errMsg = error.message ? error.message : error;
+                        notification.error({
+                            message: t('errors.front-end.add-camp.common-create'),
+                            description: errMsg
+                        });
+
+                        setLoading(false);
+                    });
+            }
+
         }
     };
 
@@ -199,15 +222,15 @@ export default function NewPlace({ objectOfPlace }) {
                             <div className='container-inputs-form-inputs'>
                                 <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="placeName" id="placeName" type="text" onChange={handleInputChange} value={formData.placeName} />
                                 <InputForm placeholder={t("add-camp.placeholder.date-of-foundation")} type="date" id="dateOfFoundation" name="dateOfFoundation" max="3000-01-01" min="1800-01-01" onChange={handleInputChange} value={formData.dateOfFoundation} />
-                                <InputForm placeholder={t("add-camp.placeholder.number-of-deaths")} type="number" id="countDeath" name="countDeath" onChange={handleInputChange} value={formData.countDeath !==0 ? formData.countDeath :""} />
+                                <InputForm placeholder={t("add-camp.placeholder.number-of-deaths")} type="number" id="countDeath" name="countDeath" onChange={handleInputChange} value={formData.countDeath !== 0 ? formData.countDeath : ""} />
                                 <InputForm placeholder={t("add-camp.placeholder.location")} type="text" id="locationDescription" name="locationDescription" onChange={handleInputChange} value={formData.locationDescription} />
                             </div>
 
                             <div className='container-inputs-for-coordinates'>
                                 <span>{t('add-camp.placeholder.coordinates')}</span>
                                 <div>
-                                    <InputForm placeholder={t("add-camp.placeholder.latitude")} type="coordinates" id="latitude" name="latitude" onChange={handleInputChange} value={formData.latitude ? formData.latitude!==0 : formData.latitude=""} />
-                                    <InputForm placeholder={t("add-camp.placeholder.longitude")} type="coordinates" id="longitude" name="longitude" onChange={handleInputChange} value={formData.longitude!==0 ? formData.longitude : formData.longitude=""} />
+                                    <InputForm placeholder={t("add-camp.placeholder.latitude")} type="coordinates" id="latitude" name="latitude" onChange={handleInputChange} value={formData.coordinates?.latitude} />
+                                    <InputForm placeholder={t("add-camp.placeholder.longitude")} type="coordinates" id="longitude" name="longitude" onChange={handleInputChange} value={formData.coordinates?.longitude} />
                                 </div>
 
                             </div>
@@ -216,7 +239,7 @@ export default function NewPlace({ objectOfPlace }) {
                             <InputShortDescription onDescriptionChange={handleDescriptionChange} shortValue={formData.shortDescription} />
                         </div>
                     </div>
-                    <InputDescription typesDisallowed={["doc"]} onFileChange={handleFileChange} onStoryChange={handleStoryChange} valueFiles={formData.files} value={formData.description} />
+                    <InputDescription typesDisallowed={["doc"]} onFileChange={handleFileChange} onStoryChange={handleStoryChange} valueFiles={formData.images} value={formData.history.description} />
                 </div>
             </section>
 

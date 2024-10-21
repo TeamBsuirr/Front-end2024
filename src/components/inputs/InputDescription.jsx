@@ -9,18 +9,54 @@ export default function InputDescription({ onFileChange, onStoryChange, typesDis
     const [fileList, setFileList] = useState([]);
 
     // Обновляем fileList при изменении valueFiles
+    // useEffect(() => {
+    //     const updatedFiles = valueFiles.map((file) => {
+    //         return {
+    //             uid: file.name + '-' + file.lastModified,
+    //             name: file.name,
+    //             type: file.type,
+    //             status: 'done',
+    //             file,
+    //             preview: file.type?.startsWith('image/') ? URL.createObjectURL(file) : null,
+    //         };
+    //     });
+    //     setFileList(updatedFiles);
+    // }, [valueFiles]);
+    // Обновляем fileList при изменении valueFiles
     useEffect(() => {
-        const updatedFiles = valueFiles.map((file) => {
-            return {
-                uid: file.name + '-' + file.lastModified,
-                name: file.name,
-                type: file.type,
-                status: 'done',
-                file,
-                preview: file.type?.startsWith('image/') ? URL.createObjectURL(file) : null,
-            };
-        });
-        setFileList(updatedFiles);
+        // Check if the new files differ from the current fileList
+        const updatedFiles = valueFiles.map(file => ({
+            uid: file.name + '-' + file.lastModified,
+            name: file.name,
+            type: file.type,
+            status: 'done',
+            file,
+            preview: file.type?.startsWith('image/') ? URL.createObjectURL(file) : null,
+        }));
+
+        // Prevent unnecessary state updates by comparing existing and new files
+        const hasChanged = updatedFiles.some(
+            (newFile, index) => !fileList[index] || fileList[index].uid !== newFile.uid
+        );
+
+        if (hasChanged) {
+            // Cleanup existing previews
+            fileList.forEach(file => {
+                if (file.preview) {
+                    URL.revokeObjectURL(file.preview);
+                }
+            });
+            setFileList(updatedFiles);
+        }
+
+        return () => {
+            // Cleanup previews for the new files when component unmounts or fileList changes
+            updatedFiles.forEach(file => {
+                if (file.preview) {
+                    URL.revokeObjectURL(file.preview);
+                }
+            });
+        };
     }, [valueFiles]);
 
     const handleFileInputChange = (event) => {

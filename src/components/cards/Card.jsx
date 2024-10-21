@@ -83,6 +83,10 @@ export default function Card({ objectOfPrisoners, isAdmin = false }) {
                             <h2>{t("add-story.placeholder.place-of-birth")}: </h2>
                             <span>{objectOfPrisoners.placeOfBirth}</span>
                         </li>
+                        <li>
+                        <h2>{t("add-story.placeholder.date-of-death")}: </h2>
+                        <span>{objectOfPrisoners.dateOfDie}</span>
+                        </li>
                         {objectOfPrisoners.places.map((place) => (<>
 
                             <li>

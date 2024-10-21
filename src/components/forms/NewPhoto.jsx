@@ -15,7 +15,7 @@ import HeaderSection from '../other/HeaderSection';
 import searchService from '../../api/services/searchService';
 
 
-export default function NewPhoto({ objectOfPhoto}) {
+export default function NewPhoto({ objectOfPhoto, isUpdate }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPhoto);
     const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function NewPhoto({ objectOfPhoto}) {
         });
 
         // Validate files
-        const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg+xml'];
+        const allowedImageTypes = [undefined,'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/tiff', 'image/svg+xml'];
         const disallowedTypes = ['application/x-javascript', 'application/x-php', 'application/x-msdos-program', 'application/x-shellscript', 'application/x-bat', 'application/x-msdos-program', 'application/x-vbscript', 'application/x-perl', 'application/x-python'];
 
 
@@ -58,13 +58,13 @@ export default function NewPhoto({ objectOfPhoto}) {
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-story.type-file') + " " + fileType + " " + t('errors.front-end.add-story.incorrect-file-type') });
             }
-        
+
             // Проверка размера файла
             if (formData.image.size > 5 * 1024 * 1024) { // 5 MB
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-story.incorrect-file-size') });
             }
-        
+
             // Проверка на некорректные символы
             const field = 'image'; // Пример поля, которое проверяем
             if (/["'<>]/.test(formData[field])) {
@@ -95,7 +95,7 @@ export default function NewPhoto({ objectOfPhoto}) {
     };
 
     const handleFileChange = (file) => {
-        
+
         setFormData(prevState => ({
             ...prevState,
             image: file, // Сохраняем сам объект файла
@@ -106,26 +106,46 @@ export default function NewPhoto({ objectOfPhoto}) {
     const handleAdminAdd = () => {
         if (validateInput()) {
             // Form valid, send data to server
-
+            //console.log(formData)
             setLoading(true);
 
-            searchService.postPhoto(formData)
-                .then(response => {
-                    // console.log(response);
-                    setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-story.success-photo') });
+            if (!isUpdate) {
+                searchService.postPhoto(formData)
+                    .then(response => {
+                        // console.log(response);
+                        setLoading(false);
+                        notification.success({ message: t('errors.front-end.add-story.success-photo') });
 
-                })
-                .catch(error => {
-                    // console.error('Ошибка получения результатов:', error);
-                    let errMsg = error.message ? error.message : error;
-                    notification.error({
-                        message: t('errors.front-end.add-story.error-receive'),
-                        description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
+                    })
+                    .catch(error => {
+                        // console.error('Ошибка получения результатов:', error);
+                        let errMsg = error.message ? error.message : error;
+                        notification.error({
+                            message: t('errors.front-end.add-story.error-receive'),
+                            description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
+                        });
+
+                        setLoading(false);
                     });
+            } else {
+                searchService.updatePhoto(formData)
+                    .then(response => {
+                        // console.log(response);
+                        setLoading(false);
+                        notification.success({ message: t('errors.front-end.update-story.success-photo') });
 
-                    setLoading(false);
-                });
+                    })
+                    .catch(error => {
+                        // console.error('Ошибка получения результатов:', error);
+                        let errMsg = error.message ? error.message : error;
+                        notification.error({
+                            message: t('errors.front-end.add-story.error-receive'),
+                            description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
+                        });
+
+                        setLoading(false);
+                    });
+            }
         }
     };
 
@@ -147,7 +167,7 @@ export default function NewPhoto({ objectOfPhoto}) {
                                 placeholder={t("add-photo.placeholder.photo-load")}
                                 onFileChange={handleFileChange}
                                 initialImage={formData.image}
-                                />
+                            />
 
                             {/* ДОПОЛНИТЕЛЬНАЯ ФУНКЦИОНАЛЬНОСТЬ ДЛЯ ПРИВЯЗКИ К МЕСТУ И УЗНИКУ  */}
 
@@ -194,7 +214,7 @@ export default function NewPhoto({ objectOfPhoto}) {
                         </div>
                         <div className='container-inputs-new-photo'>
                             <InputForm placeholder={t("add-camp.placeholder.camp-title")} name="title" id="title" type="text" onChange={handleInputChange} value={formData.title} />
-                            <InputShortDescription onDescriptionChange={handleDescriptionChange}  shortValue={formData.description} />
+                            <InputShortDescription onDescriptionChange={handleDescriptionChange} shortValue={formData.description} />
                         </div>
                     </div>
                 </div>

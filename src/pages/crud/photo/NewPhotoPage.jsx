@@ -12,12 +12,14 @@ export default function NewPhotoPage() {
     const [arrayOfPlaces, setArrayOfPlaces] = useState([]);
     const [objectOfPhoto, setObjectOfPhoto] = useState(
         {
+            "id":"",
             "image": "",
             "title": "",
             "description": "",
         }
     );
     const [loading, setLoading] = useState(true);
+    const [isUpdate, setIsUpdate] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -27,9 +29,12 @@ export default function NewPhotoPage() {
         // Проверяем, является ли последний элемент числом
         if (!isNaN(idOfPhoto) && idOfPhoto.trim() !== '') {
             idOfPhoto = Number(idOfPhoto);
+            setIsUpdate(true)
+            objectOfPhoto.id = idOfPhoto;
         } else {
             // Если это не число, делаем соответствующее действие, например, присваиваем null
             idOfPhoto = null;
+            setIsUpdate(false)
             setLoading(false);
         }
 
@@ -60,7 +65,7 @@ export default function NewPhotoPage() {
         return <PageTemplate content={<Spinner size="large" />} />;
     } else {
         return (
-            <NewPhoto objectOfPhoto={objectOfPhoto} />
+            <NewPhoto objectOfPhoto={objectOfPhoto} isUpdate={isUpdate} />
         );
     }
 

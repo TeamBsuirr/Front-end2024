@@ -13,11 +13,9 @@ import humanService from '../../api/services/humanService';
 import InputSelect from '../inputs/InputSelect';
 
 
-export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
+export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPrisoners);
-
-    //console.log(formData)
 
     const [loading, setLoading] = useState(false);
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
@@ -49,9 +47,13 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
 
         // Validate date of birth, start date and end date
         const today = new Date().toISOString().split('T')[0];
-        if (!formData.dateOfBirth || formData.dateOfBirth >= today) {
+        if (!formData.dateOfBirth || formData.dateOfBirth >= today || formData.dateOfBirth >= formData.dateOfDie) {
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
+        }
+        if (!formData.dateOfDie || formData.dateOfBirth >= today || formData.dateOfBirth >= formData.dateOfDie) {
+            isValid = false;
+            notification.error({ message: t('errors.front-end.add-story.incorrect-dod') });
         }
         formData.places.forEach((place, index) => {
             if (place.dateFrom > place.dateTo) {
@@ -59,6 +61,7 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
                 notification.error({ message: t('errors.front-end.add-story.incorrect-dot') + ` (Place: ${place.place?.placeName ?? place.name})` });
             }
         });
+
 
         // Validate place of birth and place of stay
         ['placeOfBirth'].forEach(field => {
@@ -180,24 +183,44 @@ export default function NewHumans({ arrayOfPlaces, objectOfPrisoners }) {
             // Form valid, send data to server
 
             setLoading(true);
-            //console.log(formData)
-            humanService.postHuman(formData)
-                .then(response => {
-                    // console.log(response);
-                    setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-story.success') });
-                    
-                })
-                .catch(error => {
-                    // console.error('Ошибка получения результатов:', error);
-                    let errMsg = error.message ? error.message : error;
-                    notification.error({
-                        message: t('errors.front-end.add-story.error-receive'),
-                        description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
-                    });
+            if(!isUpdate) {
+                    humanService.postHuman(formData)
+                    .then(response => {
+                        
+                        setLoading(false);
+                        notification.success({ message: t('errors.front-end.add-story.success') });
+                        
+                    })
+                    .catch(error => {
+                        let errMsg = error.message ? error.message : error;
+                        notification.error({
+                            message: t('errors.front-end.add-story.error-receive'),
+                            description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
+                        });
 
-                    setLoading(false);
-                });
+                        setLoading(false);
+                    });
+                }     
+            else
+                {
+                  
+                    humanService.updateHuman(formData)
+                    .then(response => {
+                        setLoading(false);
+                        notification.success({ message: t('errors.front-end.update-story.success') });
+                        
+                    })
+                    .catch(error => {
+                        let errMsg = error.message ? error.message : error;
+                        notification.error({
+                            message: t('errors.front-end.add-story.error-receive'),
+                            description: t('errors.front-end.add-story.error-receive-description') + ' ' + errMsg
+                        });
+
+                        setLoading(false);
+                    });
+                }
+               
         }
     };
 
