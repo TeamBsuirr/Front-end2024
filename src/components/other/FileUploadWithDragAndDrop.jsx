@@ -12,7 +12,7 @@ const RemoveIcon = () => (
 );
 
 // DraggableUploadListItem component
-const DraggableUploadListItem = ({ originNode, file, onRemove }) => {
+const DraggableUploadListItem = ({ file, onRemove }) => {
     const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: file.uid,
     });

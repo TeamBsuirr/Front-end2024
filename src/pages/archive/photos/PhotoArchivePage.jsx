@@ -1,10 +1,9 @@
 import { React, useEffect, useState } from 'react';
 import Spinner from '../../../components/other/Spinner';
 import searchService from '../../../api/services/searchService';
-import SearchResults from '../../../components/forms/SearchResults';
+
 import PageTemplate from '../../../components/other/PageTemplate';
-import Card from '../../../components/cards/Card';
-import humanService from '../../../api/services/humanService';
+
 import PhotoArchive from '../../../components/forms/PhotoArchive';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';

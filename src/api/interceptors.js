@@ -1,6 +1,5 @@
-import axios from 'axios';
+
 import api from './axiosInstance';
-import userService from './services/userService';
 import { logout, refreshToken } from '../utils/tokenService';
 import { notification } from 'antd';
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import '../../assets/styles/other/PartnersList.css'
 import bsuirLogo from '../../assets/images/icons/landing/bsuir.svg';
 import archiveLogo from '../../assets/images/icons/landing/archiveLogo.svg';

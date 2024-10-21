@@ -29,7 +29,7 @@ const placeService = {
     transformedData.append('coordinates.latitude', data.coordinates.latitude);
     transformedData.append('coordinates.longitude', data.coordinates.longitude);
 
-    data.images.forEach((file, index) => {
+    data.images.forEach((file) => {
       transformedData.append('images', file);
     });
 
@@ -58,7 +58,7 @@ const placeService = {
     transformedData.append('coordinates.latitude', data.coordinates.latitude);
     transformedData.append('coordinates.longitude', data.coordinates.longitude);
 
-    data.images.forEach((file, index) => {
+    data.images.forEach((file) => {
       transformedData.append('images', file);
     });
 

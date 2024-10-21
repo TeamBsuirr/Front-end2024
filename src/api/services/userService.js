@@ -23,7 +23,7 @@ const userService = {
     transformedData.append('phoneNumber', data.phoneNumber)
     transformedData.append('email', data.email)
     transformedData.append('history', data.history)
-    data.files.forEach((file, index) => {
+    data.files.forEach((file) => {
       transformedData.append('files', file);
     });
 

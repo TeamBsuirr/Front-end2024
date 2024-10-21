@@ -1,7 +1,6 @@
 
 
 import { React, useEffect, useRef, useState } from 'react';
-import InputMask from 'react-input-mask';
 import '../../assets/styles/inputs/InputSelect.css'
 
 
@@ -48,9 +47,9 @@ export default function InputSelect({
   };
 
   // Close the dropdown when the mouse leaves the list
-  const handleMouseLeave = () => {
-    setIsOpen(false);
-  };
+  // const handleMouseLeave = () => {
+  //   setIsOpen(false);
+  // };
 
 
   // Close the dropdown when clicking outside of the component

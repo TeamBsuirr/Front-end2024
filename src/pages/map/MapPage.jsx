@@ -31,6 +31,7 @@ export default function MapPage({isAdmin=false}) {
                     data.map(obj=>{
                         if(obj.id === idOfPlace)
                             setPassedPlace(obj);
+                        
                     })
                    
                 }

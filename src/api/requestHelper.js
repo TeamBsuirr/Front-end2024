@@ -1,5 +1,4 @@
 import { notification } from 'antd';
-import api from './axiosInstance';
 import { t } from 'i18next';
 
 const handleRequest = async (request) => {

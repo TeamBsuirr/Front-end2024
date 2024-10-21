@@ -199,7 +199,8 @@ export default function NewHistory() {
                 .then(response => {
                     // console.log(response);
                     setLoading(false);
-                    notification.success({ message: t('errors.front-end.add-story.success') });
+                    if (response.status === 201)
+                        notification.success({ message: t('errors.front-end.add-story.success') });
 
                 })
                 .catch(error => {

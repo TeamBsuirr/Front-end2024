@@ -165,9 +165,15 @@ export default function NewPlace({ objectOfPlace, isUpdate }) {
             if (!isUpdate) {
                 placeService.postPlace(formData)
                     .then(response => {
-                        // console.log(response);
+
+                        if (response.status === 201) {  // Предположим, что 201 — код успешного добавления
+                            notification.success({ message: t('errors.front-end.add-story.success-camp') });
+                        }
                         setLoading(false);
-                        notification.success({ message: t('errors.front-end.add-story.success-place') });
+
+
+                        // setLoading(false);
+                        // notification.success({ message: t('errors.front-end.add-story.success-place') });
 
                     })
                     .catch(error => {
@@ -184,8 +190,10 @@ export default function NewPlace({ objectOfPlace, isUpdate }) {
                 placeService.updatePlace(formData)
                     .then(response => {
                         // console.log(response);
+                        if (response.status === 201)   // Предположим, что 201 — код успешного добавления
+                            notification.success({ message: t('errors.front-end.update-story.success-camp') });
                         setLoading(false);
-                        notification.success({ message: t('errors.front-end.update-story.success-camp') });
+                       
 
                     })
                     .catch(error => {

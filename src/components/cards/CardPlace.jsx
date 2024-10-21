@@ -1,9 +1,9 @@
 
 
-import { React, useState } from 'react';
+import { React } from 'react';
 import '../../assets/styles/cards/Card.css'
 import '../../assets/styles/layout/DefaultLayout.css'
-import Image3 from '../../assets/images/Image3.jpeg'
+
 import Carousel from '../other/Carousel';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import { notification } from 'antd';
@@ -12,10 +12,10 @@ import ButtonCrud from '../buttons/ButtonCrud';
 import placeService from '../../api/services/placeService';
 import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
-export default function CardPlace({ objectOfPlace,isAdmin=false }) {
+export default function CardPlace({ objectOfPlace,isAdmin=false,setLoading }) {
     const navigate = useLocalizedNavigate();
     const { t } = useTranslation();
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
     const splitIndex = 73; // Количество символов в первой части строки
 
     const firstPart = objectOfPlace.history.description.slice(0, splitIndex);
@@ -24,7 +24,7 @@ export default function CardPlace({ objectOfPlace,isAdmin=false }) {
     const handleDelete = async (id) => {
         try {
             setLoading(true);
-            const response = await placeService.deletePlaceById(id)
+            await placeService.deletePlaceById(id)
 
             // console.log('Admin logged in successfully');
             notification.success({ message: t('sucess deleted place') });

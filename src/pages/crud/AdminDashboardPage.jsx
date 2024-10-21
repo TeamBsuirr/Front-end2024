@@ -1,9 +1,7 @@
 
 
 import { React } from 'react';
-import PageTemplate from '../../components/other/PageTemplate';
 import { useTranslation } from 'react-i18next';
-import Spinner from '../../components/other/Spinner';
 import HeaderSection from '../../components/other/HeaderSection';
 import ButtomAdmin from '../../components/buttons/ButtonAdmin';
 import PlacePreview from "../../assets/images/PlacePreview.jpg"

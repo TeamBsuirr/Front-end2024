@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import '../assets/styles/LandingPage.css'
 import ButtonSubmit from '../components/buttons/ButtonSubmit';
 import HeaderLanding from '../components/layout/HeaderLanding';
-import FooterLanding from '../components/layout/FooterLanding';
+
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
-import {  useNavigate } from 'react-router-dom';
+
 import useLocalizedNavigate from '../utils/useLocalizedNavigate';
 
 

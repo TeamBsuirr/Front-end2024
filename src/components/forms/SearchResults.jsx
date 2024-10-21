@@ -5,7 +5,6 @@ import xIcon from '../../assets/vectors/x-icon.svg';
 import { notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import HeaderSection from '../other/HeaderSection';
-import { useLocation, useNavigate } from 'react-router-dom';
 import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 export default function SearchResults({ arrayFoundObjects }) {

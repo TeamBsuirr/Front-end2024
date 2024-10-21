@@ -1,10 +1,4 @@
-
-
-
-
-import { useState } from 'react';
 import '../../assets/styles/buttons/ButtonAdmin.css'
-import plusSvg from '../../assets/images/icons/other/plus.svg'
 import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
 export default function ButtomAdmin({ themeColor = "black", href = "/", spanText = "КНОПКА", size = "", onClick }) {

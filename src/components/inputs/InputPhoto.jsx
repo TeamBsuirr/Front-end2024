@@ -1,7 +1,6 @@
 
 
 import { React, useEffect, useState } from 'react';
-import InputMask from 'react-input-mask';
 import '../../assets/styles/inputs/InputForm.css'
 import { sanitizeHTML } from '../../utils/sanitize';
 import { notification } from 'antd';

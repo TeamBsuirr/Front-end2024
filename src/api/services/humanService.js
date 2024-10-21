@@ -35,12 +35,12 @@ const humanService = {
         const videos = data.files.filter(file => file.type.startsWith('video/'));
 
         // Append images
-        images.forEach((file, index) => {
+        images.forEach((file) => {
             transformedData.append('images', file);
         });
 
         // Append videos
-        videos.forEach((file, index) => {
+        videos.forEach((file) => {
             transformedData.append('videos', file);
         });
 
@@ -78,12 +78,12 @@ const humanService = {
         const videos = data.files.filter(file => file.type.startsWith('video/'));
 
         // Append images
-        images.forEach((file, index) => {
+        images.forEach((file) => {
             transformedData.append('images', file);
         });
 
         // Append videos
-        videos.forEach((file, index) => {
+        videos.forEach((file) => {
             transformedData.append('videos', file);
         });
 

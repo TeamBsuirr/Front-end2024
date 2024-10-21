@@ -55,7 +55,7 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
             isValid = false;
             notification.error({ message: t('errors.front-end.add-story.incorrect-dod') });
         }
-        formData.places.forEach((place, index) => {
+        formData.places.forEach((place) => {
             if (place.dateFrom > place.dateTo) {
                 isValid = false;
                 notification.error({ message: t('errors.front-end.add-story.incorrect-dot') + ` (Place: ${place.place?.placeName ?? place.name})` });
@@ -188,7 +188,8 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                     .then(response => {
                         
                         setLoading(false);
-                        notification.success({ message: t('errors.front-end.add-story.success') });
+                        if (response.status === 201)
+                            notification.success({ message: t('errors.front-end.add-story.success') });
                         
                     })
                     .catch(error => {
@@ -207,7 +208,8 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                     humanService.updateHuman(formData)
                     .then(response => {
                         setLoading(false);
-                        notification.success({ message: t('errors.front-end.update-story.success') });
+                        if (response.status === 201)
+                            notification.success({ message: t('errors.front-end.update-story.success') });
                         
                     })
                     .catch(error => {

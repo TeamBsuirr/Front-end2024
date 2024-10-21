@@ -42,7 +42,7 @@ const AdminLogin = () => {
     } catch (err) {
       setError('Failed to login as admin');
       notification.error({
-        message: t('admin-panel.msg.error')
+        message: t('admin-panel.msg.error') + error
       });
       console.error('Error logging in:', err);
     }

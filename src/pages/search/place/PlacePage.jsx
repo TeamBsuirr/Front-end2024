@@ -1,15 +1,12 @@
 import { React, useEffect, useState } from 'react';
 import Spinner from '../../../components/other/Spinner';
 import PageTemplate from '../../../components/other/PageTemplate';
-import Card from '../../../components/cards/Card';
-import humanService from '../../../api/services/humanService';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
 import placeService from '../../../api/services/placeService';
 import CardPlace from '../../../components/cards/CardPlace';
 import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
-import SEOComponent from '../../../utils/seoData';
+
 
 
 export default function PlacePage({ isAdmin = false }) {
@@ -64,7 +61,7 @@ export default function PlacePage({ isAdmin = false }) {
         return (
             <>
                 {/* <SEOComponent data={objectOfPlace} type="place" /> */}
-                <CardPlace objectOfPlace={objectOfPlace} isAdmin={isAdmin} />
+                <CardPlace objectOfPlace={objectOfPlace} isAdmin={isAdmin} setLoading={setLoading} />
             </>
 
         );

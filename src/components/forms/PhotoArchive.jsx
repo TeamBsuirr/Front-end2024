@@ -1,13 +1,13 @@
 import { React, useEffect, useState } from 'react';
 import '../../assets/styles/forms/PhotoArchive.css'
-import Image4 from '../../assets/images/Image4.jpeg'
+
 import { useTranslation } from 'react-i18next';
 import ButtomAdmin from '../buttons/ButtonAdmin';
 import HeaderSection from '../other/HeaderSection';
 import ButtonCrud from '../buttons/ButtonCrud';
 import searchService from '../../api/services/searchService';
 import { notification } from 'antd';
-import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
+
 
 export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
     // const navigate = useLocalizedNavigate();
@@ -33,7 +33,7 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
     const handleDelete = async (id) => {
         try {
             
-            const response = await searchService.deletePhotoById(id)
+            await searchService.deletePhotoById(id)
 
             // Обновляем массив, удаляя элемент с соответствующим id
             const updatedPhotoArray = photoArray.filter(photo => photo.id !== id);

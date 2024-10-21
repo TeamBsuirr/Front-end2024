@@ -9,7 +9,6 @@ import { notification } from 'antd';
 
 export default function NewPhotoPage() {
     const { t } = useTranslation();
-    const [arrayOfPlaces, setArrayOfPlaces] = useState([]);
     const [objectOfPhoto, setObjectOfPhoto] = useState(
         {
             "id":"",

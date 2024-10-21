@@ -22,7 +22,7 @@ const searchService = {
     if (data.image instanceof File) {
       transformedData.append('image', data.image);
     } else if (data.image instanceof FileList) {
-      Array.from(data.image).forEach((file, index) => {
+      Array.from(data.image).forEach((file) => {
         transformedData.append('image', file);
       });
     } else {
@@ -46,7 +46,7 @@ const searchService = {
     if (data.image instanceof File) {
       transformedData.append('image', data.image);
     } else if (data.image instanceof FileList) {
-      Array.from(data.image).forEach((file, index) => {
+      Array.from(data.image).forEach((file) => {
         transformedData.append('image', file);
       });
     } else {

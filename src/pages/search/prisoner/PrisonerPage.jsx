@@ -1,14 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import Spinner from '../../../components/other/Spinner';
-import searchService from '../../../api/services/searchService';
-import SearchResults from '../../../components/forms/SearchResults';
 import PageTemplate from '../../../components/other/PageTemplate';
 import Card from '../../../components/cards/Card';
 import humanService from '../../../api/services/humanService';
 import { notification } from 'antd';
 import NotFound from '../../../components/layout/NotFound';
 import { useTranslation } from 'react-i18next';
-import SEOComponent from '../../../utils/seoData';
 
 
 export default function PrisonerPage({isAdmin=false}) {
@@ -66,7 +63,7 @@ export default function PrisonerPage({isAdmin=false}) {
         return (
             <>
             {/* <SEOComponent data={objectOfPrisoners} type="prisoner" /> */}
-            <Card objectOfPrisoners={objectOfPrisoners} isAdmin={isAdmin}/>
+            <Card objectOfPrisoners={objectOfPrisoners} isAdmin={isAdmin} setLoading={setLoading}/>
             </>
             
         );

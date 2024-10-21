@@ -2,15 +2,15 @@ import { React, useState } from 'react';
 import '../../assets/styles/forms/NewPhoto.css'
 
 import { notification } from 'antd';
-import userService from '../../api/services/userService';
+
 import { useTranslation } from 'react-i18next';
 import Spinner from '../other/Spinner';
 import InputForm from '../inputs/InputForm';
-import DateForm from '../inputs/DateForm';
+
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import InputShortDescription from '../inputs/InputShortDescription';
 import InputPhoto from '../inputs/InputPhoto';
-import InputSelect from '../inputs/InputSelect';
+
 import HeaderSection from '../other/HeaderSection';
 import searchService from '../../api/services/searchService';
 
@@ -113,8 +113,10 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
                 searchService.postPhoto(formData)
                     .then(response => {
                         // console.log(response);
+                        
                         setLoading(false);
-                        notification.success({ message: t('errors.front-end.add-story.success-photo') });
+                        if (response.status === 201)
+                            notification.success({ message: t('errors.front-end.add-story.success-photo') });
 
                     })
                     .catch(error => {
@@ -132,7 +134,8 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
                     .then(response => {
                         // console.log(response);
                         setLoading(false);
-                        notification.success({ message: t('errors.front-end.update-story.success-photo') });
+                        if (response.status === 201)
+                            notification.success({ message: t('errors.front-end.update-story.success-photo') });
 
                     })
                     .catch(error => {
