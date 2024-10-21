@@ -22,13 +22,15 @@ export default function MapPage({isAdmin = false}) {
         placeService.getAllPlaces()
             .then(data => {
                 setArrayOfPlaces(data);
-                setLoading(false);
+                
 
                 if (idOfPlace && data) {
                     data.forEach(obj => {
                         if (obj.id === idOfPlace) setPassedPlace(obj);
                     });
                 }
+
+                setLoading(false)
             })
             .catch(error => {
                 let errMsg = error.message || error;
@@ -45,6 +47,6 @@ export default function MapPage({isAdmin = false}) {
     } else if (!arrayOfPlaces) {
         return <NotFound />;
     } else {
-        return <MapUzniki arrayOfPlaceMarks={arrayOfPlaces} passedPlace={passedPlace} isAdmin={isAdmin} />;
+        return <MapUzniki arrayOfPlaceMarks={arrayOfPlaces} passedPlace={passedPlace} isAdmin={isAdmin} setLoading={setLoading} />;
     }
 }

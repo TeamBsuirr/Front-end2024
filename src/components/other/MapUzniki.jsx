@@ -7,7 +7,7 @@ import closeSvg from '../../assets/images/icons/other/close.svg';
 import PlaceMarkIcon from '../../assets/images/icons/other/star.svg';
 
 
-export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
+export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoading}) {
   // BOUNDS 
   // const { t } = useTranslation();
   // const mapRef = useRef(null); // Контейнер для карты
@@ -113,16 +113,6 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
   }, []);
 
   useEffect(() => {
-    const loadYandexMap = () => {
-      const script = document.createElement('script');
-      script.src = `https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=${process.env.REACT_APP_YANDEX_API_KEY}`;
-      script.onload = () => {
-        console.log('Яндекс.Карты API загружен');
-        window.ymaps.ready(init); // Ожидаем полной инициализации API Яндекс.Карт
-      };
-      document.body.appendChild(script);
-    };
-  
     const init = () => {
       const map = new window.ymaps.Map(mapRef.current, {
         center: [53.551244, 27.668423],
@@ -174,9 +164,13 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
     
           map.geoObjects.add(placemark);
         });
+
         console.log('Метки сделаны!');
+        // Устанавливаем, что карта и метки загружены
+        setLoading(false);
       } else {
         console.log('Массив меток пуст');
+        setLoading(false);
       }
       
       // Если передано passedPlace, выделяем его
@@ -185,8 +179,19 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
         console.log('Карта центрирована на:', passedPlace.placeName);
       }
     };
+
+    const loadYandexMap = () => {
+      const script = document.createElement('script');
+      script.src = `https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=${process.env.REACT_APP_YANDEX_API_KEY}`;
+      script.onload = () => {
+        console.log('Яндекс.Карты API загружен');
+        window.ymaps.ready(init); // Ожидаем полной инициализации API Яндекс.Карт
+      };
+      document.body.appendChild(script);
+    };
   
     loadYandexMap();
+  
   
     return () => {
       if (window.ymaps && mapRef.current) {
@@ -194,7 +199,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace}) {
         console.log('Карта уничтожена');
       }
     };
-  }, [arrayOfPlaceMarks, passedPlace]);
+  }, [arrayOfPlaceMarks, passedPlace,setLoading,handlePlacemarkClick]);
 
   return (
 
