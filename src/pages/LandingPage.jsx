@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../assets/styles/LandingPage.css";
 import ButtonSubmit from "../components/buttons/ButtonSubmit";
-import HeaderLanding from "../components/layout/HeaderLanding";
+// import HeaderLanding from "../components/layout/HeaderLanding";
 import searchIcon from "../assets/images/icons/search/searchIcon.svg";
 import { notification } from "antd";
 import { useTranslation } from "react-i18next";
@@ -44,8 +44,6 @@ export default function LandingPage() {
 
     return (
         <>
-            <HeaderLanding />
-            <main className="main">
                 <section className="section-background">
                     <div className="section-content">
                         <h1>{t("main.title.h1")}</h1>
@@ -158,8 +156,6 @@ export default function LandingPage() {
                     </div>
                 </section>
 
-                {/* <FooterLanding /> */}
-            </main>
         </>
     );
 }

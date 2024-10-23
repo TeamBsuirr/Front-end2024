@@ -112,6 +112,7 @@ export default function DefaultLayout() {
         currentPage = `${parts[2]}/${parts[3]}`;
     }
 
+
     return (
         <>
             <Helmet>
@@ -122,8 +123,8 @@ export default function DefaultLayout() {
                     content={t(`page-description.${currentPage}`)}
                 />
             </Helmet>
+          <HeaderLayout />
 
-            <HeaderLayout />
             <Suspense
                 fallback={<PageTemplate content={<Spinner size="large" />} />}
             >
