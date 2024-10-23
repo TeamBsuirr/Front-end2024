@@ -14,9 +14,7 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
     const [selectedObject, setSelectedObject] = useState(null);
     const [photoArray, setPhotoArray] = useState(arrayOfPhotoObjects); // Храним массив фотографий
 
-    useEffect(() => {
-        
-    }, [photoArray]);
+    useEffect(() => {}, [photoArray]);
 
     function openImage(index) {
         if (photoArray[index]) {

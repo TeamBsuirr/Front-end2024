@@ -154,11 +154,7 @@ export default function SearchResults({ arrayFoundObjects }) {
                             <img src={xIcon} alt="delete" />
                         </button>
                         <button onClick={clickGlobalSearchButton}>
-
-                            <img
-                                src={searchIcon}
-                                alt="Search"
-                            />
+                            <img src={searchIcon} alt="Search" />
                         </button>
                     </div>
                 </div>

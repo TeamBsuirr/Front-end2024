@@ -108,7 +108,7 @@ const humanService = {
             transformedData.append(`places[${index}].dateFrom`, place.dateFrom);
             transformedData.append(`places[${index}].dateTo`, place.dateTo);
         });
-        
+
         // Выполняем запрос, добавляя заголовок Content-Type
         return handleRequest(() =>
             api.put(`/humans/${data.id}`, transformedData, {
@@ -122,7 +122,6 @@ const humanService = {
 };
 
 const transformResponseAHumanForMapForPostHuman = (data) => {
-   
     // Извлечение основных полей
     const transformedData = {
         name: data.name || "",
@@ -143,7 +142,6 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
     if (data.places && data.places.length > 0) {
         // const place = data.places[0]; // Предполагаем, что первое место в списке - нужное
         transformedData.places = data.places.map((place) => {
-           
             return {
                 id: place?.place.id || "",
                 name: place?.place.placeName || "",
@@ -152,8 +150,6 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
             };
         });
     }
-
-   
 
     return transformedData;
 };
@@ -202,7 +198,6 @@ const transformResponseAllHistoriesForPrisonerStories = (data) => {
         },
     };
 
-    
     return returnData;
 };
 

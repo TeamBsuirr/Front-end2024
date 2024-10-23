@@ -11,12 +11,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { notification } from "antd";
 
 // SVG for removing files
-const RemoveIcon = () => (
-    <img
-    src={removeIcon}
-    alt="Remove"
-/>
-);
+const RemoveIcon = () => <img src={removeIcon} alt="Remove" />;
 
 // DraggableUploadListItem component
 const DraggableUploadListItem = ({ file, onRemove }) => {

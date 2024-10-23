@@ -82,27 +82,31 @@ export default function HeaderLayout() {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 >
-                    {isHovered ? <>
-                        <img
-                            src={globusIconHovered}
-                            alt="Globus Icon"
-                            className={isHovered ? "globus-hovered" : "globus"}
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
-                        />
-                    </>
-                        :
+                    {isHovered ? (
                         <>
                             <img
-                                src={globusIcon}
+                                src={globusIconHovered}
                                 alt="Globus Icon"
-                                className={isHovered ? "globus-hovered" : "globus"}
+                                className={
+                                    isHovered ? "globus-hovered" : "globus"
+                                }
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                             />
                         </>
-                    }
-
+                    ) : (
+                        <>
+                            <img
+                                src={globusIcon}
+                                alt="Globus Icon"
+                                className={
+                                    isHovered ? "globus-hovered" : "globus"
+                                }
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}
+                            />
+                        </>
+                    )}
                 </button>
                 {menuVisible && (
                     <div className="language-menu">

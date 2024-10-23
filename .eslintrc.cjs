@@ -54,7 +54,7 @@ module.exports = {
         "jsx-a11y/anchor-is-valid": "warn",
         "import/no-named-as-default-member": "off",
         "import/no-named-as-default": "off",
-        "no-console": ["error", { "allow": ["warn", "error"]}],
+        "no-console": ["error", { allow: ["warn", "error"] }],
     },
     ignorePatterns: ["*.cjs"],
 };

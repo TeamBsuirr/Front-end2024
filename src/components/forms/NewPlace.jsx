@@ -28,7 +28,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
 
     const validateInput = () => {
         let isValid = true;
-        
+
         // Validate text fields
         [
             "placeName",
@@ -169,9 +169,8 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
 
         formData.images.forEach((file) => {
             const fileType = file.type;
-           
+
             if (disallowedTypes.includes(fileType)) {
-                
                 isValid = false;
                 notification.error({
                     message:
@@ -251,15 +250,12 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
 
     const handleSelectChange = (e) => {
         const { name, value } = e.target;
-        
 
         // Update the formData based on selected values
         setFormData((prevState) => ({
             ...prevState,
             [name]: value,
         }));
-
-       
     };
 
     const handleSubmit = () => {
@@ -279,7 +275,6 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                 placeService
                     .postPlace(formData)
                     .then((response) => {
-                        
                         if (response.status === 201 || !response.status) {
                             // Предположим, что 201 — код успешного добавления
                             notification.success({
@@ -309,7 +304,6 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                 placeService
                     .updatePlace(formData)
                     .then((response) => {
-                       
                         if (response.status === 201 || !response.status)
                             // Предположим, что 201 — код успешного добавления
                             notification.success({

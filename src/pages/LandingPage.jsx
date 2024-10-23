@@ -81,10 +81,7 @@ export default function LandingPage() {
                                     className="search-button"
                                     onClick={clickGlobalSearchButton}
                                 >
-                                    <img
-                                        src={searchIcon}
-                                        alt="Search"
-                                    />
+                                    <img src={searchIcon} alt="Search" />
                                     {t("search.btn")}
                                 </button>
                             </div>

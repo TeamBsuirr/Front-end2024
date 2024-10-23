@@ -88,10 +88,7 @@ export default function InputPhoto({
                             cursor: "pointer",
                         }}
                     >
-                        <img
-                            src={removeIcon}
-                            alt="Remove"
-                        />
+                        <img src={removeIcon} alt="Remove" />
                     </button>
                 </div>
             )}
