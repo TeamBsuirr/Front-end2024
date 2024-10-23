@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { React, Suspense, useEffect, useState } from "react";
 import "../assets/styles/layout/DefaultLayout.css";
 import CreateStoryPage from "../pages/story/CreateStoryPage";

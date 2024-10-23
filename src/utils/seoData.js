@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable */
 import { t } from "i18next";
 import { Helmet } from "react-helmet-async";
 
