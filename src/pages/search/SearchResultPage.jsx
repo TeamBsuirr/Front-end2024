@@ -72,7 +72,7 @@ export default function SearchResultPage() {
                 //console.log(arrayFoundObjects)
 
                 setLoading(false);
-                
+                return data;
             })
             .catch(error => {
                 console.error('Ошибка получения результатов:', error);
@@ -82,6 +82,7 @@ export default function SearchResultPage() {
                     description: 'Ошибка получения данных узников и концлагерей с сервера: ' + errMsg
                 });
                 setLoading(false);
+                throw error;;
             });
 
 

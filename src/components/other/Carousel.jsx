@@ -53,35 +53,73 @@ const Carousel = ({ images }) => {
         setSelectedObject(null);
     }
 
+    const handleWheel = (e) => {
+        e.preventDefault(); // Останавливаем стандартное вертикальное поведение скроллинга
 
-return (
-    <div
-        className="carousel-container"
-        onMouseDown={handleMouseDown}
-        onMouseLeave={handleMouseLeave}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-    >
-        <h4>{t('materials')}</h4>
-        <div className="carousel" ref={carouselRef}>
-            {images.map((image, index) => (
-                <div className="carousel-item" key={index}>
-                    <img src={image.urlToFile} alt={`Slide ${index + 1}`} onClick = {() => { openImage(index); }} />
-                </div>
-            ))}
-        </div>
+        const scrollSpeed = 100; // Скорость прокрутки
+        let scrollAmount = e.deltaY > 0 ? scrollSpeed : -scrollSpeed;
+        
+        // Используем requestAnimationFrame для плавного выполнения
+        requestAnimationFrame(() => {
+            carouselRef.current.scrollLeft += scrollAmount;
+        });
+    };
 
+    return (
+        <div
+            className="carousel-container"
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            onWheel={handleWheel} // Обработчик скролла колесиком мыши
+            role="button" // Указываем, что это значимая область
+            aria-label="Image carousel" // Добавляем описание для пользователей с экранными читалками
+            tabIndex={0}
+        >
+            <h4>{t('materials')}</h4>
+            <div className="carousel" ref={carouselRef}>
+                {images.map((image, index) => (
+                    <div className="carousel-item" key={index}>
+                        <button
+                            onClick={() => { openImage(index); }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') openImage(index); }}
+                            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
+                            tabIndex={0}  // Делаем элемент фокусируемым
+                        >
+                            <img
+                                src={image.urlToFile}
+                                alt={`Slide ${index + 1}`}
 
-        {selectedObject && (
-            <div className='modal' onClick={closeModal}>
-                <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-                    <img src={selectedObject.urlToFile} alt="Selected" />
-                </div>
+                            />
+                        </button>
+                    </div>
+                ))}
             </div>
-        )}
 
-    </div>
-);
+
+            {selectedObject && (
+                <div
+                    className='modal'
+                    onClick={closeModal}
+                    onKeyDown={(e) => { if (e.key === 'Enter') closeModal(); }}
+                    role="button"
+                    tabIndex={0}
+                >
+                    <div className='modal-content'
+
+                        onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => { if (e.key === 'Enter') e.stopPropagation() }}
+                        role="button"
+                        tabIndex={0}
+                    >
+                        <img src={selectedObject.urlToFile} alt="Selected" />
+                    </div>
+                </div>
+            )}
+
+        </div>
+    );
 };
 
 export default Carousel;

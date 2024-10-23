@@ -101,6 +101,7 @@ export default function NewHumanPage() {
         placeService.getAllPlacesForPostHuman()
             .then(data => {
                 setArrayOfPlaces(data);
+                return data;
             })
             .catch(error => {
                 let errMsg = error.message ? error.message : error;
@@ -108,6 +109,7 @@ export default function NewHumanPage() {
                     message: t('errors.front-end.fetch.msg-photo-a'),
                     description: t('errors.front-end.fetch.description') + errMsg
                 });
+                throw error;;
             });
 
         if (idOfPrisoner) {
@@ -120,6 +122,7 @@ export default function NewHumanPage() {
                         files: fileObjects
                     });
                     setDataLoaded(true); // Ensure that data is fully loaded
+                    return data;
                 })
                 .catch(errorPrisoner => {
                     let errMsg = errorPrisoner.message ? errorPrisoner.message : errorPrisoner;
@@ -128,6 +131,7 @@ export default function NewHumanPage() {
                         description: t('errors.front-end.fetch.description') + errMsg
                     });
                     setDataLoaded(true); // Ensure that data is fully loaded even if there is an error
+                    throw errorPrisoner;
                 });
         } else {
             setDataLoaded(true); // Ensure that data is fully loaded even if no prisoner ID

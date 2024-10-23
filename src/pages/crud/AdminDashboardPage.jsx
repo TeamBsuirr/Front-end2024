@@ -3,7 +3,7 @@
 import { React } from 'react';
 import { useTranslation } from 'react-i18next';
 import HeaderSection from '../../components/other/HeaderSection';
-import ButtomAdmin from '../../components/buttons/ButtonAdmin';
+import ButtonAdmin from '../../components/buttons/ButtonAdmin';
 import PlacePreview from "../../assets/images/PlacePreview.jpg"
 import HumanPreview from "../../assets/images/HumanPreview.jpg"
 import PhotoPreview from "../../assets/images/PhotoPreview.jpg"
@@ -42,7 +42,7 @@ export default function AdminDashboardPage() {
                 <div className='container-description-map-admin'>
                     <span>{t('admin-panel.control-panel.additional-text')}</span>
                     <div className='admin-btn-container'>
-                        <ButtomAdmin isColorsInverse={false} themeColor="black" href="none" size="xs" />
+                        <ButtonAdmin isColorsInverse={false} themeColor="black" href="none" size="xs" />
                     </div>
                 </div>
 
@@ -52,7 +52,17 @@ export default function AdminDashboardPage() {
             <section className='section-register-search-result'>
                 {linksArray.map((obj) => (
                     <div className='result-container-search-result' key={obj.id}>
-                        <img src={obj.img} alt={"image #" + 1} onClick={() => { navigate(obj.href); }} />
+                        <button
+                            onClick={() => { navigate(obj.href); }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') navigate(obj.href); }}
+                            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
+                            tabIndex={0}  // Делаем элемент фокусируемым
+                        >
+                            <img
+                                src={obj.img}
+                                alt={"image #" + 1}
+                            />
+                        </button>
                         <div className='result-container-search-result-description'>
                             <h3>{obj.header}</h3>
                             <span>{obj.description}</span>

@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 // import '../../assets/styles/forms/SearchResults.css'
 import '../../assets/styles/forms/PrisonerSearchResult.css'
 import { useTranslation } from 'react-i18next';
-import ButtomAdmin from '../buttons/ButtonAdmin';
+import ButtonAdmin from '../buttons/ButtonAdmin';
 import HeaderSection from '../other/HeaderSection';
 import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
@@ -128,7 +128,7 @@ export default function PrisonerSearchResult({ histories, places, years, isAdmin
             <div className='container-description-prisoners-admin'>
               <span>{t('stories.additional-text')}</span>
               <div className='admin-btn-container'>
-                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/" spanText={t('admin-panel.btn.add-story')} size="m" />
+                <ButtonAdmin isColorsInverse={false} themeColor="black" href="/" spanText={t('admin-panel.btn.add-story')} size="m" />
               </div>
             </div>
           </>
@@ -175,7 +175,18 @@ export default function PrisonerSearchResult({ histories, places, years, isAdmin
 
         {filteredHistories.map((obj) => (
           <div className='result-container-search-result' key={obj.id}>
-            <img src={obj.img} alt={"image #" + 1} onClick={() => { navigate("/search/prisoner/" + obj.id); }} />
+            <button
+              onClick={() => { navigate("/search/prisoner/" + obj.id); }}
+              onKeyDown={(e) => { if (e.key === 'Enter') navigate("/search/prisoner/" + obj.id); }}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
+              tabIndex={0}  // Делаем элемент фокусируемым
+            >
+              <img
+                src={obj.img}
+                alt={" #" + 1}
+
+              />
+            </button>
             <div className='result-container-search-result-description'>
               <h3>{obj.header}</h3>
               <span>{obj.description}</span>

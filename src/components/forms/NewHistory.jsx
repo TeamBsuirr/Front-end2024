@@ -197,14 +197,14 @@ export default function NewHistory() {
 
             userService.postStory(formData)
                 .then(response => {
-                    // console.log(response);
+                   
                     setLoading(false);
                     if (response.status === 201 || !response.status)
                         notification.success({ message: t('errors.front-end.add-story.success') });
-
+                    return response
                 })
                 .catch(error => {
-                    // console.error('Ошибка получения результатов:', error);
+                    
                     let errMsg = error.message ? error.message : error;
                     notification.error({
                         message: t('errors.front-end.add-story.error-receive'),
@@ -212,6 +212,7 @@ export default function NewHistory() {
                     });
 
                     setLoading(false);
+                    throw error;
                 });
         }
     };

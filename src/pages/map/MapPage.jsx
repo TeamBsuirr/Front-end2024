@@ -7,6 +7,7 @@ import placeService from '../../api/services/placeService';
 import MapUzniki from '../../components/other/MapUzniki';
 import { useTranslation } from 'react-i18next';
 
+
 export default function MapPage({isAdmin = false}) {
     const { t } = useTranslation();
     const [arrayOfPlaces, setArrayOfPlaces] = useState(null);
@@ -31,6 +32,7 @@ export default function MapPage({isAdmin = false}) {
                 }
 
                 setLoading(false)
+                return data;
             })
             .catch(error => {
                 let errMsg = error.message || error;
@@ -39,6 +41,7 @@ export default function MapPage({isAdmin = false}) {
                     description: t('errors.front-end.fetch.description') + errMsg
                 });
                 setLoading(false);
+                throw error;
             });
     }, [t]);
 

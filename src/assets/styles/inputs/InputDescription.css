@@ -60,6 +60,12 @@ input[type='file'] {
     display: inline-block;
 }
 
+label {
+    font-size: 0; /* Делаем текст невидимым путем уменьшения его размера до 0 */
+}
+
+
+
 label[for='image'] {
     background: url('../../images/icons/story/img.png') 100% 100% / 100% 100% no-repeat;
 }

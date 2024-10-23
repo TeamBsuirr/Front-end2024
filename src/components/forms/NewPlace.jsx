@@ -187,9 +187,7 @@ export default function NewPlace({ objectOfPlace, isUpdate,arrayOfRegions }) {
                         setLoading(false);
 
 
-                        // setLoading(false);
-                        // notification.success({ message: t('errors.front-end.add-story.success-place') });
-
+                        return response
                     })
                     .catch(error => {
                         // console.error('Ошибка получения результатов:', error);
@@ -200,6 +198,7 @@ export default function NewPlace({ objectOfPlace, isUpdate,arrayOfRegions }) {
                         });
 
                         setLoading(false);
+                        throw error;
                     });
             } else {
                 placeService.updatePlace(formData)
@@ -208,7 +207,7 @@ export default function NewPlace({ objectOfPlace, isUpdate,arrayOfRegions }) {
                         if (response.status === 201 || !response.status)   // Предположим, что 201 — код успешного добавления
                             notification.success({ message: t('errors.front-end.update-story.success-camp') });
                         setLoading(false);
-                       
+                       return response
 
                     })
                     .catch(error => {
@@ -220,6 +219,7 @@ export default function NewPlace({ objectOfPlace, isUpdate,arrayOfRegions }) {
                         });
 
                         setLoading(false);
+                        throw error;
                     });
             }
 

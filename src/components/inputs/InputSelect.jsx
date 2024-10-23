@@ -108,6 +108,10 @@ export default function InputSelect({
               <li
                 key={index}
                 onClick={() => handleListItemClick(selectObj)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleListItemClick(selectObj); }} // Обрабатываем клавиши Enter и пробел
+                role="option" // Указываем роль элемента списка
+                tabIndex={0}  // Делаем элемент доступным для фокуса с клавиатуры
+                aria-selected={isSelected}  // Добавляем атрибут aria-selected
                 className={isSelected ? 'selected' : ''}
               >
                 {selectObj.name}

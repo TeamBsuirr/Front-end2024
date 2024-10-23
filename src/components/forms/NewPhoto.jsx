@@ -112,12 +112,11 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
             if (!isUpdate) {
                 searchService.postPhoto(formData)
                     .then(response => {
-                        // console.log(response);
                         
                         setLoading(false);
                         if (response.status === 201 || !response.status)
                             notification.success({ message: t('errors.front-end.add-story.success-photo') });
-
+                        return response
                     })
                     .catch(error => {
                         // console.error('Ошибка получения результатов:', error);
@@ -128,6 +127,7 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
                         });
 
                         setLoading(false);
+                        throw error;
                     });
             } else {
                 searchService.updatePhoto(formData)
@@ -136,7 +136,7 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
                         setLoading(false);
                         if (response.status === 201 || !response.status)
                             notification.success({ message: t('errors.front-end.update-story.success-photo') });
-
+                        return response
                     })
                     .catch(error => {
                         // console.error('Ошибка получения результатов:', error);
@@ -147,6 +147,7 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
                         });
 
                         setLoading(false);
+                        throw error;
                     });
             }
         }

@@ -34,7 +34,7 @@ export default function PrisonerPage({isAdmin=false}) {
             .then(data => {
                 setObjectOfPrisoners(data);
                 setLoading(false);
-
+                return data;
             })
             .catch(error => {
                 // console.error('Ошибка получения данных узника:', error);
@@ -47,6 +47,7 @@ export default function PrisonerPage({isAdmin=false}) {
                 });
 
                 setLoading(false);
+                throw error;;
             });
 
 

@@ -28,6 +28,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Новый шаг: Линтинг кода перед сборкой
+      - name: Run ESLint
+        run: npm run lint
+
       # Шаг 4: Сборка проекта
       - name: Build project
         env:

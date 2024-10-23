@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import FileUploadWithDragAndDrop from '../other/FileUploadWithDragAndDrop';
 
 
-export default function InputDescription({ onFileChange, onStoryChange, typesDisallowed = [], value,valueFiles=[] }) {
+export default function InputDescription({ onFileChange, onStoryChange, typesDisallowed = [], value, valueFiles = [] }) {
     const { t } = useTranslation();
     const [fileList, setFileList] = useState([]);
 
@@ -78,11 +78,11 @@ export default function InputDescription({ onFileChange, onStoryChange, typesDis
         }
     };
 
-    
+
     return (
         <div class="story">
             <div className="attachment">
-                <label htmlFor="image" className="input-file"></label>
+                {/* <label htmlFor="image" className="input-file"></label>
                 <input  type="file" name="image" id="image" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff,.svg" onChange={handleFileInputChange} multiple />
                 <label htmlFor="video" className="input-file"></label>
                 <input  type="file" name="video" id="video" accept=".mp4,.avi,.mov,.mkv,.flv,.wmv,.webm" onChange={handleFileInputChange} multiple />
@@ -94,6 +94,24 @@ export default function InputDescription({ onFileChange, onStoryChange, typesDis
                     fileList={fileList}
                     setFileList={setFileList}
                     onFileChange={onFileChange} 
+                    typesDisallowed={typesDisallowed}
+                /> */}
+                {/* Добавляем текстовое описание для каждого label */}
+                <label htmlFor="image" className="input-file">Upload Image</label>
+                <input type="file" name="image" id="image" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff,.svg" onChange={handleFileInputChange} multiple />
+
+                <label htmlFor="video" className="input-file">Upload Video</label>
+                <input type="file" name="video" id="video" accept=".mp4,.avi,.mov,.mkv,.flv,.wmv,.webm" onChange={handleFileInputChange} multiple />
+
+                {typesDisallowed.includes("doc") ? <></> : <>
+                    <label htmlFor="document" className="input-file">Upload Document</label>
+                    <input type="file" name="document" id="document" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar" onChange={handleFileInputChange} multiple />
+                </>}
+
+                <FileUploadWithDragAndDrop
+                    fileList={fileList}
+                    setFileList={setFileList}
+                    onFileChange={onFileChange}
                     typesDisallowed={typesDisallowed}
                 />
             </div>

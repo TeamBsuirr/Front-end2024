@@ -24,6 +24,7 @@ export default function PhotoArchivePage({isAdmin=false}) {
                 setArrayOfPhotoObjects(data);
 
                 setLoading(false);
+                return data
 
             })
             .catch(error => {
@@ -37,6 +38,7 @@ export default function PhotoArchivePage({isAdmin=false}) {
                 });
                 
                 setLoading(false);
+                throw error;
             });
 
 

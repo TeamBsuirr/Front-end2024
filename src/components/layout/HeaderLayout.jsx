@@ -23,29 +23,29 @@ export default function HeaderLayout() {
         //console.log('Selected language:', language); // Debug log
         setSelectedLanguage(language);
         setMenuVisible(false); // Close menu after selection
-    
+
         // Update localStorage with the selected language
         localStorage.setItem('language', language);
-    
+
         // Get the selected language or default to 'ru'
         const selectedLang = language || 'ru';
         //console.log('Selected language from localStorage:', selectedLang); // Debug log
-    
+
         // Get current path, query parameters, and hash
         const currentPath = location.pathname;
         const searchParams = location.search;
         const hashParams = location.hash;
-    
+
         // Remove the current language prefix if it exists
         const currentLangMatch = currentPath.match(/^\/(ru|de|be)/);
         const pathWithoutCurrentLang = currentLangMatch
             ? currentPath.replace(currentLangMatch[0], '')
             : currentPath;
-    
+
         // Construct the new path with the selected language prefix
         const newPath = `/${selectedLang}${pathWithoutCurrentLang}${searchParams}${hashParams}`;
         //console.log('Navigating to new path:', newPath); // Debug log
-    
+
         // Navigate to the new path
         navigate(newPath, { replace: true });
     };
@@ -77,7 +77,8 @@ export default function HeaderLayout() {
                     </a>
 
                 </div>
-                <div className="globus-button"
+                <button className="globus-button"
+
                     onClick={toggleMenu}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
@@ -132,25 +133,37 @@ export default function HeaderLayout() {
 
 
 
-                </div>
+                </button>
                 {menuVisible && (
                     <div className="language-menu">
                         <ul>
                             <li
                                 className={selectedLanguage === 'ru' ? 'active' : ''}
                                 onClick={() => handleLanguageSelect('ru')}
+                                onKeyDown={(e) => { if (e.key === 'Enter') handleLanguageSelect('ru'); }}
+                                role="option"
+                                aria-selected={selectedLanguage === 'ru' ? 'true' : 'false'}
+                                tabIndex={0}
                             >
                                 Русский
                             </li>
                             <li
                                 className={selectedLanguage === 'be' ? 'active' : ''}
                                 onClick={() => handleLanguageSelect('be')}
+                                onKeyDown={(e) => { if (e.key === 'Enter') handleLanguageSelect('be'); }}
+                                role="option"
+                                aria-selected={selectedLanguage === 'be' ? 'true' : 'false'}
+                                tabIndex={0}
                             >
                                 Белорусский
                             </li>
                             <li
                                 className={selectedLanguage === 'de' ? 'active' : ''}
                                 onClick={() => handleLanguageSelect('de')}
+                                onKeyDown={(e) => { if (e.key === 'Enter') handleLanguageSelect('de'); }}
+                                role="option"
+                                aria-selected={selectedLanguage === 'de' ? 'true' : 'false'}
+                                tabIndex={0}
                             >
                                 Deutsch
                             </li>

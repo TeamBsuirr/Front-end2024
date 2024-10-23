@@ -41,12 +41,11 @@ export default function NewPhotoPage() {
             searchService.getPhotoByIdForPostPhoto(idOfPhoto)
                 .then(data => {
                     setObjectOfPhoto(data);
-                    //console.log(data)
                     setLoading(false);
+                    return data;
                 })
                 .catch(errorPrisoner => {
-                    //console.error('Ошибка получения данных концлагеря:', error);
-
+                  
                     let errMsg = errorPrisoner.message ? errorPrisoner.message : errorPrisoner;
                     notification.error({
                         message: t('errors.front-end.fetch.msg-prisoner'),
@@ -54,6 +53,7 @@ export default function NewPhotoPage() {
                     });
 
                     setLoading(false);
+                    throw errorPrisoner;
                 });
                 
     }, []);

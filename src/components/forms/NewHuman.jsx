@@ -190,7 +190,7 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                         setLoading(false);
                         if (response.status === 201 || !response.status)
                             notification.success({ message: t('errors.front-end.add-story.success') });
-                        
+                        return response
                     })
                     .catch(error => {
                         let errMsg = error.message ? error.message : error;
@@ -200,6 +200,7 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                         });
 
                         setLoading(false);
+                        throw error;
                     });
                 }     
             else
@@ -210,7 +211,7 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                         setLoading(false);
                         if (response.status === 201 || !response.status)
                             notification.success({ message: t('errors.front-end.update-story.success') });
-                        
+                        return response
                     })
                     .catch(error => {
                         let errMsg = error.message ? error.message : error;
@@ -220,6 +221,7 @@ export default function NewHuman({ arrayOfPlaces, objectOfPrisoners, isUpdate })
                         });
 
                         setLoading(false);
+                        throw error;
                     });
                 }
                

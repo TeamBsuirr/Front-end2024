@@ -1,7 +1,7 @@
 import '../../assets/styles/buttons/ButtonAdmin.css'
 import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
 
-export default function ButtomAdmin({ themeColor = "black", href = "/", spanText = "КНОПКА", size = "", onClick }) {
+export default function ButtonAdmin({ themeColor = "black", href = "/", spanText = "КНОПКА", size = "", onClick }) {
     const navigate = useLocalizedNavigate();
     let styleClass = themeColor === "black" ? "admin-button" : "reverse-admin-button";
     let widthButton = 283;

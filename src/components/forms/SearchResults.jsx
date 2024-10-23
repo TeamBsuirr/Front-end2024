@@ -114,7 +114,7 @@ export default function SearchResults({ arrayFoundObjects }) {
                     textSecond={t('search.header')}
                     isMarginLeftText={true}
                 />
-                
+
                 <div className='container-form-search-result'>
                     <div className="search-bar-search-result">
                         <input type="text" placeholder={t('search.placeholder')}
@@ -123,9 +123,18 @@ export default function SearchResults({ arrayFoundObjects }) {
                                 setSearchInputValue(event.target.value);
                             }}
                         />
-                        <img src={xIcon} alt="X-ICON"
-                            onClick={clickDeleteInputBtn} />
+                        <button
+                            onClick={clickDeleteInputBtn}
+                            onKeyDown={(e) => { if (e.key === 'Enter') clickDeleteInputBtn }}
+                            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
+                            tabIndex={0}  // Делаем элемент фокусируемым
+                        >
+                            <img
+                                src={xIcon}
+                                alt="delete"
 
+                            />
+                        </button>
                         <button onClick={clickGlobalSearchButton}>
                             <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M19.6465 20.3536C19.8417 20.5489 20.1583 20.5489 20.3536 20.3536C20.5489 20.1583 20.5489 19.8417 20.3536 19.6465L19.6465 20.3536ZM13.8761 14.5832L19.6465 20.3536L20.3536 19.6465L14.5832 13.8761L13.8761 14.5832Z" fill="#E2D4C4" />
@@ -154,10 +163,26 @@ export default function SearchResults({ arrayFoundObjects }) {
             <section className='section-register-search-result'>
                 {filteredObjects.map((obj) => (
                     <div className='result-container-search-result' key={obj.id}>
-                        <img src={obj.img} alt={"image #" + 1} onClick={() => {
-                            const hrefString = obj.type === "humans" ? "/search/prisoner/" : "/search/place/";
-                            navigate(hrefString + obj.id);
-                        }} />
+                        <button
+                            onClick={() => {
+                                const hrefString = obj.type === "humans" ? "/search/prisoner/" : "/search/place/";
+                                navigate(hrefString + obj.id);
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    const hrefString = obj.type === "humans" ? "/search/prisoner/" : "/search/place/";
+                                    navigate(hrefString + obj.id);
+                                }
+                            }}
+                            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
+                            tabIndex={0}  // Делаем элемент фокусируемым
+                        >
+                            <img
+                                src={obj.img}
+                                alt={" #" + 1}
+
+                            />
+                        </button>
                         <div className='result-container-search-result-description'>
                             <h3>{obj.header}</h3>
                             <span>{obj.description}</span>

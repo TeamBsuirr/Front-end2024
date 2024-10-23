@@ -5,9 +5,10 @@ import HeaderSection from './HeaderSection';
 import ButtonSubmit from '../buttons/ButtonSubmit';
 import closeSvg from '../../assets/images/icons/other/close.svg';
 import PlaceMarkIcon from '../../assets/images/icons/other/star.svg';
+import ButtonAdmin from '../buttons/ButtonAdmin';
 
 
-export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoading}) {
+export default function MapUzniki({ isAdmin, arrayOfPlaceMarks, passedPlace, setLoading }) {
   // BOUNDS 
   // const { t } = useTranslation();
   // const mapRef = useRef(null); // Контейнер для карты
@@ -29,7 +30,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
   //     };
   //     document.body.appendChild(script);
   //   };
-  
+
   //   const init = () => {
   //     const map = new window.ymaps.Map(mapRef.current, {
   //       center: [53.551244, 27.668423],
@@ -37,14 +38,14 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
   //       controls: [],
   //       suppressMapOpenBlock: true,
   //     });
-  
+
   //     console.log('Карта инициализирована');
-  
+
   //     // Кастомный макет для hint (подсказки)
   //     const customHintLayout = window.ymaps.templateLayoutFactory.createClass(
   //       '<div style="display: flex; width: max-content;height: 40px; box-sizing: border-box;align-items: center; color: #E4B474; background-color: #4D4B48; opacity: 0.9; border-radius: 10px; padding: 10px; color: white;">{{ properties.hintContent }}</div>'
   //     );
-  
+
   //     // Добавляем метки сразу после инициализации карты
   //     if (arrayOfPlaceMarks.length > 0) {
   //       arrayOfPlaceMarks.forEach((place) => {
@@ -61,10 +62,10 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
   //             hintLayout: customHintLayout,
   //           }
   //         );
-    
+
   //         // Добавляем обработчики событий для меток
   //         placemark.events.add('click', (e) => handlePlacemarkClick(place, e));
-    
+
   //         placemark.events
   //           .add('mouseenter', () => {
   //             placemark.options.set({
@@ -78,7 +79,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
   //               iconImageOffset: [-15, -15],
   //             });
   //           });
-    
+
   //         map.geoObjects.add(placemark);
   //       });
   //     } else {
@@ -91,9 +92,9 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
   //       console.log('Карта центрирована на:', passedPlace.placeName);
   //     }
   //   };
-  
+
   //   loadYandexMap();
-  
+
   //   return () => {
   //     if (window.ymaps && mapRef.current) {
   //       window.ymaps.destroy(mapRef.current);
@@ -120,14 +121,14 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
         controls: [],
         suppressMapOpenBlock: true,
       });
-  
+
       console.log('Карта инициализирована');
-  
+
       // Кастомный макет для hint (подсказки)
       const customHintLayout = window.ymaps.templateLayoutFactory.createClass(
         '<div style="display: flex; width: max-content;height: 40px; box-sizing: border-box;align-items: center; color: #E4B474; background-color: #4D4B48; opacity: 0.9; border-radius: 10px; padding: 10px; color: white;">{{ properties.hintContent }}</div>'
       );
-  
+
       // Добавляем метки сразу после инициализации карты
       if (arrayOfPlaceMarks.length > 0) {
         arrayOfPlaceMarks.forEach((place) => {
@@ -144,10 +145,10 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
               hintLayout: customHintLayout,
             }
           );
-    
+
           // Добавляем обработчики событий для меток
           placemark.events.add('click', (e) => handlePlacemarkClick(place, e));
-    
+
           placemark.events
             .add('mouseenter', () => {
               placemark.options.set({
@@ -161,7 +162,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
                 iconImageOffset: [-15, -15],
               });
             });
-    
+
           map.geoObjects.add(placemark);
         });
 
@@ -172,7 +173,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
         console.log('Массив меток пуст');
         setLoading(false);
       }
-      
+
       // Если передано passedPlace, выделяем его
       if (passedPlace) {
         map.setCenter([passedPlace.coordinates.latitude, passedPlace.coordinates.longitude], 12);
@@ -189,17 +190,17 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
       };
       document.body.appendChild(script);
     };
-  
+
     loadYandexMap();
-  
-  
+
+
     return () => {
       if (window.ymaps && mapRef.current) {
         window.ymaps.destroy(mapRef.current);
         console.log('Карта уничтожена');
       }
     };
-  }, [arrayOfPlaceMarks, passedPlace,setLoading,handlePlacemarkClick]);
+  }, [arrayOfPlaceMarks, passedPlace, setLoading, handlePlacemarkClick]);
 
   return (
 
@@ -210,7 +211,7 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
           <div className='container-description-map-admin'>
             <span>{t('map.additional-text')}</span>
             <div className='admin-btn-container'>
-              <ButtomAdmin
+              <ButtonAdmin
                 isColorsInverse={false}
                 themeColor='black'
                 href={`/crud/place`}
@@ -226,50 +227,57 @@ export default function MapUzniki({isAdmin,arrayOfPlaceMarks,passedPlace,setLoad
         )}
       </section>
 
-       <section className='section-map'>
+      <section className='section-map'>
         <div className='container-map'>
           <div ref={mapRef} style={{ width: '1520px', height: '100vh' }} />
         </div>
-       </section>
+      </section>
 
-       {activePlace && (<>
-          <div className='active-place'>
-            <div className='header-active-place'>
-              <img src={closeSvg} alt="close icon" onClick={() => setActivePlace(null)} />
-            </div>
-            <div className='container-active-place'>
-              <div className='content-active-place'>
-                <div className='container-image-active-place'>
-                  <img src={activePlace.previewImg} alt="image of place" />
-                </div>
-                <div className='container-text-active-place'>
-                  <h2>
-                    {activePlace.placeName}
-                  </h2>
-                  <ul>
-                    <li>
-                      <h3>{t('map.card.location')}: </h3>
-                      <span>{activePlace.locationDescription}</span>
-                    </li>
-                    <li>
-                      <h3>{t('map.card.description')}: </h3>
-                      <span>{activePlace.shortDescription}</span>
-                    </li>
-                  </ul>
-                </div>
+      {activePlace && (<>
+        <div className='active-place'>
+          <div className='header-active-place'>
+            <button
+              onClick={() => setActivePlace(null)}
+              onKeyDown={(e) => { if (e.key === 'Enter')  setActivePlace(null)}}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
+              tabIndex={0}  // Делаем элемент фокусируемым
+            >
+              <img src={closeSvg} alt="close" />
+            </button>
+          </div>
+          <div className='container-active-place'>
+            <div className='content-active-place'>
+              <div className='container-image-active-place'>
+                <img src={activePlace.previewImg} alt=" place" />
+              </div>
+              <div className='container-text-active-place'>
+                <h2>
+                  {activePlace.placeName}
+                </h2>
+                <ul>
+                  <li>
+                    <h3>{t('map.card.location')}: </h3>
+                    <span>{activePlace.locationDescription}</span>
+                  </li>
+                  <li>
+                    <h3>{t('map.card.description')}: </h3>
+                    <span>{activePlace.shortDescription}</span>
+                  </li>
+                </ul>
               </div>
             </div>
-            <div className='container-button-selected-place'>
-              <ButtonSubmit
-                isColorsInverse={true}
-                themeColor="yellow"
-                href={"/search/place/" + activePlace.id}
-                spanText={t("map.card.btn")}
-                
-                size />
-            </div>
           </div>
-        </>)}
-     </div>
+          <div className='container-button-selected-place'>
+            <ButtonSubmit
+              isColorsInverse={true}
+              themeColor="yellow"
+              href={"/search/place/" + activePlace.id}
+              spanText={t("map.card.btn")}
+
+              size />
+          </div>
+        </div>
+      </>)}
+    </div>
   );
 }

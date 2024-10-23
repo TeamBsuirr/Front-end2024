@@ -113,6 +113,7 @@ export default function NewPlacePage() {
         .then(data => {
             setArrayOfRegions(data);
             setLoading(false);
+            return data;
             
         })
         .catch(error => {
@@ -125,6 +126,7 @@ export default function NewPlacePage() {
             });
     
             setLoading(false);
+            throw error;;
         });
 
 
@@ -137,7 +139,7 @@ export default function NewPlacePage() {
                         images: fileObjects
                     });
                     setDataLoaded(true); // Ensure that data is fully loaded
-                    console.log(data)
+                    return data;
                 })
                 .catch(errorPrisoner => {
                     let errMsg = errorPrisoner.message ? errorPrisoner.message : errorPrisoner;
@@ -146,6 +148,7 @@ export default function NewPlacePage() {
                         description: t('errors.front-end.fetch.description') + errMsg
                     });
                     setDataLoaded(true); // Ensure that data is fully loaded even if there is an error
+                    throw errorPrisoner;
                 });
         } else {
             setDataLoaded(true); // Ensure that data is fully loaded even if no prisoner ID

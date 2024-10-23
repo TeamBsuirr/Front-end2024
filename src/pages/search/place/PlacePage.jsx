@@ -33,7 +33,7 @@ export default function PlacePage({ isAdmin = false }) {
             .then(data => {
                 setobjectOfPlace(data);
                 setLoading(false);
-                
+                return data;
             })
             .catch(error => {
                 //console.error('Ошибка получения данных концлагеря:', error);
@@ -45,6 +45,7 @@ export default function PlacePage({ isAdmin = false }) {
                 });
 
                 setLoading(false);
+                throw error;;
             });
 
     }, []);

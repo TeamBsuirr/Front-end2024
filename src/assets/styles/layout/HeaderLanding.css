@@ -36,7 +36,7 @@
     color: #E4B474;
   }
   
-  .globus-button {
+  /* .globus-button {
     display: flex;
     align-items: center;
   }
@@ -48,7 +48,7 @@
     transition: filter 0.3s ease;
     color: #E4B474;
   }
-  
+   */
   .language-menu {
     width: 140px;
     height: 120px;

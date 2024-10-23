@@ -28,7 +28,7 @@ export default function PrisonerStories({isAdmin=false}) {
 
                 setPlaces(data.places)
                 setYears(data.years)
-
+                return data;
             })
             .catch(error => {
                 //console.error('Ошибка получения данных историй участников:', error);
@@ -41,6 +41,7 @@ export default function PrisonerStories({isAdmin=false}) {
                 });
 
                 setLoading(false);
+                throw error;;
             });
 
     }, []);

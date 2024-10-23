@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 import '../../assets/styles/forms/PhotoArchive.css'
 
 import { useTranslation } from 'react-i18next';
-import ButtomAdmin from '../buttons/ButtonAdmin';
+import ButtonAdmin from '../buttons/ButtonAdmin';
 import HeaderSection from '../other/HeaderSection';
 import ButtonCrud from '../buttons/ButtonCrud';
 import searchService from '../../api/services/searchService';
@@ -16,8 +16,8 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
     const [photoArray, setPhotoArray] = useState(arrayOfPhotoObjects); // Храним массив фотографий
 
     useEffect(() => {
-       console.log("array of photos has changed")
-      }, [photoArray]);
+        console.log("array of photos has changed")
+    }, [photoArray]);
 
     function openImage(index) {
         if (photoArray[index]) {
@@ -32,7 +32,7 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
 
     const handleDelete = async (id) => {
         try {
-            
+
             await searchService.deletePhotoById(id)
 
             // Обновляем массив, удаляя элемент с соответствующим id
@@ -71,7 +71,7 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
                         <div className='container-description-map-admin'>
                             <span>{t('photo-archive.additional-text')}</span>
                             <div className='admin-btn-container'>
-                                <ButtomAdmin isColorsInverse={false} themeColor="black" href="/crud/photo" spanText={t('admin-panel.btn.add-photo-archive')} size="s" />
+                                <ButtonAdmin isColorsInverse={false} themeColor="black" href="/crud/photo" spanText={t('admin-panel.btn.add-photo-archive')} size="s" />
                             </div>
                         </div>
                     </>
@@ -87,37 +87,58 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
 
                 {photoArray.map((obj, index) => (
                     <div className='result-container-archive' key={index}>
-                       
-                        <img src={obj.image.urlToFile} alt={"image #" + index} onClick={() => { openImage(index); }} />
-                     
+                        <button
+                            onClick={() => { openImage(index); }}
+                            onKeyDown={(e) => { if (e.key === 'Enter') openImage(index); }}
+                            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
+                            tabIndex={0}  // Делаем элемент фокусируемым
+                        >
+                            <img src={obj.image.urlToFile}
+                                alt={"#" + index}
+
+                            />
+                        </button>
                         <div className='result-container-archive-description'>
                             <h3>{obj.title}</h3>
                             {isAdmin ?
-                                    <>
-                                       
+                                <>
 
-                                            <div className='admin-btn-container-archive '>
-                                                <ButtonCrud href={`/crud/photo/${obj?.id}`} svgType="edit" />
-                                                <ButtonCrud href="none" onClick={()=>handleDelete(obj?.id)} svgType="delete" />
-                                            </div>
-                                       
-                                    </>
-                                    :
-                                    <></>
+
+                                    <div className='admin-btn-container-archive '>
+                                        <ButtonCrud href={`/crud/photo/${obj?.id}`} svgType="edit" />
+                                        <ButtonCrud href="none" onClick={() => handleDelete(obj?.id)} svgType="delete" />
+                                    </div>
+
+                                </>
+                                :
+                                <></>
                             }
                         </div>
-                        
+
                     </div>
                 ))}
 
                 {selectedObject && (
-                    <div className='modal' onClick={closeModal}>
-                        <div className='modal-content' onClick={(e) => e.stopPropagation()}>
+                    <div
+                        className='modal'
+                        onClick={closeModal}
+
+                        onKeyDown={(e) => { if (e.key === 'Enter') closeModal }}
+                        role="button"
+                        tabIndex={0}
+                    >
+                        <div
+                            className='modal-content'
+                            onClick={(e) => e.stopPropagation()}
+                            onKeyDown={(e) => { if (e.key === 'Enter') e.stopPropagation() }}
+                            role="button"
+                            tabIndex={0}
+                        >
                             <img src={selectedObject.image.urlToFile} alt="Selected" />
                             <div className='modal-description'>
                                 <h3>{selectedObject.title}</h3>
                                 <span>{selectedObject.description}</span>
-                               
+
                             </div>
                         </div>
                     </div>
