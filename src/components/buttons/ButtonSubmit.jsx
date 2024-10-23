@@ -1,12 +1,23 @@
-import '../../assets/styles/buttons/ButtonSubmit.css'
-import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
+import "../../assets/styles/buttons/ButtonSubmit.css";
+import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
 
-
-export default function ButtonSubmit({ isColorsInverse=false, themeColor="yellow", href="/", spanText="КНОПКА", size="",onClick}) {
+export default function ButtonSubmit({
+    isColorsInverse = false,
+    themeColor = "yellow",
+    href = "/",
+    spanText = "КНОПКА",
+    size = "",
+    onClick,
+}) {
     const navigate = useLocalizedNavigate();
-    let styleClass = themeColor === "yellow" ? 
-    (isColorsInverse ? "reverse-submit-button" : "submit-button") : 
-    (isColorsInverse ? "reverse-transparent-submit-button" : "transparent-submit-button");
+    let styleClass =
+        themeColor === "yellow"
+            ? isColorsInverse
+                ? "reverse-submit-button"
+                : "submit-button"
+            : isColorsInverse
+              ? "reverse-transparent-submit-button"
+              : "transparent-submit-button";
     let widthButton = 350;
     let heightButton = 70;
 
@@ -24,33 +35,30 @@ export default function ButtonSubmit({ isColorsInverse=false, themeColor="yellow
             heightButton = 80;
             break;
         default:
-
             break;
     }
 
-    if(href==="none"){
+    if (href === "none") {
         return (
-            <button 
-                className={styleClass} 
-                onClick={onClick} 
+            <button
+                className={styleClass}
+                onClick={onClick}
                 style={{ width: widthButton, height: heightButton }}
             >
                 {spanText}
             </button>
-        )
+        );
     } else {
         return (
-            <button 
-                className={styleClass} 
-                onClick={()=>{
+            <button
+                className={styleClass}
+                onClick={() => {
                     navigate(href);
-                }} 
+                }}
                 style={{ width: widthButton, height: heightButton }}
             >
                 {spanText}
             </button>
-        )
+        );
     }
-
-
 }

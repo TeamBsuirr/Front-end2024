@@ -10,18 +10,18 @@
     justify-content: center;
     align-items: center;
     z-index: 20;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     position: relative;
     width: 916px;
     height: 700px;
-  }
+}
 
-  .modal-description{
+.modal-description {
     width: 916px;
     height: 114px;
-    background: #1F1B16;
+    background: #1f1b16;
 
     display: flex;
     flex-direction: column;
@@ -29,33 +29,30 @@
     font-family: "Zen Kurenaido", sans-serif;
     font-weight: 400;
     font-size: 20px;
-  }
+}
 
-  .modal-content img {
+.modal-content img {
     width: 916px;
     height: 586px;
     object-fit: cover;
-  }
-  
-  .modal-description h3 {
+}
+
+.modal-description h3 {
     margin-top: 6px;
-    border-left: 2px solid #1F1B16;
+    border-left: 2px solid #1f1b16;
     padding-left: 4px;
     margin-left: -6px;
     text-transform: uppercase;
-    color:#E4B474;
+    color: #e4b474;
 }
 
- .modal-description span {
-    color:#E2D4C4;
+.modal-description span {
+    color: #e2d4c4;
     font-size: 15px;
     margin-top: -14px;
 }
 
-
-
-
-  .result-container-archive-description {
+.result-container-archive-description {
     height: 45px;
     display: flex;
     flex-direction: column;
@@ -65,18 +62,15 @@
     font-size: 20px;
 }
 
- .result-container-archive-description h3 {
+.result-container-archive-description h3 {
     margin-top: 0%;
     text-transform: uppercase;
 }
 
- .result-container-archive-description span {
-    
+.result-container-archive-description span {
     font-size: 15px;
     margin-top: -14px;
 }
-
-
 
 .result-container-archive {
     width: 393px;
@@ -85,7 +79,6 @@
     flex-direction: column;
     transition: background-color 0.3s ease;
 }
-
 
 .result-container-archive img {
     height: 299px;
@@ -98,16 +91,15 @@
 
 .result-container-archive:hover {
     transition: background-color 0.3s ease;
-    background: #1F1B16;
-    color:#E2D4C4;
+    background: #1f1b16;
+    color: #e2d4c4;
     transform: scale(1.05);
 }
 
-
 .result-container-archive:hover h3 {
     transition: background-color 0.3s ease;
-    color:#E4B474;
-    text-decoration:underline;
+    color: #e4b474;
+    text-decoration: underline;
     /* border-left: 2px solid #E4B474; */
     text-underline-offset: 5px;
 }

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 
-import '../../assets/styles/other/Carousel.css'
-import { useTranslation } from 'react-i18next';
+import "../../assets/styles/other/Carousel.css";
+import { useTranslation } from "react-i18next";
 
 const Carousel = ({ images }) => {
     const { t } = useTranslation();
@@ -15,20 +15,20 @@ const Carousel = ({ images }) => {
         isDragging = true;
         startX = e.pageX - carouselRef.current.offsetLeft;
         scrollLeft = carouselRef.current.scrollLeft;
-        carouselRef.current.style.cursor = 'grabbing';
+        carouselRef.current.style.cursor = "grabbing";
     };
 
     const handleMouseLeave = () => {
         if (isDragging) {
             isDragging = false;
-            carouselRef.current.style.cursor = 'grab';
+            carouselRef.current.style.cursor = "grab";
         }
     };
 
     const handleMouseUp = () => {
         if (isDragging) {
             isDragging = false;
-            carouselRef.current.style.cursor = 'grab';
+            carouselRef.current.style.cursor = "grab";
         }
     };
 
@@ -39,7 +39,6 @@ const Carousel = ({ images }) => {
         const walk = (x - startX) * 1; // Adjust the scrolling speed
         carouselRef.current.scrollLeft = scrollLeft - walk;
     };
-
 
     const [selectedObject, setSelectedObject] = useState(null);
 
@@ -58,7 +57,7 @@ const Carousel = ({ images }) => {
 
         const scrollSpeed = 100; // Скорость прокрутки
         let scrollAmount = e.deltaY > 0 ? scrollSpeed : -scrollSpeed;
-        
+
         // Используем requestAnimationFrame для плавного выполнения
         requestAnimationFrame(() => {
             carouselRef.current.scrollLeft += scrollAmount;
@@ -77,39 +76,50 @@ const Carousel = ({ images }) => {
             aria-label="Image carousel" // Добавляем описание для пользователей с экранными читалками
             tabIndex={0}
         >
-            <h4>{t('materials')}</h4>
+            <h4>{t("materials")}</h4>
             <div className="carousel" ref={carouselRef}>
                 {images.map((image, index) => (
                     <div className="carousel-item" key={index}>
                         <button
-                            onClick={() => { openImage(index); }}
-                            onKeyDown={(e) => { if (e.key === 'Enter') openImage(index); }}
-                            style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }} // Убираем стили кнопки
-                            tabIndex={0}  // Делаем элемент фокусируемым
+                            onClick={() => {
+                                openImage(index);
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") openImage(index);
+                            }}
+                            style={{
+                                background: "none",
+                                border: "none",
+                                padding: 0,
+                                cursor: "pointer",
+                            }} // Убираем стили кнопки
+                            tabIndex={0} // Делаем элемент фокусируемым
                         >
                             <img
                                 src={image.urlToFile}
                                 alt={`Slide ${index + 1}`}
-
                             />
                         </button>
                     </div>
                 ))}
             </div>
 
-
             {selectedObject && (
                 <div
-                    className='modal'
+                    className="modal"
                     onClick={closeModal}
-                    onKeyDown={(e) => { if (e.key === 'Enter') closeModal(); }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") closeModal();
+                    }}
                     role="button"
                     tabIndex={0}
                 >
-                    <div className='modal-content'
-
+                    <div
+                        className="modal-content"
                         onClick={(e) => e.stopPropagation()}
-                        onKeyDown={(e) => { if (e.key === 'Enter') e.stopPropagation() }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") e.stopPropagation();
+                        }}
                         role="button"
                         tabIndex={0}
                     >
@@ -117,7 +127,6 @@ const Carousel = ({ images }) => {
                     </div>
                 </div>
             )}
-
         </div>
     );
 };

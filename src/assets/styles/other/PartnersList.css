@@ -1,33 +1,32 @@
-
 .partners {
     display: flex;
     justify-content: center;
     gap: 35px;
     margin-top: 10px;
-  }
-  
-  .partner {
+}
+
+.partner {
     width: 80px;
     height: 80px;
     background-size: cover;
     background-position: center;
-  }
-  
-  .partner.round {
+}
+
+.partner.round {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 40px;
-    background: #FFFFFF;
+    background: #ffffff;
     overflow: hidden;
     /* This ensures the image doesn't overflow the rounded div */
-  }
-  
-  .partner.round .logo {
+}
+
+.partner.round .logo {
     width: 100%;
     /* Ensure the image takes the full width of the parent */
     height: 100%;
     /* Ensure the image takes the full height of the parent */
     object-fit: cover;
     /* This ensures the image covers the entire parent without stretching */
-  }
+}

@@ -18,7 +18,7 @@
     height: min-content;
 }
 
-.story-short textarea{
+.story-short textarea {
     border-radius: 5px !important;
     height: 320px !important;
 }
@@ -29,16 +29,20 @@ textarea#story {
     padding: 20px 25px;
     resize: none;
     border-radius: 0 0 5px 5px;
-    border: 1px solid #1F1B16;
+    border: 1px solid #1f1b16;
     background: transparent;
-    outline: #1F1B16;
-    font-family: Zen Kurenaido, sans-serif;
+    outline: #1f1b16;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
     font-size: 22px;
 }
 
 textarea:focus {
-    outline: #1F1B16;
-    font-family: Zen Kurenaido, sans-serif;
+    outline: #1f1b16;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
     font-size: 22px;
 }
 
@@ -48,7 +52,7 @@ textarea:focus {
     border-radius: 5px 5px 0 0;
 }
 
-input[type='file'] {
+input[type="file"] {
     display: none;
 }
 
@@ -64,29 +68,32 @@ label {
     font-size: 0; /* Делаем текст невидимым путем уменьшения его размера до 0 */
 }
 
-
-
-label[for='image'] {
-    background: url('../../images/icons/story/img.png') 100% 100% / 100% 100% no-repeat;
+label[for="image"] {
+    background: url("../../images/icons/story/img.png") 100% 100% / 100% 100%
+        no-repeat;
 }
 
-label[for='image']:hover {
-    background: url('../../images/icons/story/img-hover.png') 100% 100% / 100% 100% no-repeat;
+label[for="image"]:hover {
+    background: url("../../images/icons/story/img-hover.png") 100% 100% / 100%
+        100% no-repeat;
 }
 
-label[for='video'] {
-    background: url('../../images/icons/story/vid.png') 100% 100% / 100% 100% no-repeat;
+label[for="video"] {
+    background: url("../../images/icons/story/vid.png") 100% 100% / 100% 100%
+        no-repeat;
 }
 
-label[for='video']:hover {
-    background: url('../../images/icons/story/vid-hover.png') 100% 100% / 100% 100% no-repeat;
+label[for="video"]:hover {
+    background: url("../../images/icons/story/vid-hover.png") 100% 100% / 100%
+        100% no-repeat;
 }
 
-label[for='document'] {
-    background: url('../../images/icons/story/doc.png') 100% 100% / 100% 100% no-repeat;
+label[for="document"] {
+    background: url("../../images/icons/story/doc.png") 100% 100% / 100% 100%
+        no-repeat;
 }
 
-label[for='document']:hover {
-    background: url('../../images/icons/story/doc-hover.png') 100% 100% / 100% 100% no-repeat;
+label[for="document"]:hover {
+    background: url("../../images/icons/story/doc-hover.png") 100% 100% / 100%
+        100% no-repeat;
 }
-

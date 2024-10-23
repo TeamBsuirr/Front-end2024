@@ -2,22 +2,22 @@
     display: flex;
     flex: 3;
     flex-direction: column;
-    color: #1F1B16;
+    color: #1f1b16;
     width: 100%;
     box-sizing: border-box;
     padding: 50px 150px 70px;
-    background: url('../../images/DefaultBG.jpg') no-repeat center center;
+    background: url("../../images/DefaultBG.jpg") no-repeat center center;
     background-size: cover;
 }
 
 .header-container-new-history {
-    border-bottom: 2px solid #1F1B16;
+    border-bottom: 2px solid #1f1b16;
     margin-bottom: 20px;
 }
 
 .header-of-section {
-    color: #1F1B16;
-    font-family: 'Oswald', sans-serif;
+    color: #1f1b16;
+    font-family: "Oswald", sans-serif;
     font-size: 50px;
     font-weight: 400;
     text-align: center;
@@ -28,12 +28,9 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 20px 88px 37px;
-
-
 }
 
 .section-form-new-history {
-
     justify-content: space-between;
 }
 
@@ -55,11 +52,10 @@
 
 .section-register-new-history {
     padding: 65px 88px 0px;
-    border-top: 2px solid #1F1B16;
+    border-top: 2px solid #1f1b16;
     display: flex;
     flex-direction: row;
     align-items: start;
-
 }
 
 .container-register-header-new-history {
@@ -69,17 +65,17 @@
 }
 
 .container-register-header-new-history h2 {
-    font-family: 'Zen Kurenaido';
+    font-family: "Zen Kurenaido";
     font-weight: 400;
     font-size: 40px;
-    color: #1F1B16;
+    color: #1f1b16;
 }
 
 .container-register-header-new-history span {
-    font-family: 'Zen Kurenaido';
+    font-family: "Zen Kurenaido";
     font-weight: 400;
     font-size: 25px;
-    color: #1F1B16;
+    color: #1f1b16;
     opacity: 80%;
 }
 
@@ -98,7 +94,6 @@
     width: 100%;
     max-width: 400px;
     align-items: center;
-
 }
 
 .container-register-form-button-new-history {
@@ -116,11 +111,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-
 }
-
-
-
 
 /* .container {
     width: 80%;
@@ -138,7 +129,7 @@
 .date-range label {
     font-family: "Zen Kurenaido", sans-serif;
     font-size: 22px;
-    color: #1F1B16;
+    color: #1f1b16;
 }
 
 .date-range input {

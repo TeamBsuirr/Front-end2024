@@ -1,4 +1,4 @@
-.login-container{
+.login-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -6,14 +6,12 @@
     justify-content: center;
 }
 
-.login-input-container{
+.login-input-container {
     width: 40%;
 }
 
-.login-btn-container{
-
+.login-btn-container {
 }
 
-.login-captcha-container{
-    
+.login-captcha-container {
 }

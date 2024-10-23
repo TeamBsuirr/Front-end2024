@@ -1,324 +1,330 @@
 body,
 html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  font-family: "Zen Kurenaido", sans-serif;
-  display: flex;
-  flex-direction: column;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    font-family: "Zen Kurenaido", sans-serif;
+    display: flex;
+    flex-direction: column;
 }
 
 .main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-
 .section-content {
-  text-align: center;
-  color: #EAD7C0;
-  background: radial-gradient(circle, rgba(19, 17, 15, 0.3) 30%, rgba(33, 26, 20, 0) 58%);
-  padding: 40px;
-  border-radius: 10px;
-  font-family: Vasek, cursive;
-  width: 800px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    text-align: center;
+    color: #ead7c0;
+    background: radial-gradient(
+        circle,
+        rgba(19, 17, 15, 0.3) 30%,
+        rgba(33, 26, 20, 0) 58%
+    );
+    padding: 40px;
+    border-radius: 10px;
+    font-family: Vasek, cursive;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .section-background {
-  width: 100%;
-  height: 100vh;
-  background: url('../images/LandingPageBack.png') no-repeat center center;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: url("../images/LandingPageBack.png") no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .section-content::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 656px;
-  height: 393px;
-  background: radial-gradient(circle, rgba(33, 26, 20, 0.4) 0%, rgba(33, 26, 20, 0) 80%);
-  border-radius: 50% / 50%;
-  transform: translate(-50%, -50%);
-  filter: blur(15px);
-  z-index: -1;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 656px;
+    height: 393px;
+    background: radial-gradient(
+        circle,
+        rgba(33, 26, 20, 0.4) 0%,
+        rgba(33, 26, 20, 0) 80%
+    );
+    border-radius: 50% / 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(15px);
+    z-index: -1;
 }
 
 .section-content h1 {
-  font-size: 80px;
-  margin-bottom: -25px;
-  opacity: 75%;
-  font-style: italic;
-  font-weight: 400;
+    font-size: 80px;
+    margin-bottom: -25px;
+    opacity: 75%;
+    font-style: italic;
+    font-weight: 400;
 }
 
 .section-content h2 {
-  font-size: 50px;
-  margin-bottom: -45px;
-  opacity: 75%;
-  font-style: italic;
-  font-weight: 400;
+    font-size: 50px;
+    margin-bottom: -45px;
+    opacity: 75%;
+    font-style: italic;
+    font-weight: 400;
 }
 
-.button-container-landing{
-  margin-top: 74px;
+.button-container-landing {
+    margin-top: 74px;
 }
 
 .section-search-and-links {
-  display: flex;
-  flex-direction: column;
-  color: #E2D4C4;
-  width: 100%;
-  box-sizing: border-box;
-  /* height: 123vh; */
+    display: flex;
+    flex-direction: column;
+    color: #e2d4c4;
+    width: 100%;
+    box-sizing: border-box;
+    /* height: 123vh; */
 }
 
 .search-section {
-  flex: 2;
-  background-color: #1F1B16;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-left: 248px;
-  padding-right: 248px;
+    flex: 2;
+    background-color: #1f1b16;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 248px;
+    padding-right: 248px;
 }
 
 .search-section-container {
-  flex: 2;
-  padding-left: 88px;
-  padding-right: 88px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid #E2D4C4;
-  position: relative;
-  /* Added position relative */
-  width: 100%;
-  /* Ensure it takes the full width of the parent container */
-  box-sizing: border-box;
-  /* Include padding and border in the element's total width and height */
+    flex: 2;
+    padding-left: 88px;
+    padding-right: 88px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #e2d4c4;
+    position: relative;
+    /* Added position relative */
+    width: 100%;
+    /* Ensure it takes the full width of the parent container */
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
 }
 
 .search-section-container h2 {
-  position: absolute;
-  top: -43px;
-  background-color: #1F1B16;
-  padding: 0 10px;
-  font-family: "Zen Kurenaido", sans-serif;
-  font-weight: 400;
-  font-size: 26px;
+    position: absolute;
+    top: -43px;
+    background-color: #1f1b16;
+    padding: 0 10px;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-weight: 400;
+    font-size: 26px;
 }
 
 .search-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 30px;
-  padding-bottom: 10px;
-  width: 100%;
-  /* Ensure the search bar takes the full width */
-  box-sizing: border-box;
-  /* Include padding and border in the element's total width and height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    width: 100%;
+    /* Ensure the search bar takes the full width */
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
 }
 
 .search-bar input {
-  padding: 7px;
-  width: 100%;
-  /* Ensure the input takes the full width of the search bar */
-  border: 1px solid #E2D4C4;
-  background: none;
-  color: #E2D4C4;
-  outline: none;
-  box-sizing: border-box;
-  font-family: "Zen Kurenaido", sans-serif;
-  font-size: 18px;
-  /* Include padding and border in the element's total width and height */
+    padding: 7px;
+    width: 100%;
+    /* Ensure the input takes the full width of the search bar */
+    border: 1px solid #e2d4c4;
+    background: none;
+    color: #e2d4c4;
+    outline: none;
+    box-sizing: border-box;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-size: 18px;
+    /* Include padding and border in the element's total width and height */
 }
 
 .search-bar button {
-  align-self: flex-end;
-  /* Align the button to the start of the flex container */
-  width: 160px;
-  height: 40px;
-  padding: 0px 0px;
-  margin-top: 10px;
-  border: 2px solid #E2D4C4;
-  background: none;
-  color: #E2D4C4;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border-radius: 5px;
+    align-self: flex-end;
+    /* Align the button to the start of the flex container */
+    width: 160px;
+    height: 40px;
+    padding: 0px 0px;
+    margin-top: 10px;
+    border: 2px solid #e2d4c4;
+    background: none;
+    color: #e2d4c4;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
 }
 
-.search-bar svg {
-  position: relative;
-  top: 6px;
-  margin-right: 8px;
-  margin-top: -10px;
+
+
+
+.search-bar button img {
+    position: relative;
+    top: 6px;
+    margin-right: 8px;
+    margin-top: -10px;
 }
 
 .search-bar button:hover {
-  background-color: #E2D4C4;
-  color: #1F1B16;
+    background-color: #e2d4c4;
+    color: #1f1b16;
 }
 
 .links-section {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  background: url('../images/OldPaper.jpeg') no-repeat center center;
-  background-size: cover;
-  padding: 100px 100px;
-  box-sizing: border-box;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    background: url("../images/OldPaper.jpeg") no-repeat center center;
+    background-size: cover;
+    padding: 100px 100px;
+    box-sizing: border-box;
 }
 
 .links-section-container {
-  margin-top: 20px;
-  margin-bottom: 0px;
-
+    margin-top: 20px;
+    margin-bottom: 0px;
 }
 
 .link-item {
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .line-container {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  height: fit-content;
-  position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: fit-content;
+    position: relative;
 }
 
 .line-container::before {
-  content: '';
-  position: absolute;
-  left: 470px;
-  /* Adjusted to match the button width */
-  top: -20px;
-  bottom: -20px;
-  width: 2px;
-  background: #1F1B16;
+    content: "";
+    position: absolute;
+    left: 470px;
+    /* Adjusted to match the button width */
+    top: -20px;
+    bottom: -20px;
+    width: 2px;
+    background: #1f1b16;
 }
 
 .link-button {
-  width: 450px;
-  /* Ensure this matches the actual width of the images */
-  min-width: 450px;
-  height: 90px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #E2D4C4;
-  border: 2px solid #1F1B16;
-  font-size: 28px;
-  color: #1F1B16;
-  text-transform: uppercase;
-  border-radius: 5px;
-  margin-right: 20px;
-  cursor: pointer;
-  transition: background-color 1s ease;
-  background-size: 450px 90px;
-  /* Explicitly set the background size */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  box-sizing: border-box;
+    width: 450px;
+    /* Ensure this matches the actual width of the images */
+    min-width: 450px;
+    height: 90px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #e2d4c4;
+    border: 2px solid #1f1b16;
+    font-size: 28px;
+    color: #1f1b16;
+    text-transform: uppercase;
+    border-radius: 5px;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: background-color 1s ease;
+    background-size: 450px 90px;
+    /* Explicitly set the background size */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .link-button.item1 {
-  background: url('../images/FontBG.png') no-repeat center center / cover;
+    background: url("../images/FontBG.png") no-repeat center center / cover;
 }
 
 .link-button.item2 {
-  background: url('../images/PhotoBG.png') no-repeat center center / cover;
+    background: url("../images/PhotoBG.png") no-repeat center center / cover;
 }
 
 .link-button.item3 {
-  background: url('../images/MapBG.png') no-repeat center center / cover;
+    background: url("../images/MapBG.png") no-repeat center center / cover;
 }
 
 .link-button.item4 {
-  position: relative;
-  background: url('../images/OldPaper.jpeg') no-repeat center center / cover;
-  /* Ensure the element is properly positioned */
-  z-index: 1;
+    position: relative;
+    background: url("../images/OldPaper.jpeg") no-repeat center center / cover;
+    /* Ensure the element is properly positioned */
+    z-index: 1;
 }
 
 .link-button.item4::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(147, 66, 39, 0.1); /* Adjust the opacity as needed */
-  z-index: -1; /* Ensure this is below the content of .link-button.item4 but above the background image */
-  pointer-events: none; /* Prevent the pseudo-element from interfering with pointer events */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(147, 66, 39, 0.1); /* Adjust the opacity as needed */
+    z-index: -1; /* Ensure this is below the content of .link-button.item4 but above the background image */
+    pointer-events: none; /* Prevent the pseudo-element from interfering with pointer events */
 }
 
 .link-button.item1:hover,
 .link-button.item2:hover,
 .link-button.item3:hover,
 .link-button.item4:hover {
-  background: #1F1B16; /* Изменяет фон на черный при наведении */
-  color: #E2D4C4; /* Цвет текста */
+    background: #1f1b16; /* Изменяет фон на черный при наведении */
+    color: #e2d4c4; /* Цвет текста */
 }
 
 .link-button:hover {
-  background-color: #1F1B16;
-  color: #E2D4C4;
-  background: none;
+    background-color: #1f1b16;
+    color: #e2d4c4;
+    background: none;
 }
 
 .line-container p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #1F1B16;
-  font-size: 24px;
-  padding-left: 20px;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  font-family: "Zen Kurenaido", sans-serif;
-  /* border-left: 1px solid #1F1B16; */
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1f1b16;
+    font-size: 24px;
+    padding-left: 20px;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    font-family: "Zen Kurenaido", sans-serif;
+    /* border-left: 1px solid #1F1B16; */
 }
 
-
-
-
 .link {
-  display: block;
-  font-family: 'Zen Kurenaido';
-  font-weight: 400;
-  font-size: 26px;
-  color: #E2D4C4;
-  text-decoration: none;
-  margin-top: 10px;
+    display: block;
+    font-family: "Zen Kurenaido";
+    font-weight: 400;
+    font-size: 26px;
+    color: #e2d4c4;
+    text-decoration: none;
+    margin-top: 10px;
 }
 
 .link:hover {
-  color: #E4B474;
+    color: #e4b474;
 }

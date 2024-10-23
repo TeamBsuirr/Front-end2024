@@ -1,6 +1,5 @@
-
 .footer-container-layout {
-    background: #1F1B16;
+    background: #1f1b16;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,33 +9,28 @@
     height: 359px;
     flex-shrink: 0;
     box-sizing: border-box;
-    color: #E2D4C4;
+    color: #e2d4c4;
     z-index: 100;
     /* Это позволит футеру быть внизу */
-  }
-  
-  .upper-footer-container-layout {
+}
+
+.upper-footer-container-layout {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     max-width: 1200px;
     margin-bottom: 20px;
-  }
-  
+}
 
-  
-
-  
-  .bottom-footer-container-layout {
+.bottom-footer-container-layout {
     display: flex;
     justify-content: space-between;
     width: 100%;
     max-width: 1200px;
-    font-family: 'Zen Kurenaido';
+    font-family: "Zen Kurenaido";
     font-weight: 400;
     font-size: 20px;
-    color: #DEBF95;
+    color: #debf95;
     padding-top: 40px;
-  }
-  
+}

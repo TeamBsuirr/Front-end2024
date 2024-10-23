@@ -1,40 +1,40 @@
 .big-header-span {
-  display: block;
-  font-family: 'Oswald';
-  font-weight: 400;
-  font-size: 30px;
-  color: rgba(255, 206, 140, 0.77);
+    display: block;
+    font-family: "Oswald";
+    font-weight: 400;
+    font-size: 30px;
+    color: rgba(255, 206, 140, 0.77);
 }
 
 .low-header-span {
-  display: block;
-  font-family: 'Zen Kurenaido';
-  font-weight: 400;
-  font-size: 18.5px;
-  color: #E0CDB4;
-  margin-top: -6px;
+    display: block;
+    font-family: "Zen Kurenaido";
+    font-weight: 400;
+    font-size: 18.5px;
+    color: #e0cdb4;
+    margin-top: -6px;
 }
 
 .container-big-header-span {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
 }
 
 .big-header-span-md {
-  display: block;
-  font-family: 'Oswald';
-  font-weight: 400;
-  font-size: 24px;
-  color: rgba(255, 206, 140, 0.77);
+    display: block;
+    font-family: "Oswald";
+    font-weight: 400;
+    font-size: 24px;
+    color: rgba(255, 206, 140, 0.77);
 }
 
 .low-header-span-md {
-  display: block;
-  font-family: 'Zen Kurenaido';
-  font-weight: 400;
-  font-size: 15px;
-  color: #E0CDB4;
-  margin-top: -6px;
+    display: block;
+    font-family: "Zen Kurenaido";
+    font-weight: 400;
+    font-size: 15px;
+    color: #e0cdb4;
+    margin-top: -6px;
 }

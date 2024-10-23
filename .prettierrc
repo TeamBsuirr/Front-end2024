@@ -1,0 +1,18 @@
+{
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "endOfLine": "lf",
+    "htmlWhitespaceSensitivity": "strict",
+    "proseWrap": "preserve",
+    "overrides": [
+        {
+            "files": "*.jsx",
+            "options": {
+                "parser": "babel"
+            }
+        }
+    ]
+}

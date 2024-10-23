@@ -2,12 +2,14 @@
     display: flex;
     flex: 3;
     flex-direction: column;
-    color: #1F1B16;
-    font-family: Zen Kurenaido, sans-serif;
+    color: #1f1b16;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
     width: 100%;
     box-sizing: border-box;
     padding: 50px 150px 70px;
-    background: url('../../images/DefaultBG.jpg') no-repeat center center;
+    background: url("../../images/DefaultBG.jpg") no-repeat center center;
     background-size: cover;
 }
 
@@ -17,7 +19,6 @@
     padding: 20px 30% 37px;
     gap: 40px;
 }
-
 
 .container-desctription-inputs-new-photo {
     display: flex;
@@ -42,12 +43,12 @@
     gap: 22px;
 }
 
-.container-inputs-form-last-input{
+.container-inputs-form-last-input {
     display: flex;
     flex-direction: row;
     width: 116.8%;
     margin-left: 16.8%;
-    gap:4.8%;
+    gap: 4.8%;
 }
 
 .container-add-form-button-new-photo {
@@ -70,15 +71,14 @@
 }
 
 .container-small-message span a {
-    color: #E2D4C4;
+    color: #e2d4c4;
 }
 
 .container-small-message span a:hover {
-    color: #1F1B16;
+    color: #1f1b16;
 }
 
 .container-section-photo-description {
-
     /* justify-items: center;
     gap: 20px; */
     display: flex;
@@ -97,7 +97,7 @@
     font-size: 22px;
 }
 
-.container-span-for-inputs-new-photo span{
+.container-span-for-inputs-new-photo span {
     display: flex;
     text-align: center;
     width: 80%;
@@ -113,30 +113,30 @@
 
 .container-inputs-new-photo .story-short {
     width: -webkit-fill-available;
-    
 }
 
 .container-inputs-new-photo .story-short textarea {
     height: 280px !important    ;
 }
 
-.container-image-input-attachment{
+.container-image-input-attachment {
     position: relative;
     width: min-content;
     padding: 8px 15px;
-    background: #1F1B16;
-    border-radius: 5px ;
+    background: #1f1b16;
+    border-radius: 5px;
 }
 
-.container-image-input-attachment label{
+.container-image-input-attachment label {
     margin-right: 0px;
 }
 
-
-label[for='image'] {
-    background: url('../../images/icons/story/img-plus.svg') 100% 100% / 100% 100% no-repeat;
+label[for="image"] {
+    background: url("../../images/icons/story/img-plus.svg") 100% 100% / 100%
+        100% no-repeat;
 }
 
-label[for='image']:hover {
-    background: url('../../images/icons/story/img-plus-hover.svg') 100% 100% / 100% 100% no-repeat;
+label[for="image"]:hover {
+    background: url("../../images/icons/story/img-plus-hover.svg") 100% 100% /
+        100% 100% no-repeat;
 }

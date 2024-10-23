@@ -2,11 +2,11 @@
     display: flex;
     flex: 3;
     flex-direction: column;
-    color: #1F1B16;
+    color: #1f1b16;
     width: 100%;
     box-sizing: border-box;
     padding: 50px 150px 70px;
-    background: url('../../images/DefaultBG.jpg') no-repeat center center;
+    background: url("../../images/DefaultBG.jpg") no-repeat center center;
     background-size: cover;
 }
 
@@ -21,41 +21,39 @@
 }
 
 .span-of-section-prisoners {
-    color: #1F1B16;
-    font-family: 'Oswald', sans-serif;
+    color: #1f1b16;
+    font-family: "Oswald", sans-serif;
     font-size: 30px;
     font-weight: 400;
     text-align: center;
-    border-right: 4px solid #1F1B16;
+    border-right: 4px solid #1f1b16;
     padding-right: 0px;
     padding-top: 4.5px;
-    height: 53px
+    height: 53px;
 }
 
 .header-of-section-prisoners {
-    color: #1F1B16;
+    color: #1f1b16;
     height: 60px;
-    font-family: 'Oswald', sans-serif;
+    font-family: "Oswald", sans-serif;
     font-size: 50px;
     font-weight: 400;
     margin-left: 4px;
     margin-bottom: 18px;
 }
 
-
-
 .section-form-search-result {
-
     justify-content: space-between;
 }
 
 .container-description-prisoners {
-
     padding-bottom: 8px;
     margin: 6px 0px;
     padding-left: 14px;
     font-size: 22px;
-    font-family: Zen Kurenaido, sans-serif;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
 }
 
 .container-description-prisoners-admin {
@@ -67,13 +65,14 @@
     margin: 6px 0px;
     padding-left: 14px;
     font-size: 22px;
-    font-family: Zen Kurenaido, sans-serif;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
 }
 
 .container-description-prisoners-admin span {
     width: 70%;
 }
-
 
 .section-prisoners-search-result {
     display: flex;
@@ -94,20 +93,15 @@
 .result-container-search-result:hover {
     transition: background-color 0.3s ease;
     transform: scale(1.05);
-    background: #1F1B16;
-    color: #E2D4C4;
+    background: #1f1b16;
+    color: #e2d4c4;
 }
-
-
-
 
 .result-container-search-result:hover h3 {
     transition: background-color 0.3s ease;
-    color: #E4B474;
-    border-left: 2px solid #E4B474;
+    color: #e4b474;
+    border-left: 2px solid #e4b474;
 }
-
-
 
 .result-container-search-result img {
     height: 201px;
@@ -129,18 +123,16 @@
 
 .result-container-search-result-description h3 {
     margin-top: 6px;
-    border-left: 2px solid #1F1B16;
+    border-left: 2px solid #1f1b16;
     padding-left: 4px;
     margin-left: -6px;
     text-transform: uppercase;
 }
 
 .result-container-search-result-description span {
-
     font-size: 15px;
     margin-top: -14px;
 }
-
 
 .container {
     width: 100%;
@@ -149,8 +141,8 @@
 
 .sort-field {
     width: 100%;
-    border-top: 2px solid #1F1B16;
-    border-bottom: 2px solid #1F1B16;
+    border-top: 2px solid #1f1b16;
+    border-bottom: 2px solid #1f1b16;
     display: flex;
     justify-content: space-between;
 }
@@ -162,7 +154,7 @@
 }
 
 .sort-field div:hover {
-    background-color: #1F1B16;
+    background-color: #1f1b16;
 }
 
 .input-filter {
@@ -173,7 +165,6 @@
 
 .input-filter:focus-visible {
     outline: 0;
-
 }
 
 .sort-field div input {
@@ -181,53 +172,78 @@
     padding: 0 60px;
     font-family: "Inter", sans-serif;
     font-size: 20px;
-    color: #4D4B48e6;
-    background: url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    color: #4d4b48e6;
+    background:
+        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto
+            70% no-repeat,
+        transparent;
 }
 
 .sort-field div:hover input {
-
-    color: #E2D4C4;
+    color: #e2d4c4;
 }
 
 .sort-field div:not(:last-child) input {
-    border-right: 2px solid #4D4B48e6;
+    border-right: 2px solid #4d4b48e6;
 }
 
 .sort-field div.place input {
-    background: url(../../images/icons/search/sort-place.png) 25px / auto 70% no-repeat,
-        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    background:
+        url(../../images/icons/search/sort-place.png) 25px / auto 70% no-repeat,
+        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto
+            70% no-repeat,
+        transparent;
 }
 
 .sort-field div.place:hover input {
-    background: url(../../images/icons/search/sort-place-hover.png) 25px / auto 70% no-repeat,
-        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    background:
+        url(../../images/icons/search/sort-place-hover.png) 25px / auto 70%
+            no-repeat,
+        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) /
+            auto 70% no-repeat,
+        transparent;
 }
 
 .sort-field div.calendar input {
-    background: url(../../images/icons/search/sort-calendar.png) 25px / auto 70% no-repeat,
-        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    background:
+        url(../../images/icons/search/sort-calendar.png) 25px / auto 70%
+            no-repeat,
+        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto
+            70% no-repeat,
+        transparent;
 }
 
 .sort-field div.calendar:hover input {
-    background: url(../../images/icons/search/sort-calendar-hover.png) 25px / auto 70% no-repeat,
-        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    background:
+        url(../../images/icons/search/sort-calendar-hover.png) 25px / auto 70%
+            no-repeat,
+        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) /
+            auto 70% no-repeat,
+        transparent;
 }
 
 .sort-field div.alphabet input {
-    background: url(../../images/icons/search/sort-alphabet.png) 25px / auto 70% no-repeat,
-        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    background:
+        url(../../images/icons/search/sort-alphabet.png) 25px / auto 70%
+            no-repeat,
+        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto
+            70% no-repeat,
+        transparent;
 }
 
 .sort-field div.alphabet:hover input {
-    background: url(../../images/icons/search/sort-alphabet-hover.png) 25px / auto 70% no-repeat,
-        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    background:
+        url(../../images/icons/search/sort-alphabet-hover.png) 25px / auto 70%
+            no-repeat,
+        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) /
+            auto 70% no-repeat,
+        transparent;
 }
 
 .list {
     width: 100%;
     padding: 25px 45px;
-    background: #453F38;
+    background: #453f38;
     position: absolute;
     top: 100%;
     left: 0;
@@ -242,14 +258,14 @@
     padding: 10px 0;
     font-family: "Inter", sans-serif;
     font-size: 20px;
-    color: #E2D4C4;
+    color: #e2d4c4;
     cursor: pointer;
 }
 
 .list li:not(:last-child) {
-    border-bottom: 1px solid #E4B474;
+    border-bottom: 1px solid #e4b474;
 }
 
 .list li:hover {
-    background: #1F1B16;
+    background: #1f1b16;
 }

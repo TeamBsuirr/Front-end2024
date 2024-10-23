@@ -1,180 +1,174 @@
-    .input-form {
-      width: 100%;
-      height: 40px;
-      padding: 0 0 7px;
-      border-radius: 5px;
-      border: 1px solid #1F1B16;
-      background: transparent;
-      font-family: "Zen Kurenaido", sans-serif;
-      font-size: 22px;
-      text-align: center;
-      color: #1F1B16;
-    }
+.input-form {
+    width: 100%;
+    height: 40px;
+    padding: 0 0 7px;
+    border-radius: 5px;
+    border: 1px solid #1f1b16;
+    background: transparent;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-size: 22px;
+    text-align: center;
+    color: #1f1b16;
+}
 
-    .input-form:focus {
-      outline: #1F1B16;
-    }
+.input-form:focus {
+    outline: #1f1b16;
+}
 
-    .input-form-date {
-      width: 100%;
-      height: 40px;
-      padding: 0 0 7px;
-      border-radius: 5px;
-      border: 1px solid #1F1B16;
-      background: transparent;
-      font-family: "Zen Kurenaido", sans-serif;
-      font-size: 22px;
-      text-align: center;
-      color: #1F1B16;
+.input-form-date {
+    width: 100%;
+    height: 40px;
+    padding: 0 0 7px;
+    border-radius: 5px;
+    border: 1px solid #1f1b16;
+    background: transparent;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-size: 22px;
+    text-align: center;
+    color: #1f1b16;
 
-      position: relative; /* Needed to position the pseudo-element */
-      appearance: auto;
-      -webkit-appearance: auto;
-      -moz-appearance: auto;
-    }
+    position: relative; /* Needed to position the pseudo-element */
+    appearance: auto;
+    -webkit-appearance: auto;
+    -moz-appearance: auto;
+}
 
-    .input-form-date:focus {
-      outline: #1F1B16;
-      color: #1F1B16;
-    }
+.input-form-date:focus {
+    outline: #1f1b16;
+    color: #1f1b16;
+}
 
-    .input-form-date::after {
-      content: '';
-      display: block;
-      background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-128.png) no-repeat;
-      background-size: contain;
-      /* Ensure the image fits within the pseudo-element */
-      width: 18px;
-      /* Adjust the size to match the font size */
-      height: 18px;
-      /* Adjust the size to match the font size */
-      position: absolute;
-      right: 14px;
-      /* Position the icon 4px to the right of the input */
-      top: 50%;
-      transform: translateY(-50%);
-      /* Center the icon vertically */
-      pointer-events: none;
-      /* Prevent the icon from blocking input events */
-    }
+.input-form-date::after {
+    content: "";
+    display: block;
+    background: url(https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/calendar-128.png)
+        no-repeat;
+    background-size: contain;
+    /* Ensure the image fits within the pseudo-element */
+    width: 18px;
+    /* Adjust the size to match the font size */
+    height: 18px;
+    /* Adjust the size to match the font size */
+    position: absolute;
+    right: 14px;
+    /* Position the icon 4px to the right of the input */
+    top: 50%;
+    transform: translateY(-50%);
+    /* Center the icon vertically */
+    pointer-events: none;
+    /* Prevent the icon from blocking input events */
+}
 
+.input-form-coordinates {
+    width: 45%;
+    height: 40px;
+    padding: 0 0 7px;
+    border-radius: 5px;
+    border: 1px solid #1f1b16;
+    background: transparent;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-size: 22px;
+    text-align: center;
+    color: #1f1b16;
+}
 
+.input-form-coordinates:focus {
+    outline: #1f1b16;
+}
 
+.input-form-photo {
+    width: 100%;
+    height: 40px;
+    padding: 0 0 7px;
+    border-radius: 5px;
+    border: 1px solid #1f1b16;
+    background: transparent;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-size: 22px;
+    text-align: center;
+    color: #1f1b16;
+    display: flex !important;
+    background-image: url("../../images/icons/story/img-black.svg");
+    background-position: 30% 51%;
+    background-repeat: no-repeat;
+}
 
-    .input-form-coordinates {
-      width: 45%;
-      height: 40px;
-      padding: 0 0 7px;
-      border-radius: 5px;
-      border: 1px solid #1F1B16;
-      background: transparent;
-      font-family: "Zen Kurenaido", sans-serif;
-      font-size: 22px;
-      text-align: center;
-      color: #1F1B16;
-    }
+.input-form-photo:focus {
+    outline: #1f1b16;
+}
 
-    .input-form-coordinates:focus {
-      outline: #1F1B16;
-    }
+.input-form-photo::before {
+    text-align: center;
+    opacity: 65%;
+}
 
+.input-form-photo::file-selector-button {
+    display: none;
+    font-display: none;
+}
 
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
-    .input-form-photo {
-      width: 100%;
-      height: 40px;
-      padding: 0 0 7px;
-      border-radius: 5px;
-      border: 1px solid #1F1B16;
-      background: transparent;
-      font-family: "Zen Kurenaido", sans-serif;
-      font-size: 22px;
-      text-align: center;
-      color: #1F1B16;
-      display: flex !important;
-      background-image: url('../../images/icons/story/img-black.svg');
-      background-position: 30% 51%;
-      background-repeat: no-repeat;
-    }
+.container-form-new-history
+    .container-inputs-form-new-history
+    input::placeholder,
+textarea#story::placeholder {
+    color: #4d4b48e6;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-size: 22px;
+}
 
-    .input-form-photo:focus {
-      outline: #1F1B16;
-    }
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
 
-    .input-form-photo::before {
-      text-align: center;
-      opacity: 65%;
-    }
+.file-preview-image {
+    width: 30%;
+    position: relative;
+    top: 0;
+    right: 20px;
+}
 
-    .input-form-photo::file-selector-button {
-      display: none;
-      font-display: none;
-    }
+.attachment-preview-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-
-
-    *,
-    *:before,
-    *:after {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-
-
-    .container-form-new-history .container-inputs-form-new-history input::placeholder,
-    textarea#story::placeholder {
-      color: #4d4b48e6;
-      font-family: "Zen Kurenaido", sans-serif;
-      font-size: 22px;
-    }
-
-    input[type="date"]::-webkit-inner-spin-button {
-      display: none;
-    }
-
-    input[type="date"]::-webkit-calendar-picker-indicator {
-      opacity: 0;
-    }
-
-    .file-preview-image{
-      width: 30%;
-      position: relative;
-      top: 0;
-      right: 20px;
-    }
-
-    .attachment-preview-image {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      padding: 10px 25px;
-      margin-top: 5px;
-      background: #4d4b48e6;
-      border-radius: 5px 5px 5px 5px;
-  }
-
-  .attachment-preview-image img{
+    padding: 10px 25px;
+    margin-top: 5px;
+    background: #4d4b48e6;
     border-radius: 5px 5px 5px 5px;
-  }
+}
 
-  .file-name{
+.attachment-preview-image img {
+    border-radius: 5px 5px 5px 5px;
+}
+
+.file-name {
     display: flex;
     align-items: center;
     color: white;
-  }
+}
 
-  .file-name:hover{
-    color: #E4B474;
-  }
+.file-name:hover {
+    color: #e4b474;
+}
 
-  .admin-btn-container-archive{
+.admin-btn-container-archive {
     width: fit-content;
-    background: #E4B474;
+    background: #e4b474;
     border-radius: 5px;
     position: relative;
     top: -54px;
     left: -17px;
-  }
+}

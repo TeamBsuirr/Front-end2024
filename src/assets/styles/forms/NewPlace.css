@@ -2,23 +2,25 @@
     display: flex;
     flex: 3;
     flex-direction: column;
-    color: #1F1B16;
-    font-family: Zen Kurenaido, sans-serif;
+    color: #1f1b16;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
     width: 100%;
     box-sizing: border-box;
     padding: 50px 150px 70px;
-    background: url('../../images/DefaultBG.jpg') no-repeat center center;
+    background: url("../../images/DefaultBG.jpg") no-repeat center center;
     background-size: cover;
 }
 
 .header-container-new-history {
-    border-bottom: 2px solid #1F1B16;
+    border-bottom: 2px solid #1f1b16;
     margin-bottom: 20px;
 }
 
 .header-of-section {
-    color: #1F1B16;
-    font-family: 'Oswald', sans-serif;
+    color: #1f1b16;
+    font-family: "Oswald", sans-serif;
     font-size: 50px;
     font-weight: 400;
     text-align: center;
@@ -33,37 +35,30 @@
 }
 
 .section-form-new-place {
-
     justify-content: space-between;
 }
-
-
-
 
 .container-inputs-form-new-place {
     display: flex;
     width: 100%;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content: space-between;
 }
 
-.container-form-new-place .story{
+.container-form-new-place .story {
     width: 100%;
 }
 
-.container-inputs-form-for-inputs{
+.container-inputs-form-for-inputs {
     display: flex;
     flex-direction: column;
     gap: 11px;
-
 }
 
-.container-inputs-form-for-short-descr{
+.container-inputs-form-for-short-descr {
     display: flex;
     flex-direction: column;
-
 }
-
 
 .container-inputs-form-inputs {
     width: 100%;
@@ -73,30 +68,28 @@
     gap: 22px;
 }
 
-.container-inputs-for-coordinates{
+.container-inputs-for-coordinates {
     font-size: 22px;
     display: flex;
     flex-direction: column;
 }
 
-.container-inputs-for-coordinates div{
+.container-inputs-for-coordinates div {
     display: flex;
     flex-direction: row;
-    gap:10%;
+    gap: 10%;
 }
 
-.container-inputs-for-coordinates span{
+.container-inputs-for-coordinates span {
     margin-bottom: 8px;
 }
 
-
 .section-register-new-history {
     padding: 65px 88px 0px;
-    border-top: 2px solid #1F1B16;
+    border-top: 2px solid #1f1b16;
     display: flex;
     flex-direction: row;
     align-items: start;
-
 }
 
 .container-register-header-new-history {
@@ -106,17 +99,17 @@
 }
 
 .container-register-header-new-history h2 {
-    font-family: 'Zen Kurenaido';
+    font-family: "Zen Kurenaido";
     font-weight: 400;
     font-size: 40px;
-    color: #1F1B16;
+    color: #1f1b16;
 }
 
 .container-register-header-new-history span {
-    font-family: 'Zen Kurenaido';
+    font-family: "Zen Kurenaido";
     font-weight: 400;
     font-size: 25px;
-    color: #1F1B16;
+    color: #1f1b16;
     opacity: 80%;
 }
 
@@ -138,7 +131,6 @@
 
 } */
 
-
 .container-add-form-button-new-place {
     margin-top: 0px;
     margin-bottom: 36px;
@@ -146,9 +138,6 @@
     justify-content: center;
     align-items: center;
 }
-
-
-
 
 /* .container {
     width: 80%;
@@ -166,7 +155,7 @@
 .date-range label {
     font-family: "Zen Kurenaido", sans-serif;
     font-size: 22px;
-    color: #1F1B16;
+    color: #1f1b16;
 }
 
 .date-range input {

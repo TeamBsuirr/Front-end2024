@@ -1,9 +1,9 @@
-.admin-button{
-    background-color: #1F1B16;
-    background-image: url('../../images/icons/other/plus.svg');
+.admin-button {
+    background-color: #1f1b16;
+    background-image: url("../../images/icons/other/plus.svg");
     background-position: 5.5% 51%;
     background-repeat: no-repeat;
-    color: #E2D4C4;
+    color: #e2d4c4;
     border: none;
     padding: 7px 10px 8px 26px;
     font-size: 17px;
@@ -11,15 +11,15 @@
     cursor: pointer;
     border-radius: 10px;
     transition: background-color 0.5s ease;
-    text-transform:uppercase;
-   
+    text-transform: uppercase;
+
     align-self: flex-end;
 }
 
 .admin-button:hover {
-    color: #E4B474;
-    border: 2px solid #1F1B16;
-    background-image: url('../../images/icons/other/plusHovered.svg');
+    color: #e4b474;
+    border: 2px solid #1f1b16;
+    background-image: url("../../images/icons/other/plusHovered.svg");
     background-position: 5% 54%;
     background-repeat: no-repeat;
 }
@@ -42,5 +42,3 @@
     color: #E2D4C4;
     border: 2px solid #E4B474;
 } */
-
-

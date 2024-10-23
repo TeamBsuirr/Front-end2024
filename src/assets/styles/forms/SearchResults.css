@@ -2,11 +2,11 @@
     display: flex;
     flex: 3;
     flex-direction: column;
-    color: #1F1B16;
+    color: #1f1b16;
     width: 100%;
     box-sizing: border-box;
     padding: 50px 150px 70px;
-    background: url('../../images/DefaultBG.jpg') no-repeat center center;
+    background: url("../../images/DefaultBG.jpg") no-repeat center center;
     background-size: cover;
 }
 
@@ -23,8 +23,8 @@
 }
 
 .header-of-section {
-    color: #1F1B16;
-    font-family: 'Oswald', sans-serif;
+    color: #1f1b16;
+    font-family: "Oswald", sans-serif;
     font-size: 50px;
     font-weight: 400;
     margin-left: 4px;
@@ -32,15 +32,15 @@
 }
 
 .span-of-section {
-    color: #1F1B16;
-    font-family: 'Oswald', sans-serif;
+    color: #1f1b16;
+    font-family: "Oswald", sans-serif;
     font-size: 30px;
     font-weight: 400;
     text-align: center;
-    border-right: 4px solid #1F1B16;
+    border-right: 4px solid #1f1b16;
     padding-right: 8px;
     padding-top: 4.5px;
-    height: 53px
+    height: 53px;
 }
 
 .container-form-search-result {
@@ -53,14 +53,11 @@
     justify-content: space-between;
     padding: 20px 88px 11px 37px;
     height: fit-content;
-
 }
 
 .section-form-search-result {
-
     justify-content: space-between;
 }
-
 
 .search-bar-search-result {
     height: fit-content;
@@ -74,32 +71,32 @@
     box-sizing: border-box;
 }
 
-
 .search-bar-search-result input {
     height: fit-content;
     padding: 10px;
     width: 100%;
     height: 41px;
     /* Ensure the input takes the full width of the search bar */
-    border: 2px solid #1F1B16;
+    border: 2px solid #1f1b16;
     background: none;
-    color: #1F1B16;
+    color: #1f1b16;
     outline: none;
     justify-items: start;
     box-sizing: border-box;
     text-align: start;
-    font-family: Zen Kurenaido, sans-serif;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
     font-size: 28px;
-
 }
 
 .search-bar-search-result img {
     position: relative;
-    right: 30px;
+    /* right: 30px; */
     cursor: pointer;
 }
 
-.search-bar-search-result img:hover{
+.search-bar-search-result img:hover {
     transform: scale(1.2);
 }
 
@@ -110,8 +107,8 @@
     height: 40px;
     padding-top: 6px;
     margin-left: 0px;
-    background: #1F1B16;
-    color: #E2D4C4;
+    background: #1f1b16;
+    color: #e2d4c4;
     cursor: pointer;
     transition: background-color 0.3s ease;
     border-radius: 5px;
@@ -123,26 +120,26 @@
     justify-content: center;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #1F1B16;
+    border-bottom: 2px solid #1f1b16;
     padding-bottom: 4px;
     margin-bottom: 46px;
     font-size: 20px;
-    font-family: Zen Kurenaido, sans-serif;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
 }
-
 
 .container-result-search-result-for-filter {
     width: calc(100% / 5);
     padding: 3px 0;
     position: relative;
-    border-right: 2px solid #1F1B16;
-    border-left: 2px solid #1F1B16;
+    border-right: 2px solid #1f1b16;
+    border-left: 2px solid #1f1b16;
 }
 
 .container-result-search-result-for-filter:hover {
-    background-color: #1F1B16;
+    background-color: #1f1b16;
 }
-
 
 /* .input-filter{
     border: 0;
@@ -159,27 +156,31 @@
     padding: 0 32px;
     font-family: "Inter", sans-serif;
     font-size: 20px;
-    color: #4D4B48e6;
+    color: #4d4b48e6;
 
-    background: url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+    background:
+        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto
+            70% no-repeat,
+        transparent;
 }
 
 .container-result-search-result-for-filter:hover input {
-    color: #E2D4C4;
+    color: #e2d4c4;
 }
 
 .container-result-search-result-for-filter input {
     background:
-        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
+        url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto
+            70% no-repeat,
+        transparent;
 }
 
 .container-result-search-result-for-filter:hover input {
     background:
-        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) / auto 70% no-repeat, transparent;
-    
+        url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) /
+            auto 70% no-repeat,
+        transparent;
 }
-
-
 
 .section-register-search-result {
     display: flex;
@@ -194,7 +195,7 @@
     height: 300px;
     display: flex;
     flex-direction: column;
-    color: #4D4B48;
+    color: #4d4b48;
 }
 
 .result-container-search-result img {
@@ -215,7 +216,7 @@
 
 .result-container-search-result-description h3 {
     margin-top: 6px;
-    border-left: 2px solid #1F1B16;
+    border-left: 2px solid #1f1b16;
 
     padding-left: 4px;
     margin-left: -6px;
@@ -223,7 +224,6 @@
 }
 
 .result-container-search-result-description span {
-
     font-size: 15px;
     margin-top: -14px;
 }

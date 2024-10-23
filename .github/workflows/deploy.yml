@@ -2,68 +2,65 @@ name: Deploy Frontend
 
 # Триггер для запуска workflow на каждый пуш в ветку main
 on:
-  push:
-    branches:
-      - main
-    
+    push:
+        branches:
+            - main
 
 jobs:
-  deploy:
-    # Указываем на какой виртуальной машине будет выполняться job
-    runs-on: ubuntu-latest
+    deploy:
+        # Указываем на какой виртуальной машине будет выполняться job
+        runs-on: ubuntu-latest
 
+        steps:
+            # Шаг 1: Клонирование репозитория
+            - name: Checkout repository
+              uses: actions/checkout@v2
 
-    steps:
-      # Шаг 1: Клонирование репозитория
-      - name: Checkout repository
-        uses: actions/checkout@v2
+            # Шаг 2: Установка Node.js версии 18
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "18"
 
-      # Шаг 2: Установка Node.js версии 18
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
+            # Шаг 3: Установка зависимостей
+            - name: Install dependencies
+              run: npm install
 
-      # Шаг 3: Установка зависимостей
-      - name: Install dependencies
-        run: npm install
+            # Новый шаг: Линтинг кода перед сборкой
+            - name: Run ESLint
+              run: npm run lint
 
-      # Новый шаг: Линтинг кода перед сборкой
-      - name: Run ESLint
-        run: npm run lint
+            # Шаг 4: Сборка проекта
+            - name: Build project
+              env:
+                  CI: false
+                  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+                  REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
+                  REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
+                  REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
+                  REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
+              run: npm run build
+            # Шаг 5: Копирование файлов на сервер через SSH
+            - name: Deploy to server
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+                  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+                  REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
+                  REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
+                  REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
+                  REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
+              run: |
+                  # Установка ssh-agent и добавление приватного ключа
+                  eval "$(ssh-agent -s)"
+                  echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
 
-      # Шаг 4: Сборка проекта
-      - name: Build project
-        env:
-          CI: false
-          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
-          REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
-          REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
-          REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
-          REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
-        run: npm run build
-      # Шаг 5: Копирование файлов на сервер через SSH
-      - name: Deploy to server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
-          REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
-          REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
-          REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
-          REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
-        run: |
-          # Установка ssh-agent и добавление приватного ключа
-          eval "$(ssh-agent -s)"
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+                  # Настройка известного хоста
+                  mkdir -p ~/.ssh
+                  echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
 
-          # Настройка известного хоста
-          mkdir -p ~/.ssh
-          echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+                  # Копирование файлов на сервер через IP-адрес
+                  rsync -avz --delete ./build/ root@93.177.124.102:/var/www/uzniki.by/html
 
-          # Копирование файлов на сервер через IP-адрес
-          rsync -avz --delete ./build/ root@93.177.124.102:/var/www/uzniki.by/html
-
-          # Шаг 6: Установим переменные окружения на сервере и Перезапуск сервера через nginx
-          sudo systemctl restart nginx
-          
+                  # Шаг 6: Установим переменные окружения на сервере и Перезапуск сервера через nginx
+                  sudo systemctl restart nginx

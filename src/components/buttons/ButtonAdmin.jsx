@@ -1,16 +1,23 @@
-import '../../assets/styles/buttons/ButtonAdmin.css'
-import useLocalizedNavigate from '../../utils/useLocalizedNavigate';
+import "../../assets/styles/buttons/ButtonAdmin.css";
+import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
 
-export default function ButtonAdmin({ themeColor = "black", href = "/", spanText = "КНОПКА", size = "", onClick }) {
+export default function ButtonAdmin({
+    themeColor = "black",
+    href = "/",
+    spanText = "КНОПКА",
+    size = "",
+    onClick,
+}) {
     const navigate = useLocalizedNavigate();
-    let styleClass = themeColor === "black" ? "admin-button" : "reverse-admin-button";
+    let styleClass =
+        themeColor === "black" ? "admin-button" : "reverse-admin-button";
     let widthButton = 283;
     let heightButton = 39;
 
     switch (size) {
         // no placeholder span spanText=""
         case "xs":
-            spanText="";
+            spanText = "";
             widthButton = 57;
             heightButton = 39;
             break;
@@ -27,7 +34,6 @@ export default function ButtonAdmin({ themeColor = "black", href = "/", spanText
             heightButton = 39;
             break;
         default:
-
             break;
     }
 
@@ -36,11 +42,15 @@ export default function ButtonAdmin({ themeColor = "black", href = "/", spanText
             <button
                 className={styleClass}
                 onClick={onClick}
-                style={{ width: widthButton, height: heightButton, backgroundPosition: spanText==="" ? "51% 51%" : ""}}
+                style={{
+                    width: widthButton,
+                    height: heightButton,
+                    backgroundPosition: spanText === "" ? "51% 51%" : "",
+                }}
             >
                 {spanText}
             </button>
-        )
+        );
     } else {
         return (
             <button
@@ -50,10 +60,8 @@ export default function ButtonAdmin({ themeColor = "black", href = "/", spanText
                 }}
                 style={{ width: widthButton, height: heightButton }}
             >
-                    {spanText}
+                {spanText}
             </button>
-        )
+        );
     }
-
-
 }

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import NewHuman from '../../../components/forms/NewHuman';
-import PageTemplate from '../../../components/other/PageTemplate';
-import Spinner from '../../../components/other/Spinner';
-import { notification } from 'antd';
-import NotFound from '../../../components/layout/NotFound';
-import placeService from '../../../api/services/placeService';
-import { useTranslation } from 'react-i18next';
-import humanService from '../../../api/services/humanService';
+import React, { useCallback, useEffect, useState } from "react";
+import NewHuman from "../../../components/forms/NewHuman";
+import PageTemplate from "../../../components/other/PageTemplate";
+import Spinner from "../../../components/other/Spinner";
+import { notification } from "antd";
+import NotFound from "../../../components/layout/NotFound";
+import placeService from "../../../api/services/placeService";
+import { useTranslation } from "react-i18next";
+import humanService from "../../../api/services/humanService";
 
 export default function NewHumanPage() {
     const { t } = useTranslation();
     const [arrayOfPlaces, setArrayOfPlaces] = useState([]);
     const [objectOfPrisoners, setObjectOfPrisoners] = useState({
-        id:"",
+        id: "",
         name: "",
         surname: "",
         patronymic: "",
@@ -21,19 +21,31 @@ export default function NewHumanPage() {
         placeOfBirth: "",
         places: [],
         history: "",
-        files: []
+        files: [],
     });
     const [loading, setLoading] = useState(true);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-    
 
     // Function to fetch file and create File object
-    async function urlToFile(url, fileName, fileExtension, fileType) {
-        const response = await fetch(url);
-        const blob = await response.blob();
-        return new File([blob], `${fileName}.${fileExtension}`, { type: fileType });
-    }
+    // async function urlToFile(url, fileName, fileExtension, fileType) {
+    //     const response = await fetch(url);
+    //     const blob = await response.blob();
+    //     return new File([blob], `${fileName}.${fileExtension}`, {
+    //         type: fileType,
+    //     });
+    // }
+    // Function to fetch file and create File object
+    const urlToFile = useCallback(
+        async (url, fileName, fileExtension, fileType) => {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            return new File([blob], `${fileName}.${fileExtension}`, {
+                type: fileType,
+            });
+        },
+        [],
+    );
 
     // Function to get MIME type from file extension
     function getMimeType(fileExtension) {
@@ -64,71 +76,107 @@ export default function NewHumanPage() {
             zip: "application/zip",
             rar: "application/x-rar-compressed",
         };
-        return mimeTypes[fileExtension.toLowerCase()] || "application/octet-stream";
+        return (
+            mimeTypes[fileExtension.toLowerCase()] || "application/octet-stream"
+        );
     }
 
     // Function to convert files from URLs to File objects
-    async function convertFiles(files) {
-        if (!Array.isArray(files) || files.length === 0) {
-            return [];
-        }
-        return Promise.all(files.map(async (fileObj) => {
-            const fileExtension = fileObj.urlToFile.split('.').pop();
-            const fileName = `file_${fileObj.id}`;
-            const mimeType = getMimeType(fileExtension);
-            return await urlToFile(fileObj.urlToFile, fileName, fileExtension, mimeType);
-        }));
-    }
+    // async function convertFiles(files) {
+    //     if (!Array.isArray(files) || files.length === 0) {
+    //         return [];
+    //     }
+    //     return Promise.all(
+    //         files.map(async (fileObj) => {
+    //             const fileExtension = fileObj.urlToFile.split(".").pop();
+    //             const fileName = `file_${fileObj.id}`;
+    //             const mimeType = getMimeType(fileExtension);
+    //             return await urlToFile(
+    //                 fileObj.urlToFile,
+    //                 fileName,
+    //                 fileExtension,
+    //                 mimeType,
+    //             );
+    //         }),
+    //     );
+    // }
+    // Function to convert files from URLs to File objects
+    const convertFiles = useCallback(
+        async (files) => {
+            if (!Array.isArray(files) || files.length === 0) {
+                return [];
+            }
+            return Promise.all(
+                files.map(async (fileObj) => {
+                    const fileExtension = fileObj.urlToFile.split(".").pop();
+                    const fileName = `file_${fileObj.id}`;
+                    const mimeType = getMimeType(fileExtension);
+                    return await urlToFile(
+                        fileObj.urlToFile,
+                        fileName,
+                        fileExtension,
+                        mimeType,
+                    );
+                }),
+            );
+        },
+        [urlToFile],
+    );
 
     // Fetch data and handle file conversion
     useEffect(() => {
         setLoading(true);
-        const queryStringArray = window.location.pathname.split('/');
+        const queryStringArray = window.location.pathname.split("/");
         let idOfPrisoner = queryStringArray[queryStringArray.length - 1];
 
-        if (!isNaN(idOfPrisoner) && idOfPrisoner.trim() !== '') {
+        if (!isNaN(idOfPrisoner) && idOfPrisoner.trim() !== "") {
             idOfPrisoner = Number(idOfPrisoner);
-            setIsUpdate(true)
+            setIsUpdate(true);
             //objectOfPrisoners.id = idOfPrisoner;
-            
         } else {
             idOfPrisoner = null;
-            setIsUpdate(false)
+            setIsUpdate(false);
             setLoading(false);
         }
 
         // Fetch places data
-        placeService.getAllPlacesForPostHuman()
-            .then(data => {
+        placeService
+            .getAllPlacesForPostHuman()
+            .then((data) => {
                 setArrayOfPlaces(data);
                 return data;
             })
-            .catch(error => {
+            .catch((error) => {
                 let errMsg = error.message ? error.message : error;
                 notification.error({
-                    message: t('errors.front-end.fetch.msg-photo-a'),
-                    description: t('errors.front-end.fetch.description') + errMsg
+                    message: t("errors.front-end.fetch.msg-photo-a"),
+                    description:
+                        t("errors.front-end.fetch.description") + errMsg,
                 });
-                throw error;;
+                throw error;
             });
 
         if (idOfPrisoner) {
-            humanService.getHumanByIdForPostHuman(idOfPrisoner)
-                .then(async data => {
+            humanService
+                .getHumanByIdForPostHuman(idOfPrisoner)
+                .then(async (data) => {
                     const fileObjects = await convertFiles(data.files);
                     setObjectOfPrisoners({
                         ...data,
-                        id:idOfPrisoner,
-                        files: fileObjects
+                        id: idOfPrisoner,
+                        files: fileObjects,
                     });
                     setDataLoaded(true); // Ensure that data is fully loaded
                     return data;
                 })
-                .catch(errorPrisoner => {
-                    let errMsg = errorPrisoner.message ? errorPrisoner.message : errorPrisoner;
+                .catch((errorPrisoner) => {
+                    let errMsg = errorPrisoner.message
+                        ? errorPrisoner.message
+                        : errorPrisoner;
                     notification.error({
-                        message: t('errors.front-end.fetch.msg-prisoner'),
-                        description: t('errors.front-end.fetch.description') + errMsg
+                        message: t("errors.front-end.fetch.msg-prisoner"),
+                        description:
+                            t("errors.front-end.fetch.description") + errMsg,
                     });
                     setDataLoaded(true); // Ensure that data is fully loaded even if there is an error
                     throw errorPrisoner;
@@ -138,7 +186,7 @@ export default function NewHumanPage() {
         }
 
         setLoading(false); // Set loading to false after processing all data
-    }, [t]);
+    }, [t, convertFiles]);
 
     // Check if the data is loaded and has valid content
     if (loading || !dataLoaded) {
@@ -147,8 +195,11 @@ export default function NewHumanPage() {
         return <NotFound />;
     } else {
         return (
-            <NewHuman arrayOfPlaces={arrayOfPlaces} objectOfPrisoners={objectOfPrisoners} isUpdate={isUpdate} />
+            <NewHuman
+                arrayOfPlaces={arrayOfPlaces}
+                objectOfPrisoners={objectOfPrisoners}
+                isUpdate={isUpdate}
+            />
         );
     }
 }
-

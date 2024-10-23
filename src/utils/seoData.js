@@ -1,6 +1,5 @@
-
-import { t } from 'i18next';
-import { Helmet } from 'react-helmet-async';
+import { t } from "i18next";
+import { Helmet } from "react-helmet-async";
 
 /**
  * Universal SEO setter function
@@ -12,9 +11,9 @@ const setSEO = (data, type) => {
     let descriptionSEO = "";
 
     // SEO for places
-    if (type === 'place') {
+    if (type === "place") {
         if (data?.placeName) {
-            titleSEO = `${data.placeName} - ${t('page-title.template')}`;
+            titleSEO = `${data.placeName} - ${t("page-title.template")}`;
         }
         if (data?.shortDescription) {
             descriptionSEO = data.shortDescription;
@@ -22,15 +21,15 @@ const setSEO = (data, type) => {
     }
 
     // SEO for prisoners
-    if (type === 'prisoner') {
+    if (type === "prisoner") {
         if (data?.surname && data?.name && data?.patronymic) {
-            titleSEO = `${data.surname} ${data.name} ${data.patronymic} - ${t('page-title.template')}`;
+            titleSEO = `${data.surname} ${data.name} ${data.patronymic} - ${t("page-title.template")}`;
         }
         // Description is not set for prisoners
     }
 
     return { titleSEO, descriptionSEO };
-}
+};
 
 export default function SEOComponent({ data, type }) {
     const { titleSEO, descriptionSEO } = setSEO(data, type);
@@ -41,7 +40,9 @@ export default function SEOComponent({ data, type }) {
             {titleSEO && <title>{titleSEO}</title>}
 
             {/* Set the description if available */}
-            {descriptionSEO && <meta name="description" content={descriptionSEO} />}
+            {descriptionSEO && (
+                <meta name="description" content={descriptionSEO} />
+            )}
         </Helmet>
     );
 }

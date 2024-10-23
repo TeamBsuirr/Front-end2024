@@ -2,11 +2,11 @@
     display: flex;
     flex: 3 1;
     flex-direction: column;
-    color: #1F1B16;
+    color: #1f1b16;
     width: 100%;
     box-sizing: border-box;
     padding: 50px 0px 70px;
-    background: url('../../images/DefaultBG.jpg') no-repeat center center;
+    background: url("../../images/DefaultBG.jpg") no-repeat center center;
     background-size: cover;
 }
 
@@ -18,22 +18,23 @@
     display: flex;
     flex: 3 1;
     flex-direction: column;
-    color: #1F1B16;
+    color: #1f1b16;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     align-items: center;
 }
 
-
 .container-description-map {
     padding-bottom: 6px;
     padding-left: 14px;
     padding-bottom: 19px;
     margin-bottom: 32px;
-    border-bottom: 2px solid #1F1B16;
+    border-bottom: 2px solid #1f1b16;
     font-size: 20px;
-    font-family: Zen Kurenaido, sans-serif;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
 }
 
 .container-description-map-admin {
@@ -45,19 +46,19 @@
     padding-left: 14px;
     padding-bottom: 19px;
     margin-bottom: 32px;
-    border-bottom: 2px solid #1F1B16;
+    border-bottom: 2px solid #1f1b16;
     font-size: 20px;
-    font-family: Zen Kurenaido, sans-serif;
+    font-family:
+        Zen Kurenaido,
+        sans-serif;
 }
 
-.container-description-map-admin span{
-width: 70%;
+.container-description-map-admin span {
+    width: 70%;
 }
-
-
 
 .container-map {
-    border: 1.5px #1F1B16 solid;
+    border: 1.5px #1f1b16 solid;
     position: relative;
     z-index: 1; /* Ensure this is above other elements */
     pointer-events: auto;
@@ -66,15 +67,16 @@ width: 70%;
     height: 100vh; /* Высота должна быть указана для отображения карты */
 }
 
-.ymaps-2-1-79-placemark, .ymaps-2-1-79-placemark-overlay {
+.ymaps-2-1-79-placemark,
+.ymaps-2-1-79-placemark-overlay {
     z-index: 650;
-  }
+}
 
 .active-place {
     z-index: 10;
     width: 450px;
     height: 90%;
-    background-color: #4D4B48;
+    background-color: #4d4b48;
     opacity: 90;
     border-radius: 10px;
     overflow: hidden;
@@ -92,7 +94,7 @@ width: 70%;
     flex-direction: column;
     height: 100%;
     margin: 0px 25px 34px;
-    border: 3px solid #E2D4C4;
+    border: 3px solid #e2d4c4;
     border-radius: 10px;
     z-index: 2;
 }
@@ -103,7 +105,7 @@ width: 70%;
     padding: 30px;
     z-index: 2;
     border-radius: 10px;
-    background-color: #4D4B48;
+    background-color: #4d4b48;
 }
 
 .header-active-place img {
@@ -111,11 +113,9 @@ width: 70%;
     height: 40px;
     cursor: pointer;
     transition: transform 0.3s ease;
-
 }
 
 .header-active-place img:hover {
-
     transform: scale(1.1);
 }
 
@@ -123,9 +123,8 @@ width: 70%;
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #4D4B48;
+    background-color: #4d4b48;
     border-radius: 10px;
-
 }
 
 .container-image-active-place {
@@ -133,9 +132,8 @@ width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #E2D4C4;
+    background-color: #e2d4c4;
     border-radius: 10px;
-
 }
 
 .container-image-active-place img {
@@ -151,8 +149,8 @@ width: 70%;
 .container-text-active-place {
     flex: 1;
     padding: 20px;
-    background-color: #453F38;
-    color: #E2D4C4;
+    background-color: #453f38;
+    color: #e2d4c4;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -160,7 +158,7 @@ width: 70%;
 }
 
 .container-text-active-place h2 {
-    color: #E4B474;
+    color: #e4b474;
     margin-block-start: 0em;
     margin-block-end: 0em;
     font-family: "Oswald", sans-serif;
@@ -180,17 +178,16 @@ width: 70%;
 }
 
 .container-text-active-place h3 {
-    color: #E2D4C4;
+    color: #e2d4c4;
     margin: 0;
     font-size: 1.2em;
 }
 
 .container-text-active-place span {
-    color: #E2D4C4;
+    color: #e2d4c4;
     font-size: 18px;
     padding-left: 10px;
     padding-top: 1px;
-
 }
 
 .container-button-selected-place {
@@ -206,7 +203,9 @@ width: 70%;
     width: 30px;
     height: 30px;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s;
 }
 
 .custom-placemark-icon {
@@ -214,7 +213,7 @@ width: 70%;
     height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('../../images/icons/other/star.svg');
+    background-image: url("../../images/icons/other/star.svg");
 }
 
 .custom-placemark:hover {
