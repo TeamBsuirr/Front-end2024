@@ -7,7 +7,7 @@ import NotFound from "../../components/layout/NotFound";
 import { notification } from "antd";
 import { useTranslation } from "react-i18next";
 
-export default function PrisonerStories({ isAdmin = false }) {
+export default function PrisonerStories() {
     const { t } = useTranslation();
     const [histories, setHistoies] = useState([]);
     const [places, setPlaces] = useState([]);
@@ -19,16 +19,13 @@ export default function PrisonerStories({ isAdmin = false }) {
         humanService
             .getAllHistoriesForPrisonerStories()
             .then((data) => {
-                //console.log(data)
                 setHistoies(data.histories);
                 setLoading(false);
-
                 setPlaces(data.places);
                 setYears(data.years);
                 return data;
             })
             .catch((error) => {
-                //console.error('Ошибка получения данных историй участников:', error);
 
                 let errMsg = error.message ? error.message : error;
 
@@ -53,7 +50,6 @@ export default function PrisonerStories({ isAdmin = false }) {
                 histories={histories}
                 places={places}
                 years={years}
-                isAdmin={isAdmin}
             />
         );
     }

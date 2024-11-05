@@ -7,7 +7,7 @@ import { notification } from "antd";
 import NotFound from "../../../components/layout/NotFound";
 import { useTranslation } from "react-i18next";
 
-export default function PrisonerPage({ isAdmin = false }) {
+export default function PrisonerPage() {
     const { t } = useTranslation();
     const [objectOfPrisoners, setObjectOfPrisoners] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -26,8 +26,6 @@ export default function PrisonerPage({ isAdmin = false }) {
             idOfPrisoner = null;
         }
 
-        //console.log(idOfPrisoner);
-
         humanService
             .getHumanById(idOfPrisoner)
             .then((data) => {
@@ -36,8 +34,7 @@ export default function PrisonerPage({ isAdmin = false }) {
                 return data;
             })
             .catch((error) => {
-                // console.error('Ошибка получения данных узника:', error);
-
+    
                 let errMsg = error.message ? error.message : error;
 
                 notification.error({
@@ -61,7 +58,6 @@ export default function PrisonerPage({ isAdmin = false }) {
                 {/* <SEOComponent data={objectOfPrisoners} type="prisoner" /> */}
                 <Card
                     objectOfPrisoners={objectOfPrisoners}
-                    isAdmin={isAdmin}
                     setLoading={setLoading}
                 />
             </>

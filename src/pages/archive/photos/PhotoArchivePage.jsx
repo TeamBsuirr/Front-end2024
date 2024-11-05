@@ -9,7 +9,7 @@ import { notification } from "antd";
 import NotFound from "../../../components/layout/NotFound";
 import { useTranslation } from "react-i18next";
 
-export default function PhotoArchivePage({ isAdmin = false }) {
+export default function PhotoArchivePage() {
     const { t } = useTranslation();
     const [arrayOfPhotoObjects, setArrayOfPhotoObjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -26,7 +26,6 @@ export default function PhotoArchivePage({ isAdmin = false }) {
                 return data;
             })
             .catch((error) => {
-                //console.error( error);
 
                 let errMsg = error.message ? error.message : error;
 
@@ -49,7 +48,6 @@ export default function PhotoArchivePage({ isAdmin = false }) {
         return (
             <PhotoArchive
                 arrayOfPhotoObjects={arrayOfPhotoObjects}
-                isAdmin={isAdmin}
             />
         );
     }

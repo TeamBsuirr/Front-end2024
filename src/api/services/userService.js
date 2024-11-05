@@ -2,9 +2,6 @@ import api from "../axiosInstance";
 import handleRequest from "../requestHelper";
 
 const userService = {
-    authenticateAdmin: (data) =>
-        handleRequest(() => api.post("/auth/login", data)),
-
     postStory: (data) => {
         // Сериализуем данные в FormData MIME
         const transformedData = new FormData();
@@ -40,12 +37,6 @@ const userService = {
             }),
         );
     },
-    getAllUsers: () => handleRequest(() => api.get("/users")),
-    getUserById: (id) => handleRequest(() => api.get(`/users/${id}`)),
-    createUser: (data) => handleRequest(() => api.post("/users", data)),
-    updateUser: (id, data) =>
-        handleRequest(() => api.put(`/users/${id}`, data)),
-    deleteUser: (id) => handleRequest(() => api.delete(`/users/${id}`)),
 };
 
 export default userService;

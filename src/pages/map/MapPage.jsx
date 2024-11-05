@@ -7,7 +7,7 @@ import placeService from "../../api/services/placeService";
 import MapUzniki from "../../components/other/MapUzniki";
 import { useTranslation } from "react-i18next";
 
-export default function MapPage({ isAdmin = false }) {
+export default function MapPage() {
     const { t } = useTranslation();
     const [arrayOfPlaces, setArrayOfPlaces] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -54,7 +54,6 @@ export default function MapPage({ isAdmin = false }) {
             <MapUzniki
                 arrayOfPlaceMarks={arrayOfPlaces}
                 passedPlace={passedPlace}
-                isAdmin={isAdmin}
                 setLoading={setLoading}
             />
         );

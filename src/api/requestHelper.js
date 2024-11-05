@@ -3,14 +3,8 @@ import { t } from "i18next";
 
 const handleRequest = async (request) => {
     try {
-        // Логируем формат данных
-        const config = request.config ? request.config : {};
-        if (config.data) {
-            //console.log("Request body data:", config.data);
-        }
-
         const response = await request();
-        //console.log("Request successful:", response); // Преобразованные данные
+
         return response.data;
     } catch (error) {
         console.error("Error fetching data:", error);

@@ -11,12 +11,9 @@ i18n.use(HttpBackend)
         fallbackLng: "ru", // Язык по умолчанию
         debug: true,
         backend: {
-            //loadPath: '/locales/{{lng}}/{{ns}}.json', // Путь к файлам с переводами
             loadPath: process.env.REACT_APP_I18N_PATH, // Путь к файлам с переводами
         },
         detection: {
-            // order: ['querystring', 'localStorage', 'cookie', 'navigator', 'htmlTag', 'path', 'subdomain'],
-            // caches: ['localStorage'],
             order: [
                 "localStorage",
                 "querystring",

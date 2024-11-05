@@ -27,7 +27,6 @@ export default function SearchResultPage() {
             setSearchString(urlParams.get("searchFor"));
             urlParamsString = urlParams.get("searchFor");
         } else {
-            //console.error('Ошибка получения результатов. Поиск пустой!');
             notification.error({
                 message: t("errors.front-end.empty-main-search-field"),
                 description: t(
@@ -41,8 +40,6 @@ export default function SearchResultPage() {
         searchService
             .getGlobalSearch(urlParamsString)
             .then((data) => {
-                //console.log(data);
-
                 setHumans(data.humans);
                 setPlaces(data.places);
 
@@ -74,16 +71,11 @@ export default function SearchResultPage() {
                         .join(" "),
                 }));
 
-                //console.log(humansFormatted,placesFormatted)
-
                 const combinedResults = [
                     ...humansFormatted,
                     ...placesFormatted,
                 ];
                 setArrayFoundObjects(combinedResults);
-
-                //console.log(arrayFoundObjects)
-
                 setLoading(false);
                 return data;
             })

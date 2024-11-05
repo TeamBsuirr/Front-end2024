@@ -1,8 +1,6 @@
 import { React, useCallback, useEffect, useState } from "react";
-// import '../../assets/styles/forms/SearchResults.css'
 import "../../assets/styles/forms/PrisonerSearchResult.css";
 import { useTranslation } from "react-i18next";
-import ButtonAdmin from "../buttons/ButtonAdmin";
 import HeaderSection from "../other/HeaderSection";
 import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
 
@@ -10,7 +8,6 @@ export default function PrisonerSearchResult({
     histories,
     places,
     years,
-    isAdmin = false,
 }) {
     const navigate = useLocalizedNavigate();
     const { t } = useTranslation();
@@ -139,31 +136,10 @@ export default function PrisonerSearchResult({
             <section className="section-form-search-result">
                 <HeaderSection textFirst={t("stories.header")} />
 
-                {/* 
-        <div className='container-description-prisoners'>
-          <span>{t('stories.additional-text')}</span>
-        </div> */}
 
-                {isAdmin ? (
-                    <>
-                        <div className="container-description-prisoners-admin">
-                            <span>{t("stories.additional-text")}</span>
-                            <div className="admin-btn-container">
-                                <ButtonAdmin
-                                    isColorsInverse={false}
-                                    themeColor="black"
-                                    href="/"
-                                    spanText={t("admin-panel.btn.add-story")}
-                                    size="m"
-                                />
-                            </div>
-                        </div>
-                    </>
-                ) : (
-                    <div className="container-description-prisoners">
-                        <span>{t("stories.additional-text")}</span>
-                    </div>
-                )}
+                <div className="container-description-prisoners">
+                    <span>{t("stories.additional-text")}</span>
+                </div>
             </section>
             {/* ADD TOP BORDER TO THIS */}
             <section className="section-register-search-result">

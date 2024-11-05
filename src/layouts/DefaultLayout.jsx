@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { React, Suspense, useEffect, useState } from "react";
+import { React, Suspense, useEffect } from "react";
 import "../assets/styles/layout/DefaultLayout.css";
 import CreateStoryPage from "../pages/story/CreateStoryPage";
 import HeaderLayout from "../components/layout/HeaderLayout";
@@ -16,7 +16,6 @@ import Contact from "../pages/contact/Contact";
 import PrisonerPage from "../pages/search/prisoner/PrisonerPage";
 import PrisonerStories from "../pages/prisoners/PrisonerStories";
 import PageTemplate from "../components/other/PageTemplate";
-import AdminLogin from "../pages/login/AdminLogin";
 import SearchResultPage from "../pages/search/SearchResultPage";
 import PhotoArchivePage from "../pages/archive/photos/PhotoArchivePage";
 import PlacePage from "../pages/search/place/PlacePage";
@@ -24,15 +23,8 @@ import Analysis from "../pages/archive/analysis/Analysis";
 import MapPage from "../pages/map/MapPage";
 import i18n from "../i18n";
 import Spinner from "../components/other/Spinner";
-
 import Policy from "../pages/about/policy/Policy";
-import NewPhotoPage from "../pages/crud/photo/NewPhotoPage";
-import NewPlacePage from "../pages/crud/place/NewPlacePage";
-import NewHumanPage from "../pages/crud/human/NewHumanPage";
-import AdminDashboardPage from "../pages/crud/AdminDashboardPage";
 import LandingPage from "../pages/LandingPage";
-import ProtectedRoute from "./ProtectedRoute";
-import { checkAdminStatus } from "../utils/auth";
 import { Helmet } from "react-helmet-async";
 import { t } from "i18next";
 import { notification } from "antd";
@@ -86,12 +78,8 @@ export default function DefaultLayout() {
     const location = useLocation(); // Get the current route
 
     useLanguage();
-
-    const [isAdmin, setIsAdmin] = useState(false);
-
     useEffect(() => {
-        const result = checkAdminStatus();
-        setIsAdmin(result);
+
         notification.warning({
             message: t("errors.front-end.warning-site-not-finished"),
             description: t("errors.front-end.warning-site-not-finished-msg"),
@@ -123,60 +111,26 @@ export default function DefaultLayout() {
                     content={t(`page-description.${currentPage}`)}
                 />
             </Helmet>
-          <HeaderLayout />
+            <HeaderLayout />
 
             <Suspense
                 fallback={<PageTemplate content={<Spinner size="large" />} />}
             >
-                {/* <Suspense fallback={<Spinner size="large"s />}> */}
+
                 <main className="main-layout">
                     <Routes>
-                        {/* Admin Protected Routes */}
-
-                        <Route
-                            path="/:lang/crud/place/*"
-                            element={
-                                <ProtectedRoute>
-                                    <NewPlacePage />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="/:lang/crud/photo/*"
-                            element={
-                                <ProtectedRoute>
-                                    <NewPhotoPage />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="/:lang/crud/human/*"
-                            element={
-                                <ProtectedRoute>
-                                    <NewHumanPage />
-                                </ProtectedRoute>
-                            }
-                        />
-                        <Route
-                            path="/:lang/crud"
-                            element={
-                                <ProtectedRoute>
-                                    <AdminDashboardPage />
-                                </ProtectedRoute>
-                            }
-                        />
 
                         {/* Public Routes */}
 
                         <Route
                             path="/:lang/map"
-                            element={<MapPage isAdmin={isAdmin} />}
+                            element={<MapPage />}
                         />
                         <Route path="/:lang/contacts" element={<Contact />} />
-                        <Route path="/:lang/login" element={<AdminLogin />} />
+                        
                         <Route
                             path="/:lang/archive/photos"
-                            element={<PhotoArchivePage isAdmin={isAdmin} />}
+                            element={<PhotoArchivePage />}
                         />
                         <Route
                             path="/:lang/archive/analysis"
@@ -189,11 +143,11 @@ export default function DefaultLayout() {
                         />
                         <Route
                             path="/:lang/search"
-                            element={<SearchResultPage isAdmin={isAdmin} />}
+                            element={<SearchResultPage />}
                         />
                         <Route
                             path="/:lang/prisoners"
-                            element={<PrisonerStories isAdmin={isAdmin} />}
+                            element={<PrisonerStories />}
                         />
 
                         <Route
@@ -203,11 +157,11 @@ export default function DefaultLayout() {
 
                         <Route
                             path="/:lang/search/prisoner/*"
-                            element={<PrisonerPage isAdmin={isAdmin} />}
+                            element={<PrisonerPage />}
                         />
                         <Route
                             path="/:lang/search/place/*"
-                            element={<PlacePage isAdmin={isAdmin} />}
+                            element={<PlacePage />}
                         />
                         <Route path="/:lang/" element={<LandingPage />} />
                         <Route path="*" element={<PageTemplate />} />

@@ -4,18 +4,13 @@ import "../../assets/styles/layout/DefaultLayout.css";
 
 import Carousel from "../other/Carousel";
 import ButtonSubmit from "../buttons/ButtonSubmit";
-import { notification } from "antd";
 import { useTranslation } from "react-i18next";
-import ButtonCrud from "../buttons/ButtonCrud";
-import humanService from "../../api/services/humanService";
-import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
+
 
 export default function Card({
     objectOfPrisoners,
-    isAdmin = false,
-    setLoading,
 }) {
-    const navigate = useLocalizedNavigate();
+
     const { t } = useTranslation();
     const splitIndex = 73; // Количество символов в первой части строки
 
@@ -24,31 +19,6 @@ export default function Card({
         splitIndex,
     );
     const secondPart = objectOfPrisoners.history.description.slice(splitIndex);
-
-    const handleDelete = async (id) => {
-        try {
-            setLoading(true);
-            await humanService.deleteHumanById(id);
-
-            // console.log('Admin logged in successfully');
-            notification.success({ message: t("sucess deleted user") });
-
-            setTimeout(() => navigate("/prisoners"), 1000);
-            // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
-        } catch (err) {
-            // Check if the error object contains a specific error response message
-            const errorMessage =
-                err.response?.data?.message || t("delete error");
-
-            // Display an error notification with a specific or fallback message
-            notification.error({
-                message: errorMessage,
-            });
-
-            // Log the error details for debugging
-            console.error("Error occurred during deletion:", err);
-        }
-    };
 
     return (
         <section className="section-prisoner">
@@ -68,27 +38,7 @@ export default function Card({
                             " " +
                             objectOfPrisoners.patronymic}
                     </h1>
-                    {isAdmin ? (
-                        <>
-                            <div className="container-description-map-admin">
-                                <div className="admin-btn-container">
-                                    <ButtonCrud
-                                        href={`/crud/human/${objectOfPrisoners.id}`}
-                                        svgType="edit"
-                                    />
-                                    <ButtonCrud
-                                        href="none"
-                                        onClick={() =>
-                                            handleDelete(objectOfPrisoners.id)
-                                        }
-                                        svgType="delete"
-                                    />
-                                </div>
-                            </div>
-                        </>
-                    ) : (
-                        <></>
-                    )}
+                
 
                     <ul>
                         <li>

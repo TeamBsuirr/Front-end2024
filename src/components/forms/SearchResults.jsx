@@ -22,7 +22,7 @@ export default function SearchResults({ arrayFoundObjects }) {
 
     function clickGlobalSearchButton() {
         if (searchInputValue !== "") {
-            //window.location.href = `/search?searchFor=${searchInputValue}`;
+          
             navigate(
                 `/search?searchFor=${encodeURIComponent(searchInputValue)}`,
             );

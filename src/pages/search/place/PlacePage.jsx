@@ -7,7 +7,7 @@ import placeService from "../../../api/services/placeService";
 import CardPlace from "../../../components/cards/CardPlace";
 import { useTranslation } from "react-i18next";
 
-export default function PlacePage({ isAdmin = false }) {
+export default function PlacePage() {
     const { t } = useTranslation();
     const [objectOfPlace, setobjectOfPlace] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -34,8 +34,6 @@ export default function PlacePage({ isAdmin = false }) {
                 return data;
             })
             .catch((error) => {
-                //console.error('Ошибка получения данных концлагеря:', error);
-
                 let errMsg = error.message ? error.message : error;
                 notification.error({
                     message: t("errors.front-end.fetch.msg-place"),
@@ -58,7 +56,6 @@ export default function PlacePage({ isAdmin = false }) {
                 {/* <SEOComponent data={objectOfPlace} type="place" /> */}
                 <CardPlace
                     objectOfPlace={objectOfPlace}
-                    isAdmin={isAdmin}
                     setLoading={setLoading}
                 />
             </>

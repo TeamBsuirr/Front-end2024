@@ -4,49 +4,20 @@ import "../../assets/styles/layout/DefaultLayout.css";
 
 import Carousel from "../other/Carousel";
 import ButtonSubmit from "../buttons/ButtonSubmit";
-import { notification } from "antd";
+
 import { useTranslation } from "react-i18next";
-import ButtonCrud from "../buttons/ButtonCrud";
-import placeService from "../../api/services/placeService";
-import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
+
 
 export default function CardPlace({
     objectOfPlace,
-    isAdmin = false,
-    setLoading,
 }) {
-    const navigate = useLocalizedNavigate();
-    const { t } = useTranslation();
-    //const [loading, setLoading] = useState(false);
-    const splitIndex = 73; // Количество символов в первой части строки
 
+    const { t } = useTranslation();
+    const splitIndex = 73; // Количество символов в первой части строки
     const firstPart = objectOfPlace.history.description.slice(0, splitIndex);
     const secondPart = objectOfPlace.history.description.slice(splitIndex);
 
-    const handleDelete = async (id) => {
-        try {
-            setLoading(true);
-            await placeService.deletePlaceById(id);
 
-            // console.log('Admin logged in successfully');
-            notification.success({ message: t("sucess deleted place") });
-
-            setTimeout(() => navigate("/map"), 1000);
-            // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
-        } catch (err) {
-            // Check if the error object contains a specific error response message
-            const errorMessage =
-                err.response?.data?.message || t("delete error");
-
-            // Display an error notification with a specific or fallback message
-            notification.error({
-                message: errorMessage,
-            });
-
-            // Log the error details for debugging
-            console.error("Error occurred during deletion:", err);
-        }
-    };
     return (
         <section className="section-prisoner">
             <div className="container-header-prisoner">
@@ -62,27 +33,7 @@ export default function CardPlace({
                         {objectOfPlace.placeName}
                     </h1>
 
-                    {isAdmin ? (
-                        <>
-                            <div className="container-description-map-admin">
-                                <div className="admin-btn-container">
-                                    <ButtonCrud
-                                        href={`/crud/place/${objectOfPlace.id}`}
-                                        svgType="edit"
-                                    />
-                                    <ButtonCrud
-                                        href="none"
-                                        onClick={() =>
-                                            handleDelete(objectOfPlace.id)
-                                        }
-                                        svgType="delete"
-                                    />
-                                </div>
-                            </div>
-                        </>
-                    ) : (
-                        <></>
-                    )}
+
 
                     <ul>
                         <li>
@@ -92,8 +43,8 @@ export default function CardPlace({
                             <span>
                                 {objectOfPlace.dateOfFoundation
                                     ? " " +
-                                      objectOfPlace.dateOfFoundation +
-                                      " г."
+                                    objectOfPlace.dateOfFoundation +
+                                    " г."
                                     : " год не определен"}{" "}
                             </span>
                         </li>

@@ -37,7 +37,6 @@ export default function NewHistory() {
 
     const validateInput = () => {
         let isValid = true;
-        //console.log(formData);
         // Validate name, surname, and patronymic
         ["name", "surname", "patronymic"].forEach((field) => {
             if (
@@ -70,13 +69,9 @@ export default function NewHistory() {
         });
 
         // Validate date of birth, start date and end date
-        // 1 old if
+
         const today = new Date().toISOString().split("T")[0];
-        // if (!formData.dateOfBirth || formData.dateOfBirth >= today) {
-        //     isValid = false;
-        //     notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
-        // }
-        // new 2 ifs
+
         if (
             !formData.dateOfBirth ||
             formData.dateOfBirth >= today ||
@@ -98,7 +93,7 @@ export default function NewHistory() {
             });
         }
 
-        if (formData.dateFrom >= formData.dateTo) {
+        if (formData.dateFrom > formData.dateTo) {
             isValid = false;
             notification.error({
                 message: t("errors.front-end.add-story.incorrect-dot"),
@@ -278,14 +273,6 @@ export default function NewHistory() {
         });
     };
 
-    // const handleFileChange = (e) => {
-    //     const { files } = e.target;
-    //     setFormData({
-    //         ...formData,
-    //         files: [...formData.files, ...files]
-    //     });
-    // };
-
     const handleFileChange = (files) => {
         // Ensure files are processed correctly
         const updatedFiles = Array.from(files);
@@ -320,10 +307,27 @@ export default function NewHistory() {
                 .postStory(formData)
                 .then((response) => {
                     setLoading(false);
-                    if (response.status === 201 || !response.status)
+                    if (response.status === 201 || !response.status){
                         notification.success({
                             message: t("errors.front-end.add-story.success"),
                         });
+                        setFormData({
+                            name: "",
+                            surname: "",
+                            patronymic: "",
+                            dateOfBirth: "",
+                            dateOfDie: "",
+                            placeOfBirth: "",
+                            placeOfDetention: "",
+                            dateFrom: "",
+                            dateTo: "",
+                            fio: "",
+                            phoneNumber: "",
+                            email: "",
+                            history: "",
+                            files: [],
+                        })
+                    }
                     return response;
                 })
                 .catch((error) => {

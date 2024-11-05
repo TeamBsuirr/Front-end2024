@@ -14,20 +14,6 @@ export default function InputDescription({
     const [fileList, setFileList] = useState([]);
 
     // Обновляем fileList при изменении valueFiles
-    // useEffect(() => {
-    //     const updatedFiles = valueFiles.map((file) => {
-    //         return {
-    //             uid: file.name + '-' + file.lastModified,
-    //             name: file.name,
-    //             type: file.type,
-    //             status: 'done',
-    //             file,
-    //             preview: file.type?.startsWith('image/') ? URL.createObjectURL(file) : null,
-    //         };
-    //     });
-    //     setFileList(updatedFiles);
-    // }, [valueFiles]);
-    // Обновляем fileList при изменении valueFiles
     useEffect(() => {
         // Check if the new files differ from the current fileList
         const updatedFiles = valueFiles.map((file) => ({

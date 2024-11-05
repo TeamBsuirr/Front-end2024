@@ -46,10 +46,7 @@ export default function InputSelect({
         }
     };
 
-    // Close the dropdown when the mouse leaves the list
-    // const handleMouseLeave = () => {
-    //   setIsOpen(false);
-    // };
+
 
     // Close the dropdown when clicking outside of the component
     const handleClickOutside = (event) => {

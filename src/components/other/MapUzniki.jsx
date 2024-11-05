@@ -5,10 +5,8 @@ import HeaderSection from "./HeaderSection";
 import ButtonSubmit from "../buttons/ButtonSubmit";
 import closeSvg from "../../assets/images/icons/other/close.svg";
 import PlaceMarkIcon from "../../assets/images/icons/other/star.svg";
-import ButtonAdmin from "../buttons/ButtonAdmin";
 
 export default function MapUzniki({
-    isAdmin,
     arrayOfPlaceMarks,
     passedPlace,
     setLoading,
@@ -223,24 +221,11 @@ export default function MapUzniki({
         <div className="section-map-page">
             <section className="section-map-header">
                 <HeaderSection textFirst={t("map.header")} />
-                {isAdmin ? (
-                    <div className="container-description-map-admin">
-                        <span>{t("map.additional-text")}</span>
-                        <div className="admin-btn-container">
-                            <ButtonAdmin
-                                isColorsInverse={false}
-                                themeColor="black"
-                                href={`/crud/place`}
-                                spanText={t("admin-panel.btn.add-camp")}
-                                size="m"
-                            />
-                        </div>
-                    </div>
-                ) : (
-                    <div className="container-description-map">
-                        <span>{t("map.additional-text")}</span>
-                    </div>
-                )}
+
+                <div className="container-description-map">
+                    <span>{t("map.additional-text")}</span>
+                </div>
+
             </section>
 
             <section className="section-map">
