@@ -4,7 +4,7 @@ name: Deploy Frontend
 on:
     push:
         branches:
-            - main
+            - admin
 
 jobs:
     deploy:
@@ -36,6 +36,10 @@ jobs:
                   CI: false
                   REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
                   REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
+
+                  REACT_APP_API_BASE_URL_ADMIN: ${{ secrets.REACT_APP_API_BASE_URL_ADMIN }}
+                  REACT_APP_I18N_PATH_ADMIN: ${{ secrets.REACT_APP_I18N_PATH_ADMIN }}
+
                   REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
                   REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
                   REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
@@ -47,6 +51,10 @@ jobs:
                   SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
                   REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
                   REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
+
+                  REACT_APP_API_BASE_URL_ADMIN: ${{ secrets.REACT_APP_API_BASE_URL_ADMIN }}
+                  REACT_APP_I18N_PATH_ADMIN: ${{ secrets.REACT_APP_I18N_PATH_ADMIN }}
+
                   REACT_APP_YANDEX_API_KEY: ${{ secrets.REACT_APP_YANDEX_API_KEY }}
                   REACT_APP_RECAPTCHA_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_API_KEY }}
                   REACT_APP_RECAPTCHA_SECRET_API_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SECRET_API_KEY }}
@@ -60,7 +68,7 @@ jobs:
                   echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
 
                   # Копирование файлов на сервер через IP-адрес
-                  rsync -avz --delete ./build/ root@93.177.124.102:/var/www/uzniki.by/html
+                  rsync -avz --delete ./build/ root@93.177.124.102:/var/www/93.177.124.102/html
 
                   # Шаг 6: Установим переменные окружения на сервере и Перезапуск сервера через nginx
                   sudo systemctl restart nginx

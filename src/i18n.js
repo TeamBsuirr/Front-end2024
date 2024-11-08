@@ -12,7 +12,7 @@ i18n.use(HttpBackend)
         debug: true,
         backend: {
             //loadPath: '/locales/{{lng}}/{{ns}}.json', // Путь к файлам с переводами
-            loadPath: process.env.REACT_APP_I18N_PATH, // Путь к файлам с переводами
+            loadPath: process.env.REACT_APP_I18N_PATH_ADMIN, // Путь к файлам с переводами
         },
         detection: {
             // order: ['querystring', 'localStorage', 'cookie', 'navigator', 'htmlTag', 'path', 'subdomain'],
