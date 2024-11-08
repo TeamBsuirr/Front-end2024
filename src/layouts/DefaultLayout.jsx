@@ -28,6 +28,7 @@ import LandingPage from "../pages/LandingPage";
 import { Helmet } from "react-helmet-async";
 import { t } from "i18next";
 import { notification } from "antd";
+import NotFound from "../components/layout/NotFound";
 
 const useLanguage = () => {
     const { lang } = useParams();
@@ -164,7 +165,7 @@ export default function DefaultLayout() {
                             element={<PlacePage />}
                         />
                         <Route path="/:lang/" element={<LandingPage />} />
-                        <Route path="*" element={<PageTemplate />} />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
             </Suspense>
