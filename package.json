@@ -22,7 +22,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "proxy": "https://uzniki.by",
+    "proxy": "https://93.177.124.102",
     "eslintConfig": {
         "extends": [
             "react-app",
