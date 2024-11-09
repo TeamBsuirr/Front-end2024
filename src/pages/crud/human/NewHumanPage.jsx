@@ -165,9 +165,11 @@ export default function NewHumanPage() {
     // Check if the data is loaded and has valid content
     if (loading || !dataLoaded) {
         return <PageTemplate content={<Spinner size="large" />} />;
-    } else if (arrayOfPlaces.length === 0 || !objectOfPrisoners) {
-        return <NotFound />;
-    } else {
+    } else if (arrayOfPlaces.length === 0){
+        return <NotFound message={"404 | Fill places of detention before creating a prisonwer"}/>; 
+    }else if (!objectOfPrisoners) {
+        return <NotFound/>;
+    }  else {
         return (
             <NewHuman
                 arrayOfPlaces={arrayOfPlaces}
