@@ -18,7 +18,7 @@ const AdminLogin = () => {
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
 
     const handleLogin = async () => {
-        if (!isCaptchaValid) {
+        if (isCaptchaValid) {
             notification.error({
                 message: t("errors.front-end.captcha-failed"),
                 description: t(t("errors.front-end.captcha-failed-msg")),

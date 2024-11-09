@@ -292,7 +292,7 @@ export default function NewHuman({
     };
 
     const handleAdminAdd = () => {
-        if (!isCaptchaValid) {
+        if (isCaptchaValid) {
             notification.error({
                 message: t("errors.front-end.captcha-failed"),
                 description: t(t("errors.front-end.captcha-failed-msg")),
@@ -532,7 +532,7 @@ export default function NewHuman({
                 <div className="container-add-form-button-new-history">
                     <div>
                         <ReCAPTCHA
-                            sitekey={process.env.REACT_APP_RECAPTCHA_API_KEY}
+                            // sitekey={process.env.REACT_APP_RECAPTCHA_API_KEY}
                             onChange={onChangeCaptcha}
                         />
                     </div>

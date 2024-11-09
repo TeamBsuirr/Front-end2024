@@ -260,7 +260,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
 
     const handleSubmit = () => {
         if (validateInput()) {
-            if (!isCaptchaValid) {
+            if (isCaptchaValid) {
                 notification.error({
                     message: t("errors.front-end.captcha-failed"),
                     description: t(t("errors.front-end.captcha-failed-msg")),

@@ -303,7 +303,7 @@ export default function NewHistory() {
     };
 
     const handleSubmit = () => {
-        if (!isCaptchaValid) {
+        if (isCaptchaValid) {
             notification.error({
                 message: t("errors.front-end.captcha-failed"),
                 description: t(t("errors.front-end.captcha-failed-msg")),
