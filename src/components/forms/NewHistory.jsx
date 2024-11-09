@@ -79,24 +79,27 @@ export default function NewHistory() {
         // new 2 ifs
         if (
             !formData.dateOfBirth ||
-            formData.dateOfBirth >= today ||
-            formData.dateOfBirth >= formData.dateOfDie
+            formData.dateOfBirth >= today 
         ) {
             isValid = false;
             notification.error({
                 message: t("errors.front-end.add-story.incorrect-dof"),
             });
         }
-        if (
-            !formData.dateOfDie ||
-            formData.dateOfBirth >= today ||
-            formData.dateOfBirth >= formData.dateOfDie
-        ) {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dod"),
-            });
+        if(formData.dateOfDie){
+            if (
+                formData.dateOfBirth >= formData.dateOfDie
+            ) {
+                isValid = false;
+                notification.error({
+                    message: t("errors.front-end.add-story.incorrect-dod"),
+                });
+            }
+    
         }
+
+
+
 
         if (formData.dateFrom >= formData.dateTo) {
             isValid = false;
