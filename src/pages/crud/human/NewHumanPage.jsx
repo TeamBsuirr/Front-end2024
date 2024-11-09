@@ -28,14 +28,6 @@ export default function NewHumanPage() {
     const [isUpdate, setIsUpdate] = useState(false);
 
     // Function to fetch file and create File object
-    // async function urlToFile(url, fileName, fileExtension, fileType) {
-    //     const response = await fetch(url);
-    //     const blob = await response.blob();
-    //     return new File([blob], `${fileName}.${fileExtension}`, {
-    //         type: fileType,
-    //     });
-    // }
-    // Function to fetch file and create File object
     const urlToFile = useCallback(
         async (url, fileName, fileExtension, fileType) => {
             const response = await fetch(url);
@@ -81,25 +73,7 @@ export default function NewHumanPage() {
         );
     }
 
-    // Function to convert files from URLs to File objects
-    // async function convertFiles(files) {
-    //     if (!Array.isArray(files) || files.length === 0) {
-    //         return [];
-    //     }
-    //     return Promise.all(
-    //         files.map(async (fileObj) => {
-    //             const fileExtension = fileObj.urlToFile.split(".").pop();
-    //             const fileName = `file_${fileObj.id}`;
-    //             const mimeType = getMimeType(fileExtension);
-    //             return await urlToFile(
-    //                 fileObj.urlToFile,
-    //                 fileName,
-    //                 fileExtension,
-    //                 mimeType,
-    //             );
-    //         }),
-    //     );
-    // }
+
     // Function to convert files from URLs to File objects
     const convertFiles = useCallback(
         async (files) => {
