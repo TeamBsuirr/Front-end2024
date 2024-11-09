@@ -34,8 +34,6 @@ jobs:
             - name: Build project
               env:
                   CI: false
-                  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
-                  REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
 
                   REACT_APP_API_BASE_URL_ADMIN: ${{ secrets.REACT_APP_API_BASE_URL_ADMIN }}
                   REACT_APP_I18N_PATH_ADMIN: ${{ secrets.REACT_APP_I18N_PATH_ADMIN }}
@@ -49,8 +47,6 @@ jobs:
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-                  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
-                  REACT_APP_I18N_PATH: ${{ secrets.REACT_APP_I18N_PATH }}
 
                   REACT_APP_API_BASE_URL_ADMIN: ${{ secrets.REACT_APP_API_BASE_URL_ADMIN }}
                   REACT_APP_I18N_PATH_ADMIN: ${{ secrets.REACT_APP_I18N_PATH_ADMIN }}
