@@ -15,6 +15,8 @@ export default function App() {
         scheduleTokenRefresh(); // Активируем регулярное обновление токенов
     }, []);
 
+    console.log("admin version")
+
     return (
         <HelmetProvider>
             <RouterProvider router={router} />
