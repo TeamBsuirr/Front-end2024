@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.0db96e20.css",
-    "main.js": "/static/js/main.397ee80a.js",
+    "main.js": "/static/js/main.2f4538d8.js",
     "static/media/ZenKurenaido-Regular.ttf": "/static/media/ZenKurenaido-Regular.61210c17444b93cbf502.ttf",
     "static/media/DefaultBG.jpg": "/static/media/DefaultBG.2bdef49c008775a10a53.jpg",
     "static/media/LandingPageBack.png": "/static/media/LandingPageBack.9101a62f27f28eec3244.png",
@@ -40,10 +40,10 @@
     "static/media/plus.svg": "/static/media/plus.efcdb2ebbe873854607e.svg",
     "static/media/plusHovered.svg": "/static/media/plusHovered.a181b3e9592a6f9a9358.svg",
     "main.0db96e20.css.map": "/static/css/main.0db96e20.css.map",
-    "main.397ee80a.js.map": "/static/js/main.397ee80a.js.map"
+    "main.2f4538d8.js.map": "/static/js/main.2f4538d8.js.map"
   },
   "entrypoints": [
     "static/css/main.0db96e20.css",
-    "static/js/main.397ee80a.js"
+    "static/js/main.2f4538d8.js"
   ]
 }
