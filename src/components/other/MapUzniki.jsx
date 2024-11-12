@@ -214,7 +214,7 @@ export default function MapUzniki({
         return () => {
             if (window.ymaps && currentMapContainer) {
                 //window.ymaps.destroy(currentMapContainer);
-                 console.log("Карта скрыта");
+                // console.log("Карта скрыта");
             }
         };
     }, [arrayOfPlaceMarks, passedPlace, setLoading, handlePlacemarkClick]);
