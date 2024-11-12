@@ -211,8 +211,8 @@ export default function MapUzniki({
 
         return () => {
             if (window.ymaps && currentMapContainer) {
-                window.ymaps.destroy(currentMapContainer);
-                // console.log("Карта уничтожена");
+                //window.ymaps.destroy(currentMapContainer);
+                 console.log("Карта уничтожена");
             }
         };
     }, [arrayOfPlaceMarks, passedPlace, setLoading, handlePlacemarkClick]);
