@@ -28,16 +28,25 @@ export default function NewHumanPage() {
     const [isUpdate, setIsUpdate] = useState(false);
 
     // Function to fetch file and create File object
-    const urlToFile = useCallback(
-        async (url, fileName, fileExtension, fileType) => {
-            const response = await fetch(url);
+    const urlToFile = useCallback(async (url, fileName, fileExtension, fileType) => {
+        try {
+            const response = await fetch(url, { mode: 'cors' }); // Убедитесь, что сервер поддерживает CORS
+            if (!response.ok) {
+                throw new Error(`Failed to fetch file: ${response.statusText}`);
+            }
             const blob = await response.blob();
-            return new File([blob], `${fileName}.${fileExtension}`, {
+            const file = new File([blob], `${fileName}.${fileExtension}`, {
                 type: fileType,
             });
-        },
-        [],
-    );
+            //file.preview = URL.createObjectURL(blob); // Создаем preview
+            file.preview = url; // Создаем preview
+            file.cameFrom="yandex";
+            return file;
+        } catch (error) {
+            console.error('Error fetching file:', error);
+            return null;
+        }
+    }, []);
 
     // Function to get MIME type from file extension
     function getMimeType(fileExtension) {
@@ -75,27 +84,25 @@ export default function NewHumanPage() {
 
 
     // Function to convert files from URLs to File objects
-    const convertFiles = useCallback(
-        async (files) => {
-            if (!Array.isArray(files) || files.length === 0) {
-                return [];
-            }
-            return Promise.all(
-                files.map(async (fileObj) => {
-                    const fileExtension = fileObj.urlToFile.split(".").pop();
-                    const fileName = `file_${fileObj.id}`;
-                    const mimeType = getMimeType(fileExtension);
-                    return await urlToFile(
-                        fileObj.urlToFile,
-                        fileName,
-                        fileExtension,
-                        mimeType,
-                    );
-                }),
-            );
-        },
-        [urlToFile],
-    );
+    const convertFiles = useCallback(async (files) => {
+        if (!Array.isArray(files) || files.length === 0) {
+            return [];
+        }
+        const convertedFiles = await Promise.all(
+            files.map(async (fileObj) => {
+                const fileExtension = fileObj.urlToFile.split('.').pop();
+                const fileName = `file_${fileObj.id}`;
+                const mimeType = getMimeType(fileExtension);
+                return await urlToFile(
+                    fileObj.urlToFile,
+                    fileName,
+                    fileExtension,
+                    mimeType
+                );
+            })
+        );
+        return convertedFiles.filter(Boolean); // Исключаем неудачные загрузки
+    }, [urlToFile]);
 
     // Fetch data and handle file conversion
     useEffect(() => {
@@ -134,7 +141,10 @@ export default function NewHumanPage() {
             humanService
                 .getHumanByIdForPostHuman(idOfPrisoner)
                 .then(async (data) => {
+
                     const fileObjects = await convertFiles(data.files);
+                    console.log("ошибка с получением фотографий (data.files функция urlToFile) 2:",fileObjects)
+                   
                     setObjectOfPrisoners({
                         ...data,
                         id: idOfPrisoner,

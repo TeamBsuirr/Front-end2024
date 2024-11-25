@@ -96,6 +96,8 @@ const FileUploadWithDragAndDrop = ({
     onFileChange,
     typesDisallowed,
 }) => {
+    
+
     const [previewFiles, setPreviewFiles] = useState([]);
     const sensor = useSensor(PointerSensor, {
         activationConstraint: {
@@ -104,10 +106,19 @@ const FileUploadWithDragAndDrop = ({
     });
 
     useEffect(() => {
+        console.log(fileList)
         const newPreviewFiles = fileList.map((file) => {
             if (!file.preview && file.type?.startsWith("image/")) {
+
+                if(file.file.cameFrom==="yandex"){
+                    console.log("file from yandex")
+                    return { ...file, preview: file.file };
+                }
+                console.log("file not from yandex")
                 return { ...file, preview: URL.createObjectURL(file.file) };
             }
+
+            console.log("file preview exists",file)
             return file;
         });
 
@@ -130,7 +141,7 @@ const FileUploadWithDragAndDrop = ({
         };
     }, [fileList, previewFiles]);
 
-    // console.log(fileList)
+
 
     const onDragEnd = ({ active, over }) => {
         if (active.id !== over?.id) {

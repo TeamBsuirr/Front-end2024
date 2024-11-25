@@ -259,8 +259,8 @@ export default function NewHistory() {
                         t("errors.front-end.add-story.incorrect-file-type"),
                 });
             }
-            if (file.size > 5 * 1024 * 1024) {
-                // 5 MB
+            if (file.size > 100 * 1024 * 1024) {
+                // 100 MB
                 isValid = false;
                 notification.error({
                     message: t(

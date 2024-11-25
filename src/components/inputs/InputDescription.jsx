@@ -36,9 +36,13 @@ export default function InputDescription({
             type: file.type,
             status: "done",
             file,
-            preview: file.type?.startsWith("image/")
-                ? URL.createObjectURL(file)
-                : null,
+            preview: 
+            file.cameFrom==="yandex" ?file.preview :file.type?.startsWith("image/")
+            ? URL.createObjectURL(file)
+            : null
+            
+            
+            ,
         }));
 
         // Prevent unnecessary state updates by comparing existing and new files
