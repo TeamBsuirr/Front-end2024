@@ -197,10 +197,10 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                 });
             }
             if (
-                file.size > 5 * 1024 * 1024 &&
+                file.size > 100 * 1024 * 1024 &&
                 !allowedVideoTypes.includes(fileType)
             ) {
-                // 5 MB
+                // 100 MB
                 //console.log("size types")
                 isValid = false;
                 notification.error({
