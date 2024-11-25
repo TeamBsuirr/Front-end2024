@@ -30,14 +30,18 @@ export default function NewHumanPage() {
     // Function to fetch file and create File object
     const urlToFile = useCallback(async (url, fileName, fileExtension, fileType) => {
         try {
+            console.log("before fetch of file",url, fileName, fileExtension, fileType)
             const response = await fetch(url, { mode: 'cors' }); // Убедитесь, что сервер поддерживает CORS
             if (!response.ok) {
                 throw new Error(`Failed to fetch file: ${response.statusText}`);
             }
+            console.log("file fetched",blob)
             const blob = await response.blob();
+            console.log("blob created",blob)
             const file = new File([blob], `${fileName}.${fileExtension}`, {
                 type: fileType,
             });
+            console.log("file created")
             //file.preview = URL.createObjectURL(blob); // Создаем preview
             file.preview = url; // Создаем preview
             file.cameFrom="yandex";
