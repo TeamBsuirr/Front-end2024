@@ -61,9 +61,21 @@ const placeService = {
         transformedData.append("coordinates.latitude", data.latitude);
         transformedData.append("coordinates.longitude", data.longitude);
 
-        data.images.forEach((file) => {
-            transformedData.append("images", file);
-        });
+        const images = data.images.filter((file) =>
+            file.type.startsWith("image/"),
+        );
+        
+        // Append newImages or images
+        images.map((file) => {
+            if (file?.id) {
+                transformedData.append("images", file.id);
+            } else if (file?.file?.id) {
+                transformedData.append("images", file.file.id);
+            } else {
+                transformedData.append("newImages", file);
+                return file;
+            }
+        }).filter(file => file);  // Filter out undefined values if any
 
         // Выполняем запрос, добавляя заголовок Content-Type
         return handleRequest(() =>

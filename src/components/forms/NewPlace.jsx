@@ -11,12 +11,14 @@ import Spinner from "../other/Spinner";
 import HeaderSection from "../other/HeaderSection";
 import placeService from "../../api/services/placeService";
 import InputSelect from "../inputs/InputSelect";
+import { useNavigate } from "react-router-dom";
 
 export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
     const { t } = useTranslation();
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
     const [formData, setFormData] = useState(objectOfPlace);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     const onChangeCaptcha = (value) => {
         if (value) {
@@ -304,13 +306,17 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                 placeService
                     .updatePlace(formData)
                     .then((response) => {
-                        if (response.status === 201 || !response.status)
+                        if (response.status === 201 || !response.status) {
                             // Предположим, что 201 — код успешного добавления
                             notification.success({
                                 message: t(
                                     "errors.front-end.update-story.success-camp",
                                 ),
                             });
+
+                            setTimeout(()=>navigate(0), 1500)
+                        }
+
                         setLoading(false);
                         return response;
                     })

@@ -46,7 +46,7 @@ export default function AdminDashboardPage() {
 
                 <div className="container-description-map-admin">
                     <span>
-                        {t("admin-panel.control-panel.additional-text")}123
+                        {t("admin-panel.control-panel.additional-text")}
                     </span>
                     <div className="admin-btn-container">
                         <ButtonAdmin

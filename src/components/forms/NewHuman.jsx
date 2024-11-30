@@ -11,6 +11,7 @@ import HeaderSection from "../other/HeaderSection";
 import ReCAPTCHA from "react-google-recaptcha";
 import humanService from "../../api/services/humanService";
 import InputSelect from "../inputs/InputSelect";
+import { useNavigate } from "react-router-dom";
 
 export default function NewHuman({
     arrayOfPlaces,
@@ -19,7 +20,7 @@ export default function NewHuman({
 }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPrisoners);
-
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
 
@@ -76,7 +77,7 @@ export default function NewHuman({
                 message: t("errors.front-end.add-story.incorrect-dof"),
             });
         }
-        if(formData.dateOfDie){
+        if (formData.dateOfDie) {
             if (
                 formData.dateOfBirth >= formData.dateOfDie
             ) {
@@ -85,7 +86,7 @@ export default function NewHuman({
                     message: t("errors.front-end.add-story.incorrect-dod"),
                 });
             }
-    
+
         }
 
         formData.places.forEach((place) => {
@@ -335,16 +336,26 @@ export default function NewHuman({
                         throw error;
                     });
             } else {
+
+
+                // заменить файлы, которые остались из яндекс хранилища на строки, а файлы новые оставить
+
                 humanService
                     .updateHuman(formData)
                     .then((response) => {
                         setLoading(false);
-                        if (response.status === 201 || !response.status)
+                        if (response.status === 201 || !response.status) {
                             notification.success({
                                 message: t(
                                     "errors.front-end.update-story.success",
                                 ),
                             });
+                            // refresh
+                            setTimeout(()=>navigate(0), 1500)
+
+
+                        }
+
                         return response;
                     })
                     .catch((error) => {

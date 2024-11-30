@@ -32,16 +32,17 @@ export default function InputDescription({
         // Check if the new files differ from the current fileList
         const updatedFiles = valueFiles.map((file) => ({
             uid: file.name + "-" + file.lastModified,
+            id:file.id,
             name: file.name,
             type: file.type,
             status: "done",
             file,
-            preview: 
-            file.cameFrom==="yandex" ?file.preview :file.type?.startsWith("image/")
-            ? URL.createObjectURL(file)
-            : null
-            
-            
+            preview:
+                file.cameFrom === "yandex" ? file.preview :
+                    file.type?.startsWith("image/") ? URL.createObjectURL(file)
+                        : null
+
+
             ,
         }));
 
@@ -82,9 +83,10 @@ export default function InputDescription({
                     type: file.type,
                     status: "done",
                     file,
-                    preview: file.type?.startsWith("image/")
-                        ? URL.createObjectURL(file)
-                        : null,
+                    preview:
+                    file.cameFrom === "yandex" ? file.preview :
+                        file.type?.startsWith("image/") ? URL.createObjectURL(file)
+                            : null
                 }));
 
                 const updatedFileList = [...fileList, ...validatedFiles];

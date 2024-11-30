@@ -92,15 +92,30 @@ const humanService = {
             file.type.startsWith("video/"),
         );
 
-        // Append images
-        images.forEach((file) => {
-            transformedData.append("images", file);
-        });
+        // Append newImages or images
+        images.map((file) => {
+            if (file?.id) {
+                transformedData.append("images", file.id);
+            } else if (file?.file?.id) {
+                transformedData.append("images", file.file.id);
+            } else {
+                transformedData.append("newImages", file);
+                return file;
+            }
+        }).filter(file => file);  // Filter out undefined values if any
 
-        // Append videos
-        videos.forEach((file) => {
-            transformedData.append("videos", file);
-        });
+        // Append newVideos or videos
+        videos.map((file) => {
+            if (file?.id) {
+                transformedData.append("videos", file.id);
+            } else if (file?.file?.id) {
+                transformedData.append("videos", file.file.id);
+            } else {
+                transformedData.append("newVideos", file);
+                return file;
+            }
+        }).filter(file => file);  // Filter out undefined values if any
+
 
         // Append places with a flattened structure
         data.places.forEach((place, index) => {

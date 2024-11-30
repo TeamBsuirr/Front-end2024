@@ -37,18 +37,23 @@ export default function NewPlacePage() {
     const [arrayOfRegions, setArrayOfRegions] = useState(null);
 
     // Function to fetch file and create File object
-    const urlToFile = useCallback(
-        async (url, fileName, fileExtension, fileType) => {
-            const response = await fetch(url);
-            const blob = await response.blob();
-            return new File([blob], `${fileName}.${fileExtension}`, {
+    const urlToFile = useCallback(async (id, url, fileName, fileExtension, fileType) => {
+        try {
+            const file = new File([url], `${fileName}.${fileExtension}`, {
                 type: fileType,
             });
-        },
-        [],
-    );
+            console.log("file created", file)
+            file.preview = url; // Создаем preview
+            file.cameFrom = "yandex";
+            file.id = id
+            file.uid = file.name + "-" + file.lastModified;
+            return file;
+        } catch (error) {
+            console.error('Error fetching file:', error);
+            return null;
+        }
+    }, []);
 
-    // Function to get MIME type from file extension
     // function getMimeType(fileExtension) {
     //     const mimeTypes = {
     //         jpg: "image/jpeg",
@@ -131,6 +136,7 @@ export default function NewPlacePage() {
                     const fileName = `file_${fileObj.id}`;
                     const mimeType = getMimeType(fileExtension);
                     return await urlToFile(
+                        fileObj.id,
                         fileObj.urlToFile,
                         fileName,
                         fileExtension,
@@ -139,6 +145,7 @@ export default function NewPlacePage() {
                 }),
             );
         },
+        
         [urlToFile],
     );
 

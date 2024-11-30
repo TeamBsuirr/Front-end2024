@@ -28,26 +28,28 @@ export default function NewHumanPage() {
     const [isUpdate, setIsUpdate] = useState(false);
 
     // Function to fetch file and create File object
-    const urlToFile = useCallback(async (url, fileName, fileExtension, fileType) => {
+    const urlToFile = useCallback(async (id, url, fileName, fileExtension, fileType) => {
         try {
-            console.log("before fetch of file",url, fileName, fileExtension, fileType)
+            //console.log("before fetch of file", url, fileName, fileExtension, fileType)
             // const response = await fetch(url, { mode: 'cors' }); // Убедитесь, что сервер поддерживает CORS
             // if (!response.ok) {
             //     throw new Error(`Failed to fetch file: ${response.statusText}`);
             // }
-           // console.log("file fetched",blob)
+            // console.log("file fetched",blob)
             //const blob = await response.blob();
-           // console.log("blob created",blob)
+            // console.log("blob created",blob)
             // const file = new File([blob], `${fileName}.${fileExtension}`, {
             //     type: fileType,
             // });
-             const file = new File([url], `${fileName}.${fileExtension}`, {
+            const file = new File([url], `${fileName}.${fileExtension}`, {
                 type: fileType,
             });
-            console.log("file created",file)
+            console.log("file created", file)
             //file.preview = URL.createObjectURL(blob); // Создаем preview
             file.preview = url; // Создаем preview
-            file.cameFrom="yandex";
+            file.cameFrom = "yandex";
+            file.id = id
+            file.uid= file.name + "-" + file.lastModified;
             return file;
         } catch (error) {
             console.error('Error fetching file:', error);
@@ -101,6 +103,7 @@ export default function NewHumanPage() {
                 const fileName = `file_${fileObj.id}`;
                 const mimeType = getMimeType(fileExtension);
                 return await urlToFile(
+                    fileObj.id,
                     fileObj.urlToFile,
                     fileName,
                     fileExtension,
@@ -148,15 +151,14 @@ export default function NewHumanPage() {
             humanService
                 .getHumanByIdForPostHuman(idOfPrisoner)
                 .then(async (data) => {
-
                     const fileObjects = await convertFiles(data.files);
-                    console.log("ошибка с получением фотографий (data.files функция urlToFile) 2:",fileObjects)
-                   
+                 
                     setObjectOfPrisoners({
                         ...data,
                         id: idOfPrisoner,
                         files: fileObjects,
                     });
+
                     setDataLoaded(true); // Ensure that data is fully loaded
                     return data;
                 })
@@ -182,11 +184,11 @@ export default function NewHumanPage() {
     // Check if the data is loaded and has valid content
     if (loading || !dataLoaded) {
         return <PageTemplate content={<Spinner size="large" />} />;
-    } else if (arrayOfPlaces.length === 0){
-        return <NotFound message={"404 | Fill places of detention before creating a prisonwer"}/>; 
-    }else if (!objectOfPrisoners) {
-        return <NotFound/>;
-    }  else {
+    } else if (arrayOfPlaces.length === 0) {
+        return <NotFound message={"404 | Fill places of detention before creating a prisonwer"} />;
+    } else if (!objectOfPrisoners) {
+        return <NotFound />;
+    } else {
         return (
             <NewHuman
                 arrayOfPlaces={arrayOfPlaces}

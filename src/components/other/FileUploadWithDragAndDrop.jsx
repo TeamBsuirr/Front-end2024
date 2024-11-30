@@ -42,6 +42,8 @@ const DraggableUploadListItem = ({ file, onRemove }) => {
         borderRadius: "4px",
     };
 
+    //console.log("file with preview ",)
+
     return (
         <div
             ref={setNodeRef}
@@ -111,10 +113,10 @@ const FileUploadWithDragAndDrop = ({
             if (!file.preview && file.type?.startsWith("image/")) {
 
                 if(file.file.cameFrom==="yandex"){
-                    console.log("file from yandex")
+                    //console.log("file from yandex")
                     return { ...file, preview: file.file };
                 }
-                console.log("file not from yandex")
+                //console.log("file not from yandex")
                 return { ...file, preview: URL.createObjectURL(file.file) };
             }
 
@@ -164,7 +166,7 @@ const FileUploadWithDragAndDrop = ({
     const handleFileInputChange = (event) => {
         if (event.target && event.target.files) {
             const files = Array.from(event.target.files);
-            //console.log('Files:', files);
+            console.log('Files:', files);
             const newFiles = files.map((file) => ({
                 uid: file.name + "-" + file.lastModified,
                 name: file.name,

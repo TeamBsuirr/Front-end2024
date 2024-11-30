@@ -13,11 +13,13 @@ import InputPhoto from "../inputs/InputPhoto";
 
 import HeaderSection from "../other/HeaderSection";
 import searchService from "../../api/services/searchService";
+import { useNavigate } from "react-router-dom";
 
 export default function NewPhoto({ objectOfPhoto, isUpdate }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPhoto);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     const validateInput = () => {
         let isValid = true;
@@ -201,12 +203,15 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
                     .then((response) => {
                         // console.log(response);
                         setLoading(false);
-                        if (response.status === 201 || !response.status)
+                        if (response.status === 201 || !response.status){
                             notification.success({
                                 message: t(
                                     "errors.front-end.update-story.success-photo",
                                 ),
                             });
+                            setTimeout(()=>navigate(0), 1500)
+                        }
+                            
                         return response;
                     })
                     .catch((error) => {

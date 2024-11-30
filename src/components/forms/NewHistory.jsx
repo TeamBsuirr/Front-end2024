@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import HeaderSection from "../other/HeaderSection";
 import ReCAPTCHA from "react-google-recaptcha";
 
+
 export default function NewHistory() {
     const { t } = useTranslation();
 
@@ -323,10 +324,13 @@ export default function NewHistory() {
                 .postStory(formData)
                 .then((response) => {
                     setLoading(false);
-                    if (response.status === 201 || !response.status)
+                    if (response.status === 201 || !response.status){
                         notification.success({
                             message: t("errors.front-end.add-story.success"),
                         });
+                        
+                    }
+                        
                     return response;
                 })
                 .catch((error) => {
