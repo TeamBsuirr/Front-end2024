@@ -34,7 +34,13 @@
 .modal-content img {
     width: 916px;
     height: 586px;
-    object-fit: cover;
+    object-fit: contain;
+}
+
+.modal-content video {
+    width: 916px;
+    height: 586px;
+    object-fit: contain;
 }
 
 .modal-description h3 {

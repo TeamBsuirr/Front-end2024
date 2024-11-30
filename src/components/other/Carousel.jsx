@@ -3,7 +3,8 @@ import React, { useRef, useState } from "react";
 import "../../assets/styles/other/Carousel.css";
 import { useTranslation } from "react-i18next";
 
-const Carousel = ({ images }) => {
+const Carousel = ({ images, videos=null }) => {
+
     const { t } = useTranslation();
 
     const carouselRef = useRef(null);
@@ -42,10 +43,13 @@ const Carousel = ({ images }) => {
 
     const [selectedObject, setSelectedObject] = useState(null);
 
-    function openImage(index) {
-        if (images[index]) {
-            setSelectedObject(images[index]);
+    function openObject(index, type) {
+        if (type === 'image' && images[index]) {
+            setSelectedObject({...images[index],type:"image"});
+        } else if (type === 'video' && videos[index]) {
+            setSelectedObject({...videos[index],type:"video"});
         }
+        console.log(selectedObject)
     }
 
     function closeModal() {
@@ -73,7 +77,7 @@ const Carousel = ({ images }) => {
             onMouseMove={handleMouseMove}
             onWheel={handleWheel} // Обработчик скролла колесиком мыши
             role="button" // Указываем, что это значимая область
-            aria-label="Image carousel" // Добавляем описание для пользователей с экранными читалками
+            aria-label="Media carousel" // Добавляем описание для пользователей с экранными читалками
             tabIndex={0}
         >
             <h4>{t("materials")}</h4>
@@ -82,10 +86,10 @@ const Carousel = ({ images }) => {
                     <div className="carousel-item" key={index}>
                         <button
                             onClick={() => {
-                                openImage(index);
+                                openObject(index,'image');
                             }}
                             onKeyDown={(e) => {
-                                if (e.key === "Enter") openImage(index);
+                                if (e.key === "Enter") openObject(index,'image');
                             }}
                             style={{
                                 background: "none",
@@ -98,6 +102,32 @@ const Carousel = ({ images }) => {
                             <img
                                 src={image.urlToFile}
                                 alt={`Slide ${index + 1}`}
+                            />
+                        </button>
+                    </div>
+                ))}
+                {videos.map((video, index) => (
+                    <div className="carousel-item" key={`video-${index}`}>
+                        <button
+                            onClick={() => openObject(index, 'video')}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") openObject(index, 'video');
+                            }}
+                            style={{
+                                background: "none",
+                                border: "none",
+                                padding: 0,
+                                cursor: "pointer",
+                            }}
+                            tabIndex={0}
+                        >
+                            <video
+                                src={video.urlToFile}
+                                alt={`Video Slide ${index + 1}`}
+                                style={{ width: '100%', height: 'auto' }}
+                                muted
+                                loop
+                                playsInline
                             />
                         </button>
                     </div>
@@ -123,7 +153,18 @@ const Carousel = ({ images }) => {
                         role="button"
                         tabIndex={0}
                     >
-                        <img src={selectedObject.urlToFile} alt="Selected" />
+                        {selectedObject.type === "video" ? (
+                            <video
+                            controls
+                            src={selectedObject.urlToFile}
+                            style={{ width: "100%" }}
+                        >
+                            <track kind="captions" src="" label="Video selected" />
+                            Your browser does not support the video tag.
+                        </video>
+                        ) : (
+                            <img src={selectedObject.urlToFile} alt="Selected pic" />
+                        )}
                     </div>
                 </div>
             )}

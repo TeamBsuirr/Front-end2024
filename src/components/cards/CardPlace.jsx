@@ -82,7 +82,7 @@ export default function CardPlace({
                 </div>
             </div>
 
-            <Carousel images={objectOfPlace.images} />
+            <Carousel images={objectOfPlace.images} videos={[]} />
             <div className="container-prisoner-button">
                 <ButtonSubmit
                     isColorsInverse={true}
