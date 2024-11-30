@@ -30,7 +30,7 @@ export const logout = () => {
 
 // Механизм для регулярного обновления токенов
 export const scheduleTokenRefresh = () => {
-    const REFRESH_INTERVAL = 45 * 60 * 1000; // 15 минут
+    const REFRESH_INTERVAL = 30 * 60 * 1000; // 15 минут
     setInterval(async () => {
         try {
             await refreshToken();
