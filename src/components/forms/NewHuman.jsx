@@ -11,7 +11,7 @@ import HeaderSection from "../other/HeaderSection";
 import ReCAPTCHA from "react-google-recaptcha";
 import humanService from "../../api/services/humanService";
 import InputSelect from "../inputs/InputSelect";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export default function NewHuman({
     arrayOfPlaces,
@@ -20,7 +20,7 @@ export default function NewHuman({
 }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPrisoners);
-    const navigate = useNavigate()
+    //const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
 
@@ -351,7 +351,7 @@ export default function NewHuman({
                                 ),
                             });
                             // refresh
-                            setTimeout(()=>navigate(0), 1500)
+                            //setTimeout(()=>navigate(0), 1500)
 
 
                         }
