@@ -139,7 +139,7 @@ const humanService = {
         for (let pair of transformedData.entries()) {
             const key = pair[0];
             const value = pair[1];
-    
+
             // Check if the value is a File object and handle it accordingly
             if (value instanceof File) {
                 transformedDataObject[key] = `File: ${value.name}`;  // or any other info about the file you want to log
@@ -147,6 +147,10 @@ const humanService = {
                 transformedDataObject[key] = value;
             }
         }
+
+        // Log the final transformed data as a JSON object
+        console.log('Transformed Data as JSON:', JSON.stringify(transformedDataObject, null, 2));
+
 
         // Выполняем запрос, добавляя заголовок Content-Type
         return handleRequest(() =>
