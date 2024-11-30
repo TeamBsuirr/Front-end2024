@@ -84,7 +84,7 @@ const humanService = {
         transformedData.append("history.article", "История");
         transformedData.append("history.description", data.history);
 
-        console.log(data.files)
+        // console.log(data.files)
 
         // Separate and append files
         const images = [];
@@ -134,6 +134,12 @@ const humanService = {
             transformedData.append(`places[${index}].dateFrom`, place.dateFrom);
             transformedData.append(`places[${index}].dateTo`, place.dateTo);
         });
+
+        // Log the contents of transformedData
+        console.log('Transformed Data Fields:');
+        for (let pair of transformedData.entries()) {
+            console.log(pair[0] + ':', pair[1]);
+        }
 
         // Выполняем запрос, добавляя заголовок Content-Type
         return handleRequest(() =>
