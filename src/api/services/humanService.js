@@ -136,9 +136,16 @@ const humanService = {
         });
 
         // Log the contents of transformedData
-        console.log('Transformed Data Fields:');
         for (let pair of transformedData.entries()) {
-            console.log(pair[0] + ':', pair[1]);
+            const key = pair[0];
+            const value = pair[1];
+    
+            // Check if the value is a File object and handle it accordingly
+            if (value instanceof File) {
+                transformedDataObject[key] = `File: ${value.name}`;  // or any other info about the file you want to log
+            } else {
+                transformedDataObject[key] = value;
+            }
         }
 
         // Выполняем запрос, добавляя заголовок Content-Type
