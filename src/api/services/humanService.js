@@ -135,6 +135,7 @@ const humanService = {
             transformedData.append(`places[${index}].dateTo`, place.dateTo);
         });
 
+        const transformedDataObject = {};
         // Log the contents of transformedData
         for (let pair of transformedData.entries()) {
             const key = pair[0];
