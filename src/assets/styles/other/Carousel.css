@@ -43,3 +43,9 @@
     height: 230px;
     object-fit: cover;
 }
+
+.carousel-item video {
+    width: 347px;
+    height: 230px;
+    object-fit: contain;
+}

@@ -23,6 +23,7 @@ export default function CardPlace({
     const firstPart = objectOfPlace.history.description.slice(0, splitIndex);
     const secondPart = objectOfPlace.history.description.slice(splitIndex);
 
+
     const handleDelete = async (id) => {
         try {
             setLoading(true);
@@ -131,7 +132,7 @@ export default function CardPlace({
                 </div>
             </div>
 
-            <Carousel images={objectOfPlace.images} />
+            <Carousel images={objectOfPlace.images} videos={[]} />
             <div className="container-prisoner-button">
                 <ButtonSubmit
                     isColorsInverse={true}

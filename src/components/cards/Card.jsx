@@ -143,7 +143,7 @@ export default function Card({
                 </div>
             </div>
 
-            <Carousel images={objectOfPrisoners.images} />
+            <Carousel images={objectOfPrisoners.images} videos={objectOfPrisoners.videos} />
             <div className="container-prisoner-button">
                 <ButtonSubmit
                     isColorsInverse={true}
