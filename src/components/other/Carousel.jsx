@@ -49,7 +49,6 @@ const Carousel = ({ images, videos=null }) => {
         } else if (type === 'video' && videos[index]) {
             setSelectedObject({...videos[index],type:"video"});
         }
-        console.log(selectedObject)
     }
 
     function closeModal() {
