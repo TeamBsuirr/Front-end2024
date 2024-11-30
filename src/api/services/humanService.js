@@ -115,7 +115,6 @@ const humanService = {
         });
 
         // Append all image ids and video ids to transformedData
-        // Append all image ids and video ids to transformedData
         if (images.length > 0) {
             images.forEach(id => transformedData.append("images", id));
         } else {
