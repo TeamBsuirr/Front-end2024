@@ -82,14 +82,14 @@ const placeService = {
         if (images.length > 0) {
             images.forEach(id => transformedData.append("images", id));
         } else {
-            transformedData.append("images", JSON.stringify([])); // Add empty array as a string
+            transformedData.append("images", []); // Add empty array as a string
         }
 
         // Append new images and new videos (files) to transformedData
         if (newImages.length > 0) {
             newImages.forEach(file => transformedData.append("newImages", file));
         } else {
-            transformedData.append("newImages", JSON.stringify([])); // Add empty array as a string
+            transformedData.append("newImages", []); // Add empty array as a string
         }
 
 
