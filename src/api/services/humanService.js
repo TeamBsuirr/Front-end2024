@@ -118,26 +118,26 @@ const humanService = {
         if (images.length > 0) {
             images.forEach(id => transformedData.append("images", id));
         } else {
-            transformedData.append("images", JSON([])); // Add empty array as a string
+            transformedData.append("images",null); // Add empty array as a string
         }
 
         if (videos.length > 0) {
             videos.forEach(id => transformedData.append("videos", id));
         } else {
-            transformedData.append("videos", JSON([])); // Add empty array as a string
+            transformedData.append("videos",null); // Add empty array as a string
         }
 
         // Append new images and new videos (files) to transformedData
         if (newImages.length > 0) {
             newImages.forEach(file => transformedData.append("newImages", file));
         } else {
-            transformedData.append("newImages", JSON([])); // Add empty array as a string
+            transformedData.append("newImages",null); // Add empty array as a string
         }
 
         if (newVideos.length > 0) {
             newVideos.forEach(file => transformedData.append("newVideos", file));
         } else {
-            transformedData.append("newVideos", JSON([])); // Add empty array as a string
+            transformedData.append("newVideos",null); // Add empty array as a string
         }
 
 
