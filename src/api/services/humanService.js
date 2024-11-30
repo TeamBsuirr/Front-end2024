@@ -129,17 +129,9 @@ const humanService = {
         }
 
         // Append new images and new videos (files) to transformedData
-        if (newImages.length > 0) {
-            newImages.forEach(file => transformedData.append("newImages", file));
-        } else {
-            transformedData.append("newImages", newImages); // Add empty array as a string
-        }
+        newImages.forEach(file => transformedData.append("newImages", file));
+        newVideos.forEach(file => transformedData.append("newVideos", file));
 
-        if (newVideos.length > 0) {
-            newVideos.forEach(file => transformedData.append("newVideos", file));
-        } else {
-            transformedData.append("newVideos", newVideos); // Add empty array as a string
-        }
 
 
 
