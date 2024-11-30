@@ -84,6 +84,8 @@ const humanService = {
         transformedData.append("history.article", "История");
         transformedData.append("history.description", data.history);
 
+        console.log(data.files)
+
         // Separate and append files
         const images = data.files.filter((file) =>
             file.type.startsWith("image/"),
@@ -95,9 +97,9 @@ const humanService = {
         // Append newImages or images
         images.map((file) => {
             if (file?.id) {
-                transformedData.append("images", file.id);
+                transformedData.append("images", +file.id);
             } else if (file?.file?.id) {
-                transformedData.append("images", file.file.id);
+                transformedData.append("images", +file.file.id);
             } else {
                 transformedData.append("newImages", file);
                 return file;
@@ -107,9 +109,9 @@ const humanService = {
         // Append newVideos or videos
         videos.map((file) => {
             if (file?.id) {
-                transformedData.append("videos", file.id);
+                transformedData.append("videos", +file.id);
             } else if (file?.file?.id) {
-                transformedData.append("videos", file.file.id);
+                transformedData.append("videos", +file.file.id);
             } else {
                 transformedData.append("newVideos", file);
                 return file;

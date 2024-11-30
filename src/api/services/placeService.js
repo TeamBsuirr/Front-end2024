@@ -68,9 +68,9 @@ const placeService = {
         // Append newImages or images
         images.map((file) => {
             if (file?.id) {
-                transformedData.append("images", file.id);
+                transformedData.append("images", +file.id);
             } else if (file?.file?.id) {
-                transformedData.append("images", file.file.id);
+                transformedData.append("images", +file.file.id);
             } else {
                 transformedData.append("newImages", file);
                 return file;
