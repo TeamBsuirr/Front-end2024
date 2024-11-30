@@ -115,29 +115,30 @@ const humanService = {
         });
 
         // Append all image ids and video ids to transformedData
+        // Append all image ids and video ids to transformedData
         if (images.length > 0) {
             images.forEach(id => transformedData.append("images", id));
         } else {
-            transformedData.append("images",null); // Add empty array as a string
+            transformedData.append("images", []); // Add empty array as a string
         }
 
         if (videos.length > 0) {
             videos.forEach(id => transformedData.append("videos", id));
         } else {
-            transformedData.append("videos",null); // Add empty array as a string
+            transformedData.append("videos", JSON.stringify([])); // Add empty array as a string
         }
 
         // Append new images and new videos (files) to transformedData
         if (newImages.length > 0) {
             newImages.forEach(file => transformedData.append("newImages", file));
         } else {
-            transformedData.append("newImages",null); // Add empty array as a string
+            transformedData.append("newImages", JSON.stringify([])); // Add empty array as a string
         }
 
         if (newVideos.length > 0) {
             newVideos.forEach(file => transformedData.append("newVideos", file));
         } else {
-            transformedData.append("newVideos",null); // Add empty array as a string
+            transformedData.append("newVideos", JSON.stringify([])); // Add empty array as a string
         }
 
 
