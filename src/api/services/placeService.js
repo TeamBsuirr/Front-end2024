@@ -61,21 +61,37 @@ const placeService = {
         transformedData.append("coordinates.latitude", data.latitude);
         transformedData.append("coordinates.longitude", data.longitude);
 
-        const images = data.images.filter((file) =>
-            file.type.startsWith("image/"),
-        );
-        
-        // Append newImages or images
-        images.map((file) => {
-            if (file?.id) {
-                transformedData.append("images", +file.id);
-            } else if (file?.file?.id) {
-                transformedData.append("images", +file.file.id);
-            } else {
-                transformedData.append("newImages", file);
-                return file;
+        // Separate and append files
+        const images = [];
+        const newImages = [];
+
+        data.images.forEach((file) => {
+            if (file.type.startsWith("image/")) {
+                // Check if file has id or file.id
+                if (file?.id) {
+                    images.push(file.id); // Append the id as a number
+                } else if (file?.file?.id) {
+                    images.push(file.file.id); // Append the id as a number
+                } else {
+                    newImages.push(file); // Append the whole file if it doesn't have an id
+                }
             }
-        }).filter(file => file);  // Filter out undefined values if any
+        });
+
+        // Append all image ids and video ids to transformedData
+        if (images.length > 0) {
+            images.forEach(id => transformedData.append("images", id));
+        } else {
+            transformedData.append("images", JSON.stringify([])); // Add empty array as a string
+        }
+
+        // Append new images and new videos (files) to transformedData
+        if (newImages.length > 0) {
+            newImages.forEach(file => transformedData.append("newImages", file));
+        } else {
+            transformedData.append("newImages", JSON.stringify([])); // Add empty array as a string
+        }
+
 
         // Выполняем запрос, добавляя заголовок Content-Type
         return handleRequest(() =>

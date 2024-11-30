@@ -115,18 +115,33 @@ const humanService = {
         });
 
         // Append all image ids and video ids to transformedData
-        images.forEach(id => transformedData.append("images", id));
-        videos.forEach(id => transformedData.append("videos", id));
+        // Append all image ids and video ids to transformedData
+        if (images.length > 0) {
+            images.forEach(id => transformedData.append("images", id));
+        } else {
+            transformedData.append("images", JSON.stringify([])); // Add empty array as a string
+        }
+
+        if (videos.length > 0) {
+            videos.forEach(id => transformedData.append("videos", id));
+        } else {
+            transformedData.append("videos", JSON.stringify([])); // Add empty array as a string
+        }
 
         // Append new images and new videos (files) to transformedData
-        newImages.forEach(file => transformedData.append("newImages", file));
-        newVideos.forEach(file => transformedData.append("newVideos", file));
+        if (newImages.length > 0) {
+            newImages.forEach(file => transformedData.append("newImages", file));
+        } else {
+            transformedData.append("newImages", JSON.stringify([])); // Add empty array as a string
+        }
 
-        // Log the final categories
-        console.log('Images (with ids):', images);
-        console.log('New Images (without ids):', newImages);
-        console.log('Videos (with ids):', videos);
-        console.log('New Videos (without ids):', newVideos);
+        if (newVideos.length > 0) {
+            newVideos.forEach(file => transformedData.append("newVideos", file));
+        } else {
+            transformedData.append("newVideos", JSON.stringify([])); // Add empty array as a string
+        }
+
+
 
         // Append places with a flattened structure
         data.places.forEach((place, index) => {
@@ -135,6 +150,7 @@ const humanService = {
             transformedData.append(`places[${index}].dateTo`, place.dateTo);
         });
 
+        // Log the final categories
         const transformedDataObject = {};
         // Log the contents of transformedData
         for (let pair of transformedData.entries()) {
@@ -150,7 +166,7 @@ const humanService = {
         }
 
         // Log the final transformed data as a JSON object
-        console.log('Transformed Data as JSON:', JSON.stringify(transformedDataObject, null, 2));
+        console.log('Transformed Data as JSON:', transformedDataObject);
 
 
         // Выполняем запрос, добавляя заголовок Content-Type
