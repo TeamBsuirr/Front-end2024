@@ -96,18 +96,18 @@ const humanService = {
             if (file.type.startsWith("image/")) {
                 // Check if file has id or file.id
                 if (file?.id) {
-                    images.push(+file.id); // Append the id as a number
+                    images.push(file.id); // Append the id as a number
                 } else if (file?.file?.id) {
-                    images.push(+file.file.id); // Append the id as a number
+                    images.push(file.file.id); // Append the id as a number
                 } else {
                     newImages.push(file); // Append the whole file if it doesn't have an id
                 }
             } else if (file.type.startsWith("video/")) {
                 // Check if file has id or file.id
                 if (file?.id) {
-                    videos.push(+file.id); // Append the id as a number
+                    videos.push(file.id); // Append the id as a number
                 } else if (file?.file?.id) {
-                    videos.push(+file.file.id); // Append the id as a number
+                    videos.push(file.file.id); // Append the id as a number
                 } else {
                     newVideos.push(file); // Append the whole file if it doesn't have an id
                 }
