@@ -252,8 +252,8 @@ export default function NewHistory() {
                         t("errors.front-end.add-story.incorrect-file-type"),
                 });
             }
-            if (file.size > 5 * 1024 * 1024) {
-                // 5 MB
+            if (file.size > 25 * 1024 * 1024) {
+                // 25 MB
                 isValid = false;
                 notification.error({
                     message: t(
@@ -482,6 +482,7 @@ export default function NewHistory() {
                         onFileChange={handleFileChange}
                         onStoryChange={handleStoryChange}
                         value={formData.history}
+                        valueFiles={formData.files}
                     />
                 </div>
             </section>

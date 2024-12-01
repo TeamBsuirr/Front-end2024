@@ -137,6 +137,9 @@ export default function InputDescription({
                     </>
                 )}
 
+                <span style={{ "color": "#e4b474", textAlign: "end" }}>! Размер файлов не должен превышать 25мб !</span>
+
+
                 <FileUploadWithDragAndDrop
                     fileList={fileList}
                     setFileList={setFileList}
