@@ -32,7 +32,7 @@ export default function InputDescription({
         // Check if the new files differ from the current fileList
         const updatedFiles = valueFiles.map((file) => ({
             uid: file.name + "-" + file.lastModified,
-            id:file.id,
+            id: file.id,
             name: file.name,
             type: file.type,
             status: "done",
@@ -84,9 +84,9 @@ export default function InputDescription({
                     status: "done",
                     file,
                     preview:
-                    file.cameFrom === "yandex" ? file.preview :
-                        file.type?.startsWith("image/") ? URL.createObjectURL(file)
-                            : null
+                        file.cameFrom === "yandex" ? file.preview :
+                            file.type?.startsWith("image/") ? URL.createObjectURL(file)
+                                : null
                 }));
 
                 const updatedFileList = [...fileList, ...validatedFiles];
@@ -127,17 +127,22 @@ export default function InputDescription({
                     multiple
                 />
 
-                <label htmlFor="video" className="input-file">
-                    Upload Video
-                </label>
-                <input
-                    type="file"
-                    name="video"
-                    id="video"
-                    accept=".mp4,.avi,.mov,.mkv,.flv,.wmv,.webm"
-                    onChange={handleFileInputChange}
-                    multiple
-                />
+                {typesDisallowed.includes("video") ? (
+                    <></>
+                ) : (<>
+                    <label htmlFor="video" className="input-file">
+                        Upload Video
+                    </label>
+                    <input
+                        type="file"
+                        name="video"
+                        id="video"
+                        accept=".mp4,.avi,.mov,.mkv,.flv,.wmv,.webm"
+                        onChange={handleFileInputChange}
+                        multiple
+                    />
+                </>)}
+
 
                 {typesDisallowed.includes("doc") ? (
                     <></>
@@ -156,6 +161,8 @@ export default function InputDescription({
                         />
                     </>
                 )}
+
+                <span style={{"color":"#e4b474", textAlign:"end"}}>! Размер файлов не должен превышать 25мб !</span>
 
                 <FileUploadWithDragAndDrop
                     fileList={fileList}

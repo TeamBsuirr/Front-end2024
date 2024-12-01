@@ -42,7 +42,7 @@ export default function NewPlacePage() {
             const file = new File([url], `${fileName}.${fileExtension}`, {
                 type: fileType,
             });
-            console.log("file created", file)
+            // console.log("file created", file)
             file.preview = url; // Создаем preview
             file.cameFrom = "yandex";
             file.id = id
@@ -54,7 +54,6 @@ export default function NewPlacePage() {
         }
     }, []);
 
-    // function getMimeType(fileExtension) {
     //     const mimeTypes = {
     //         jpg: "image/jpeg",
     //         jpeg: "image/jpeg",
@@ -105,13 +104,13 @@ export default function NewPlacePage() {
                     bmp: "image/bmp",
                     tiff: "image/tiff",
                     svg: "image/svg+xml",
-                    mp4: "video/mp4",
-                    avi: "video/x-msvideo",
-                    mov: "video/quicktime",
-                    mkv: "video/x-matroska",
-                    flv: "video/x-flv",
-                    wmv: "video/x-ms-wmv",
-                    webm: "video/webm",
+                    // mp4: "video/mp4",
+                    // avi: "video/x-msvideo",
+                    // mov: "video/quicktime",
+                    // mkv: "video/x-matroska",
+                    // flv: "video/x-flv",
+                    // wmv: "video/x-ms-wmv",
+                    // webm: "video/webm",
                     pdf: "application/pdf",
                     doc: "application/msword",
                     docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",

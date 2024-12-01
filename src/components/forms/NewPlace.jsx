@@ -453,7 +453,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                         </div>
                     </div>
                     <InputDescription
-                        typesDisallowed={["doc"]}
+                        typesDisallowed={["doc","video"]}
                         onFileChange={handleFileChange}
                         onStoryChange={handleStoryChange}
                         valueFiles={formData.images}

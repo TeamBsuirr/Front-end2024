@@ -15,7 +15,7 @@ export default function InputForm({
     // Обработчик для text input, который фильтрует вводимые символы
     const handleTextInputChange = (e) => {
         // Регулярное выражение для разрешения букв всех указанных языков и пробелов
-        const regex = /^[\p{L}\s]*$/u;
+        const regex = /^[\p{L}\p{N}\s.,-]*$/u;
         const value = e.target.value;
 
         if (regex.test(value) || value === "") {
