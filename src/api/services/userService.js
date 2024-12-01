@@ -6,7 +6,7 @@ const userService = {
         // Сериализуем данные в FormData MIME
         const transformedData = new FormData();
         // Логируем данные перед отправкой
-        //console.log("Posting story with transformedData:", data);
+        console.log("Posting story with Data:", data);
 
         transformedData.append("name", data.name);
         transformedData.append("surname", data.surname);

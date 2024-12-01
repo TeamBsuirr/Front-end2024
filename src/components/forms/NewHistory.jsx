@@ -11,10 +11,11 @@ import Spinner from "../other/Spinner";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../other/HeaderSection";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useNavigate } from "react-router-dom";
 
 export default function NewHistory() {
     const { t } = useTranslation();
-
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: "",
         surname: "",
@@ -74,7 +75,7 @@ export default function NewHistory() {
 
         if (
             !formData.dateOfBirth ||
-            formData.dateOfBirth >= today 
+            formData.dateOfBirth >= today
         ) {
             isValid = false;
             notification.error({
@@ -82,7 +83,7 @@ export default function NewHistory() {
             });
         }
 
-        if(formData.dateOfDie){
+        if (formData.dateOfDie) {
             if (
                 formData.dateOfBirth >= formData.dateOfDie
             ) {
@@ -91,7 +92,21 @@ export default function NewHistory() {
                     message: t("errors.front-end.add-story.incorrect-dod"),
                 });
             }
-    
+
+        }
+
+        if (!formData.dateFrom || formData.dateFrom === "") {
+            isValid = false;
+            notification.error({
+                message: t("errors.front-end.add-story.incorrect-dot"),
+            });
+        }
+
+        if (!formData.dateTo || formData.dateTo === "") {
+            isValid = false;
+            notification.error({
+                message: t("errors.front-end.add-story.incorrect-dot"),
+            });
         }
 
         if (formData.dateFrom > formData.dateTo) {
@@ -303,12 +318,12 @@ export default function NewHistory() {
             // Form valid, send data to server
 
             setLoading(true);
-
+            console.log("data after validate", formData)
             userService
                 .postStory(formData)
                 .then((response) => {
                     setLoading(false);
-                    if (response.status === 201 || !response.status){
+                    if (response.status === 201 || !response.status) {
                         notification.success({
                             message: t("errors.front-end.add-story.success"),
                         });
@@ -328,6 +343,7 @@ export default function NewHistory() {
                             history: "",
                             files: [],
                         })
+                        setTimeout(()=>navigate(0), 1500)
                     }
                     return response;
                 })
