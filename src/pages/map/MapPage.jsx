@@ -6,8 +6,8 @@ import NotFound from "../../components/layout/NotFound";
 import placeService from "../../api/services/placeService";
 import MapUzniki from "../../components/other/MapUzniki";
 import { useTranslation } from "react-i18next";
-// import ButtonAdmin from "../../components/buttons/ButtonAdmin";
-// import HeaderSection from "../../components/other/HeaderSection";
+import ButtonAdmin from "../../components/buttons/ButtonAdmin";
+import HeaderSection from "../../components/other/HeaderSection";
 
 export default function MapPage({ isAdmin = false }) {
     const { t } = useTranslation();
@@ -53,9 +53,8 @@ export default function MapPage({ isAdmin = false }) {
         return <NotFound />;
     } else {
         return (
-            // <div className="section-map-page">
-            <div>
-                {/* <section className="section-map-header">
+            <div className="map-container" style={{ position: "relative", width: "100%", height: "100%" }}>
+                <section className="section-map-header">
                     <HeaderSection textFirst={t("map.header")} />
                     {isAdmin ? (
                         <div className="container-description-map-admin">
@@ -75,7 +74,7 @@ export default function MapPage({ isAdmin = false }) {
                             <span>{t("map.additional-text")}</span>
                         </div>
                     )}
-                </section> */}
+                </section>
 
                 <MapUzniki
                     arrayOfPlaceMarks={arrayOfPlaces}
