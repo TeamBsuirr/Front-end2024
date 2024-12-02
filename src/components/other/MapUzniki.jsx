@@ -5,11 +5,10 @@ import { useTranslation } from "react-i18next";
 // import HeaderSection from "./HeaderSection";
 import ButtonSubmit from "../buttons/ButtonSubmit";
 import closeSvg from "../../assets/images/icons/other/close.svg";
-import HeaderSection from "./HeaderSection";
 // import ButtonAdmin from "../buttons/ButtonAdmin";
 
 export default function MapUzniki({
-    isAdmin,
+    // isAdmin,
     arrayOfPlaceMarks,
     passedPlace,
 }) {
@@ -83,29 +82,9 @@ export default function MapUzniki({
         loadYandexMap();
     }, [arrayOfPlaceMarks]);
 
-    return <div className="section-map-page">
+    return <>
 
-        <div className="section-map-header">
-            <HeaderSection textFirst={t("map.header")} />
-            {isAdmin ? (
-                <div className="container-description-map-admin">
-                    <span>{t("map.additional-text")}</span>
-                    <div className="admin-btn-container">
-                        <ButtonAdmin
-                            isColorsInverse={false}
-                            themeColor="black"
-                            href={`/crud/place`}
-                            spanText={t("admin-panel.btn.add-camp")}
-                            size="m"
-                        />
-                    </div>
-                </div>
-            ) : (
-                <div className="container-description-map">
-                    <span>{t("map.additional-text")}</span>
-                </div>
-            )}
-        </div>
+       
 
 
         <div className="section-map">
@@ -175,5 +154,5 @@ export default function MapUzniki({
                 </div>
             </>
         )}
-    </div>;
+    </>;
 }

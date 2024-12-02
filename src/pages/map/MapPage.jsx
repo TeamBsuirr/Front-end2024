@@ -6,6 +6,8 @@ import NotFound from "../../components/layout/NotFound";
 import placeService from "../../api/services/placeService";
 import MapUzniki from "../../components/other/MapUzniki";
 import { useTranslation } from "react-i18next";
+import ButtonAdmin from "../../components/buttons/ButtonAdmin";
+import HeaderSection from "../../components/other/HeaderSection";
 
 export default function MapPage({ isAdmin = false }) {
     const { t } = useTranslation();
@@ -51,12 +53,36 @@ export default function MapPage({ isAdmin = false }) {
         return <NotFound />;
     } else {
         return (
-            <MapUzniki
-                arrayOfPlaceMarks={arrayOfPlaces}
-                passedPlace={passedPlace}
-                isAdmin={isAdmin}
-                setLoading={setLoading}
-            />
+            <div className="section-map-page">
+                <section className="section-map-header">
+                    <HeaderSection textFirst={t("map.header")} />
+                    {isAdmin ? (
+                        <div className="container-description-map-admin">
+                            <span>{t("map.additional-text")}</span>
+                            <div className="admin-btn-container">
+                                <ButtonAdmin
+                                    isColorsInverse={false}
+                                    themeColor="black"
+                                    href={`/crud/place`}
+                                    spanText={t("admin-panel.btn.add-camp")}
+                                    size="m"
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="container-description-map">
+                            <span>{t("map.additional-text")}</span>
+                        </div>
+                    )}
+                </section>
+
+                <MapUzniki
+                    arrayOfPlaceMarks={arrayOfPlaces}
+                    passedPlace={passedPlace}
+                    isAdmin={isAdmin}
+                    setLoading={setLoading}
+                />
+            </div>
         );
     }
 }
