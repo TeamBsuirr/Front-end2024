@@ -50,12 +50,37 @@ export default function MapPage() {
     } else if (!arrayOfPlaces) {
         return <NotFound />;
     } else {
-        return (
-            <MapUzniki
-                arrayOfPlaceMarks={arrayOfPlaces}
-                passedPlace={passedPlace}
-                setLoading={setLoading}
-            />
-        );
+            return (
+                <div className="map-container" style={{ width: "100%", height: "100%" }}>
+                    <section className="section-map-header">
+                        <HeaderSection textFirst={t("map.header")} />
+                        {isAdmin ? (
+                            <div className="container-description-map-admin">
+                                <span>{t("map.additional-text")}</span>
+                                <div className="admin-btn-container">
+                                    <ButtonAdmin
+                                        isColorsInverse={false}
+                                        themeColor="black"
+                                        href={`/crud/place`}
+                                        spanText={t("admin-panel.btn.add-camp")}
+                                        size="m"
+                                    />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="container-description-map">
+                                <span>{t("map.additional-text")}</span>
+                            </div>
+                        )}
+                    </section>
+    
+                    <MapUzniki
+                        arrayOfPlaceMarks={arrayOfPlaces}
+                        passedPlace={passedPlace}
+                        isAdmin={isAdmin}
+                        setLoading={setLoading}
+                    />
+                </div>
+            );
     }
 }

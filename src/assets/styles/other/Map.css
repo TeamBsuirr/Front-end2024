@@ -1,11 +1,16 @@
 .section-map-page {
-    display: flex;
-    flex: 3 1;
-    flex-direction: column;
+    /* display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr; */
     color: #1f1b16;
     width: 100%;
     box-sizing: border-box;
     padding: 50px 0px 70px;
+    background: url("../../images/DefaultBG.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+.map-container{
     background: url("../../images/DefaultBG.jpg") no-repeat center center;
     background-size: cover;
 }
