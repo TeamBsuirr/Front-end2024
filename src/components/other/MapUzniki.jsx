@@ -13,82 +13,87 @@ export default function MapUzniki({
     passedPlace,
 }) {
     const { t } = useTranslation();
-    const mapRef = useRef(null);
-    const [activePlace, setActivePlace] = useState(passedPlace);
+    const mapRef = useRef(null); // Контейнер для карты
+    const [activePlace, setActivePlace] = useState(passedPlace); // Выбранное место
+    const [isLoading, setIsLoading] = useState(true); // Состояние загрузки карты
 
-    // Обработчик клика на метку
-    const handlePlacemarkClick = useCallback((place, e) => {
-        e.stopPropagation();
-        setActivePlace(place); // Устанавливаем активное место
-    }, []);
+    // Инициализация карты
+    const initializeMap = useCallback(() => {
+        if (!mapRef.current || !window.ymaps) return;
 
-    useEffect(() => {
-        const currentMapContainer = mapRef.current;
+        const map = new window.ymaps.Map(mapRef.current, {
+            center: [53.551244, 27.668423], // Центр карты
+            zoom: 7,
+            controls: ["zoomControl", "typeSelector"], // Элементы управления
+        });
 
-        const init = () => {
-            const map = new window.ymaps.Map(currentMapContainer, {
-                center: [53.551244, 27.668423],
-                zoom: 7,
-                controls: [],
+
+        // Добавление меток
+        if (arrayOfPlaceMarks?.length) {
+            arrayOfPlaceMarks.forEach((place) => {
+                const placemark = new window.ymaps.Placemark(
+                    [place.coordinates.latitude, place.coordinates.longitude],
+                    { hintContent: place.placeName }, // Всплывающая подсказка
+                    {
+                        iconLayout: "default#image",
+                        iconImageHref: PlaceMarkIcon,
+                        iconImageSize: [30, 30],
+                        iconImageOffset: [-15, -15],
+                    }
+                );
+
+                // Событие клика на метке
+                placemark.events.add("click", () => setActivePlace(place));
+                map.geoObjects.add(placemark);
             });
+            setIsLoading(false);
+        }
 
-            if (arrayOfPlaceMarks.length > 0) {
-                arrayOfPlaceMarks.forEach((place) => {
-                    const placemark = new window.ymaps.Placemark(
-                        [
-                            place.coordinates.latitude,
-                            place.coordinates.longitude,
-                        ],
-                        {},
-                        {
-                            iconLayout: "default#image",
-                            iconImageHref: PlaceMarkIcon,
-                            iconImageSize: [30, 30],
-                            iconImageOffset: [-15, -15],
-                        }
-                    );
+        // Снимаем состояние загрузки
+        
+    }, [arrayOfPlaceMarks]);
 
-                    // Добавляем обработчики событий для меток
-                    placemark.events.add("click", (e) =>
-                        handlePlacemarkClick(place, e),
-                    );
-
-                    placemark.events
-                        .add("mouseenter", () => {
-                            placemark.options.set({
-                                iconImageSize: [50, 50],
-                                iconImageOffset: [-20, -20],
-                            });
-                        })
-                        .add("mouseleave", () => {
-                            placemark.options.set({
-                                iconImageSize: [40, 40],
-                                iconImageOffset: [-15, -15],
-                            });
-                        });
-
-                    map.geoObjects.add(placemark);
-                });
+    // Подгрузка API Яндекс.Карт
+    useEffect(() => {
+        const loadYandexMaps = () => {
+            if (window.ymaps) {
+                // Если API уже загружен
+                window.ymaps.ready(initializeMap);
+                return;
             }
-        };
 
-        const loadYandexMap = () => {
             const script = document.createElement("script");
             script.src = `https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=${process.env.REACT_APP_YANDEX_API_KEY}`;
-            script.onload = () => window.ymaps.ready(init);
+            script.onload = () => window.ymaps.ready(initializeMap);
             document.body.appendChild(script);
         };
 
-        loadYandexMap();
-    }, [arrayOfPlaceMarks]);
-
+        loadYandexMaps();
+    }, [initializeMap]);
     return <>
 
        
 
 
         <div className="section-map">
-            <div ref={mapRef} style={{ width: "1520px", height: "100vh", zIndex: "9" }} />
+        {isLoading ? (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "100vh",
+                            fontSize: "1.5rem",
+                        }}
+                    >
+                        {t("map.loading")}...
+                    </div>
+                ) : (
+                    <div
+                        ref={mapRef}
+                        style={{ width: "100%", height: "100vh", zIndex: 9 }}
+                    />
+                )}
         </div>
 
         {activePlace && (
