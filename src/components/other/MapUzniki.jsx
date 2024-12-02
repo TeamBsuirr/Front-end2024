@@ -1,13 +1,15 @@
 import { React, useCallback, useEffect, useRef, useState } from "react";
 import PlaceMarkIcon from "../../assets/images/icons/other/star.svg";
 import "../../assets/styles/other/Map.css";
- import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 // import HeaderSection from "./HeaderSection";
 import ButtonSubmit from "../buttons/ButtonSubmit";
 import closeSvg from "../../assets/images/icons/other/close.svg";
+import HeaderSection from "./HeaderSection";
 // import ButtonAdmin from "../buttons/ButtonAdmin";
 
 export default function MapUzniki({
+    isAdmin,
     arrayOfPlaceMarks,
     passedPlace,
 }) {
@@ -81,8 +83,35 @@ export default function MapUzniki({
         loadYandexMap();
     }, [arrayOfPlaceMarks]);
 
-    return <>
-        <div ref={mapRef} style={{ width: "100%", height: "500px" }} />
+    return <div className="section-map-page">
+
+        <div className="section-map-header">
+            <HeaderSection textFirst={t("map.header")} />
+            {isAdmin ? (
+                <div className="container-description-map-admin">
+                    <span>{t("map.additional-text")}</span>
+                    <div className="admin-btn-container">
+                        <ButtonAdmin
+                            isColorsInverse={false}
+                            themeColor="black"
+                            href={`/crud/place`}
+                            spanText={t("admin-panel.btn.add-camp")}
+                            size="m"
+                        />
+                    </div>
+                </div>
+            ) : (
+                <div className="container-description-map">
+                    <span>{t("map.additional-text")}</span>
+                </div>
+            )}
+        </div>
+
+
+        <div className="section-map">
+            <div ref={mapRef} style={{ width: "1520px", height: "100vh", zIndex: "9" }} />
+        </div>
+
         {activePlace && (
             <>
                 <div className="active-place">
@@ -146,5 +175,5 @@ export default function MapUzniki({
                 </div>
             </>
         )}
-    </>;
+    </div>;
 }

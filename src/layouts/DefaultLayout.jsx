@@ -93,11 +93,11 @@ export default function DefaultLayout() {
     useEffect(() => {
         const result = checkAdminStatus();
         setIsAdmin(result);
-        notification.warning({
-            message: t("errors.front-end.warning-site-not-finished"),
-            description: t("errors.front-end.warning-site-not-finished-msg"),
-            duration: 7,
-        });
+        // notification.warning({
+        //     message: t("errors.front-end.warning-site-not-finished"),
+        //     description: t("errors.front-end.warning-site-not-finished-msg"),
+        //     duration: 7,
+        // });
     }, []);
 
     // Determine the current page based on the route
