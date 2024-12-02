@@ -53,7 +53,7 @@ export default function MapPage({ isAdmin = false }) {
         return <NotFound />;
     } else {
         return (
-            <div className="map-container" style={{ position: "relative", width: "100%", height: "100%" }}>
+            <div className="map-container" style={{ width: "100%", height: "100%" }}>
                 <section className="section-map-header">
                     <HeaderSection textFirst={t("map.header")} />
                     {isAdmin ? (
