@@ -55,6 +55,9 @@ export default function MapPage() {
             <div className="map-container" style={{ width: "100%", height: "100%" }}>
                 <section className="section-map-header">
                     <HeaderSection textFirst={t("map.header")} />
+                    <div className="container-description-map">
+                        <span>{t("map.additional-text")}</span>
+                    </div>
                 </section>
 
                 <MapUzniki
