@@ -6,6 +6,7 @@ import NotFound from "../../components/layout/NotFound";
 import placeService from "../../api/services/placeService";
 import MapUzniki from "../../components/other/MapUzniki";
 import { useTranslation } from "react-i18next";
+import HeaderSection from "../../components/other/HeaderSection";
 
 export default function MapPage() {
     const { t } = useTranslation();
@@ -50,18 +51,18 @@ export default function MapPage() {
     } else if (!arrayOfPlaces) {
         return <NotFound />;
     } else {
-            return (
-                <div className="map-container" style={{ width: "100%", height: "100%" }}>
-                    <section className="section-map-header">
-                        <HeaderSection textFirst={t("map.header")} />
-                    </section>
-    
-                    <MapUzniki
-                        arrayOfPlaceMarks={arrayOfPlaces}
-                        passedPlace={passedPlace}
-                        setLoading={setLoading}
-                    />
-                </div>
-            );
+        return (
+            <div className="map-container" style={{ width: "100%", height: "100%" }}>
+                <section className="section-map-header">
+                    <HeaderSection textFirst={t("map.header")} />
+                </section>
+
+                <MapUzniki
+                    arrayOfPlaceMarks={arrayOfPlaces}
+                    passedPlace={passedPlace}
+                    setLoading={setLoading}
+                />
+            </div>
+        );
     }
 }
