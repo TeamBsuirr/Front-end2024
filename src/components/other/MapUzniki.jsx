@@ -10,7 +10,7 @@ import closeSvg from "../../assets/images/icons/other/close.svg";
 export default function MapUzniki({
     arrayOfPlaceMarks,
     passedPlace,
-}) {
+}) {123
 
     const { t } = useTranslation();
     const mapRef = useRef(null);
