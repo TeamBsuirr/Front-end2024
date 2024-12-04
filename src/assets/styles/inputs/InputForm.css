@@ -172,3 +172,36 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     top: -54px;
     left: -17px;
 }
+
+.input-form-date-container{
+    display: flex;
+    flex-direction: column;
+    gap:6px;
+}
+
+.input-form-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .input-form-label {
+    position: absolute;
+    top: -15px;
+    left: -11px;
+    font-size: 20px;
+    color: black;
+    pointer-events: none;
+    transition: all 0.2s ease-in-out;
+    border-radius: 18px;
+    padding: 1px 4px;
+    background: rgba(255, 206, 140, 0.77);
+    z-index: 4;
+  }
+  
+  .input-form:focus + .input-form-label,
+  .input-form:not(:placeholder-shown) + .input-form-label {
+    top: -16px;
+    font-size: 10px;
+    color: #000;
+  }
+  

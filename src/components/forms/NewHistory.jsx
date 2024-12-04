@@ -71,50 +71,50 @@ export default function NewHistory() {
 
         // Validate date of birth, start date and end date
 
-        const today = new Date().toISOString().split("T")[0];
+        // const today = new Date().toISOString().split("T")[0];
 
-        if (
-            !formData.dateOfBirth ||
-            formData.dateOfBirth >= today
-        ) {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dof"),
-            });
-        }
+        // if (
+        //     !formData.dateOfBirth ||
+        //     formData.dateOfBirth >= today
+        // ) {
+        //     isValid = false;
+        //     notification.error({
+        //         message: t("errors.front-end.add-story.incorrect-dof"),
+        //     });
+        // }
 
-        if (formData.dateOfDie) {
-            if (
-                formData.dateOfBirth >= formData.dateOfDie
-            ) {
-                isValid = false;
-                notification.error({
-                    message: t("errors.front-end.add-story.incorrect-dod"),
-                });
-            }
+        // if (formData.dateOfDie) {
+        //     if (
+        //         formData.dateOfBirth >= formData.dateOfDie
+        //     ) {
+        //         isValid = false;
+        //         notification.error({
+        //             message: t("errors.front-end.add-story.incorrect-dod"),
+        //         });
+        //     }
 
-        }
+        // }
 
-        if (!formData.dateFrom || formData.dateFrom === "") {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dot"),
-            });
-        }
+        // if (!formData.dateFrom || formData.dateFrom === "") {
+        //     isValid = false;
+        //     notification.error({
+        //         message: t("errors.front-end.add-story.incorrect-dot"),
+        //     });
+        // }
 
-        if (!formData.dateTo || formData.dateTo === "") {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dot"),
-            });
-        }
+        // if (!formData.dateTo || formData.dateTo === "") {
+        //     isValid = false;
+        //     notification.error({
+        //         message: t("errors.front-end.add-story.incorrect-dot"),
+        //     });
+        // }
 
-        if (formData.dateFrom > formData.dateTo) {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dot"),
-            });
-        }
+        // if (formData.dateFrom > formData.dateTo) {
+        //     isValid = false;
+        //     notification.error({
+        //         message: t("errors.front-end.add-story.incorrect-dot"),
+        //     });
+        // }
 
         // Validate place of birth and place of stay
         ["placeOfBirth", "placeOfDetention"].forEach((field) => {
