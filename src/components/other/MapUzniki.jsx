@@ -11,7 +11,7 @@ export default function MapUzniki({
     arrayOfPlaceMarks,
     passedPlace,
 }) {
-
+    // am i good?
     const { t } = useTranslation();
     const mapRef = useRef(null);
     const [activePlace, setActivePlace] = useState(passedPlace);
