@@ -41,11 +41,14 @@
 .carousel-item img {
     width: 347px;
     height: 230px;
-    object-fit: cover;
+
+    object-fit: contain;
+    background: white;
 }
 
 .carousel-item video {
     width: 347px;
     height: 230px;
     object-fit: contain;
+    background: white;
 }

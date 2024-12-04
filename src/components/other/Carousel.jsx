@@ -102,6 +102,7 @@ const Carousel = ({ images, videos=null }) => {
                             <img
                                 src={image.urlToFile}
                                 alt={`Slide ${index + 1}`}
+                                draggable="false"
                             />
                         </button>
                     </div>
@@ -124,10 +125,10 @@ const Carousel = ({ images, videos=null }) => {
                             <video
                                 src={video.urlToFile}
                                 alt={`Video Slide ${index + 1}`}
-                                style={{ width: '100%', height: 'auto' }}
                                 muted
                                 loop
                                 playsInline
+                                draggable="false"
                             />
                         </button>
                     </div>
@@ -163,7 +164,7 @@ const Carousel = ({ images, videos=null }) => {
                             Your browser does not support the video tag.
                         </video>
                         ) : (
-                            <img src={selectedObject.urlToFile} alt="Selected pic" />
+                            <img  src={selectedObject.urlToFile} alt="Selected pic" draggable="false"/>
                         )}
                     </div>
                 </div>
