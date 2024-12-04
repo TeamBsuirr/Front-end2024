@@ -87,15 +87,14 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
         }
 
         // Validate date of birth, start date and end date
-        const today = new Date().toISOString().split("T")[0];
-        if (!formData.dateOfFoundation || formData.dateOfFoundation >= today) {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dof"),
-            });
-        }
+       // const today = new Date().toISOString().split("T")[0];
+        // if (!formData.dateOfFoundation || formData.dateOfFoundation >= today) {
+        //     isValid = false;
+        //     notification.error({
+        //         message: t("errors.front-end.add-story.incorrect-dof"),
+        //     });
+        // }
 
-        // Validate countDeath (number), validate coordinates (number)
         // Validate countDeath (number)
         if (
             !formData.countDeath ||
@@ -314,7 +313,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                                 ),
                             });
 
-                            setTimeout(()=>navigate(0), 1500)
+                            setTimeout(() => navigate(0), 1500)
                         }
 
                         setLoading(false);
@@ -358,68 +357,100 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                     <div className="container-inputs-form-new-place">
                         <div className="container-inputs-form-for-inputs">
                             <div className="container-inputs-form-inputs">
-                                <InputForm
-                                    placeholder={t(
-                                        "add-camp.placeholder.camp-title",
-                                    )}
-                                    name="placeName"
-                                    id="placeName"
-                                    type="text"
-                                    onChange={handleInputChange}
-                                    value={formData.placeName}
-                                />
-                                <InputForm
-                                    placeholder={t(
-                                        "add-camp.placeholder.date-of-foundation",
-                                    )}
-                                    type="date"
-                                    id="dateOfFoundation"
-                                    name="dateOfFoundation"
-                                    max="3000-01-01"
-                                    min="1800-01-01"
-                                    onChange={handleInputChange}
-                                    value={formData.dateOfFoundation}
-                                />
-                                <InputForm
-                                    placeholder={t(
-                                        "add-camp.placeholder.number-of-deaths",
-                                    )}
-                                    type="number"
-                                    id="countDeath"
-                                    name="countDeath"
-                                    onChange={handleInputChange}
-                                    value={
-                                        formData.countDeath !== 0
-                                            ? formData.countDeath
-                                            : ""
-                                    }
-                                />
-                                <InputForm
-                                    placeholder={t(
-                                        "add-camp.placeholder.location",
-                                    )}
-                                    type="text"
-                                    id="locationDescription"
-                                    name="locationDescription"
-                                    onChange={handleInputChange}
-                                    value={formData.locationDescription}
-                                />
+                                <div className="container-input-span">
+                                    <InputForm
+                                        placeholder={t(
+                                            "add-camp.placeholder.camp-title",
+                                        )}
+                                        name="placeName"
+                                        id="placeName"
+                                        type="text"
+                                        onChange={handleInputChange}
+                                        value={formData.placeName}
+                                    />
+                                    <span>
+                                        {t("add-camp.placeholder.camp-title")}
+                                    </span>
+                                </div>
 
-                                <InputSelect
-                                    name="region"
-                                    value={formData.region}
-                                    arrayOfSelects={arrayOfRegions} // Ensure arrayOfPlaces contains objects with an `id` and `name` property
-                                    multiple={false}
-                                    onChange={handleSelectChange}
-                                    placeholder={t(
-                                        "add-camp.placeholder.location",
-                                    )}
-                                />
+                                <div className="container-input-span">
+                                    <InputForm
+                                        placeholder={t(
+                                            "add-camp.placeholder.date-of-foundation",
+                                        )}
+                                        type="date"
+                                        id="dateOfFoundation"
+                                        name="dateOfFoundation"
+                                        max="3000-01-01"
+                                        min="1800-01-01"
+                                        onChange={handleInputChange}
+                                        value={formData.dateOfFoundation}
+                                    />
+                                    <span>
+                                        {t("add-camp.placeholder.date-of-foundation")}
+                                    </span>
+                                </div>
+                                <div className="container-input-span">
+                                    <InputForm
+                                        placeholder={t(
+                                            "add-camp.placeholder.number-of-deaths",
+                                        )}
+                                        type="number"
+                                        id="countDeath"
+                                        name="countDeath"
+                                        onChange={handleInputChange}
+                                        value={
+                                            formData.countDeath !== 0
+                                                ? formData.countDeath
+                                                : ""
+                                        }
+                                    />
+                                    <span>
+                                        {t("add-camp.placeholder.number-of-deaths")}
+                                    </span>
+                                </div>
+
+                                <div className="container-input-span">
+                                    <InputForm
+                                        placeholder={t(
+                                            "add-camp.placeholder.location",
+                                        )}
+                                        type="text"
+                                        id="locationDescription"
+                                        name="locationDescription"
+                                        onChange={handleInputChange}
+                                        value={formData.locationDescription}
+                                    />
+                                    <span>
+                                        {t("add-camp.placeholder.location")}
+                                    </span>
+                                </div>
+
+                                <div className="container-input-span">
+                                    <InputSelect
+                                        name="region"
+                                        value={formData.region}
+                                        arrayOfSelects={arrayOfRegions} // Ensure arrayOfPlaces contains objects with an `id` and `name` property
+                                        multiple={false}
+                                        onChange={handleSelectChange}
+                                        placeholder={t(
+                                            "add-camp.placeholder.location",
+                                        )}
+                                    />
+
+                                    <span>
+                                        {t("add-camp.placeholder.location")}
+                                    </span>
+                                </div>
                             </div>
 
                             <div className="container-inputs-for-coordinates">
                                 <span>
-                                    {t("add-camp.placeholder.coordinates")}
+                                    {t("add-camp.placeholder.coordinates")} {t(
+                                        "add-camp.placeholder.latitude",
+                                    )} & {t(
+                                        "add-camp.placeholder.longitude",
+                                    )}
                                 </span>
                                 <div>
                                     <InputForm
@@ -446,14 +477,16 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                             </div>
                         </div>
                         <div className="container-inputs-form-for-short-descr">
+
                             <InputShortDescription
                                 onDescriptionChange={handleDescriptionChange}
                                 shortValue={formData.shortDescription}
                             />
+
                         </div>
                     </div>
                     <InputDescription
-                        typesDisallowed={["doc","video"]}
+                        typesDisallowed={["doc", "video"]}
                         onFileChange={handleFileChange}
                         onStoryChange={handleStoryChange}
                         valueFiles={formData.images}

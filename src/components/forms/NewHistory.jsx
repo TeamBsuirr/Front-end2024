@@ -71,33 +71,26 @@ export default function NewHistory() {
         });
 
         // Validate date of birth, start date and end date
-        // 1 old if
-        const today = new Date().toISOString().split("T")[0];
-        // if (!formData.dateOfBirth || formData.dateOfBirth >= today) {
+        // if (
+        //     !formData.dateOfBirth ||
+        //     formData.dateOfBirth >= today 
+        // ) {
         //     isValid = false;
-        //     notification.error({ message: t('errors.front-end.add-story.incorrect-dof') });
+        //     notification.error({
+        //         message: t("errors.front-end.add-story.incorrect-dof"),
+        //     });
         // }
-        // new 2 ifs
-        if (
-            !formData.dateOfBirth ||
-            formData.dateOfBirth >= today 
-        ) {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dof"),
-            });
-        }
-        if(formData.dateOfDie){
-            if (
-                formData.dateOfBirth >= formData.dateOfDie
-            ) {
-                isValid = false;
-                notification.error({
-                    message: t("errors.front-end.add-story.incorrect-dod"),
-                });
-            }
+        // if(formData.dateOfDie){
+        //     if (
+        //         formData.dateOfBirth >= formData.dateOfDie
+        //     ) {
+        //         isValid = false;
+        //         notification.error({
+        //             message: t("errors.front-end.add-story.incorrect-dod"),
+        //         });
+        //     }
     
-        }
+        // }
 
 
 

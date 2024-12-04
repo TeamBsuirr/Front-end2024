@@ -9,14 +9,19 @@ export default function InputShortDescription({
     const { t } = useTranslation();
 
     return (
-        <div className="story-short">
-            <textarea
-                value={shortValue}
-                name="story"
-                id="story"
-                placeholder={t("add-camp.placeholder.short-description")}
-                onChange={onDescriptionChange}
-            ></textarea>
+        <div className="container-input-span">
+            <span>
+                {t("add-camp.placeholder.short-description")}
+            </span>
+            <div className="story-short">
+                <textarea
+                    value={shortValue}
+                    name="story"
+                    id="story"
+                    placeholder={t("add-camp.placeholder.short-description")}
+                    onChange={onDescriptionChange}
+                ></textarea>
+            </div>
         </div>
     );
 }

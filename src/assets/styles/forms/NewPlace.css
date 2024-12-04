@@ -145,7 +145,7 @@
 } */
 
 .date-range {
-    width: 100%;
+    width: 150%;
     margin-top: -6px;
     display: flex;
     justify-content: flex-end;
@@ -159,37 +159,6 @@
 }
 
 .date-range input {
-    width: 40% !important;
+    width: 100% !important;
     height: 30px !important;
 }
-
-/* .story-block {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
-
-/* .story-block .data {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 22px;
-} */
-
-/* .story-block .story {
-    width: 60%;
-} */
-
-/* .container-inputs-form-new-history input,
-.container-register-form-new-history input,
-.container-register-form-new-history button,
-.container-story-form-new-history textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-} */

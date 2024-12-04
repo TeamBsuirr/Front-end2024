@@ -67,38 +67,38 @@ export default function NewHuman({
         });
 
         // Validate date of birth, start date and end date
-        const today = new Date().toISOString().split("T")[0];
-        if (
-            !formData.dateOfBirth ||
-            formData.dateOfBirth >= today
-        ) {
-            isValid = false;
-            notification.error({
-                message: t("errors.front-end.add-story.incorrect-dof"),
-            });
-        }
-        if (formData.dateOfDie) {
-            if (
-                formData.dateOfBirth >= formData.dateOfDie
-            ) {
-                isValid = false;
-                notification.error({
-                    message: t("errors.front-end.add-story.incorrect-dod"),
-                });
-            }
+        // const today = new Date().toISOString().split("T")[0];
+        // if (
+        //     !formData.dateOfBirth ||
+        //     formData.dateOfBirth >= today
+        // ) {
+        //     isValid = false;
+        //     notification.error({
+        //         message: t("errors.front-end.add-story.incorrect-dof"),
+        //     });
+        // }
+        // if (formData.dateOfDie) {
+        //     if (
+        //         formData.dateOfBirth >= formData.dateOfDie
+        //     ) {
+        //         isValid = false;
+        //         notification.error({
+        //             message: t("errors.front-end.add-story.incorrect-dod"),
+        //         });
+        //     }
 
-        }
+        // }
 
-        formData.places.forEach((place) => {
-            if (place.dateFrom > place.dateTo) {
-                isValid = false;
-                notification.error({
-                    message:
-                        t("errors.front-end.add-story.incorrect-dot") +
-                        ` (Place: ${place.place?.placeName ?? place.name})`,
-                });
-            }
-        });
+        // formData.places.forEach((place) => {
+        //     if (place.dateFrom > place.dateTo) {
+        //         isValid = false;
+        //         notification.error({
+        //             message:
+        //                 t("errors.front-end.add-story.incorrect-dot") +
+        //                 ` (Place: ${place.place?.placeName ?? place.name})`,
+        //         });
+        //     }
+        // });
 
         // Validate place of birth and place of stay
         ["placeOfBirth"].forEach((field) => {
@@ -303,7 +303,7 @@ export default function NewHuman({
         }
         if (validateInput()) {
             // Form valid, send data to server
-
+            console.log(formData)
             setLoading(true);
             if (!isUpdate) {
                 humanService
