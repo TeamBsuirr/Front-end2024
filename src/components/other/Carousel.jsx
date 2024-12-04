@@ -124,7 +124,7 @@ const Carousel = ({ images, videos = null }) => {
                             <video
                                 src={video.urlToFile}
                                 alt={`Video Slide ${index + 1}`}
-                                style={{ width: '100%', height: 'auto' }}
+                    
                                 muted
                                 loop
                                 playsInline
