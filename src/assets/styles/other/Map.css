@@ -28,6 +28,7 @@
     height: 100%;
     box-sizing: border-box;
     align-items: center;
+    padding-bottom: 5%;
 }
 
 .container-description-map {

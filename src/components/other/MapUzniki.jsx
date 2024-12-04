@@ -41,12 +41,13 @@ export default function MapUzniki({
                             place.coordinates.longitude,
                         ],
                         {},
-                        // {
-                        //     iconLayout: "default#image",
-                        //     iconImageHref: PlaceMarkIcon,
-                        //     iconImageSize: [30, 30],
-                        //     iconImageOffset: [-15, -15],
-                        // }
+                        
+                        {
+                            // iconLayout: "default#image",
+                            // iconImageHref: PlaceMarkIcon,
+                            iconImageSize: [30, 30],
+                            iconImageOffset: [-15, -15],
+                        }
                     );
 
                     // Добавляем обработчики событий для меток
