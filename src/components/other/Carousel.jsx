@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import "../../assets/styles/other/Carousel.css";
 import { useTranslation } from "react-i18next";
 
-const Carousel = ({ images, videos=null }) => {
+const Carousel = ({ images, videos = null }) => {
 
     const { t } = useTranslation();
 
@@ -45,9 +45,9 @@ const Carousel = ({ images, videos=null }) => {
 
     function openObject(index, type) {
         if (type === 'image' && images[index]) {
-            setSelectedObject({...images[index],type:"image"});
+            setSelectedObject({ ...images[index], type: "image" });
         } else if (type === 'video' && videos[index]) {
-            setSelectedObject({...videos[index],type:"video"});
+            setSelectedObject({ ...videos[index], type: "video" });
         }
     }
 
@@ -85,10 +85,10 @@ const Carousel = ({ images, videos=null }) => {
                     <div className="carousel-item" key={index}>
                         <button
                             onClick={() => {
-                                openObject(index,'image');
+                                openObject(index, 'image');
                             }}
                             onKeyDown={(e) => {
-                                if (e.key === "Enter") openObject(index,'image');
+                                if (e.key === "Enter") openObject(index, 'image');
                             }}
                             style={{
                                 background: "none",
@@ -101,6 +101,7 @@ const Carousel = ({ images, videos=null }) => {
                             <img
                                 src={image.urlToFile}
                                 alt={`Slide ${index + 1}`}
+                                draggable="false"
                             />
                         </button>
                     </div>
@@ -154,15 +155,15 @@ const Carousel = ({ images, videos=null }) => {
                     >
                         {selectedObject.type === "video" ? (
                             <video
-                            controls
-                            src={selectedObject.urlToFile}
-                            style={{ width: "100%" }}
-                        >
-                            <track kind="captions" src="" label="Video selected" />
-                            Your browser does not support the video tag.
-                        </video>
+                                controls
+                                src={selectedObject.urlToFile}
+                                draggable="false"
+                            >
+                                <track kind="captions" src="" label="Video selected" />
+                                Your browser does not support the video tag.
+                            </video>
                         ) : (
-                            <img src={selectedObject.urlToFile} alt="Selected pic" />
+                            <img src={selectedObject.urlToFile} alt="Selected pic" draggable="false" />
                         )}
                     </div>
                 </div>

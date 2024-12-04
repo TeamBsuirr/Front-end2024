@@ -10,6 +10,14 @@ html {
     flex-direction: column;
 }
 
+img {
+    pointer-events: none;
+    /* Prevents all interaction */
+    user-drag: none;
+    /* Prevents dragging for supported browsers */
+}
+
+
 .main {
     flex: 1;
     display: flex;

@@ -1,5 +1,5 @@
 import { React, useCallback, useEffect, useRef, useState } from "react";
-import PlaceMarkIcon from "../../assets/images/icons/other/star.svg";
+// import PlaceMarkIcon from "../../assets/images/icons/other/star.svg";
 import "../../assets/styles/other/Map.css";
 import { useTranslation } from "react-i18next";
 // import HeaderSection from "./HeaderSection";
@@ -41,12 +41,12 @@ export default function MapUzniki({
                             place.coordinates.longitude,
                         ],
                         {},
-                        {
-                            iconLayout: "default#image",
-                            iconImageHref: PlaceMarkIcon,
-                            iconImageSize: [30, 30],
-                            iconImageOffset: [-15, -15],
-                        }
+                        // {
+                        //     iconLayout: "default#image",
+                        //     iconImageHref: PlaceMarkIcon,
+                        //     iconImageSize: [30, 30],
+                        //     iconImageOffset: [-15, -15],
+                        // }
                     );
 
                     // Добавляем обработчики событий для меток
@@ -93,7 +93,7 @@ export default function MapUzniki({
 
 
         <div className="section-map">
-            <div ref={mapRef} style={{ width: "1520px", height: "100vh", zIndex: "9" }} />
+            <div ref={mapRef} style={{ width: "90vw", height: "80vh", zIndex: "9" }} />
         </div>
 
         {activePlace && (
