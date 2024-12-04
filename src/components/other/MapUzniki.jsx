@@ -23,7 +23,7 @@ export default function MapUzniki({
     }, []);
 
     useEffect(() => {
-        
+
         const currentMapContainer = mapRef.current;
 
         const init = () => {
@@ -41,32 +41,17 @@ export default function MapUzniki({
                             place.coordinates.longitude,
                         ],
                         {},
-                        // {
-                        //     iconLayout: "default#image",
-                        //     iconImageHref: PlaceMarkIcon,
-                        //     iconImageSize: [30, 30],
-                        //     iconImageOffset: [-15, -15],
-                        // }
+                        {
+
+                            iconImageSize: [30, 30],
+
+                        }
                     );
 
                     // Добавляем обработчики событий для меток
                     placemark.events.add("click", (e) =>
                         handlePlacemarkClick(place, e),
                     );
-
-                    placemark.events
-                        .add("mouseenter", () => {
-                            placemark.options.set({
-                                iconImageSize: [50, 50],
-                                iconImageOffset: [-20, -20],
-                            });
-                        })
-                        .add("mouseleave", () => {
-                            placemark.options.set({
-                                iconImageSize: [40, 40],
-                                iconImageOffset: [-15, -15],
-                            });
-                        });
 
                     map.geoObjects.add(placemark);
                 });
