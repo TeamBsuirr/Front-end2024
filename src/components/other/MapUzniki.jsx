@@ -39,13 +39,7 @@ export default function MapUzniki({
                         [
                             place.coordinates.latitude,
                             place.coordinates.longitude,
-                        ],
-                        {},
-                        {
-
-                            iconImageSize: [30, 30],
-
-                        }
+                        ]
                     );
 
                     // Добавляем обработчики событий для меток
@@ -69,7 +63,7 @@ export default function MapUzniki({
 
         loadYandexMap();
 
-    }, [arrayOfPlaceMarks]);
+    }, []);
 
 
     return <>
