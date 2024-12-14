@@ -171,14 +171,14 @@
 .container-result-search-result-for-filter input {
     background:
         url(../../images/icons/search/sort-list.png) calc(100% - 30px) / auto
-            70% no-repeat,
+            93% no-repeat,
         transparent;
 }
 
 .container-result-search-result-for-filter:hover input {
     background:
         url(../../images/icons/search/sort-list-hover.png) calc(100% - 30px) /
-            auto 70% no-repeat,
+            auto 93% no-repeat,
         transparent;
 }
 
@@ -188,6 +188,7 @@
     gap: 20px;
     align-content: center;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .result-container-search-result {
@@ -224,6 +225,6 @@
 }
 
 .result-container-search-result-description span {
-    font-size: 15px;
+    font-size: 18px;
     margin-top: -14px;
 }

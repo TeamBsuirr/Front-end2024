@@ -7,8 +7,21 @@ import { notification } from "antd";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../other/HeaderSection";
 import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
+import PaginationLayout from "../layout/PaginationLayout";
+import ButtonCrud from "../buttons/ButtonCrud";
+import placeService from "../../api/services/placeService";
+import humanService from "../../api/services/humanService";
 
-export default function SearchResults({ arrayFoundObjects }) {
+export default function SearchResults({
+    arrayFoundObjects,
+    currentPage,
+    isAdmin=false,
+    setLoading,
+    setCurrentPage,
+    itemsPerPage,
+    totalPages,
+    totalElements
+}) {
     const { t } = useTranslation();
     const navigate = useLocalizedNavigate();
     const searchParams = new URLSearchParams(window.location.search);
@@ -19,6 +32,8 @@ export default function SearchResults({ arrayFoundObjects }) {
         t("search.parameters.show-all"),
     );
     const [filteredObjects, setFilteredObjects] = useState(arrayFoundObjects);
+
+    console.log(filteredObjects)
 
     function clickGlobalSearchButton() {
         if (searchInputValue !== "") {
@@ -66,6 +81,65 @@ export default function SearchResults({ arrayFoundObjects }) {
         },
         [arrayFoundObjects, t],
     );
+
+    const handleDelete = async (obj) => {
+        const id = obj.id;
+        if (obj.type === "places") {
+            try {
+                setLoading(true);
+                await placeService.deletePlaceById(id);
+
+                // console.log('Admin logged in successfully');
+                notification.success({ message: t("sucess deleted place") });
+                setTimeout(window.location.reload(),500)
+                
+                // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
+            } catch (err) {
+                // Check if the error object contains a specific error response message
+                const errorMessage =
+                    err.response?.data?.message || t("delete error");
+
+                // Display an error notification with a specific or fallback message
+                notification.error({
+                    message: errorMessage,
+                });
+
+                // Log the error details for debugging
+                console.error("Error occurred during deletion:", err);
+            } finally {
+                setLoading(false);
+            }
+        } else {
+            try {
+                setLoading(true);
+                await humanService.deleteHumanById(id);
+
+                // console.log('Admin logged in successfully');
+                notification.success({ message: t("sucess deleted prisoner") });
+
+
+                setTimeout(window.location.reload(),500)
+                
+                // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
+            } catch (err) {
+                // Check if the error object contains a specific error response message
+                const errorMessage =
+                    err.response?.data?.message || t("delete error");
+
+                // Display an error notification with a specific or fallback message
+                notification.error({
+                    message: errorMessage,
+                });
+
+                // Log the error details for debugging
+                console.error("Error occurred during deletion:", err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+
+    };
 
     useEffect(() => {
         const inputs = document.querySelectorAll("#sort-arrayFoundObjects");
@@ -137,11 +211,15 @@ export default function SearchResults({ arrayFoundObjects }) {
                             onChange={(event) => {
                                 setSearchInputValue(event.target.value);
                             }}
+                            onKeyDown={(e) => {
+                                if (e.code === "Enter") clickGlobalSearchButton();
+                                if (e.code === "Delete") clickDeleteInputBtn();
+                            }}
                         />
                         <button
                             onClick={clickDeleteInputBtn}
                             onKeyDown={(e) => {
-                                if (e.key === "Enter") clickDeleteInputBtn;
+                                if (e.code === "Delete") clickDeleteInputBtn();
                             }}
                             style={{
                                 background: "none",
@@ -153,7 +231,12 @@ export default function SearchResults({ arrayFoundObjects }) {
                         >
                             <img src={xIcon} alt="delete" />
                         </button>
-                        <button onClick={clickGlobalSearchButton}>
+                        <button onClick={clickGlobalSearchButton}
+
+                            onKeyDown={(e) => {
+                                if (e.code === "Enter") clickGlobalSearchButton();
+                            }}
+                        >
                             <img src={searchIcon} alt="Search" />
                         </button>
                     </div>
@@ -161,7 +244,7 @@ export default function SearchResults({ arrayFoundObjects }) {
 
                 <div className="container-result-search-result">
                     <span>
-                        {t("search.number-of-results")} {filteredObjects.length}
+                        {t("search.number-of-results")} {totalElements}
                     </span>
 
                     <div className="container-result-search-result-for-filter">
@@ -218,10 +301,37 @@ export default function SearchResults({ arrayFoundObjects }) {
                         <div className="result-container-search-result-description">
                             <h3>{obj.header}</h3>
                             <span>{obj.description}</span>
+                            {isAdmin ? (
+                                <>
+                                    <div className="admin-btn-container-prisoners ">
+                                        <ButtonCrud
+                                            href={`/crud/${obj.type === "places" ? "place" : "human"}/${obj?.id}`}
+                                            svgType="edit"
+                                        />
+                                        <ButtonCrud
+                                            href="none"
+                                            onClick={() =>
+                                                handleDelete(obj)
+                                            }
+                                            svgType="delete"
+                                        />
+                                    </div>
+                                </>
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                 ))}
             </section>
+
+            <PaginationLayout
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalPages={totalPages}
+                totalElements={totalElements}
+            />
         </div>
     );
 }

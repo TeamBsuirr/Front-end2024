@@ -7,14 +7,23 @@ import HeaderSection from "../other/HeaderSection";
 import ButtonCrud from "../buttons/ButtonCrud";
 import searchService from "../../api/services/searchService";
 import { notification } from "antd";
+import PaginationLayout from "../layout/PaginationLayout";
 
-export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
+export default function PhotoArchive({
+    arrayOfPhotoObjects,
+    isAdmin = false,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    totalPages,
+    totalElements
+}) {
     // const navigate = useLocalizedNavigate();
     const { t } = useTranslation();
     const [selectedObject, setSelectedObject] = useState(null);
     const [photoArray, setPhotoArray] = useState(arrayOfPhotoObjects); // Храним массив фотографий
 
-    useEffect(() => {}, [photoArray]);
+    useEffect(() => { }, [photoArray]);
 
     function openImage(index) {
         if (photoArray[index]) {
@@ -160,6 +169,14 @@ export default function PhotoArchive({ arrayOfPhotoObjects, isAdmin = false }) {
                     </div>
                 )}
             </section>
+
+            <PaginationLayout
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalPages={totalPages}
+                totalElements={totalElements}
+            />
         </div>
     );
 }

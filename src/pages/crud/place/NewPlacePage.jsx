@@ -37,7 +37,7 @@ export default function NewPlacePage() {
     const [arrayOfRegions, setArrayOfRegions] = useState(null);
 
     // Function to fetch file and create File object
-    const urlToFile = useCallback(async (id, url, fileName, fileExtension, fileType) => {
+    const urlToFile = useCallback(async (id, url, fileName, fileExtension, fileType,isMain) => {
         try {
             const file = new File([url], `${fileName}.${fileExtension}`, {
                 type: fileType,
@@ -47,6 +47,7 @@ export default function NewPlacePage() {
             file.cameFrom = "yandex";
             file.id = id
             file.uid = file.name + "-" + file.lastModified;
+            file.isMain = isMain;
             return file;
         } catch (error) {
             console.error('Error fetching file:', error);
@@ -54,39 +55,7 @@ export default function NewPlacePage() {
         }
     }, []);
 
-    //     const mimeTypes = {
-    //         jpg: "image/jpeg",
-    //         jpeg: "image/jpeg",
-    //         png: "image/png",
-    //         gif: "image/gif",
-    //         bmp: "image/bmp",
-    //         tiff: "image/tiff",
-    //         svg: "image/svg+xml",
-    //         mp4: "video/mp4",
-    //         avi: "video/x-msvideo",
-    //         mov: "video/quicktime",
-    //         mkv: "video/x-matroska",
-    //         flv: "video/x-flv",
-    //         wmv: "video/x-ms-wmv",
-    //         webm: "video/webm",
-    //         pdf: "application/pdf",
-    //         doc: "application/msword",
-    //         docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    //         xls: "application/vnd.ms-excel",
-    //         xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    //         ppt: "application/vnd.ms-powerpoint",
-    //         pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    //         txt: "text/plain",
-    //         csv: "text/csv",
-    //         zip: "application/zip",
-    //         rar: "application/x-rar-compressed",
-    //     };
-    //     return (
-    //         mimeTypes[fileExtension.toLowerCase()] || "application/octet-stream"
-    //     );
-    // }
 
-    // Function to convert files from URLs to File objects
     // Function to convert files from URLs to File objects
     const convertFiles = useCallback(
         async (files) => {
@@ -134,12 +103,14 @@ export default function NewPlacePage() {
                     const fileExtension = fileObj.urlToFile.split(".").pop();
                     const fileName = `file_${fileObj.id}`;
                     const mimeType = getMimeType(fileExtension);
+                   
                     return await urlToFile(
                         fileObj.id,
                         fileObj.urlToFile,
                         fileName,
                         fileExtension,
                         mimeType,
+                        fileObj.isMain
                     );
                 }),
             );
@@ -192,6 +163,7 @@ export default function NewPlacePage() {
                         ...data,
                         images: fileObjects,
                     });
+
                     setDataLoaded(true); // Ensure that data is fully loaded
                     return data;
                 })
@@ -212,7 +184,7 @@ export default function NewPlacePage() {
         }
 
         setLoading(false); // Set loading to false after processing all data
-    }, [t, convertFiles, objectOfPlace]);
+    }, [t]);
 
     // Check if the data is loaded and has valid content
     if (loading || !dataLoaded) {

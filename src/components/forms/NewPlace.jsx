@@ -11,14 +11,14 @@ import Spinner from "../other/Spinner";
 import HeaderSection from "../other/HeaderSection";
 import placeService from "../../api/services/placeService";
 import InputSelect from "../inputs/InputSelect";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
     const { t } = useTranslation();
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
     const [formData, setFormData] = useState(objectOfPlace);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
+    //const navigate = useNavigate()       
 
     const onChangeCaptcha = (value) => {
         if (value) {
@@ -110,10 +110,10 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
         // Validate coordinates (number)
         ["latitude", "longitude"].forEach((coord) => {
             if (
-                !formData[coord] ||
-                isNaN(formData[coord]) ||
-                formData[coord] < -180 ||
-                formData[coord] > 180
+                !formData.coordinates[coord] ||
+                isNaN(formData.coordinates[coord]) ||
+                formData.coordinates[coord] < -180 ||
+                formData.coordinates[coord] > 180
             ) {
                 isValid = false;
                 notification.error({
@@ -217,15 +217,32 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(name,value)
+
         setFormData({
             ...formData,
             [name]: value,
         });
     };
 
+    const handleInputCoordinatesChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            coordinates: {
+                ...prevData.coordinates,
+                [name]: value,
+            },
+        }));
+    };
+    
+
+
     const handleFileChange = (files) => {
+
         // Ensure files are processed correctly
         const updatedFiles = Array.from(files);
+        console.log(formData,updatedFiles)
         setFormData((prevFormData) => ({
             ...prevFormData,
             images: updatedFiles,
@@ -271,7 +288,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
             // Form valid, send data to server
 
             setLoading(true);
-
+            //console.log(formData)
             if (!isUpdate) {
                 placeService
                     .postPlace(formData)
@@ -313,7 +330,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                                 ),
                             });
 
-                            setTimeout(() => navigate(0), 1500)
+                           // setTimeout(() => navigate(0), 1500)
                         }
 
                         setLoading(false);
@@ -434,7 +451,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                                         multiple={false}
                                         onChange={handleSelectChange}
                                         placeholder={t(
-                                            "add-camp.placeholder.location",
+                                            "add-camp.placeholder.region",
                                         )}
                                     />
 
@@ -460,7 +477,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                                         type="coordinates"
                                         id="latitude"
                                         name="latitude"
-                                        onChange={handleInputChange}
+                                        onChange={handleInputCoordinatesChange}
                                         value={formData.coordinates?.latitude}
                                     />
                                     <InputForm
@@ -470,7 +487,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                                         type="coordinates"
                                         id="longitude"
                                         name="longitude"
-                                        onChange={handleInputChange}
+                                        onChange={handleInputCoordinatesChange}
                                         value={formData.coordinates?.longitude}
                                     />
                                 </div>

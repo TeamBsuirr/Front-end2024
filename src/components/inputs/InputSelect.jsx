@@ -68,7 +68,8 @@ export default function InputSelect({
     }, [value]);
 
     const displayValue = () => {
-        if (multiple && Array.isArray(value)) {
+
+        if (Array.isArray(value)) {
             return value
                 .map((item) =>
                     typeof item === "object"
@@ -76,7 +77,8 @@ export default function InputSelect({
                         : item,
                 )
                 .join(", ");
-        }
+        } else if (value.centralCity)
+            return value.centralCity
         return typeof value === "object" ? value.name : value;
     };
 
@@ -96,7 +98,7 @@ export default function InputSelect({
                 <ul className="list-select">
                     {arrayOfSelects.map((selectObj, index) => {
                         const isSelected =
-                            multiple &&
+
                             Array.isArray(value) &&
                             value.some((item) => item.id === selectObj.id);
                         return (

@@ -15,83 +15,135 @@ export default function InputDescription({
 
     // Обновляем fileList при изменении valueFiles
     // useEffect(() => {
-    //     const updatedFiles = valueFiles.map((file) => {
-    //         return {
-    //             uid: file.name + '-' + file.lastModified,
-    //             name: file.name,
-    //             type: file.type,
-    //             status: 'done',
-    //             file,
-    //             preview: file.type?.startsWith('image/') ? URL.createObjectURL(file) : null,
-    //         };
-    //     });
-    //     setFileList(updatedFiles);
-    // }, [valueFiles]);
-    // Обновляем fileList при изменении valueFiles
+    //     // Check if the new files differ from the current fileList
+    //     const updatedFiles = valueFiles.map((file) => ({
+    //         uid: file.name + "-" + file.lastModified,
+    //         id: file.id,
+    //         name: file.name,
+    //         type: file.type,
+    //         status: "done",
+    //         file,
+    //         preview:
+    //             file.cameFrom === "yandex" ? file.preview :
+    //                 file.type?.startsWith("image/") ? URL.createObjectURL(file)
+    //                     : null
+
+
+    //         ,
+    //     }));
+
+    //     // Prevent unnecessary state updates by comparing existing and new files
+    //     const hasChanged = updatedFiles.some(
+    //         (newFile, index) =>
+    //             !fileList[index] || fileList[index].uid !== newFile.uid,
+    //     );
+
+    //     if (hasChanged) {
+    //         // Cleanup existing previews
+    //         fileList.forEach((file) => {
+    //             if (file.preview) {
+    //                 URL.revokeObjectURL(file.preview);
+    //             }
+    //         });
+    //         setFileList(updatedFiles);
+    //     }
+
+    //     return () => {
+    //         // Cleanup previews for the new files when component unmounts or fileList changes
+    //         updatedFiles.forEach((file) => {
+    //             if (file.preview) {
+    //                 URL.revokeObjectURL(file.preview);
+    //             }
+    //         });
+    //     };
+    // }, [valueFiles, fileList]);
+
     useEffect(() => {
-        // Check if the new files differ from the current fileList
-        const updatedFiles = valueFiles.map((file) => ({
-            uid: file.name + "-" + file.lastModified,
-            id: file.id,
-            name: file.name,
-            type: file.type,
-            status: "done",
-            file,
-            preview:
-                file.cameFrom === "yandex" ? file.preview :
-                    file.type?.startsWith("image/") ? URL.createObjectURL(file)
-                        : null
+        console.log("inside use effect descr",valueFiles)
+        // Только обновляем state, если действительно что-то изменилось
+        const updatedFiles = valueFiles.map((file) => {
+            // Проверяем, является ли файл изображением
+            let isImage;
+            if (file?.cameFrom === "yandex") {
+                isImage = file?.preview?.match(/\.(jpeg|jpg|png|gif|bmp|tiff|svg)$/i)
+            } else {
+                isImage = file?.type?.startsWith("image/");
+            }
+            return {
+                ...file,
+                preview: file?.cameFrom === "yandex"
+                    ? file.preview // Яндекс может передавать только preview
+                    : isImage
+                        ? URL.createObjectURL(file.file) // Для изображений генерируем preview
+                        : null,
+                isMain: file.isMain, // Устанавливаем флаг isMain для первого изображения
+            };
+        });
 
-
-            ,
-        }));
-
-        // Prevent unnecessary state updates by comparing existing and new files
+        // Проверка на изменения для минимизации рендеров
         const hasChanged = updatedFiles.some(
             (newFile, index) =>
-                !fileList[index] || fileList[index].uid !== newFile.uid,
+                !fileList[index] || fileList[index].uid !== newFile.uid
         );
 
         if (hasChanged) {
-            // Cleanup existing previews
+            // Очистка старых preview
             fileList.forEach((file) => {
                 if (file.preview) {
                     URL.revokeObjectURL(file.preview);
                 }
             });
-            setFileList(updatedFiles);
+
+            setFileList(updatedFiles); // Обновляем fileList
         }
 
+        console.log("inside use effect descr 2",valueFiles)
+
+
+
         return () => {
-            // Cleanup previews for the new files when component unmounts or fileList changes
             updatedFiles.forEach((file) => {
                 if (file.preview) {
                     URL.revokeObjectURL(file.preview);
                 }
             });
         };
-    }, [valueFiles, fileList]);
+    }, [valueFiles]); // Зависимость только от valueFiles
+
 
     const handleFileInputChange = useCallback(
         (event) => {
             if (event.target && event.target.files) {
                 const files = event.target.files;
                 const newFilesArray = Array.from(files);
-                const validatedFiles = newFilesArray.map((file) => ({
-                    uid: file.name + "-" + file.lastModified,
-                    name: file.name,
-                    type: file.type,
-                    status: "done",
-                    file,
-                    preview:
-                        file.cameFrom === "yandex" ? file.preview :
-                            file.type?.startsWith("image/") ? URL.createObjectURL(file)
-                                : null
-                }));
+                const validatedFiles = newFilesArray.map((file, index) => {
+                    let isImage=false;
+                    if (file?.cameFrom === "yandex") {
+                        isImage = file?.preview?.match(/\.(jpeg|jpg|png|gif|bmp|tiff|svg)$/i)
+                    } else {
+                        isImage = file?.type?.startsWith("image/");
+                    }
+
+
+                    return {
+                        uid: file.name + "-" + file.lastModified,
+                        name: file.name,
+                        type: file.type,
+                        status: "done",
+                        isMain: index === 0 && isImage,  // Устанавливаем флаг isMain для первого изображения
+                        file,
+                        preview:
+                            file.cameFrom === "yandex"
+                                ? file.preview // Яндекс может передавать только preview
+                                : isImage
+                                    ? URL.createObjectURL(file) // Для изображений генерируем preview
+                                    : null,
+                    };
+                });
 
                 const updatedFileList = [...fileList, ...validatedFiles];
                 setFileList(updatedFileList);
-                onFileChange(updatedFileList.map((f) => f.file));
+                onFileChange(updatedFileList); // Передаем весь объект файла, включая дополнительные свойства
             }
         },
         [fileList, onFileChange],
@@ -162,7 +214,7 @@ export default function InputDescription({
                     </>
                 )}
 
-                <span style={{"color":"#e4b474", textAlign:"end"}}>! Размер файлов не должен превышать 25мб !</span>
+                <span style={{ "color": "#e4b474", textAlign: "end" }}>! Размер файлов не должен превышать 25мб ! Изображение с красной единичкой - это превью, убедитесь, чтобы только одна картинка была с ним !</span>
 
                 <FileUploadWithDragAndDrop
                     fileList={fileList}

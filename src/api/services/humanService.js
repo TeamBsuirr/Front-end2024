@@ -1,22 +1,35 @@
+import { addMainImagePreview } from "../../utils/globalFunctions";
 import api from "../axiosInstance";
 import handleRequest from "../requestHelper";
 
 const humanService = {
-    getAllHumans: () => handleRequest(() => api.get("/humans")),
-    getAllHistories: () => handleRequest(() => api.get("/humans/history")),
-    getAllHistoriesForPrisonerStories: () =>
+    //getAllHumans: (page = 0, size = 15) => handleRequest(() => api.get(`/humans?page=${page}&size=${size}`)),
+    //getAllHistories: () => handleRequest(() => api.get("/humans/history")),
+    getAllHistoriesForPrisonerStories: (page = 0, size = 15) =>
         handleRequest(async () => {
-            const response = await api.get("/humans/history");
-            return transformResponseAllHistoriesForPrisonerStories(
-                response.data,
+
+            const response = await api.get(`/humans?page=${page}&size=${size}`);
+
+            const answerArrayHumans = transformResponseAllHistoriesForPrisonerStories(
+                response.data.content
             );
+
+            return {
+                data: {
+                    histories: answerArrayHumans.data.histories,
+                    totalElements: response.data.totalElements,
+                    totalPages: response.data.totalPages,
+                }
+
+            }
+
         }),
     getHumanById: (id) => handleRequest(() => api.get(`/humans/${id}`)),
     getHumanByIdForPostHuman: (id) =>
         handleRequest(async () => {
             const response = await api.get(`/humans/${id}`);
             return {
-                data: transformResponseAHumanForMapForPostHuman(response.data),
+                data: transformResponseAHumanForMapForPostHuman(response.data)
             };
         }),
     // createHuman: (data) => handleRequest(() => api.post('/humans', data)),
@@ -45,13 +58,22 @@ const humanService = {
         );
 
         // Append images
-        images.forEach((file) => {
-            transformedData.append("images", file);
+        images.forEach((file, index) => {
+            // transformedData.append("images", file);
+
+            // Добавляем файл
+            transformedData.append(`images[${index}].img`, file.file);
+            // Добавляем флаг isMain для каждого изображения
+            transformedData.append(`images[${index}].isMain`, file.isMain || false);
         });
 
+        console.log(videos)
         // Append videos
         videos.forEach((file) => {
-            transformedData.append("videos", file);
+            transformedData.append("videos", file.file);
+
+            // Добавляем файл
+            //transformedData.append(`videos[${index}]`, file.file);
         });
 
         // Append places with a flattened structure
@@ -93,31 +115,75 @@ const humanService = {
         const newVideos = [];
 
         data.files.forEach((file) => {
-            if (file.type.startsWith("image/")) {
-                // Check if file has id or file.id
-                if (file?.id) {
-                    images.push(file.id); // Append the id as a number
-                } else if (file?.file?.id) {
-                    images.push(file.file.id); // Append the id as a number
+
+            let fileType;
+
+            // Проверка для Yandex-источников
+            if (file.cameFrom === "yandex") {
+                const preview = file?.preview;
+
+                if (preview) {
+                    // Проверяем, является ли файл изображением
+                    if (preview.match(/\.(jpeg|jpg|png|gif|bmp|tiff|svg)$/i)) {
+                        fileType = "image/jpeg";  // Присваиваем универсальный тип для изображений
+                    }
+                    // Проверяем, является ли файл видео
+                    else if (preview.match(/\.(mp4|avi|mov|mkv)$/i)) {
+                        fileType = "video/mp4";  // Присваиваем универсальный тип для видео
+                    } else {
+                        fileType = undefined;  // Для всех других типов оставляем неопределенным
+                    }
                 } else {
-                    newImages.push(file); // Append the whole file if it doesn't have an id
+                    fileType = undefined;
                 }
-            } else if (file.type.startsWith("video/")) {
-                // Check if file has id or file.id
+            }
+            else {
+                fileType = file.type || (file?.file?.type);  // Определяем тип по умолчанию
+            }
+
+            // Обрабатываем файлы по типам
+            if (fileType && fileType.startsWith("image/")) {
+                if (file?.id) {
+                    // Для существующих изображений, добавляем только ID
+                    images.push({
+                        id: file.id,
+                        isMain: file.isMain || false, // Присваиваем флаг isMain
+                    });
+
+                } else if (file?.file?.id) {
+                    // Для существующих файлов, у которых есть id
+                    images.push({
+                        id: file.file.id,
+                        isMain: file.isMain || false,
+                    });
+                } else {
+                    // Обрабатываем новые изображения
+                    newImages.push({
+                        file: file.file, // Сохраняем сам файл
+                        isMain: file.isMain || false, // Присваиваем флаг isMain
+                    });
+                }
+            } else if (fileType && fileType.startsWith("video/")) {
                 if (file?.id) {
                     videos.push(file.id); // Append the id as a number
                 } else if (file?.file?.id) {
                     videos.push(file.file.id); // Append the id as a number
                 } else {
-                    newVideos.push(file); // Append the whole file if it doesn't have an id
+                    newVideos.push(file.file); // Append the whole file if it doesn't have an id
                 }
             }
+
+
         });
 
-        // Append all image ids and video ids to transformedData
+        console.log(images, videos, newImages)
         // Append all image ids and video ids to transformedData
         if (images.length > 0) {
-            images.forEach(id => transformedData.append("images", id));
+            images.forEach((image, index) => {
+                transformedData.append(`images[${index}].id`, image.id);
+                // Добавляем флаг isMain для каждого изображения
+                transformedData.append(`images[${index}].isMain`, image.isMain);
+            });
         } else {
             transformedData.append("images", images); // Add empty array as a string
         }
@@ -129,7 +195,12 @@ const humanService = {
         }
 
         // Append new images and new videos (files) to transformedData
-        newImages.forEach(file => transformedData.append("newImages", file));
+        if (newImages.length > 0) {
+            newImages.forEach((file, index) => {
+                transformedData.append(`newImages[${index}].img`, file.file); // Добавляем сам файл
+                transformedData.append(`newImages[${index}].isMain`, file.isMain); // Добавляем флаг isMain
+            });
+        } 
         newVideos.forEach(file => transformedData.append("newVideos", file));
 
 
@@ -209,44 +280,36 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
 const transformResponseAllHistoriesForPrisonerStories = (data) => {
     // Трансформировать данные ответа перед передачей их дальше
     // Инициализируем Set для уникальных мест и годов
-    const uniquePlaces = new Set();
-    const uniqueYears = new Set();
+    let transformedData;
 
-    const transformedData = data.map((obj) => {
-        // Разделяем описание на слова, берем первые 15 и объединяем их обратно в строку
-        const shortDescription = obj.history.description
-            .split(" ")
-            .slice(0, 16)
-            .join(" ");
+    if (data.length !== 0) {
+        transformedData = data.map((obj) => {
 
-        // Собираем места и годы из obj.places
-        const places = obj.places.map((placeObj) => placeObj.place.placeName);
-        const years = obj.places.flatMap((place) => {
-            const yearFrom = place.dateFrom.split("-")[0];
-            const yearTo = place.dateTo.split("-")[0];
-            return [yearFrom, yearTo];
+            // Разделяем описание на слова, берем первые 15 и объединяем их обратно в строку
+            const shortDescription = obj.history.description
+                .split(" ")
+                .slice(0, 16)
+                .join(" ");
+
+            // Выбираем preview
+            const transformedObject = addMainImagePreview(obj)
+
+            return {
+                id: transformedObject.id,
+                img: transformedObject.previewImg,
+                header: `${transformedObject.surname} ${transformedObject.name} ${transformedObject.patronymic}`,
+                description: shortDescription,
+            };
         });
+    } else {
+        return [];
+    }
 
-        // Добавляем места и годы в Set для уникальных значений
-        places.forEach((place) => uniquePlaces.add(place));
-        years.forEach((year) => uniqueYears.add(year));
-
-        return {
-            id: obj.id,
-            img: obj.images[0]?.urlToFile || "",
-            header: `${obj.surname} ${obj.name} ${obj.patronymic}`,
-            description: shortDescription,
-            years: years,
-            places: places,
-        };
-    });
 
     // Создаем окончательный объект с полями data, places и years
     const returnData = {
         data: {
             histories: transformedData,
-            places: Array.from(uniquePlaces).sort(),
-            years: Array.from(uniqueYears).sort((a, b) => a - b),
         },
     };
 

@@ -6,6 +6,7 @@ import humanService from "../../../api/services/humanService";
 import { notification } from "antd";
 import NotFound from "../../../components/layout/NotFound";
 import { useTranslation } from "react-i18next";
+import { addMainImagePreview } from "../../../utils/globalFunctions";
 
 export default function PrisonerPage({ isAdmin = false }) {
     const { t } = useTranslation();
@@ -31,7 +32,8 @@ export default function PrisonerPage({ isAdmin = false }) {
         humanService
             .getHumanById(idOfPrisoner)
             .then((data) => {
-                setObjectOfPrisoners(data);
+        
+                setObjectOfPrisoners(addMainImagePreview(data));
                 setLoading(false);
                 return data;
             })

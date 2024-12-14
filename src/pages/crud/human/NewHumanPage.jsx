@@ -28,7 +28,7 @@ export default function NewHumanPage() {
     const [isUpdate, setIsUpdate] = useState(false);
 
     // Function to fetch file and create File object
-    const urlToFile = useCallback(async (id, url, fileName, fileExtension, fileType) => {
+    const urlToFile = useCallback(async (id, url, fileName, fileExtension, fileType,isMain) => {
         try {
             //console.log("before fetch of file", url, fileName, fileExtension, fileType)
             // const response = await fetch(url, { mode: 'cors' }); // Убедитесь, что сервер поддерживает CORS
@@ -50,6 +50,7 @@ export default function NewHumanPage() {
             file.cameFrom = "yandex";
             file.id = id
             file.uid= file.name + "-" + file.lastModified;
+            file.isMain = isMain;
             return file;
         } catch (error) {
             console.error('Error fetching file:', error);
@@ -107,7 +108,8 @@ export default function NewHumanPage() {
                     fileObj.urlToFile,
                     fileName,
                     fileExtension,
-                    mimeType
+                    mimeType,
+                    fileObj.isMain
                 );
             })
         );

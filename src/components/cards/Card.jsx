@@ -31,7 +31,7 @@ export default function Card({
             await humanService.deleteHumanById(id);
 
             // console.log('Admin logged in successfully');
-            notification.success({ message: t("sucess deleted user") });
+            notification.success({ message: t("sucess deleted prisoner  ") });
 
             setTimeout(() => navigate("/prisoners"), 1000);
             // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
@@ -47,6 +47,8 @@ export default function Card({
 
             // Log the error details for debugging
             console.error("Error occurred during deletion:", err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -56,7 +58,7 @@ export default function Card({
                 <div className="container-prisoner-portrait">
                     <img
                         className="img-prisoner-portrait"
-                        src={objectOfPrisoners.images[0].urlToFile}
+                        src={objectOfPrisoners.previewImg}
                         alt="portrait of a prisoner"
                     ></img>
                 </div>

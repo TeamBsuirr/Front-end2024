@@ -54,7 +54,7 @@ export default function CardPlace({
                 <div className="container-prisoner-portrait">
                     <img
                         className="img-prisoner-portrait"
-                        src={objectOfPlace.images[0].urlToFile}
+                        src={objectOfPlace.previewImg}
                         alt="portrait of a prisoner"
                     ></img>
                 </div>

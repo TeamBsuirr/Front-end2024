@@ -7,13 +7,21 @@ import { notification } from "antd";
 import NotFound from "../../components/layout/NotFound";
 import { useTranslation } from "react-i18next";
 
-export default function SearchResultPage() {
+export default function SearchResultPage({ isAdmin = false }) {
     const { t } = useTranslation();
     const [humans, setHumans] = useState(null);
     const [places, setPlaces] = useState(null);
     const [arrayFoundObjects, setArrayFoundObjects] = useState([]);
     const [searchString, setSearchString] = useState("");
     const [loading, setLoading] = useState(true);
+
+    const [currentPage, setCurrentPage] = useState(0);  // Текущая страница
+
+    const [itemsPerPage, setItemsPerPage] = useState(15); // Количество элементов на странице
+    const [totalElements, setTotalElements] = useState(15); // Количество элементов на странице
+    const [totalPages, setTotalPages] = useState(1); // Количество элементов на странице
+
+
 
     useEffect(() => {
         setLoading(true);
@@ -39,9 +47,9 @@ export default function SearchResultPage() {
         }
 
         searchService
-            .getGlobalSearch(urlParamsString)
+            .getGlobalSearch(urlParamsString, currentPage, 15)
             .then((data) => {
-                //console.log(data);
+                console.log(data);
 
                 setHumans(data.humans);
                 setPlaces(data.places);
@@ -49,10 +57,11 @@ export default function SearchResultPage() {
                 const humansFormatted = data.humans.map((human) => ({
                     id: human?.id,
                     type: "humans",
-                    img:
-                        human.images && human.images.length > 0
-                            ? human.images[0].urlToFile
-                            : "",
+                    // img:
+                    //     human.images && human.images.length > 0
+                    //         ? human.images[0].urlToFile
+                    //         : "",
+                    img: human.previewImg,
                     header: `${human.surname} ${human.name} ${human.patronymic}`,
                     description: human.history?.description
                         .split(" ")
@@ -63,10 +72,11 @@ export default function SearchResultPage() {
                 const placesFormatted = data.places.map((place) => ({
                     id: place?.id,
                     type: "places",
-                    img:
-                        place.images && place.images.length > 0
-                            ? place.images[0].urlToFile
-                            : "",
+                    // img:
+                    //     place.images && place.images.length > 0
+                    //         ? place.images[0].urlToFile
+                    //         : "",
+                    img: place.previewImg,
                     header: place.placeName,
                     description: place.history?.description
                         .split(" ")
@@ -81,6 +91,26 @@ export default function SearchResultPage() {
                     ...placesFormatted,
                 ];
                 setArrayFoundObjects(combinedResults);
+
+
+                // пагинация
+
+               
+
+
+                // Защита от undefined и других некорректных значений
+                const humansTotalElements = data.
+                totalElementsHumans || 0;
+                const placesTotalElements = data.totalElementsPlaces || 0;
+
+                // Обновляем totalElements и totalPages
+                const totalElementsCombined = humansTotalElements + placesTotalElements;
+                const totalPagesCombined = totalElementsCombined > 0 ? Math.ceil(totalElementsCombined / 15) : 1;
+
+                // Устанавливаем значения
+                setTotalElements(totalElementsCombined);
+                setTotalPages(totalPagesCombined);
+                setItemsPerPage((currentPage * 15) + (combinedResults).length)
 
                 //console.log(arrayFoundObjects)
 
@@ -99,7 +129,7 @@ export default function SearchResultPage() {
                 setLoading(false);
                 throw error;
             });
-    }, [t]);
+    }, [t, currentPage, setCurrentPage]);
 
     if (loading) {
         return <PageTemplate content={<Spinner size="large" />} />;
@@ -110,6 +140,17 @@ export default function SearchResultPage() {
     ) {
         return <NotFound />;
     } else {
-        return <SearchResults arrayFoundObjects={arrayFoundObjects} />;
+        return <SearchResults
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setLoading={setLoading}
+            isAdmin={isAdmin}
+
+            itemsPerPage={itemsPerPage}
+            totalPages={totalPages}
+            totalElements={totalElements}
+
+            arrayFoundObjects={arrayFoundObjects}
+        />;
     }
 }

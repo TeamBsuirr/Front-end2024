@@ -13,14 +13,24 @@ export default function PhotoArchivePage({ isAdmin = false }) {
     const { t } = useTranslation();
     const [arrayOfPhotoObjects, setArrayOfPhotoObjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(0);  // Текущая страница
+    const [itemsPerPage, setItemsPerPage] = useState(15); // Количество элементов на странице
+    const [totalElements, setTotalElements] = useState(15); // Количество элементов на странице
+    const [totalPages, setTotalPages] = useState(1); // Количество элементов на странице
 
     useEffect(() => {
         setLoading(true);
         searchService
-            .getAllPhotos()
+            .getAllPhotos(currentPage, 15)
             .then((data) => {
-                //console.log(data);
-                setArrayOfPhotoObjects(data);
+
+                setArrayOfPhotoObjects(data.data);
+
+                // пагинация
+                setTotalElements(data.totalElements)
+                setTotalPages(data.totalPages)
+                setItemsPerPage((currentPage * 15) + (data.data).length)
+
 
                 setLoading(false);
                 return data;
@@ -39,7 +49,7 @@ export default function PhotoArchivePage({ isAdmin = false }) {
                 setLoading(false);
                 throw error;
             });
-    }, [t]);
+    }, [t, currentPage, setCurrentPage]);
 
     if (loading) {
         return <PageTemplate content={<Spinner size="large" />} />;
@@ -50,6 +60,11 @@ export default function PhotoArchivePage({ isAdmin = false }) {
             <PhotoArchive
                 arrayOfPhotoObjects={arrayOfPhotoObjects}
                 isAdmin={isAdmin}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalElements={totalElements}
+                totalPages={totalPages}
             />
         );
     }

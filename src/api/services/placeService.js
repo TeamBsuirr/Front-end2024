@@ -1,23 +1,25 @@
 import api from "../axiosInstance";
 import handleRequest from "../requestHelper";
+import { addMainImagePreview } from "../../utils/globalFunctions";
 
 const placeService = {
     getPlaceById: (id) => handleRequest(() => api.get(`/places/${id}`)),
     getAllPlaces: () =>
         handleRequest(async () => {
-            const response = await api.get(`/places`);
-            return transformResponseAllPlacesForMap(response.data);
+            const response = await api.get(`/places?page=0&size=100`);
+            return transformResponseAllPlacesForMap(response.data.content);
         }),
+    getAllYearsAndPlaces: () => handleRequest(() => api.get(`/places/data?page=0&size=100`)),
     getAllPlacesForPostHuman: () =>
         handleRequest(async () => {
-            const response = await api.get(`/places`);
-            return transformResponseAllPlacesForMapForPostHuman(response.data);
+            const response = await api.get(`/places?page=0&size=100`);
+            return transformResponseAllPlacesForMapForPostHuman(response.data.content);
         }),
     postPlace: (data) => {
         // Сериализуем данные в FormData MIME
         const transformedData = new FormData();
         // Логируем данные перед отправкой
-        //console.log("Posting story with transformedData:", data);
+        console.log("Posting story with transformedData:", data);
 
         transformedData.append("placeName", data.placeName);
         transformedData.append("countDeath", data.countDeath);
@@ -27,15 +29,31 @@ const placeService = {
         transformedData.append("dateOfFoundation", data.dateOfFoundation);
         transformedData.append("locationDescription", data.locationDescription);
         transformedData.append("shortDescription", data.shortDescription);
-        transformedData.append("coordinates.latitude", data.latitude);
-        transformedData.append("coordinates.longitude", data.longitude);
 
-        data.images.forEach((file) => {
-            transformedData.append("images", file);
+        // Преобразуем координаты в числа (double)
+        const latitude = parseFloat(data.coordinates.latitude);
+        const longitude = parseFloat(data.coordinates.longitude);
+        transformedData.append("coordinates.latitude", latitude);
+        transformedData.append("coordinates.longitude", longitude);
+
+        // Добавляем изображения в FormData
+        data.images.forEach((file, index) => {
+            // Добавляем файл
+            transformedData.append(`images[${index}].img`, file.file);
+            // Добавляем флаг isMain для каждого изображения
+            transformedData.append(`images[${index}].isMain`, file.isMain || false);
         });
 
         // Логируем данные перед отправкой
-        //console.log("Posting place with transformedData:", transformedData);
+        // console.log("Logging FormData contents:");
+        // transformedData.forEach((value, key) => {
+        //     // Выводим ключ и значение в консоль
+        //     if (value instanceof File) {
+        //         console.log(`${key}: [File] ${value.name}`);
+        //     } else {
+        //         console.log(`${key}: ${value}`);
+        //     }
+        // });
 
         // Выполняем запрос, добавляя заголовок Content-Type
         return handleRequest(() =>
@@ -58,35 +76,76 @@ const placeService = {
         transformedData.append("dateOfFoundation", data.dateOfFoundation);
         transformedData.append("locationDescription", data.locationDescription);
         transformedData.append("shortDescription", data.shortDescription);
-        transformedData.append("coordinates.latitude", data.latitude);
-        transformedData.append("coordinates.longitude", data.longitude);
+
+
+        const latitude = parseFloat(data.coordinates.latitude);
+        const longitude = parseFloat(data.coordinates.longitude);
+        transformedData.append("coordinates.latitude", latitude);
+        transformedData.append("coordinates.longitude", longitude);
+
 
         // Separate and append files
         const images = [];
         const newImages = [];
 
         data.images.forEach((file) => {
-            if (file.type.startsWith("image/")) {
-                // Check if file has id or file.id
-                if (file?.id) {
-                    images.push(file.id); // Append the id as a number
-                } else if (file?.file?.id) {
-                    images.push(file.file.id); // Append the id as a number
-                } else {
-                    newImages.push(file); // Append the whole file if it doesn't have an id
-                }
+
+            // Обрабатываем существующие изображения
+            if (file.id) {
+                // Для существующих изображений, добавляем только ID
+                images.push({
+                    id: file.id,
+                    isMain: file.isMain || false, // Присваиваем флаг isMain
+                });
+            } else if (file.file?.id) {
+                // Для существующих файлов, у которых есть id
+                images.push({
+                    id: file.file.id,
+                    isMain: file.isMain || false,
+                });
+            } else {
+                // Обрабатываем новые изображения
+                newImages.push({
+                    file:file.file, // Сохраняем сам файл
+                    isMain: file.isMain || false, // Присваиваем флаг isMain
+                });
             }
+
         });
 
-        // Append all image ids and video ids to transformedData
+        // Добавляем существующие изображения (id)
         if (images.length > 0) {
-            images.forEach(id => transformedData.append("images", id));
-        } else {
-            transformedData.append("images", images); // Add empty array as a string
+            images.forEach((image, index) => {
+                transformedData.append(`images[${index}].id`, image.id);
+                // Добавляем флаг isMain для каждого изображения
+                transformedData.append(`images[${index}].isMain`, image.isMain );
+            });
+        }
+        // Добавляем новые изображения (files)
+        if (newImages.length > 0) {
+            newImages.forEach((file, index) => {
+                transformedData.append(`newImages[${index}].img`, file.file); // Добавляем сам файл
+                transformedData.append(`newImages[${index}].isMain`, file.isMain); // Добавляем флаг isMain
+            });
         }
 
-        // Append new images and new videos (files) to transformedData
-        newImages.forEach(file => transformedData.append("newImages", file));
+        // Логируем данные перед отправкой
+        const transformedDataObject = {};
+        // Log the contents of transformedData
+        for (let pair of transformedData.entries()) {
+            const key = pair[0];
+            const value = pair[1];
+
+            // Check if the value is a File object and handle it accordingly
+            if (value instanceof File) {
+                transformedDataObject[key] = `File: ${value.name}`;  // or any other info about the file you want to log
+            } else {
+                transformedDataObject[key] = value;
+            }
+        }
+
+        // Log the final transformed data as a JSON object
+        console.log('Transformed Data as JSON:', transformedDataObject);
 
 
 
@@ -119,8 +178,9 @@ const placeService = {
     },
     getAllRegions: () =>
         handleRequest(async () => {
-            const response = await api.get(`/regions`);
-            return transformResponseAllRegionsForMapForPostPlace(response.data);
+            const response = await api.get(`/regions?page=0&size=100`);
+            console.log(response.data)
+            return transformResponseAllRegionsForMapForPostPlace(response.data.content);
         }),
 
     deleteRegionById: (id) => handleRequest(() => api.delete(`/regions/${id}`)),
@@ -165,16 +225,16 @@ const transformResponseAllPlacesForMapForPostHuman = (data) => {
 const transformResponseAllPlacesForMap = (data) => {
     //console.log(data);
     const transformedData = data.map((obj) => {
+
+        const transformedObj = addMainImagePreview(obj);
+        //console.log(transformedObj)
         return {
-            id: obj.id,
-            placeName: obj.placeName,
-            locationDescription:
-                obj.locationDescription ?? "описание не определено",
-            shortDescription: obj.shortDescription ?? "описание Тростенец",
-            coordinates: obj.coordinates,
-            previewImg:
-                obj.images[0].urlToFile ??
-                "https://uzniki.storage.yandexcloud.net/1721029769100_zhimanov-trostenecz.jpg",
+            id: transformedObj.id,
+            placeName: transformedObj.placeName,
+            locationDescription: transformedObj.locationDescription ?? "описание не определено",
+            shortDescription: transformedObj.shortDescription ?? "описание Тростенец",
+            coordinates: transformedObj.coordinates,
+            previewImg: transformedObj.previewImg,
         };
     });
 
@@ -186,5 +246,6 @@ const transformResponseAllPlacesForMap = (data) => {
     // console.log("returnData in transformResponse", returnData);
     return returnData;
 };
+
 
 export default placeService;

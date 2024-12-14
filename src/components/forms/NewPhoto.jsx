@@ -211,7 +211,7 @@ export default function NewPhoto({ objectOfPhoto, isUpdate }) {
                             });
                             setTimeout(()=>navigate(0), 1500)
                         }
-                            
+                        setLoading(false);
                         return response;
                     })
                     .catch((error) => {

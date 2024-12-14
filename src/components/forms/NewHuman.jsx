@@ -11,7 +11,7 @@ import HeaderSection from "../other/HeaderSection";
 import ReCAPTCHA from "react-google-recaptcha";
 import humanService from "../../api/services/humanService";
 import InputSelect from "../inputs/InputSelect";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export default function NewHuman({
     arrayOfPlaces,
@@ -20,7 +20,7 @@ export default function NewHuman({
 }) {
     const { t } = useTranslation();
     const [formData, setFormData] = useState(objectOfPrisoners);
-    const navigate = useNavigate()
+    //const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [isCaptchaValid, setIsCaptchaValid] = useState(false); // Новое состояние для капчи
 
@@ -180,19 +180,19 @@ export default function NewHuman({
             "video/x-ms-wmv",
             "video/webm",
         ];
-        const allowedDocumentTypes = [
-            "application/pdf",
-            "application/msword",
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "application/vnd.ms-excel",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "application/vnd.ms-powerpoint",
-            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-            "text/plain",
-            "text/csv",
-            "application/zip",
-            "application/x-rar-compressed",
-        ];
+        // const allowedDocumentTypes = [
+        //     "application/pdf",
+        //     "application/msword",
+        //     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        //     "application/vnd.ms-excel",
+        //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        //     "application/vnd.ms-powerpoint",
+        //     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        //     "text/plain",
+        //     "text/csv",
+        //     "application/zip",
+        //     "application/x-rar-compressed",
+        // ];
         const disallowedTypes = [
             "application/x-javascript",
             "application/x-php",
@@ -207,41 +207,46 @@ export default function NewHuman({
 
         formData.files.forEach((file) => {
             const fileType = file.type;
-            if (disallowedTypes.includes(fileType)) {
-                isValid = false;
-                notification.error({
-                    message:
-                        t("errors.front-end.add-story.type-file") +
-                        " " +
-                        fileType +
-                        " " +
-                        t("errors.front-end.add-story.incorrect-file-type"),
-                });
+
+            if (file.cameFrom !== "yandex") {
+
+                if (disallowedTypes.includes(fileType)) {
+                    isValid = false;
+                    notification.error({
+                        message:
+                            t("errors.front-end.add-story.type-file") +
+                            " " +
+                            fileType +
+                            " " +
+                            t("errors.front-end.add-story.incorrect-file-type"),
+                    });
+                }
+                if (
+                    !allowedImageTypes.includes(fileType) &&
+                    !allowedVideoTypes.includes(fileType)
+                    // !allowedDocumentTypes.includes(fileType)
+                ) {
+                    isValid = false;
+                    notification.error({
+                        message:
+                            t("errors.front-end.add-story.type-file") +
+                            " " +
+                            fileType +
+                            " " +
+                            t("errors.front-end.add-story.incorrect-file-type"),
+                    });
+                }
+                if (file.size > 100 * 1024 * 1024) {
+                    // 100 MB
+                    isValid = false;
+                    notification.error({
+                        message: t(
+                            "errors.front-end.add-story.incorrect-file-size",
+                        ),
+                    });
+                }
             }
-            if (
-                !allowedImageTypes.includes(fileType) &&
-                !allowedVideoTypes.includes(fileType) &&
-                !allowedDocumentTypes.includes(fileType)
-            ) {
-                isValid = false;
-                notification.error({
-                    message:
-                        t("errors.front-end.add-story.type-file") +
-                        " " +
-                        fileType +
-                        " " +
-                        t("errors.front-end.add-story.incorrect-file-type"),
-                });
-            }
-            if (file.size > 100 * 1024 * 1024) {
-                // 100 MB
-                isValid = false;
-                notification.error({
-                    message: t(
-                        "errors.front-end.add-story.incorrect-file-size",
-                    ),
-                });
-            }
+
         });
 
         return isValid;
@@ -351,11 +356,11 @@ export default function NewHuman({
                                 ),
                             });
                             // refresh
-                            setTimeout(()=>navigate(0), 1500)
+                            //setTimeout(()=>navigate(0), 1500)
 
 
                         }
-
+                        setLoading(false);
                         return response;
                     })
                     .catch((error) => {

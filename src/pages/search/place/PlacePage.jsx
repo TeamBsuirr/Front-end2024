@@ -6,6 +6,7 @@ import NotFound from "../../../components/layout/NotFound";
 import placeService from "../../../api/services/placeService";
 import CardPlace from "../../../components/cards/CardPlace";
 import { useTranslation } from "react-i18next";
+import { addMainImagePreview } from "../../../utils/globalFunctions";
 
 export default function PlacePage({ isAdmin = false }) {
     const { t } = useTranslation();
@@ -29,7 +30,7 @@ export default function PlacePage({ isAdmin = false }) {
         placeService
             .getPlaceById(idOfPlace)
             .then((data) => {
-                setobjectOfPlace(data);
+                setobjectOfPlace(addMainImagePreview(data));
                 setLoading(false);
                 return data;
             })

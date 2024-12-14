@@ -10,8 +10,11 @@ const handleRequest = async (request) => {
         }
 
         const response = await request();
-        //console.log("Request successful:", response); // Преобразованные данные
-        return response.data;
+        console.log("Request successful:", response); // Преобразованные данные
+        if(response.data.content)
+            return response.data.content;
+        else
+            return response.data;
     } catch (error) {
         console.error("Error fetching data:", error);
         if (error.response) {

@@ -6,6 +6,7 @@ import Spinner from "../../components/other/Spinner";
 import NotFound from "../../components/layout/NotFound";
 import { notification } from "antd";
 import { useTranslation } from "react-i18next";
+import placeService from "../../api/services/placeService";
 
 export default function PrisonerStories({ isAdmin = false }) {
     const { t } = useTranslation();
@@ -13,18 +14,28 @@ export default function PrisonerStories({ isAdmin = false }) {
     const [places, setPlaces] = useState([]);
     const [years, setYears] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(0);  // Текущая страница
+    const [itemsPerPage, setItemsPerPage] = useState(15); // Количество элементов на странице
+    const [totalElements, setTotalElements] = useState(15); // Количество элементов на странице
+    const [totalPages, setTotalPages] = useState(1); // Количество элементов на странице
 
     useEffect(() => {
         setLoading(true);
+
         humanService
-            .getAllHistoriesForPrisonerStories()
+            .getAllHistoriesForPrisonerStories(currentPage, 15)
             .then((data) => {
-                //console.log(data)
+                // данные
                 setHistoies(data.histories);
+
+                // пагинация
+                setTotalElements(data.totalElements)
+                setTotalPages(data.totalPages)
+                setItemsPerPage((currentPage * 15) + (data.histories).length)
+
+                //загрузка
                 setLoading(false);
 
-                setPlaces(data.places);
-                setYears(data.years);
                 return data;
             })
             .catch((error) => {
@@ -41,7 +52,38 @@ export default function PrisonerStories({ isAdmin = false }) {
                 setLoading(false);
                 throw error;
             });
-    }, [t]);
+
+        setLoading(true);
+
+        placeService
+            .getAllYearsAndPlaces()
+            .then((data) => {
+               
+                // данные
+                setPlaces(data.places);
+                setYears(data.years);
+
+                //загрузка
+                setLoading(false);
+
+                return data;
+            })
+            .catch((error) => {
+                //console.error('Ошибка получения данных историй участников:', error);
+
+                let errMsg = error.message ? error.message : error;
+
+                notification.error({
+                    message: t("errors.front-end.fetch.msg-prisoners"),
+                    description:
+                        t("errors.front-end.fetch.description") + errMsg,
+                });
+
+                setLoading(false);
+                throw error;
+            });
+
+    }, [t, currentPage, setCurrentPage]);
 
     if (loading) {
         return <PageTemplate content={<Spinner size="large" />} />;
@@ -54,6 +96,12 @@ export default function PrisonerStories({ isAdmin = false }) {
                 places={places}
                 years={years}
                 isAdmin={isAdmin}
+                setLoading={setLoading}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalElements={totalElements}
+                totalPages={totalPages}
             />
         );
     }

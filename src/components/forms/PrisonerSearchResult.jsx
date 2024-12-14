@@ -5,12 +5,23 @@ import { useTranslation } from "react-i18next";
 import ButtonAdmin from "../buttons/ButtonAdmin";
 import HeaderSection from "../other/HeaderSection";
 import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
+import PaginationLayout from "../layout/PaginationLayout";
+import humanService from "../../api/services/humanService";
+import { notification } from "antd";
+import ButtonCrud from "../buttons/ButtonCrud";
+
 
 export default function PrisonerSearchResult({
     histories,
     places,
     years,
     isAdmin = false,
+    setLoading,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    totalPages,
+    totalElements
 }) {
     const navigate = useLocalizedNavigate();
     const { t } = useTranslation();
@@ -68,6 +79,34 @@ export default function PrisonerSearchResult({
         },
         [histories, t],
     );
+
+    const handleDelete = async (id) => {
+        try {
+            setLoading(true);
+            await humanService.deleteHumanById(id);
+
+            // console.log('Admin logged in successfully');
+            notification.success({ message: t("sucess deleted prisoner") });
+   
+
+            window.location.reload();
+            // Здесь можно выполнить дополнительные действия, например, перенаправление на защищенную страницу
+        } catch (err) {
+            // Check if the error object contains a specific error response message
+            const errorMessage =
+                err.response?.data?.message || t("delete error");
+
+            // Display an error notification with a specific or fallback message
+            notification.error({
+                message: errorMessage,
+            });
+
+            // Log the error details for debugging
+            console.error("Error occurred during deletion:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         const inputs = document.querySelectorAll("input");
@@ -152,7 +191,7 @@ export default function PrisonerSearchResult({
                                 <ButtonAdmin
                                     isColorsInverse={false}
                                     themeColor="black"
-                                    href="/"
+                                    href="/crud/human"
                                     spanText={t("admin-panel.btn.add-story")}
                                     size="m"
                                 />
@@ -247,10 +286,37 @@ export default function PrisonerSearchResult({
                         <div className="result-container-search-result-description">
                             <h3>{obj.header}</h3>
                             <span>{obj.description}</span>
+                            {isAdmin ? (
+                                <>
+                                    <div className="admin-btn-container-prisoners ">
+                                        <ButtonCrud
+                                            href={`/crud/human/${obj?.id}`}
+                                            svgType="edit"
+                                        />
+                                        <ButtonCrud
+                                            href="none"
+                                            onClick={() =>
+                                                handleDelete(obj?.id)
+                                            }
+                                            svgType="delete"
+                                        />
+                                    </div>
+                                </>
+                            ) : (
+                                <></>
+                            )}
                         </div>
                     </div>
                 ))}
             </section>
+
+            <PaginationLayout
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalPages={totalPages}
+                totalElements={totalElements}
+            />
         </div>
     );
 }
