@@ -1,24 +1,48 @@
-import { addMainImagePreview } from "../../utils/globalFunctions";
+import { addMainImagePreview, parseCalendarContentToInputId } from "../../utils/globalFunctions";
 import api from "../axiosInstance";
 import handleRequest from "../requestHelper";
 
 const humanService = {
-    //getAllHumans: (page = 0, size = 15) => handleRequest(() => api.get(`/humans?page=${page}&size=${size}`)),
-    //getAllHistories: () => handleRequest(() => api.get("/humans/history")),
-    getAllHistoriesForPrisonerStories: (page = 0, size = 15) =>
+    getAllHistoriesForPrisonerStories: (page = 0, size = 15, alphabetic = '', place = '', year = '') =>
         handleRequest(async () => {
+            // старое до фильтрации влада
+            //const response = await api.get(`/humans?page=${page}&size=${size}`);
 
-            const response = await api.get(`/humans?page=${page}&size=${size}`);
+            let queryParams = `?page=${page}&size=${size}`;
+
+            // Добавляем параметр alphabetic, если он не пустой
+            if (alphabetic) {
+                const parsedAlphabetic = parseCalendarContentToInputId(alphabetic);
+
+
+                queryParams += `&alphabetic=${parsedAlphabetic}`;
+            }
+
+            // Добавляем параметр place, если он не пустой
+            if (place) {
+                queryParams += `&place=${place}`;
+            }
+
+            // Добавляем параметр year, если он не пустой
+            if (year) {
+                queryParams += `&year=${year}`;
+            }
+
+            // Отправляем запрос с динамически сформированными параметрами
+            const response = await api.get(`/humans/history${queryParams}`);
+
+            console.log(response)
 
             const answerArrayHumans = transformResponseAllHistoriesForPrisonerStories(
                 response.data.content
             );
 
+
             return {
                 data: {
-                    histories: answerArrayHumans.data.histories,
-                    totalElements: response.data.totalElements,
-                    totalPages: response.data.totalPages,
+                    histories: answerArrayHumans.data?.histories,
+                    totalElements: response.data?.totalElements,
+                    totalPages: response.data?.totalPages,
                 }
 
             }
@@ -200,7 +224,7 @@ const humanService = {
                 transformedData.append(`newImages[${index}].img`, file.file); // Добавляем сам файл
                 transformedData.append(`newImages[${index}].isMain`, file.isMain); // Добавляем флаг isMain
             });
-        } 
+        }
         newVideos.forEach(file => transformedData.append("newVideos", file));
 
 
@@ -302,7 +326,7 @@ const transformResponseAllHistoriesForPrisonerStories = (data) => {
             };
         });
     } else {
-        return [];
+        transformedData = [];
     }
 
 

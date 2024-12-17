@@ -19,46 +19,64 @@ export default function PrisonerStories({ isAdmin = false }) {
     const [totalElements, setTotalElements] = useState(15); // Количество элементов на странице
     const [totalPages, setTotalPages] = useState(1); // Количество элементов на странице
 
+
+    const [selectedPlace, setSelectedPlace] = useState(
+        t("stories.filter.place"),
+    );
+    const [selectedCalendar, setSelectedCalendar] = useState(
+        t("stories.filter.year"),
+    );
+    const [selectedAlphabet, setSelectedAlphabet] = useState(
+        t("stories.sort.alphabetically"),
+    );
+
     useEffect(() => {
         setLoading(true);
 
         humanService
-            .getAllHistoriesForPrisonerStories(currentPage, 15)
-            .then((data) => {
-                // данные
-                setHistoies(data.histories);
+            .getAllHistoriesForPrisonerStories(currentPage, 15,
+                selectedAlphabet,
+                selectedPlace !== t("stories.filter.place") ? selectedPlace : '',  
+                selectedCalendar !== t("stories.filter.year") ? selectedCalendar : '')
+                    .then((data) => {
+                        // данные
 
-                // пагинация
-                setTotalElements(data.totalElements)
-                setTotalPages(data.totalPages)
-                setItemsPerPage((currentPage * 15) + (data.histories).length)
+                        setHistoies(data.histories);
 
-                //загрузка
-                setLoading(false);
+                        // пагинация
+                        setTotalElements(data.totalElements)
+                        setTotalPages(data.totalPages)
+                        const qItems = (data.histories)?.length || 0;
+                        setItemsPerPage((currentPage * 15) + qItems)
 
-                return data;
-            })
-            .catch((error) => {
-                //console.error('Ошибка получения данных историй участников:', error);
+                        //загрузка
+                        setLoading(false);
 
-                let errMsg = error.message ? error.message : error;
+                        return data;
+                    })
+                    .catch((error) => {
+                        //console.error('Ошибка получения данных историй участников:', error);
 
-                notification.error({
-                    message: t("errors.front-end.fetch.msg-prisoners"),
-                    description:
-                        t("errors.front-end.fetch.description") + errMsg,
-                });
+                        let errMsg = error.message ? error.message : error;
 
-                setLoading(false);
-                throw error;
-            });
+                        notification.error({
+                            message: t("errors.front-end.fetch.msg-prisoners"),
+                            description:
+                                t("errors.front-end.fetch.description") + errMsg,
+                        });
+
+                        setLoading(false);
+                        throw error;
+                    });
+
+        
 
         setLoading(true);
 
         placeService
             .getAllYearsAndPlaces()
             .then((data) => {
-               
+
                 // данные
                 setPlaces(data.places);
                 setYears(data.years);
@@ -83,13 +101,20 @@ export default function PrisonerStories({ isAdmin = false }) {
                 throw error;
             });
 
-    }, [t, currentPage, setCurrentPage]);
+    }, [t, currentPage, setCurrentPage, selectedPlace, selectedCalendar, selectedAlphabet]);
 
     if (loading) {
         return <PageTemplate content={<Spinner size="large" />} />;
-    } else if (!histories || !places || !years) {
+    } else if (!places || !years) {
         return <NotFound />;
     } else {
+
+
+
+
+
+
+
         return (
             <PrisonerSearchResult
                 histories={histories}
@@ -102,6 +127,12 @@ export default function PrisonerStories({ isAdmin = false }) {
                 itemsPerPage={itemsPerPage}
                 totalElements={totalElements}
                 totalPages={totalPages}
+                selectedPlace={selectedPlace}
+                setSelectedPlace={setSelectedPlace}
+                selectedCalendar={selectedCalendar}
+                setSelectedCalendar={setSelectedCalendar}
+                selectedAlphabet={selectedAlphabet}
+                setSelectedAlphabet={setSelectedAlphabet}
             />
         );
     }

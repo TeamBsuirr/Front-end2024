@@ -1,4 +1,5 @@
 import { notification } from "antd";
+import { t } from "i18next";
 
 notification.config({
   placement: "top",
@@ -39,17 +40,36 @@ export function handlePagination({ type, currentPage, setCurrentPage, totalPages
 export const addMainImagePreview = (obj, imagesField = 'images') => {
   // Проверяем, что поле с изображениями существует и является массивом
   if (Array.isArray(obj[imagesField]) && obj[imagesField].length > 0) {
-      // Находим изображение с isMain === true
-      const mainImage = obj[imagesField].find(image => image.isMain === true);
-      // Если нашли - используем его, если нет - берем первое изображение, если оно есть
-      const img = mainImage ? mainImage.urlToFile : (obj[imagesField][0]?.urlToFile || "");
-      // Добавляем новое поле imgPreview
-      obj.previewImg = img;
+    // Находим изображение с isMain === true
+    const mainImage = obj[imagesField].find(image => image.isMain === true);
+    // Если нашли - используем его, если нет - берем первое изображение, если оно есть
+    const img = mainImage ? mainImage.urlToFile : (obj[imagesField][0]?.urlToFile || "");
+    // Добавляем новое поле imgPreview
+    obj.previewImg = img;
   } else {
-      // Если поле с изображениями отсутствует или пустое, добавляем пустое значение для imgPreview
-      obj.previewImg = "";
+    // Если поле с изображениями отсутствует или пустое, добавляем пустое значение для imgPreview
+    obj.previewImg = "";
   }
 
   // Возвращаем обновленный объект
   return obj;
 };
+
+export function parseCalendarContentToInputId(selectedAlphabet) {
+  let alphabeticValue = '';
+  switch (selectedAlphabet) {
+    case t("stories.sort.by-date"):
+      alphabeticValue = 'by-date';
+      break;
+    case t("stories.sort.counter-alphabetically"):
+      alphabeticValue = 'counter-alphabetically';
+      break;
+    case t("stories.sort.alphabetically"):
+      alphabeticValue = 'alphabetically';
+      break;
+    default:
+      alphabeticValue = '';
+      break;
+  }
+  return alphabeticValue
+}
