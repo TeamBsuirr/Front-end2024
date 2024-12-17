@@ -308,7 +308,7 @@ export default function NewHuman({
         }
         if (validateInput()) {
             // Form valid, send data to server
-            console.log(formData)
+           // console.log(formData)
             setLoading(true);
             if (!isUpdate) {
                 humanService
@@ -558,7 +558,7 @@ export default function NewHuman({
                         isColorsInverse={true}
                         themeColor="yellow"
                         href="none"
-                        spanText={t("admin-panel.btn.add")}
+                        spanText={isUpdate ? t("admin-panel.btn.update") : t("admin-panel.btn.add")}
                         onClick={handleAdminAdd}
                         size
                     />

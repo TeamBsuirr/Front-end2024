@@ -524,7 +524,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
                     isColorsInverse={true}
                     themeColor="yellow"
                     href="none"
-                    spanText={t("admin-panel.btn.add")}
+                    spanText={isUpdate ? t("admin-panel.btn.update") : t("admin-panel.btn.add")}
                     onClick={handleSubmit}
                     size
                 />

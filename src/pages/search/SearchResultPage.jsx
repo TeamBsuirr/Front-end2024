@@ -49,7 +49,7 @@ export default function SearchResultPage({ isAdmin = false }) {
         searchService
             .getGlobalSearch(urlParamsString, currentPage, 15)
             .then((data) => {
-                console.log(data);
+                //console.log(data);
 
                 setHumans(data.humans);
                 setPlaces(data.places);

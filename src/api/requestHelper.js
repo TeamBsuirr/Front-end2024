@@ -10,7 +10,7 @@ const handleRequest = async (request) => {
         }
 
         const response = await request();
-        console.log("Request successful:", response); // Преобразованные данные
+        //console.log("Request successful:", response); // Преобразованные данные
         if(response.data.content)
             return response.data.content;
         else

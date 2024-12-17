@@ -33,7 +33,7 @@ export default function SearchResults({
     );
     const [filteredObjects, setFilteredObjects] = useState(arrayFoundObjects);
 
-    console.log(filteredObjects)
+    //console.log(filteredObjects)
 
     function clickGlobalSearchButton() {
         if (searchInputValue !== "") {

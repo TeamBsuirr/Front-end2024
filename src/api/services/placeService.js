@@ -19,7 +19,7 @@ const placeService = {
         // Сериализуем данные в FormData MIME
         const transformedData = new FormData();
         // Логируем данные перед отправкой
-        console.log("Posting story with transformedData:", data);
+        //("Posting story with transformedData:", data);
 
         transformedData.append("placeName", data.placeName);
         transformedData.append("countDeath", data.countDeath);

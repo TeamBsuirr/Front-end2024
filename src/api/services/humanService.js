@@ -31,7 +31,7 @@ const humanService = {
             // Отправляем запрос с динамически сформированными параметрами
             const response = await api.get(`/humans/history${queryParams}`);
 
-            console.log(response)
+            //console.log(response)
 
             const answerArrayHumans = transformResponseAllHistoriesForPrisonerStories(
                 response.data.content
@@ -91,7 +91,7 @@ const humanService = {
             transformedData.append(`images[${index}].isMain`, file.isMain || false);
         });
 
-        console.log(videos)
+        //console.log(videos)
         // Append videos
         videos.forEach((file) => {
             transformedData.append("videos", file.file);
