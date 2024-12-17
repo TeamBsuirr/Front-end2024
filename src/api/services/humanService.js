@@ -200,7 +200,7 @@ const humanService = {
 
         });
 
-        console.log(images, videos, newImages)
+        //console.log(images, videos, newImages)
         // Append all image ids and video ids to transformedData
         if (images.length > 0) {
             images.forEach((image, index) => {
@@ -253,7 +253,7 @@ const humanService = {
         }
 
         // Log the final transformed data as a JSON object
-        console.log('Transformed Data as JSON:', transformedDataObject);
+       // console.log('Transformed Data as JSON:', transformedDataObject);
 
 
         // Выполняем запрос, добавляя заголовок Content-Type

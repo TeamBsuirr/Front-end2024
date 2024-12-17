@@ -49,7 +49,7 @@ const Carousel = ({ images, videos = null }) => {
         } else if (type === 'video' && videos[index]) {
             setSelectedObject({ ...videos[index], type: "video" });
         }
-        console.log(selectedObject)
+        //console.log(selectedObject)
     }
 
     function closeModal() {
@@ -71,9 +71,9 @@ const Carousel = ({ images, videos = null }) => {
     const handlePaginationCarousel = ({ type }) => {
         if (!selectedObject || typeof selectedObject.id !== 'number') return;
 
-        console.log("inside", selectedObject);
-        console.log(images);
-        console.log(videos);
+      //  console.log("inside", selectedObject);
+      //  console.log(images);
+      //  console.log(videos);
     
         let newIndex = selectedObject.id;
     

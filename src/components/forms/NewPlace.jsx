@@ -217,7 +217,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        console.log(name,value)
+        //console.log(name,value)
 
         setFormData({
             ...formData,
@@ -242,7 +242,7 @@ export default function NewPlace({ objectOfPlace, isUpdate, arrayOfRegions }) {
 
         // Ensure files are processed correctly
         const updatedFiles = Array.from(files);
-        console.log(formData,updatedFiles)
+       // console.log(formData,updatedFiles)
         setFormData((prevFormData) => ({
             ...prevFormData,
             images: updatedFiles,

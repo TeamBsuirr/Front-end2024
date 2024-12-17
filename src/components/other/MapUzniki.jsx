@@ -32,7 +32,7 @@ export default function MapUzniki({
 
     // Кастомный хинт
     const getHintContent = (place) => {
-        console.log(place)
+        //console.log(place)
         return (
             `
                 ${place?.placeName}

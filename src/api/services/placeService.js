@@ -145,7 +145,7 @@ const placeService = {
         }
 
         // Log the final transformed data as a JSON object
-        console.log('Transformed Data as JSON:', transformedDataObject);
+      //  console.log('Transformed Data as JSON:', transformedDataObject);
 
 
 
@@ -179,7 +179,7 @@ const placeService = {
     getAllRegions: () =>
         handleRequest(async () => {
             const response = await api.get(`/regions?page=0&size=100`);
-            console.log(response.data)
+           // console.log(response.data)
             return transformResponseAllRegionsForMapForPostPlace(response.data.content);
         }),
 

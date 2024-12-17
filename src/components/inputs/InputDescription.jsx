@@ -59,7 +59,7 @@ export default function InputDescription({
     // }, [valueFiles, fileList]);
 
     useEffect(() => {
-        console.log("inside use effect descr",valueFiles)
+        //console.log("inside use effect descr",valueFiles)
         // Только обновляем state, если действительно что-то изменилось
         const updatedFiles = valueFiles.map((file) => {
             // Проверяем, является ли файл изображением
@@ -97,7 +97,7 @@ export default function InputDescription({
             setFileList(updatedFiles); // Обновляем fileList
         }
 
-        console.log("inside use effect descr 2",valueFiles)
+       // console.log("inside use effect descr 2",valueFiles)
 
 
 

@@ -8,7 +8,7 @@ const searchService = {
 
             const response = await api.get(`/filter-search?search=${stringSearch}&page=${page}&size=${size}`)
 
-            console.log(response)
+           // console.log(response)
 
 
          response.data.humans.content.map(item => addMainImagePreview(item)); // Применяем функцию к каждому объекту массива
@@ -30,7 +30,7 @@ const searchService = {
         }),
     getAllPhotos: (page=0,size=15) => handleRequest(async() =>{
         const response = await api.get(`/albums?page=${page}&size=${size}`)
-        console.log(response)
+        //console.log(response)
         return {
             data: {
                 data: response.data.content,
