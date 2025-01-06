@@ -27,7 +27,7 @@ export default function MapUzniki({
 
     // Обработчик клика по метке
     const handlePlacemarkClick = useCallback((place) => {
-        //e.stopPropagation();
+   
         setActivePlace(place); // Устанавливаем активное место
     }, []);
 
@@ -45,7 +45,19 @@ export default function MapUzniki({
         <>
             <section className="section-map">
                 <div className="container-map">
-                    <MapContainer center={mapCenter} zoom={zoomLevel} style={{ width: "100%", height: "100%" }} onLoad={setLoading(false)}>
+                    <MapContainer
+                        center={mapCenter}
+                        zoom={zoomLevel}
+                        style={{ width: "100%", height: "100%" }}
+              
+                        whenReady={(event) => {
+                            setLoading(false); // Убедитесь, что снимаете загрузку
+                            const map = event.target; // Карта доступна здесь
+                            map.eachLayer((layer) => layer.redraw()); // Принудительная перерисовка слоев
+                           
+                          }}
+               
+                    >
                         {/* Тайлы OpenStreetMap */}
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -62,7 +74,9 @@ export default function MapUzniki({
                                     iconSize: [30, 30],
                                 })}
                                 eventHandlers={{
-                                    click: (e) => handlePlacemarkClick(place, e),
+                                    click: () => {
+                                        handlePlacemarkClick(place)
+                                    },
                                 }}
                             >
                                 {/* Подсказка для каждого маркера */}
