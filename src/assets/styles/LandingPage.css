@@ -28,11 +28,9 @@ img {
 .section-content {
     text-align: center;
     color: #ead7c0;
-    background: radial-gradient(
-        circle,
-        rgba(19, 17, 15, 0.3) 30%,
-        rgba(33, 26, 20, 0) 58%
-    );
+    background: radial-gradient(circle,
+            rgba(19, 17, 15, 0.3) 30%,
+            rgba(33, 26, 20, 0) 58%);
     padding: 40px;
     border-radius: 10px;
     font-family: Vasek, cursive;
@@ -60,11 +58,9 @@ img {
     left: 50%;
     width: 656px;
     height: 393px;
-    background: radial-gradient(
-        circle,
-        rgba(33, 26, 20, 0.4) 0%,
-        rgba(33, 26, 20, 0) 80%
-    );
+    background: radial-gradient(circle,
+            rgba(33, 26, 20, 0.4) 0%,
+            rgba(33, 26, 20, 0) 80%);
     border-radius: 50% / 50%;
     transform: translate(-50%, -50%);
     filter: blur(15px);
@@ -287,17 +283,22 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(147, 66, 39, 0.1); /* Adjust the opacity as needed */
-    z-index: -1; /* Ensure this is below the content of .link-button.item4 but above the background image */
-    pointer-events: none; /* Prevent the pseudo-element from interfering with pointer events */
+    background: rgba(147, 66, 39, 0.1);
+    /* Adjust the opacity as needed */
+    z-index: -1;
+    /* Ensure this is below the content of .link-button.item4 but above the background image */
+    pointer-events: none;
+    /* Prevent the pseudo-element from interfering with pointer events */
 }
 
 .link-button.item1:hover,
 .link-button.item2:hover,
 .link-button.item3:hover,
 .link-button.item4:hover {
-    background: #1f1b16; /* Изменяет фон на черный при наведении */
-    color: #e2d4c4; /* Цвет текста */
+    background: #1f1b16;
+    /* Изменяет фон на черный при наведении */
+    color: #e2d4c4;
+    /* Цвет текста */
 }
 
 .link-button:hover {

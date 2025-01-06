@@ -1,23 +1,30 @@
 import api from "../axiosInstance";
 import handleRequest from "../requestHelper";
+import { addMainImagePreview } from "../../utils/globalFunctions";
 
 const placeService = {
     getPlaceById: (id) => handleRequest(() => api.get(`/places/${id}`)),
     getAllPlaces: () =>
         handleRequest(async () => {
-            const response = await api.get(`/places`);
-            return transformResponseAllPlacesForMap(response.data);
+            const response = await api.get(`/places?page=0&size=100`);
+            return transformResponseAllPlacesForMap(response.data.content);
         }),
+    getAllYearsAndPlaces: () =>
+        handleRequest(() => api.get(`/places/data?page=0&size=100`)),
     getAllPlacesForPostHuman: () =>
         handleRequest(async () => {
-            const response = await api.get(`/places`);
-            return transformResponseAllPlacesForMapForPostHuman(response.data);
+            const response = await api.get(`/places?page=0&size=100`);
+            return transformResponseAllPlacesForMapForPostHuman(
+                response.data.content,
+            );
         }),
-
     getAllRegions: () =>
         handleRequest(async () => {
-            const response = await api.get(`/regions`);
-            return transformResponseAllRegionsForMapForPostPlace(response.data);
+            const response = await api.get(`/regions?page=0&size=100`);
+            // console.log(response.data)
+            return transformResponseAllRegionsForMapForPostPlace(
+                response.data.content,
+            );
         }),
 };
 
@@ -60,16 +67,17 @@ const transformResponseAllPlacesForMapForPostHuman = (data) => {
 const transformResponseAllPlacesForMap = (data) => {
     //console.log(data);
     const transformedData = data.map((obj) => {
+        const transformedObj = addMainImagePreview(obj);
+        //console.log(transformedObj)
         return {
-            id: obj.id,
-            placeName: obj.placeName,
+            id: transformedObj.id,
+            placeName: transformedObj.placeName,
             locationDescription:
-                obj.locationDescription ?? "описание не определено",
-            shortDescription: obj.shortDescription ?? "описание Тростенец",
-            coordinates: obj.coordinates,
-            previewImg:
-                obj.images[0].urlToFile ??
-                "https://uzniki.storage.yandexcloud.net/1721029769100_zhimanov-trostenecz.jpg",
+                transformedObj.locationDescription ?? "описание не определено",
+            shortDescription:
+                transformedObj.shortDescription ?? "описание Тростенец",
+            coordinates: transformedObj.coordinates,
+            previewImg: transformedObj.previewImg,
         };
     });
 

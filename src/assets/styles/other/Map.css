@@ -28,6 +28,7 @@
     height: 100%;
     box-sizing: border-box;
     align-items: center;
+    padding-bottom: 5%;
 }
 
 .container-description-map {
@@ -67,20 +68,15 @@
     position: relative;
     z-index: 1; /* Ensure this is above other elements */
     pointer-events: auto;
-
-    width: 1520px;
+    width: 80vw;
     height: 100vh; /* Высота должна быть указана для отображения карты */
 }
 
-.ymaps-2-1-79-placemark,
-.ymaps-2-1-79-placemark-overlay {
-    z-index: 650;
-}
 
 .active-place {
     z-index: 10;
-    width: 450px;
-    height: 90%;
+    width: 28vw;
+    height: 90vh;
     background-color: #4d4b48;
     opacity: 90;
     border-radius: 10px;
@@ -107,7 +103,7 @@
 .header-active-place {
     display: flex;
     justify-content: flex-end;
-    padding: 30px;
+    padding: 20px 25px 10px;
     z-index: 2;
     border-radius: 10px;
     background-color: #4d4b48;
@@ -160,6 +156,7 @@
     flex-direction: column;
     justify-content: flex-start;
     border-radius: 10px;
+    /* height: max-content; */
 }
 
 .container-text-active-place h2 {
@@ -185,43 +182,47 @@
 .container-text-active-place h3 {
     color: #e2d4c4;
     margin: 0;
-    font-size: 1.2em;
+    font-size: 16px;
 }
 
 .container-text-active-place span {
     color: #e2d4c4;
-    font-size: 18px;
+    font-size: 14px;
     padding-left: 10px;
     padding-top: 1px;
+    word-break:keep-all;
 }
 
 .container-button-selected-place {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 34px;
+  
+    margin: 0px 25px 34px 25px;
 }
 
-.custom-placemark {
-    position: relative;
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    transition:
-        transform 0.3s,
-        box-shadow 0.3s;
-}
 
-.custom-placemark-icon {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url("../../images/icons/other/star.svg");
-}
 
-.custom-placemark:hover {
+.custom-tooltip:hover {
     transform: scale(1.2);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.leaflet-control-attribution {
+    display: none !important;
+}
+
+/* Пример кастомных стилей для Tooltip */
+.custom-tooltip {
+    background-color: #4D4B48 !important; /* Цвет фона */
+    color: white !important; /* Цвет текста */
+    border-radius: 10px; /* Скругление углов */
+    padding: 10px; /* Отступы */
+    font-size: 14px; /* Размер шрифта */
+    opacity: 0.9; /* Прозрачность */
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: max-content;
+    height: 40px;
 }

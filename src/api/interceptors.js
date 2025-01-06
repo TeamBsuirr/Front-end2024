@@ -35,7 +35,7 @@ api.interceptors.response.use(
             try {
                 return api(originalRequest);
             } catch (refreshError) {
-                console.error("Token refresh failed:", refreshError);
+                console.error("Communicate refresh failed:", refreshError);
                 logout();
                 notification.warning({
                     message: "Session Expired",

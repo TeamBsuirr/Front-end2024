@@ -1,15 +1,59 @@
 import api from "../axiosInstance";
 import handleRequest from "../requestHelper";
+import {
+    addMainImagePreview,
+    parseCalendarContentToInputId,
+} from "../../utils/globalFunctions";
 
 const humanService = {
-    getAllHumans: () => handleRequest(() => api.get("/humans")),
-    getAllHistories: () => handleRequest(() => api.get("/humans/history")),
-    getAllHistoriesForPrisonerStories: () =>
+    getAllHistoriesForPrisonerStories: (
+        page = 0,
+        size = 15,
+        alphabetic = "",
+        place = "",
+        year = "",
+    ) =>
         handleRequest(async () => {
-            const response = await api.get("/humans/history");
-            return transformResponseAllHistoriesForPrisonerStories(
-                response.data,
-            );
+            // старое до фильтрации влада
+            //const response = await api.get(`/humans?page=${page}&size=${size}`);
+
+            let queryParams = `?page=${page}&size=${size}`;
+
+            // Добавляем параметр alphabetic, если он не пустой
+            if (alphabetic) {
+                const parsedAlphabetic =
+                    parseCalendarContentToInputId(alphabetic);
+
+                queryParams += `&alphabetic=${parsedAlphabetic}`;
+            }
+
+            // Добавляем параметр place, если он не пустой
+            if (place) {
+                queryParams += `&place=${place}`;
+            }
+
+            // Добавляем параметр year, если он не пустой
+            if (year) {
+                queryParams += `&year=${year}`;
+            }
+
+            // Отправляем запрос с динамически сформированными параметрами
+            const response = await api.get(`/humans/history${queryParams}`);
+
+            //console.log(response)
+
+            const answerArrayHumans =
+                transformResponseAllHistoriesForPrisonerStories(
+                    response.data.content,
+                );
+
+            return {
+                data: {
+                    histories: answerArrayHumans.data?.histories,
+                    totalElements: response.data?.totalElements,
+                    totalPages: response.data?.totalPages,
+                },
+            };
         }),
     getHumanById: (id) => handleRequest(() => api.get(`/humans/${id}`)),
     getHumanByIdForPostHuman: (id) =>
@@ -57,44 +101,34 @@ const transformResponseAHumanForMapForPostHuman = (data) => {
 const transformResponseAllHistoriesForPrisonerStories = (data) => {
     // Трансформировать данные ответа перед передачей их дальше
     // Инициализируем Set для уникальных мест и годов
-    const uniquePlaces = new Set();
-    const uniqueYears = new Set();
+    let transformedData;
 
-    const transformedData = data.map((obj) => {
-        // Разделяем описание на слова, берем первые 15 и объединяем их обратно в строку
-        const shortDescription = obj.history.description
-            .split(" ")
-            .slice(0, 16)
-            .join(" ");
+    if (data.length !== 0) {
+        transformedData = data.map((obj) => {
+            // Разделяем описание на слова, берем первые 15 и объединяем их обратно в строку
+            const shortDescription = obj.history.description
+                .split(" ")
+                .slice(0, 16)
+                .join(" ");
 
-        // Собираем места и годы из obj.places
-        const places = obj.places.map((placeObj) => placeObj.place.placeName);
-        const years = obj.places.flatMap((place) => {
-            const yearFrom = place.dateFrom.split("-")[0];
-            const yearTo = place.dateTo.split("-")[0];
-            return [yearFrom, yearTo];
+            // Выбираем preview
+            const transformedObject = addMainImagePreview(obj);
+
+            return {
+                id: transformedObject.id,
+                img: transformedObject.previewImg,
+                header: `${transformedObject.surname} ${transformedObject.name} ${transformedObject.patronymic}`,
+                description: shortDescription,
+            };
         });
-
-        // Добавляем места и годы в Set для уникальных значений
-        places.forEach((place) => uniquePlaces.add(place));
-        years.forEach((year) => uniqueYears.add(year));
-
-        return {
-            id: obj.id,
-            img: obj.images[0]?.urlToFile || "",
-            header: `${obj.surname} ${obj.name} ${obj.patronymic}`,
-            description: shortDescription,
-            years: years,
-            places: places,
-        };
-    });
+    } else {
+        transformedData = [];
+    }
 
     // Создаем окончательный объект с полями data, places и years
     const returnData = {
         data: {
             histories: transformedData,
-            places: Array.from(uniquePlaces).sort(),
-            years: Array.from(uniqueYears).sort((a, b) => a - b),
         },
     };
 

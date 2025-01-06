@@ -1,70 +1,33 @@
-import { React, useCallback, useEffect, useState } from "react";
+import { React, useEffect } from "react";
 import "../../assets/styles/forms/PrisonerSearchResult.css";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../other/HeaderSection";
 import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
+import PaginationLayout from "../layout/PaginationLayout";
+
+
 
 export default function PrisonerSearchResult({
     histories,
     places,
     years,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    totalPages,
+    totalElements,
+    selectedPlace,        // Новый пропс
+    setSelectedPlace,     // Новый пропс
+    selectedCalendar,     // Новый пропс
+    setSelectedCalendar,  // Новый пропс
+    selectedAlphabet,     // Новый пропс
+    setSelectedAlphabet   // Новый пропс
+
 }) {
     const navigate = useLocalizedNavigate();
     const { t } = useTranslation();
-    const [filteredHistories, setFilteredHistories] = useState(histories);
-    const [selectedPlace, setSelectedPlace] = useState(
-        t("stories.filter.place"),
-    );
-    const [selectedCalendar, setSelectedCalendar] = useState(
-        t("stories.filter.year"),
-    );
-    const [selectedAlphabet, setSelectedAlphabet] = useState(
-        t("stories.sort.alphabetically"),
-    );
 
-    const filterHistories = useCallback(
-        (value, type) => {
-            let updatedHistories = [...histories];
 
-            if (type === "sort-place") {
-                setSelectedPlace(value);
-                if (value !== t("stories.filter.place")) {
-                    updatedHistories = updatedHistories.filter((obj) =>
-                        obj.places.includes(value),
-                    );
-                }
-            }
-
-            if (type === "sort-calendar") {
-                setSelectedCalendar(value);
-                if (value !== t("stories.filter.year")) {
-                    updatedHistories = updatedHistories.filter((obj) =>
-                        obj.years.includes(value),
-                    );
-                }
-            }
-
-            if (type === "sort-alphabet") {
-                if (value === t("stories.sort.alphabetically")) {
-                    updatedHistories = updatedHistories.sort((a, b) =>
-                        a.header.localeCompare(b.header),
-                    );
-                } else if (value === t("stories.sort.counter-alphabetically")) {
-                    updatedHistories = updatedHistories.sort((a, b) =>
-                        b.header.localeCompare(a.header),
-                    );
-                } else if (value === t("stories.sort.by-date")) {
-                    updatedHistories = updatedHistories.sort(
-                        (a, b) =>
-                            new Date(b.dateCreated) - new Date(a.dateCreated),
-                    );
-                }
-            }
-
-            setFilteredHistories(updatedHistories);
-        },
-        [histories, t],
-    );
 
     useEffect(() => {
         const inputs = document.querySelectorAll("input");
@@ -96,7 +59,7 @@ export default function PrisonerSearchResult({
                 setSelectedAlphabet(event.target.textContent);
             }
 
-            filterHistories(event.target.textContent, input.name);
+            // filterHistories(event.target.textContent, input.name);
         };
 
         inputs.forEach((elem) => {
@@ -129,14 +92,12 @@ export default function PrisonerSearchResult({
                 elem.removeEventListener("click", handleListItemClick);
             });
         };
-    }, [filterHistories]);
+    }, [histories]);
 
     return (
         <div className="section-search-result">
             <section className="section-form-search-result">
                 <HeaderSection textFirst={t("stories.header")} />
-
-
                 <div className="container-description-prisoners">
                     <span>{t("stories.additional-text")}</span>
                 </div>
@@ -197,7 +158,7 @@ export default function PrisonerSearchResult({
                     </div>
                 </div>
 
-                {filteredHistories.map((obj) => (
+                {histories.map((obj) => (
                     <div
                         className="result-container-search-result"
                         key={obj.id}
@@ -223,10 +184,19 @@ export default function PrisonerSearchResult({
                         <div className="result-container-search-result-description">
                             <h3>{obj.header}</h3>
                             <span>{obj.description}</span>
+
                         </div>
                     </div>
                 ))}
             </section>
+
+            <PaginationLayout
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalPages={totalPages}
+                totalElements={totalElements}
+            />
         </div>
     );
 }

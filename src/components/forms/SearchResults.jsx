@@ -7,8 +7,16 @@ import { notification } from "antd";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../other/HeaderSection";
 import useLocalizedNavigate from "../../utils/useLocalizedNavigate";
+import PaginationLayout from "../layout/PaginationLayout";
 
-export default function SearchResults({ arrayFoundObjects }) {
+export default function SearchResults({
+    arrayFoundObjects,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    totalPages,
+    totalElements
+}) {
     const { t } = useTranslation();
     const navigate = useLocalizedNavigate();
     const searchParams = new URLSearchParams(window.location.search);
@@ -20,9 +28,11 @@ export default function SearchResults({ arrayFoundObjects }) {
     );
     const [filteredObjects, setFilteredObjects] = useState(arrayFoundObjects);
 
+    //console.log(filteredObjects)
+
     function clickGlobalSearchButton() {
         if (searchInputValue !== "") {
-          
+            //window.location.href = `/search?searchFor=${searchInputValue}`;
             navigate(
                 `/search?searchFor=${encodeURIComponent(searchInputValue)}`,
             );
@@ -137,11 +147,15 @@ export default function SearchResults({ arrayFoundObjects }) {
                             onChange={(event) => {
                                 setSearchInputValue(event.target.value);
                             }}
+                            onKeyDown={(e) => {
+                                if (e.code === "Enter") clickGlobalSearchButton();
+                                if (e.code === "Delete") clickDeleteInputBtn();
+                            }}
                         />
                         <button
                             onClick={clickDeleteInputBtn}
                             onKeyDown={(e) => {
-                                if (e.key === "Enter") clickDeleteInputBtn;
+                                if (e.code === "Delete") clickDeleteInputBtn();
                             }}
                             style={{
                                 background: "none",
@@ -153,7 +167,12 @@ export default function SearchResults({ arrayFoundObjects }) {
                         >
                             <img src={xIcon} alt="delete" />
                         </button>
-                        <button onClick={clickGlobalSearchButton}>
+                        <button onClick={clickGlobalSearchButton}
+
+                            onKeyDown={(e) => {
+                                if (e.code === "Enter") clickGlobalSearchButton();
+                            }}
+                        >
                             <img src={searchIcon} alt="Search" />
                         </button>
                     </div>
@@ -161,7 +180,7 @@ export default function SearchResults({ arrayFoundObjects }) {
 
                 <div className="container-result-search-result">
                     <span>
-                        {t("search.number-of-results")} {filteredObjects.length}
+                        {t("search.number-of-results")} {totalElements}
                     </span>
 
                     <div className="container-result-search-result-for-filter">
@@ -218,10 +237,19 @@ export default function SearchResults({ arrayFoundObjects }) {
                         <div className="result-container-search-result-description">
                             <h3>{obj.header}</h3>
                             <span>{obj.description}</span>
+                            
                         </div>
                     </div>
                 ))}
             </section>
+
+            <PaginationLayout
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalPages={totalPages}
+                totalElements={totalElements}
+            />
         </div>
     );
 }

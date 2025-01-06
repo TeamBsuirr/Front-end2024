@@ -169,8 +169,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: #e4b474;
     border-radius: 5px;
     position: relative;
-    top: -54px;
-    left: -17px;
+    top: -106px;
+    left: -14px;
+}
+
+.admin-btn-container-prisoners {
+    width: fit-content;
+    background: #e4b474;
+    border-radius: 5px;
+    position: relative;
+    top: -129px;
+    left: -14px;
 }
 
 .input-form-date-container{

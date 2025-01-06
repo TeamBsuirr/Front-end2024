@@ -7,6 +7,7 @@ import placeService from "../../api/services/placeService";
 import MapUzniki from "../../components/other/MapUzniki";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../../components/other/HeaderSection";
+import "../../assets/styles/other/Map.css";
 
 export default function MapPage() {
     const { t } = useTranslation();
@@ -52,12 +53,14 @@ export default function MapPage() {
         return <NotFound />;
     } else {
         return (
-            <div className="map-container" style={{ width: "100%", height: "100%" }}>
+            <div className="section-map-page">
                 <section className="section-map-header">
                     <HeaderSection textFirst={t("map.header")} />
+
                     <div className="container-description-map">
                         <span>{t("map.additional-text")}</span>
                     </div>
+
                 </section>
 
                 <MapUzniki

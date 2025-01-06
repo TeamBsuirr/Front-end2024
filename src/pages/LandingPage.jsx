@@ -9,10 +9,24 @@ import useLocalizedNavigate from "../utils/useLocalizedNavigate";
 export default function LandingPage() {
     const { t } = useTranslation();
     const navigate = useLocalizedNavigate();
-    let isLngWarn = false;
     const [searchInputValue, setSearchInputValue] = useState("");
+    let isLngWarn = false;
+    
+    function clickDeleteInputBtn() {
+        if (searchInputValue !== "") {
+            setSearchInputValue("");
+        } else {
+            notification.warning({
+                message: t("errors.front-end.empty-search-field"),
+                description: t(
+                    "errors.front-end.empty-search-field-description",
+                ),
+            });
+        }
+    }
 
     function clickGlobalSearchButton() {
+    
         if (searchInputValue !== "") {
             if (localStorage.getItem("language") !== "ru" && !isLngWarn) {
                 isLngWarn = true;
@@ -69,7 +83,13 @@ export default function LandingPage() {
                                     setSearchInputValue(event.target.value);
                                 }}
                                 placeholder={t("search.placeholder")}
+                                onKeyDown={(e) => {
+                                    if (e.code === "Enter") clickGlobalSearchButton();
+                                    if (e.code === "Delete") clickDeleteInputBtn();
+                                }}
                             />
+                            
+                            
                             <button
                                 className="search-button"
                                 onClick={clickGlobalSearchButton}

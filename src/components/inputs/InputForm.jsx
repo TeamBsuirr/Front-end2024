@@ -13,8 +13,6 @@ export default function InputForm({
     value = null,
 }) {
 
-    console.log(name)
-
     // Обработчик для text input, который фильтрует вводимые символы
     const handleTextInputChange = (e) => {
         // Регулярное выражение для разрешения букв всех указанных языков и пробелов

@@ -10,19 +10,12 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { notification } from "antd";
 
-// SVG for removing files
+// SVG для удаления
 const RemoveIcon = () => <img src={removeIcon} alt="Remove" />;
 
-// DraggableUploadListItem component
+// Компонент для элемента списка с перетаскиванием
 const DraggableUploadListItem = ({ file, onRemove }) => {
-    const {
-        attributes,
-        listeners,
-        setNodeRef,
-        transform,
-        transition,
-        isDragging,
-    } = useSortable({
+    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
         id: file.uid,
     });
 
@@ -43,13 +36,7 @@ const DraggableUploadListItem = ({ file, onRemove }) => {
     };
 
     return (
-        <div
-            ref={setNodeRef}
-            style={style}
-            className={isDragging ? "is-dragging" : ""}
-            {...attributes}
-            {...listeners}
-        >
+        <div ref={setNodeRef} style={style} className={isDragging ? "is-dragging" : ""} {...attributes} {...listeners}>
             <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
                 {file.preview && (
                     <img
@@ -62,17 +49,18 @@ const DraggableUploadListItem = ({ file, onRemove }) => {
                         }}
                     />
                 )}
-                <svg
-                    viewBox="64 64 896 896"
-                    focusable="false"
-                    data-icon="paper-clip"
-                    width="1em"
-                    height="1em"
-                    fill="currentColor"
-                    aria-hidden="true"
-                >
-                    <path d="M779.3 196.6c-94.2-94.2-247.6-94.2-341.7 0l-261 260.8c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0012.7 0l261-260.8c32.4-32.4 75.5-50.2 121.3-50.2s88.9 17.8 121.2 50.2c32.4 32.4 50.2 75.5 50.2 121.2 0 45.8-17.8 88.8-50.2 121.2l-266 265.9-43.1 43.1c-40.3 40.3-105.8 40.3-146.1 0-19.5-19.5-30.2-45.4-30.2-73s10.7-53.5 30.2-73l263.9-263.8c6.7-6.6 15.5-10.3 24.9-10.3h.1c9.4 0 18.1 3.7 24.7 10.3 6.7 6.7 10.3 15.5 10.3 24.9 0 9.3-3.7 18.1-10.3 24.7L372.4 653c-1.7 1.7-2.6 4-2.6 6.4s.9 4.7 2.6 6.4l36.9 36.9a9 9 0 0012.7 0l215.6-215.6c19.9-19.9 30.8-46.3 30.8-74.4s-11-54.6-30.8-74.4c-41.1-41.1-107.9-41-149 0L463 364 224.8 602.1A172.22 172.22 0 00174 724.8c0 46.3 18.1 89.8 50.8 122.5 33.9 33.8 78.3 50.7 122.7 50.7 44.4 0 88.8-16.9 122.6-50.7l309.2-309C824.8 492.7 850 432 850 367.5c.1-64.6-25.1-125.3-70.7-170.9z"></path>
-                </svg>
+                {file.isMain && (
+                    <span
+                        style={{
+                            fontSize: "18px",
+                            fontWeight: "bold",
+                            color: "red",
+                            marginLeft: "4px",
+                        }}
+                    >
+                        1
+                    </span>
+                )}
                 {file.name}
             </div>
             <button
@@ -89,13 +77,8 @@ const DraggableUploadListItem = ({ file, onRemove }) => {
     );
 };
 
-// FileUploadWithDragAndDrop component
-const FileUploadWithDragAndDrop = ({
-    fileList,
-    setFileList,
-    onFileChange,
-    typesDisallowed,
-}) => {
+// Основной компонент загрузки с перетаскиванием
+const FileUploadWithDragAndDrop = ({ fileList, setFileList, onFileChange, typesDisallowed }) => {
     const [previewFiles, setPreviewFiles] = useState([]);
     const sensor = useSensor(PointerSensor, {
         activationConstraint: {
@@ -103,24 +86,31 @@ const FileUploadWithDragAndDrop = ({
         },
     });
 
+    // Обработка загрузки файлов
     useEffect(() => {
+       
+
         const newPreviewFiles = fileList.map((file) => {
             if (!file.preview && file.type?.startsWith("image/")) {
+                if (file.file.cameFrom === "yandex") {
+                    return { ...file, preview: file.file };
+                }
                 return { ...file, preview: URL.createObjectURL(file.file) };
             }
             return file;
         });
 
-        // Avoid updating state if the previewFiles have not changed
+        // Обновляем состояние previewFiles, если оно изменилось
         const hasChanged = newPreviewFiles.some(
-            (file, index) => previewFiles[index]?.preview !== file.preview,
+            (file, index) => previewFiles[index]?.preview !== file.preview
         );
 
         if (hasChanged) {
             setPreviewFiles(newPreviewFiles);
         }
 
-        // Cleanup function to revoke object URLs
+      
+        // Очистка object URL
         return () => {
             newPreviewFiles.forEach((file) => {
                 if (file.preview) {
@@ -130,60 +120,80 @@ const FileUploadWithDragAndDrop = ({
         };
     }, [fileList, previewFiles]);
 
-    // console.log(fileList)
-
+    // Обработка окончания перетаскивания
     const onDragEnd = ({ active, over }) => {
         if (active.id !== over?.id) {
             const reorderedFiles = arrayMove(
                 fileList,
                 fileList.findIndex((i) => i.uid === active.id),
-                fileList.findIndex((i) => i.uid === over?.id),
+                fileList.findIndex((i) => i.uid === over?.id)
             );
-            setFileList(reorderedFiles);
-            onFileChange(reorderedFiles.map((file) => file.file));
+
+            // Устанавливаем флаг isMain после перетаскивания
+            const filesWithMainFlag = setMainFileFlag(reorderedFiles);
+            setFileList(filesWithMainFlag);
+            onFileChange(filesWithMainFlag);  // Передаем обновленные файлы
         }
     };
 
+    // Удаление файла
     const handleRemove = (uid) => {
         const updatedFiles = fileList.filter((file) => file.uid !== uid);
         setFileList(updatedFiles);
-        onFileChange(updatedFiles.map((file) => file.file));
+        onFileChange(updatedFiles);  // Передаем обновленный список файлов с метаданными
     };
 
+    // Обработка изменения файлов в input
     const handleFileInputChange = (event) => {
         if (event.target && event.target.files) {
             const files = Array.from(event.target.files);
-            //console.log('Files:', files);
-            const newFiles = files.map((file) => ({
-                uid: file.name + "-" + file.lastModified,
-                name: file.name,
-                type: file.type,
-                file,
-                preview: file.type.startsWith("image/")
-                    ? URL.createObjectURL(file)
-                    : null,
-                status: "done",
-            }));
-            //console.log('New Files:', newFiles);
+            const newFiles = files.map((file,index) => {
+                let isImage =false;
+                if (file?.cameFrom === "yandex") {
+                    isImage = file?.preview?.match(/\.(jpeg|jpg|png|gif|bmp|tiff|svg)$/i)
+                } else {
+                    isImage = file?.type?.startsWith("image/");
+                }
+
+                return {
+                    uid: file.name + "-" + file.lastModified,
+                    name: file.name,
+                    type: file.type,
+                    file,
+                    preview: file.type.startsWith("image/") ? URL.createObjectURL(file) : null,
+                    isMain: index === 0 && isImage, // По умолчанию первый файл не главный
+                    status: "done",
+                }
+            });
+
+            // Устанавливаем флаг isMain для первого изображения
+            const imageFiles = newFiles.filter((file) => file.type.startsWith("image/"));
+            if (imageFiles.length > 0 && fileList.length === 0) {
+                imageFiles[0].isMain = true; // Первое изображение будет основным
+            }
+
             const validatedFiles = newFiles.map(validateFiles);
-            //console.log('Validated Files:', validatedFiles);
-            setFileList((prevFiles) => [...prevFiles, ...validatedFiles]);
+
+            setFileList((prevFiles) => {
+                const updatedFileList = [...prevFiles, ...validatedFiles];
+                return setMainFileFlag(updatedFileList);
+            });
+
             setPreviewFiles((prevFiles) => [
                 ...prevFiles,
                 ...newFiles.filter((file) => file.preview),
             ]);
-            onFileChange(
-                [...fileList, ...validatedFiles].map((file) => file.file),
-            );
+            onFileChange([...fileList, ...validatedFiles]);  // Передаем файлы с метаданными
         }
     };
 
+    // Валидация файлов
     const validateFiles = (file) => {
         const fileType = file.type;
         if (typesDisallowed.includes(fileType)) {
             notification.error({
-                message: `Invalid file type: ${file.name}`,
-                description: `The file type ${fileType} is not allowed.`,
+                message: `Недопустимый тип файла: ${file.name}`,
+                description: `Тип файла ${fileType} не разрешен.`,
             });
             return {
                 ...file,
@@ -192,6 +202,82 @@ const FileUploadWithDragAndDrop = ({
         }
         return file;
     };
+
+    // Функция для установки флага isMain для первого изображения
+    const setMainFileFlag = (files) => {
+        const imageFiles = files.filter((file) => {
+
+            let fileType;
+
+            if (file.cameFrom === "yandex") {
+                const preview = file?.preview;
+                if (preview && preview.match(/\.(jpeg|jpg|png|gif|bmp|tiff|svg)$/i)) {
+                    fileType = "image/jpeg"; // Можно указать любой подходящий тип, например "image/jpeg" для всех
+                } else {
+                    fileType = undefined
+                }
+            } else {
+                fileType = file.type || (file.file && file.file.type);
+            }
+
+            return fileType && fileType.startsWith("image/");
+        });
+
+        if (imageFiles.length > 0) {
+            // Для всех изображений установим isMain = true только для первого
+            imageFiles.forEach((file, index) => {
+                file.isMain = index === 0;
+            });
+        }
+
+        return files;
+    };
+
+
+    const sortedFileList = fileList
+        .map((file) => {
+            if (file.cameFrom === "yandex") {
+                return {
+                    ...file,
+                    preview: file.preview || (file.file && file.file.type.startsWith("image/") ? file.file : null),
+                    type: file.file ? file.file.type : 'image/jpeg', // Берем тип из файла или по умолчанию
+                };
+            }
+
+            return {
+                ...file,
+                preview: file.preview || (file.file && file.file.type.startsWith("image/") ? URL.createObjectURL(file.file) : null),
+                type: file.type || (file.file && file.file.type) || 'application/octet-stream', // Обеспечиваем тип
+            };
+        })
+        .filter((file) => {
+            const fileType = file.type || (file.file && file.file.type);
+            return fileType && fileType.startsWith("image/");
+        })
+        .sort((a, b) => (b.isMain ? 1 : 0) - (a.isMain ? 1 : 0))  // Сортируем изображения по флагу isMain
+        .concat(
+            fileList
+                .map((file) => {
+                    if (file.cameFrom === "yandex") {
+                        return {
+                            ...file,
+                            preview: file.preview || (file.file && file.file.type.startsWith("image/") ? file.file : null),
+                            type: file.file ? file.file.type : 'image/jpeg',
+                        };
+                    }
+
+                    return {
+                        ...file,
+                        preview: file.preview || (file.file && file.file.type.startsWith("image/") ? URL.createObjectURL(file.file) : null),
+                        type: file.type || (file.file && file.file.type) || 'application/octet-stream',
+                    };
+                })
+                .filter((file) => {
+                    const fileType = file.type || (file.file && file.file.type);
+                    return !fileType || !fileType.startsWith("image/");  // Отфильтровываем не изображения
+                })
+        );
+
 
     return (
         <div>
@@ -204,14 +290,13 @@ const FileUploadWithDragAndDrop = ({
             />
             <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
                 <SortableContext
-                    items={fileList.map((i) => i.uid)}
+                    items={sortedFileList.map((i) => i.uid)}
                     strategy={verticalListSortingStrategy}
                 >
                     <div className="sortable-file-list">
-                        {fileList.map((file) => (
+                        {sortedFileList.map((file) => (
                             <DraggableUploadListItem
                                 key={file.uid}
-                                originNode={<div>{file.name}</div>}
                                 file={file}
                                 onRemove={handleRemove}
                             />

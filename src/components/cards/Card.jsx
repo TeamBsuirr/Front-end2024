@@ -1,7 +1,6 @@
 import { React } from "react";
 import "../../assets/styles/cards/Card.css";
 import "../../assets/styles/layout/DefaultLayout.css";
-
 import Carousel from "../other/Carousel";
 import ButtonSubmit from "../buttons/ButtonSubmit";
 import { useTranslation } from "react-i18next";
@@ -26,7 +25,7 @@ export default function Card({
                 <div className="container-prisoner-portrait">
                     <img
                         className="img-prisoner-portrait"
-                        src={objectOfPrisoners.images[0].urlToFile}
+                        src={objectOfPrisoners.previewImg}
                         alt="portrait of a prisoner"
                     ></img>
                 </div>
@@ -38,7 +37,7 @@ export default function Card({
                             " " +
                             objectOfPrisoners.patronymic}
                     </h1>
-                
+                 
 
                     <ul>
                         <li>

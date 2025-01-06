@@ -24,7 +24,7 @@ export default function CardPlace({
                 <div className="container-prisoner-portrait">
                     <img
                         className="img-prisoner-portrait"
-                        src={objectOfPlace.images[0].urlToFile}
+                        src={objectOfPlace.previewImg}
                         alt="portrait of a prisoner"
                     ></img>
                 </div>
@@ -33,7 +33,7 @@ export default function CardPlace({
                         {objectOfPlace.placeName}
                     </h1>
 
-
+                  
 
                     <ul>
                         <li>
@@ -43,8 +43,8 @@ export default function CardPlace({
                             <span>
                                 {objectOfPlace.dateOfFoundation
                                     ? " " +
-                                    objectOfPlace.dateOfFoundation +
-                                    " г."
+                                      objectOfPlace.dateOfFoundation +
+                                      " г."
                                     : " год не определен"}{" "}
                             </span>
                         </li>

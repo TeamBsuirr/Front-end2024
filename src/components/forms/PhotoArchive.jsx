@@ -2,14 +2,23 @@ import { React, useEffect, useState } from "react";
 import "../../assets/styles/forms/PhotoArchive.css";
 import { useTranslation } from "react-i18next";
 import HeaderSection from "../other/HeaderSection";
+import PaginationLayout from "../layout/PaginationLayout";
 
 
-export default function PhotoArchive({ arrayOfPhotoObjects}) {
+export default function PhotoArchive({
+    arrayOfPhotoObjects,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    totalPages,
+    totalElements
+}) {
+    // const navigate = useLocalizedNavigate();
     const { t } = useTranslation();
     const [selectedObject, setSelectedObject] = useState(null);
-    const [photoArray] = useState(arrayOfPhotoObjects); // Храним массив фотографий
+    const [photoArray, setPhotoArray] = useState(arrayOfPhotoObjects); // Храним массив фотографий
 
-    useEffect(() => { }, [photoArray]);
+    useEffect(() => { }, [photoArray,setPhotoArray]);
 
     function openImage(index) {
         if (photoArray[index]) {
@@ -54,6 +63,7 @@ export default function PhotoArchive({ arrayOfPhotoObjects}) {
                         </button>
                         <div className="result-container-archive-description">
                             <h3>{obj.title}</h3>
+
                         </div>
                     </div>
                 ))}
@@ -89,6 +99,14 @@ export default function PhotoArchive({ arrayOfPhotoObjects}) {
                     </div>
                 )}
             </section>
+
+            <PaginationLayout
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                itemsPerPage={itemsPerPage}
+                totalPages={totalPages}
+                totalElements={totalElements}
+            />
         </div>
     );
 }

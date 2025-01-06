@@ -1,0 +1,89 @@
+
+/* Общие стили для контейнера пагинации */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;  /* Размещаем кнопки по бокам */
+    align-items: center;  /* Центрируем элементы по вертикали */
+    width: 100%;  /* Ширина на всю доступную область */
+    height: auto;  /* Высота по содержимому */
+    padding-top: 20px;  /* Паддинг сверху */
+    padding-bottom: 20px;  /* Паддинг сверху */
+    border-top: 2px solid black;  /* Верхняя граница */
+    border-bottom: 2px solid black;  /* Верхняя граница */
+    box-sizing: border-box;  /* Чтобы паддинги не увеличивали размер */
+}
+
+/* Стили для левой кнопки */
+.pagination-container-btn-l, .pagination-container-btn-r {
+    display: flex;
+    align-items: center;  /* Центрируем иконки по вертикали */
+}
+/* Стили для кнопки */
+.pagination-container-btn-l button, .pagination-container-btn-r button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;  /* Плавное изменение фона и эффекта трансформации */
+}
+
+/* Стили для изображения в кнопке */
+.pagination-container-btn-l button img, .pagination-container-btn-r button img {
+    width: 40px;  /* Размер иконки */
+    height: 40px;
+    transition: filter 0.3s ease, transform 0.3s ease;  /* Плавное изменение фильтра и трансформации */
+}
+
+/* Плавная смена фона и цвета иконки при наведении */
+.pagination-container-btn-l button:hover, .pagination-container-btn-r button:hover {
+    background-color: #E4B474;  /* Изменение фона на заданный цвет */
+}
+
+/* При наведении меняем фильтр на иконке */
+.pagination-container-btn-l button:hover img, .pagination-container-btn-r button:hover img {
+    filter: brightness(0) saturate(100%) invert(53%) sepia(88%) saturate(3192%) hue-rotate(32deg) brightness(103%) contrast(102%);  /* Плавное изменение иконки */
+}
+
+/* Стили для иконки правой кнопки с поворотом */
+.pagination-container-btn-r button img {
+    transform: rotate(180deg);  /* Переворачиваем иконку на 180 градусов */
+}
+
+/* Центрируем текст в блоке пагинации */
+.pagination-spans {
+    display: flex;
+    justify-content: center;  /* Центрируем элементы по горизонтали */
+    align-items: center;  /* Центрируем элементы по вертикали */
+    gap: 20px;  /* Расстояние между элементами */
+    flex-grow: 1;  /* Занимает оставшееся пространство */
+    text-align: center;  /* Центрируем текст внутри */
+    font-size: 14px;  /* Можно настроить размер текста */
+}
+
+/* Стили для текста в пагинации */
+.pagination-spans span {
+    font-family: "Inter", sans-serif;
+    
+    font-size: 20px;
+    color: #000;  /* Цвет текста */
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+    .pagination-container {
+        flex-direction: column;  /* Переводим на вертикальное расположение */
+        align-items: center;  /* Центрируем все элементы */
+    }
+
+    .pagination-spans {
+        flex-direction: column;  /* Выводим элементы в столбик */
+        gap: 10px;  /* Уменьшаем расстояние между элементами */
+    }
+
+    .pagination-container-btn-l, .pagination-container-btn-r {
+        margin-bottom: 10px;  /* Добавляем отступ снизу, если нужно */
+    }
+}

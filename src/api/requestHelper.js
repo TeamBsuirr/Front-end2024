@@ -5,7 +5,8 @@ const handleRequest = async (request) => {
     try {
         const response = await request();
 
-        return response.data;
+        if (response.data.content) return response.data.content;
+        else return response.data;
     } catch (error) {
         console.error("Error fetching data:", error);
         if (error.response) {

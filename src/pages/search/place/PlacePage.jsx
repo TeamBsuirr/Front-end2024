@@ -6,6 +6,7 @@ import NotFound from "../../../components/layout/NotFound";
 import placeService from "../../../api/services/placeService";
 import CardPlace from "../../../components/cards/CardPlace";
 import { useTranslation } from "react-i18next";
+import { addMainImagePreview } from "../../../utils/globalFunctions";
 
 export default function PlacePage() {
     const { t } = useTranslation();
@@ -29,11 +30,13 @@ export default function PlacePage() {
         placeService
             .getPlaceById(idOfPlace)
             .then((data) => {
-                setobjectOfPlace(data);
+                setobjectOfPlace(addMainImagePreview(data));
                 setLoading(false);
                 return data;
             })
             .catch((error) => {
+                //console.error('Ошибка получения данных концлагеря:', error);
+
                 let errMsg = error.message ? error.message : error;
                 notification.error({
                     message: t("errors.front-end.fetch.msg-place"),
@@ -53,10 +56,8 @@ export default function PlacePage() {
     } else {
         return (
             <>
-                {/* <SEOComponent data={objectOfPlace} type="place" /> */}
                 <CardPlace
                     objectOfPlace={objectOfPlace}
-                    setLoading={setLoading}
                 />
             </>
         );

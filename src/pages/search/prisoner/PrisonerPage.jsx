@@ -6,6 +6,7 @@ import humanService from "../../../api/services/humanService";
 import { notification } from "antd";
 import NotFound from "../../../components/layout/NotFound";
 import { useTranslation } from "react-i18next";
+import { addMainImagePreview } from "../../../utils/globalFunctions";
 
 export default function PrisonerPage() {
     const { t } = useTranslation();
@@ -29,12 +30,14 @@ export default function PrisonerPage() {
         humanService
             .getHumanById(idOfPrisoner)
             .then((data) => {
-                setObjectOfPrisoners(data);
+        
+                setObjectOfPrisoners(addMainImagePreview(data));
                 setLoading(false);
                 return data;
             })
             .catch((error) => {
-    
+                // console.error('Ошибка получения данных узника:', error);
+
                 let errMsg = error.message ? error.message : error;
 
                 notification.error({
@@ -55,10 +58,10 @@ export default function PrisonerPage() {
     } else {
         return (
             <>
-                {/* <SEOComponent data={objectOfPrisoners} type="prisoner" /> */}
+               
                 <Card
                     objectOfPrisoners={objectOfPrisoners}
-                    setLoading={setLoading}
+                  
                 />
             </>
         );
